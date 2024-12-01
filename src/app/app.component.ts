@@ -10,7 +10,7 @@ import { CasheService } from './shared/services/cashe.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'ICPC';
+  title = 'PSOLVE';
   cacheService = inject(CasheService);
   router = inject(Router);
   constructor() {
