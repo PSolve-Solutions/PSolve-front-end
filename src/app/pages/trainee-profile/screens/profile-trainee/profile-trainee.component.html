@@ -1,0 +1,499 @@
+<div class="w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full pb-8 bg-white"
+  >
+    <div class="flex flex-col gap-y-4">
+      <div class="flex items-center justify-end w-full pe-16 gap-x-8">
+        @if (isEditMode) {
+        <button
+          (click)="toggleEditMode()"
+          type="button"
+          class="px-6 py-1.5 text-xl text-white border rounded-lg w-fit bg-[#EF4A50]"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="!isEditMode"
+          class="px-8 py-1.5 text-xl bg-profileTColor border rounded-lg text-white w-fit"
+        >
+          @if (isLoading) {
+          <div class="flex items-center justify-center w-full bg-opacity-60">
+            <div class="flex items-center justify-center">
+              <div
+                class="border-4 border-white border-dashed rounded-full w-7 h-7 animate-spin"
+              ></div>
+            </div>
+          </div>
+
+          }@else { Save }
+        </button>
+        }@else {
+
+        <button
+          (click)="toggleEditMode()"
+          type="button"
+          class="px-8 py-1.5 text-xl bg-profileTColor border rounded-lg text-white w-fit"
+        >
+          @if (isLoading) {
+          <div class="flex items-center justify-center w-full bg-opacity-60">
+            <div class="flex items-center justify-center">
+              <div
+                class="border-4 border-white border-dashed rounded-full w-7 h-7 animate-spin"
+              ></div>
+            </div>
+          </div>
+
+          }@else { Edit }
+        </button>
+        }
+      </div>
+
+      <h2 class="mb-4 text-3xl font-semibold px-14">Personal Information</h2>
+      <div class="border-l-2 px-14">
+        <div class="flex items-center justify-between w-full mb-4">
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">First Name</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="firstName"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="First Name"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+          </div>
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">Middle Name</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="middleName"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="Middle Name"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between w-full mb-4">
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">Last Name</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="lastName"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="Last Name"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+          </div>
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">Birth Date</label>
+            <div class="relative">
+              <input
+                type="date"
+                formControlName="birthDate"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="Birth Date"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between w-full mb-4">
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">Phone Number</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="phoneNumber"
+                (keyup)="vaildationPhone()"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="Phone Number"
+                [class.font-bold]="!isEditMode"
+                [class.border]="!isMessageSuccess && phoneMessage"
+                [class.border-red-500]="!isMessageSuccess && phoneMessage"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+            @if (phoneMessage) {
+            <div
+              class="flex items-center justify-start text-sm font-semibold ps-2 gap-x-2"
+              [ngClass]="isMessageSuccess ? 'text-[#52B788]' : 'text-[#EF4A50]'"
+            >
+              @if (isMessageSuccess ) {
+
+              <div
+                class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
+              >
+                <span class="text-[#52B788]"> &#10003; </span>
+              </div>
+              }@else {
+              <div
+                class="flex items-center justify-center w-5 h-5 bg-[#f9b7b9] rounded-full"
+              >
+                <span class="text-[#EF4A50]"> x </span>
+              </div>
+              }
+              <span> {{ phoneMessage }}</span>
+            </div>
+            }
+          </div>
+          <div class="flex flex-col pb-2 basis-1/2">
+            <label class="font-semibold">National ID</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="nationalId"
+                (keyup)="vaildationId()"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="National ID"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [class.border]="!isMessageSuccessId && idMessage"
+                [class.border-red-500]="!isMessageSuccessId && idMessage"
+                [readonly]="!isEditMode"
+              />
+            </div>
+            @if (idMessage) {
+            <div
+              class="flex items-center justify-start text-sm font-semibold ps-2 gap-x-2"
+              [ngClass]="
+                isMessageSuccessId ? 'text-[#52B788]' : 'text-[#EF4A50]'
+              "
+            >
+              @if (isMessageSuccessId ) {
+
+              <div
+                class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
+              >
+                <span class="text-[#52B788]"> &#10003; </span>
+              </div>
+              }@else {
+              <div
+                class="flex items-center justify-center w-5 h-5 bg-[#f9b7b9] rounded-full"
+              >
+                <span class="text-[#EF4A50]"> x </span>
+              </div>
+              }
+              <span> {{ idMessage }}</span>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="flex items-center justify-between w-full mb-4">
+          <div class="flex flex-col basis-1/2">
+            <label class="font-semibold">Facebook Link</label>
+            <div class="relative">
+              <input
+                type="text"
+                formControlName="facebookLink"
+                class="relative block w-[430px] my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                placeholder="Facebook Link"
+                [class.font-bold]="!isEditMode"
+                [class.font-medium]="isEditMode"
+                [readonly]="!isEditMode"
+              />
+            </div>
+          </div>
+          <div class="flex flex-col basis-1/2"></div>
+        </div>
+      </div>
+
+      <h2 class="mb-2 text-3xl font-semibold px-14">Academic Information</h2>
+      <div class="flex items-center justify-between w-full px-14">
+        <div class="flex flex-col basis-1/2">
+          <label class="font-semibold">College</label>
+          <div class="relative w-[430px]">
+            <ng-select
+              #college
+              [items]="allCollege"
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              formControlName="college"
+              placeholder="College"
+              (click)="toggleDropdownCollege()"
+              class="relative block text-lg w-full my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            >
+            </ng-select>
+            <button (click)="toggleDropdownCollege()" type="button">
+              <svg
+                [ngClass]="foucsCollege && isEditMode ? 'rotate-180' : ''"
+                class="absolute transition-transform top-5 z-[1100] size-6 right-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-col basis-1/2">
+          <label class="font-semibold">Year</label>
+          <div class="relative w-[430px]">
+            <ng-select
+              #term
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              formControlName="grade"
+              placeholder="Year"
+              (click)="toggleDropdownTerm()"
+              [ngClass]="!isEditMode ? '!font-bold' : 'font-medium'"
+              class="relative block text-lg w-full my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            >
+              <ng-option [value]="1"> First Year </ng-option>
+              <ng-option [value]="2"> Second year </ng-option>
+              <ng-option [value]="3"> Third year </ng-option>
+              <ng-option [value]="4"> Fourth year </ng-option>
+              <ng-option [value]="5"> Fifth year </ng-option>
+            </ng-select>
+            <button (click)="toggleDropdownTerm()" type="button">
+              <svg
+                [ngClass]="foucsTerm && isEditMode ? 'rotate-180' : ''"
+                class="absolute transition-transform top-5 z-[1100] size-6 right-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between w-full mb-4 px-14">
+        <div class="flex flex-col basis-1/2">
+          <label class="font-semibold">Camp</label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="campName"
+              class="relative block w-[430px] font-bold my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+              placeholder="Camp"
+              readOnly
+            />
+          </div>
+        </div>
+        <div class="flex flex-col basis-1/2">
+          <label class="font-semibold">Number of Attendance</label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="attendanceCount"
+              class="relative block w-[430px] font-bold my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+              placeholder="Number of Attendance"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between w-full mb-4 px-14">
+        <div class="flex flex-col basis-1/2">
+          <label class="font-semibold">Join Date</label>
+          <div class="relative">
+            <div
+              class="relative block w-[430px] font-bold my-1 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            >
+              {{ profileForm.get("creationDate")?.value | date : "YYY-LL-dd" }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col basis-1/2"></div>
+      </div>
+    </div>
+  </form>
+  <div class="fixed space-y-2 bottom-4 z-[1300] right-8">
+    @for (error of errorMessages; track i; let i = $index) {
+    <div
+      (click)="removeError(i)"
+      class="flex items-center justify-between cursor-pointer max-w-lg px-6 py-4 mx-2 my-4 text-lg bg-[#fae1e3] border-l-[10px] border-[#DC3545] rounded-md"
+    >
+      <div class="flex items-center w-fit pe-8">
+        <svg
+          class="w-8 h-8 mr-3"
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.1493 6.43367L3.03264 30.0003C2.74158 30.5044 2.58758 31.0758 2.58595 31.6579C2.58432 32.2399 2.73512 32.8122 3.02335 33.3179C3.31157 33.8235 3.72718 34.2449 4.22882 34.5401C4.73045 34.8353 5.30063 34.9939 5.88264 35.0003H34.116C34.698 34.9939 35.2682 34.8353 35.7698 34.5401C36.2714 34.2449 36.687 33.8235 36.9753 33.3179C37.2635 32.8122 37.4143 32.2399 37.4127 31.6579C37.411 31.0758 37.257 30.5044 36.966 30.0003L22.8493 6.43367C22.5522 5.94385 22.1338 5.53887 21.6346 5.25781C21.1354 4.97675 20.5722 4.8291 19.9993 4.8291C19.4264 4.8291 18.8632 4.97675 18.364 5.25781C17.8648 5.53887 17.4464 5.94385 17.1493 6.43367V6.43367Z"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M20 15V21.6667"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M20 26.667V27.5003"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <span class="text-red-800"> {{ error }} </span>
+      </div>
+
+      <button
+        (click)="removeError(i)"
+        type="button"
+        class="ml-4 text-red-800 hover:text-red-500 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    }
+  </div>
+  @if (errorMessage || successMessage) {
+  <div class="fixed space-y-2 bottom-4 z-[1300] right-8">
+    <div
+      (click)="removeErrorM()"
+      [ngClass]="
+        errorMessage
+          ? 'border-[#DC3545] bg-[#fae1e3]'
+          : 'bg-[#dff2e3] border-[#28A745]'
+      "
+      class="flex items-center justify-between cursor-pointer max-w-lg px-6 py-4 mx-2 my-4 text-lg border-l-[10px] rounded-md"
+    >
+      <div class="flex items-center pe-8">
+        @if (errorMessage) {
+        <svg
+          class="w-8 h-8 mr-3"
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.1493 6.43367L3.03264 30.0003C2.74158 30.5044 2.58758 31.0758 2.58595 31.6579C2.58432 32.2399 2.73512 32.8122 3.02335 33.3179C3.31157 33.8235 3.72718 34.2449 4.22882 34.5401C4.73045 34.8353 5.30063 34.9939 5.88264 35.0003H34.116C34.698 34.9939 35.2682 34.8353 35.7698 34.5401C36.2714 34.2449 36.687 33.8235 36.9753 33.3179C37.2635 32.8122 37.4143 32.2399 37.4127 31.6579C37.411 31.0758 37.257 30.5044 36.966 30.0003L22.8493 6.43367C22.5522 5.94385 22.1338 5.53887 21.6346 5.25781C21.1354 4.97675 20.5722 4.8291 19.9993 4.8291C19.4264 4.8291 18.8632 4.97675 18.364 5.25781C17.8648 5.53887 17.4464 5.94385 17.1493 6.43367V6.43367Z"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M20 15V21.6667"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M20 26.667V27.5003"
+            stroke="#DC3545"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        }@else {
+        <svg
+          class="w-8 h-8 mr-3"
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M36.6693 18.4671V20.0004C36.6672 23.5945 35.5034 27.0916 33.3515 29.9701C31.1996 32.8487 28.1747 34.9546 24.7282 35.9736C21.2817 36.9926 17.598 36.8703 14.2267 35.6247C10.8554 34.3792 7.97703 32.0773 6.02087 29.0622C4.06471 26.0472 3.13559 22.4805 3.37207 18.8943C3.60854 15.308 4.99795 11.8943 7.33307 9.16221C9.66819 6.43012 12.8239 4.52606 16.3296 3.734C19.8353 2.94194 23.5031 3.30432 26.7859 4.76709"
+            stroke="#28A745"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M36.6667 6.66699L20 23.3503L15 18.3503"
+            stroke="#28A745"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        }
+
+        <span [ngClass]="errorMessage ? 'text-red-800' : 'text-green-800'">
+          {{ errorMessage || successMessage }}
+        </span>
+      </div>
+
+      <button
+        (click)="removeErrorM()"
+        type="button"
+        [ngClass]="
+          errorMessage
+            ? ' text-red-800 hover:text-red-500'
+            : 'text-green-800 hover:text-green-500'
+        "
+        class="ml-4 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,26 @@
+li {
+  a {
+    font-family: Inter;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 24.2px;
+    text-align: left;
+    color: white;
+  }
+}
+.login-btn {
+  font-family: Inter;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 20.57px;
+  text-align: left;
+  border-image-slice: 1;
+
+  background: linear-gradient(#474847 0 0) padding-box,
+    linear-gradient(90deg, #3d91c7 0%, #e69c24 50%, #ef4a50 100%) border-box;
+
+  // border-radius: 10px;
+  border: 4px solid transparent;
+  border-radius: 15px;
+  overflow: hidden;
+}

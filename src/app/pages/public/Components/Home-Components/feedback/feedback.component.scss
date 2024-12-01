@@ -1,0 +1,52 @@
+.feedbacks{
+  // min-height: 100vh;
+  .card-container {
+    width: 100%;
+    display: flex;
+    flex: 2;
+    flex-wrap: wrap; /* Allows the cards to wrap if needed */
+    gap: 10px; /* Adjust the spacing between cards */
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Makes each card take equal space */
+    align-items: stretch; /* Ensures all cards stretch to the same height */
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding is included in the width/height */
+  }
+  .swiper {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0 80px;
+    z-index: 1;
+}
+}
+.headers{
+  h1{
+    font-family: Cormorant;
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 84.77px;
+    text-align:start;
+    text-transform: uppercase;
+  }
+  ::after{
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 22%;
+    background: #000;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.swiper-pagination{
+  display: none;
+}

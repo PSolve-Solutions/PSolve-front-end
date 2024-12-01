@@ -1,0 +1,31 @@
+<div
+  class="flex items-center overflow-x-hidden lg:w-screen md:w-[95vw] h-screen justify-center"
+>
+  <div class="bg-[#FFFFFF] flex items-center gap-0 flex-wrap justify-center">
+    <div
+      class="md:px-[160px] md:mb-[150px] lg:mb-0 h-[200px] sm:h-auto flex items-center"
+    >
+      <img
+        class="sm:w-[488px] w-[95vw]"
+        src="./../../../../assets/img/IcpcLogo.svg"
+        alt=""
+      />
+    </div>
+    <div
+      class="relative w-[80vw] sm:w-[400px] md:min-h-[500px] sm:h-[500px] h-[460px] flex justify-center"
+    >
+      <div
+        class="absolute w-full backdrop-blur-md h-full z-50 bg-opacity-75 flex text-white bg-[rgba(0,0,0,0.3)] rounded-[20px] border-[1px] border-[#AFAFAF] shad"
+        style="box-shadow: -8px 4px 5px 0px rgba(0, 0, 0, 0.25)"
+      >
+        <router-outlet />
+      </div>
+      <div
+        class="absolute z-10 lg:top-[-20px] lg:left-[-150px] md:top-[-140px] md:left-[-140px] sm:top-[-20px] sm:left-[-70px] top-[-50px] left-[-20px] md:w-[280px] md:h-[280px] sm:w-[150px] sm:h-[150px] w-[100px] h-[100px] bg-gradient-to-b from-[#EF4A50] to-[#7E1D20] rounded-full"
+      ></div>
+      <div
+        class="absolute z-10 lg:bottom-[-60px] lg:right-[-50px] md:bottom-[-100px] md:right-[-100px] sm:bottom-[-80px] sm:right-[-50px] bottom-[-25px] right-[-20px] md:w-[200px] md:h-[200px] sm:w-[150px] sm:h-[150px] w-[70px] h-[70px] bg-gradient-to-b from-[#F8B522] to-[#B68C30] rounded-full"
+      ></div>
+    </div>
+  </div>
+</div>

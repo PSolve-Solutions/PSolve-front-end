@@ -1,0 +1,18 @@
+.scroll-host-table::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px;
+}
+
+.scroll-host-table::-webkit-scrollbar-track {
+  background: #abd0e7;
+  border-radius: 2px;
+}
+
+.scroll-host-table::-webkit-scrollbar-thumb {
+  background: #3d91c7;
+  border-radius: 10px;
+}
+
+.scroll-host-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

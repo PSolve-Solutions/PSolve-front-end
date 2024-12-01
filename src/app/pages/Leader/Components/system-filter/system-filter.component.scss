@@ -1,0 +1,17 @@
+.ng-select span.ng-value-label[ng-reflect-escape="true"] {
+  background-color: #fff;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.ng-select .ng-select-container {
+  min-height: 24px !important;
+}
+
+.ng-select span.ng-value-label {
+  background-color: transparent;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 8px;
+}

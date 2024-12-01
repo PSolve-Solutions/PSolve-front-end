@@ -1,0 +1,126 @@
+<div class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4">
+  <div
+    class="flex items-center justify-between px-12 py-4 mb-2 bg-white rounded-xl"
+  >
+    <h2 class="text-xl font-bold">Attendance</h2>
+  </div>
+  <div
+    class="sticky top-0 flex w-full py-4 overflow-x-auto border-b scroll-host-table"
+  >
+    @for (session of allSesions; track session.id; let i = $index) {
+    <div
+      (click)="onTabClick(session.id)"
+      class="w-full px-4 py-2 font-semibold rounded-lg cursor-pointer whitespace-nowrap"
+      [ngClass]="{
+        ' bg-[#3D91C7] text-white': activeTab === session.id,
+      }"
+    >
+      {{ session.topic }}
+    </div>
+    }
+  </div>
+  @if( isLoading()) {
+  <div class="fixed z-50 top-[50%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div
+    style="max-height: calc(100vh - 280px)"
+    class="pb-2 overflow-auto pe-4 scroll-host-table"
+  >
+    <table class="min-w-full text-center bg-transparent rounded-lg">
+      <thead class="text-lg">
+        <tr class="border-b border-black bg-white text-[#6B7088]">
+          <th class="p-4 text-left rounded-lg whitespace-nowrap">Name</th>
+          <th class="p-4 text-right rounded-lg whitespace-nowrap pe-12">
+            Attendance
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of allTraniees; track item.id; let rowIndex = $index) {
+        <tr
+          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
+        >
+          <td class="p-4 text-left bg-white rounded-s-lg whitespace-nowrap">
+            {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+          </td>
+          <td class="py-4 text-right pe-12 rounded-e-lg">
+            <label
+              [ngClass]="item.isAttend ? 'bg-[#66AE1F]' : 'bg-[#ff0000]'"
+              class="relative inline-flex items-center w-20 p-1 transition-all duration-500 rounded-full cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="sr-only peer"
+                [checked]="item.isAttend"
+                (change)="toggleStatus(item.id, $event)"
+              />
+
+              @if (item.isAttend) {
+              <div
+                class="flex items-center justify-center w-6 h-6 transition-all duration-500 bg-white rounded-full translate-x-11"
+              >
+                <svg
+                  width="15"
+                  height="14"
+                  class="text-green-500"
+                  viewBox="0 0 20 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 10.5L8.6 15L17 3"
+                    stroke="#66AE1F"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              }@else {
+              <div
+                class="flex items-center justify-center w-6 h-6 transition-all duration-500 translate-x-0 bg-white rounded-full"
+              >
+                <svg
+                  width="14"
+                  class="text-red-500"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_3101_12224)">
+                    <path
+                      d="M11 3L3 11"
+                      stroke="#FF0000"
+                      stroke-width="5"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M11 11L3 3"
+                      stroke="#FF0000"
+                      stroke-width="5"
+                      stroke-linecap="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_3101_12224">
+                      <rect width="14" height="14" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+              }
+            </label>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

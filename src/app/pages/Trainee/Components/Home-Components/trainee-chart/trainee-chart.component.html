@@ -1,0 +1,104 @@
+<div class="w-[90%] md:w-4/5 mx-auto my-10 md:my-44">
+  <!-- Container for cards -->
+  <div class="flex flex-col items-center justify-between md:flex-row md:gap-28">
+    <!-- Card for Solving Percent -->
+    <div class="card w-[19.5rem] md:w-[500px]">
+      <h4 class="mb-5 text-4xl font-bold text-center md:mb-14 sm:text-start">
+        Solving Percent
+      </h4>
+
+      <div
+        class="relative bg-img rounded-[20px] w-full md:w-[500px] min-h-[250px] md:min-h-[400px]"
+      >
+        <!-- Overlay for chart and legend -->
+        <div
+          class="absolute text-white inset-0 rounded-[20px] w-full h-full flex flex-col items-center justify-around bg-black bg-opacity-50"
+        >
+          <div style="display: block">
+            <canvas id="myDoughnutChart" width="400" height="400"></canvas>
+          </div>
+
+          <!-- Legend for chart -->
+          <div class="flex flex-col items-baseline w-4/5 mx-auto">
+            <!-- Solved percentage -->
+            <div class="flex items-center">
+              <div
+                class="bg-[#00AC47] w-6 h-4 rounded-full font-semibold"
+              ></div>
+              <span class="ml-2 font-semibold md:text-xl md:ml-3"
+                >Solved
+                {{
+                  roundIfHasDecimal((solvedProblems / AllProblems) * 100)
+                }}%</span
+              >
+            </div>
+            <!-- Minimum percentage -->
+            <div class="flex items-center">
+              <div
+                class="bg-[#EF4A50] w-6 h-4 rounded-full font-semibold"
+              ></div>
+              <span class="ml-2 font-semibold md:text-xl md:ml-3"
+                >Minimum percent {{ minimumProblems }}%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card for Next Practice -->
+    <div class="card w-[19.5rem] md:w-[500px]">
+      <h4
+        class="my-5 text-4xl font-bold text-center md:my-0 md:mb-14 md:text-start"
+      >
+        Next Practice
+      </h4>
+      <div
+        class="relative bg-img rounded-[20px] w-[500px] min-h-[320px] md:min-h-[400px]"
+      >
+        <!-- Overlay for practice details -->
+        <div
+          class="absolute text-white inset-0 rounded-[20px] w-full h-full flex flex-col justify-evenly bg-black bg-opacity-50 p-5 md:p-0 md:px-10"
+        >
+          <!-- Practice name -->
+          @if(nextPractice == null){
+          <p class="text-[3rem]">No Next Practice</p>
+          } @if(nextPractice != null){
+          <h2
+            class="text-2xl font-bold text-center md:text-start md:text-[3rem]"
+          >
+            {{ nextPractice.title }}
+          </h2>
+          <!-- Practice details -->
+          <span class="md:text-xl">
+            <p class="font-bold">
+              {{ nextPractice.note }}
+            </p>
+            <i class="fa-regular fa-clock md:mr-2 mt-5 text-[#FFBA00]"></i>
+            <span class="text-[#FFBA00] font-medium text-[14px] md:text-[16px]">
+              {{ formatDateTime(nextPractice.time) }}
+            </span>
+          </span>
+
+          <!-- Contact information -->
+          <div
+            class="bg-white min-w-full flex justify-between items-center rounded-[20px] p-3"
+          >
+            <img src="assets/img_trainee/google-meet.svg" alt="Google Meet" />
+            <p class="text-gray-500 line-clamp-1">
+              {{ nextPractice.meetingLink }}
+            </p>
+            <img
+              src="assets/img_trainee/copy.svg"
+              role="button"
+              class="self-end cursor-pointer"
+              (click)="copyText(nextPractice.meetingLink)"
+              alt="Copy"
+            />
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

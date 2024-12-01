@@ -1,0 +1,26 @@
+.bg-img{
+  background-image: url('../../../../../../assets/img_trainee/marvel-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+.head{
+font-size: 2.5rem;
+font-weight: 700;
+text-align: left;
+color: #E69C24;
+}
+.next,.prev{
+  cursor: pointer!important;
+
+}
+.custom-buttons{
+  cursor: not-allowed;
+}
+.no-contest{
+  text-align: center;
+  color: rgb(152, 7, 7);
+  font-size: 2rem;
+  font-weight: 600;
+}

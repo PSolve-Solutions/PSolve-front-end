@@ -1,0 +1,142 @@
+<div
+  style="height: calc(100vh - 72px)"
+  class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4"
+>
+  <div
+    class="flex items-center justify-between px-12 py-4 mb-4 bg-white rounded-xl"
+  >
+    <h2 class="text-xl font-bold">Attendance</h2>
+    <div class="flex items-center justify-between px-2">
+      <button
+        routerLink="/head_of_camp/attendance/edit-attendance"
+        class="flex items-center px-8 py-1 text-lg text-white rounded-md w-fit bg-activeLink"
+      >
+        Edit
+      </button>
+    </div>
+  </div>
+
+  @if( isLoading() && dataRequest.length === 0) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div
+    style="max-height: calc(100vh - 180px)"
+    class="pb-4 overflow-auto scroll-host-table"
+    (scroll)="loadMoreData($event)"
+  >
+    <table class="min-w-full text-center bg-white rounded-lg">
+      <thead class="sticky top-0 text-sm">
+        <tr class="border-b border-black text-[#6B7088]">
+          <th
+            class="sticky top-0 left-0 z-10 p-4 text-left bg-white border-b rounded-lg whitespace-nowrap"
+          >
+            Name
+          </th>
+          @for (s of allSesions; track s.id; let colIndex = $index) {
+          <th
+            [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
+            class="sticky top-0 p-4 font-extrabold whitespace-nowrap"
+          >
+            {{ s.topic }}
+          </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (trainee of dataRequest; track $index) { @for (item of
+        trainee.data; track item.traineeId; let rowIndex = $index) {
+        <tr
+          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
+        >
+          <td
+            [ngClass]="{
+              '!bg-blue-200': hoveredRow === rowIndex
+            }"
+            (mouseover)="onHover(rowIndex, 0)"
+            (mouseleave)="onLeave()"
+            class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+          >
+            {{ item.name }}
+          </td>
+          @for (s of item.status; track s.sessionId; let colIndex = $index) {
+          <td
+            class="p-4"
+            [ngClass]="{
+              'bg-gray-200 cursor-cell':
+                (hoveredRow !== null && hoveredRow === rowIndex) ||
+                (hoveredCol !== null &&
+                  hoveredCol === colIndex &&
+                  rowIndex <= (hoveredRow ?? -1) &&
+                  rowIndex !== hoveredRow),
+            }"
+            (mouseover)="onHover(rowIndex, colIndex)"
+            (mouseleave)="onLeave()"
+          >
+            @if (!s.status) {
+            <svg
+              class="m-auto size-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_3634_13663)">
+                <path
+                  d="M21.4294 2.66675L2.57227 21.3334"
+                  stroke="#FF0000"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M21.4294 21.3334L2.57227 2.66675"
+                  stroke="#FF0000"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_3634_13663">
+                  <rect width="24" height="24" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+            }@else {
+            <svg
+              class="m-auto size-6"
+              viewBox="0 0 30 31"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 18L12.6 27L27 3"
+                stroke="#66AE1F"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            }
+          </td>
+          }
+        </tr>
+        } }
+      </tbody>
+    </table>
+    @if (isLoading()) { @if (dataRequest.length !== 0) {
+
+    <div class="flex items-center justify-center w-full bg-opacity-60">
+      <div class="flex items-center justify-center">
+        <div
+          class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+    </div>
+    } }
+  </div>
+  }
+</div>

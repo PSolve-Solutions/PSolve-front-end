@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "swiper/css/bundle";
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css";
+@import "ngx-toastr/toastr";
+::-webkit-scrollbar {
+  width: 12px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #abd0e7;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3d91c7;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+  top: 128% !important;
+  border-radius: 10px !important;
+  background: #fff;
+  padding: 6px 0;
+  // border: 1;
+}
+
+.focus\:outline-none:focus {
+  outline: none;
+  // border: none;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background-color: #3c8fc5 !important;
+  color: #fff !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:not(:last-of-type) {
+  border-bottom: 1px solid #3c8fc5;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 208px !important;
+}
+
+.ng-select span {
+  font-size: 14px !important;
+  padding-left: 12px;
+  font-weight: 500;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border: none;
+}
+
+.ng-select .ng-clear-wrapper {
+  display: none;
+}
+.ng-select,
+.ng-select:focus {
+  outline: none;
+  cursor: pointer;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  display: none;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
+  font-size: 18px;
+  padding: 0px 0 0px 14px;
+  border: none;
+}
+
+//camp
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
+  padding: 0 !important;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
+  background-color: transparent;
+}
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-icon.left {
+  border: none;
+}
+
+.ng-select .ng-select-container,
+.ng-select.ng-select-opened .ng-select-container {
+  background-color: transparent;
+}
+
+.ng-select .ng-select-container {
+  height: 100% !important;
+  border: none;
+}
+
+.ng-select span.ng-value-label,
+.campName {
+  background-color: #3c8fc5;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-placeholder {
+  top: 8px !important;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+.ng-select .ng-arrow-wrapper {
+  display: none;
+}
+
+// toast
+#toast-container {
+  margin: 20px 0;
+
+  .toast-error,
+  .toast-success,
+  .toast-info,
+  .toast-warning {
+    display: flex;
+    min-width: 450px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    width: fit-content;
+    padding: 6px 30px 6px 60px;
+    border-left-width: 10px;
+    box-shadow: none;
+    .toast-message {
+      font-size: 20px;
+      padding-right: 24px;
+    }
+  }
+}
+
+.toast-success {
+  background: #dff2e3 url("./assets/img/Success.png") no-repeat 15px center;
+  background-size: 36px !important;
+  border-color: #28a745;
+  color: #28a745 !important;
+}
+.toast-error {
+  background: #fae1e3 url("./assets/img/Error.png") no-repeat 15px center;
+  background-size: 36px !important;
+  border-color: #dc3545;
+  color: #dc3545 !important;
+  .toast-progress {
+    background-color: #dc3545;
+  }
+}
+.toast-warning {
+  background: #fff5d9 url("./assets/img/warning.png") no-repeat 15px center;
+  background-size: 36px !important;
+  border-color: #ffbf00;
+  color: #ffbf00 !important;
+  .toast-progress {
+    background-color: #ffbf00;
+  }
+}
+
+.toast-close-button {
+  color: #111;
+  font-size: 40px;
+  padding: 0 4px;
+  font-weight: 200 !important;
+  order: 1;
+  top: 0px !important;
+}

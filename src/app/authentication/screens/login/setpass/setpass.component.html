@@ -1,0 +1,57 @@
+<div class="w-[80vw] sm:w-[400px] py-16 px-6 flex flex-wrap items-stretch">
+  <div class="w-full mb-4">
+    <h1 class="text-4xl font-bold">Forget password</h1>
+  </div>
+
+  <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="w-full">
+    <!-- Password Input -->
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+      class="w-full bg-transparent border focus:outline-0 border-white rounded-[12px] text-white placeholder-white py-2 px-3"
+    />
+    <!-- Error Message for Password -->
+
+    <!-- Confirm Password Input -->
+    <input
+      id="pass"
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Confirm Password"
+      class="w-full mt-3 mb-5 bg-transparent border focus:outline-0 border-white rounded-[12px] text-white placeholder-white py-2 px-3"
+    />
+    <!-- Error Message for Confirm Password -->
+    <small
+      *ngIf="password?.errors?.['minlength'] && password?.touched"
+      class="text-red-500 text-center block"
+    >
+      Password must be at least 6 characters long.
+    </small>
+
+    <small
+      *ngIf="passwordForm.errors?.['passwordMismatch'] && confirmPassword?.touched"
+      class="text-red-500 text-center block"
+    >
+      Passwords do not match.
+    </small>
+
+    <small *ngIf="error" class="text-red-500 text-center block">
+      <div *ngFor="let i of err" class="block">{{ i }}</div>
+    </small>
+    <!-- Save Button -->
+    <button
+      type="submit"
+      class="flex justify-center items-center w-full py-2 text-center rounded-xl mt-5 bg-gradient-to-r from-[#3D91C7] via-[#3591C9] to-[#63ABFD]"
+    >
+      @if (isLoading) {
+      <img
+        class="w-8 h-8 animate-spin text-purple-950"
+        src="https://www.svgrepo.com/show/474682/loading.svg"
+        alt="Loading icon"
+        loading="lazy"
+      />
+      } @else { Save }
+    </button>
+  </form>
+</div>

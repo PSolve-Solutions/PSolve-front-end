@@ -1,0 +1,84 @@
+.card-bg-img{
+  background-image: url('../../../../../../assets/img_trainee/sheet_card_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0px 1px 50px 0px #00000014;
+  // padding: 10px;
+  min-height: 24rem;
+}
+.left h1{
+  line-height: 60.51px;
+  font-size: 3.125rem;
+  font-weight: 700;
+  font-family: Inter;
+  max-width: 75%;
+}
+small{
+  font-size: 1.25rem;
+  // font-family: DM Sans;
+font-weight: 500;
+line-height: 31.25px;
+
+}
+.left,.right{
+  min-height: calc( 100dvh - 134px );
+  max-height: calc( 100dvh - 134px );
+
+}
+.right{
+    background-image: url('../../../../../../assets/img_trainee/students-jumping-NurEYbJFKC.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.border-card{
+  border: 6px solid #EF4A50;
+  transition: all .05s;
+
+}
+.border-btn{
+  border: 2px solid #EF4A50;
+  transition: all .05s;
+}
+button {
+  span{
+    font-family: Inter;
+font-size: 1.5rem;
+font-weight: 500;
+line-height: 36.31px;
+text-align: left;
+
+  }
+}
+
+// <div [id]="sheet.id" class="card min-h- bg-black"  [ngClass]="{'mb-2': !last}">
+//               <div class=" card-bg-img rounded-[12px] relative flex flex-col justify-between items-center px-5 py-7 text-white  min-h-25.5rem] bg-red-300 cursor-pointer" (click)="openLink(sheet.sheetLink)">
+//                 <!-- Sheet Name -->
+//                 <h1 class=" self-start">{{ sheet.name }}</h1>
+//                 <div class="card-footer w-full">
+//                   <div class="footer-text flex flex-col justify-between">
+//                     <!-- Display the Start Date -->
+//                     <span class="flex items-center mb-2 gap-3">
+//                       <i class="fa-regular fa-clock"></i>
+//                       <small>Start in {{ sheet.date | formatDate }}</small>
+//                     </span>
+//                     <!-- Display the End Date -->
+//                     <span class="flex items-center gap-3">
+//                       <i class="fa-solid fa-clock-rotate-left"></i>
+//                       <small>Ended in {{ sheet.date | formatDate}}</small>
+//                     </span>
+//                   </div>
+//                   <!-- Problem Count Badge -->
+//                   <div class="absolute size-[4rem] bg-white text-[#5D7BAD] flex items-center justify-center rounded-full top-[62%] left-[72.5%]">
+//                     {{ sheet.problemSolved + '/' + sheet.problemCount }}
+//                   </div>
+//                 </div>
+//               </div>
+//               <!-- Button to View Materials for the Selected Sheet -->
+//               <button  class=" flex justify-between items-center text-white bg-[#5D7BAD] w-[40rem] py-1 px-4 rounded-[12px] mt-3" (click)="updateMatrial(sheet.id, sheet.name)">
+//                 <span>Materials</span>
+//                 <img src="assets/img_trainee/solar_map-arrow-up-bold.svg" alt="Arrow icon">
+//               </button>
+//             </div>

@@ -1,0 +1,39 @@
+section{
+  min-height: 115dvh;
+  position: relative;
+  overflow: hidden;
+  .content{
+    min-height: 100dvh;
+    .img{
+      flex: 3;
+    }
+    .text{
+      flex: 2;
+    }
+  }
+  .wave{
+    // transform: rotate(-15deg);
+    top: -7%;
+    right: -12%;
+  }
+  h1{
+    // font-family: Volkhov;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 89px;
+    letter-spacing: -0.04em;
+    text-align: left;
+
+    span{
+      color:#E69C24 ;
+    }
+  }
+  .text p{
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 32.5px;
+    text-align: left;
+    color: #6B7088;
+  }
+}

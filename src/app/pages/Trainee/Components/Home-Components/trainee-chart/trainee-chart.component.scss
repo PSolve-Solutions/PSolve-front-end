@@ -1,0 +1,17 @@
+.bg-img{
+  background-image: url('../../../../../../assets/img_trainee/bg-chart.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+canvas {
+  max-width: 300px;
+  max-height: 300px;
+}
+@media screen and (max-width:640px) {
+  canvas {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}

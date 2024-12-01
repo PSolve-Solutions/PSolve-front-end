@@ -1,0 +1,50 @@
+<footer class="footer-2 p-6 mt-32">
+  <div class="flex gap-10 pt-14">
+    <!-- First div with half the width of the others -->
+      <div class="logo flex items-end justify-end w-1/4">
+        <img src="assets/img_public/logo-dark.svg" alt="icpc-logo">
+      </div>
+    <!-- Second div with double the width of the first -->
+    <div class="w-1/2 ml-20">
+      <div class="flex items-center contact-us">
+        <div class=" flex flex-col items-start justify gap-4">
+          <h2 class="header">
+            Contact Us
+          </h2>
+          <div class="flex items-center gap-2 cursor-pointer" (click)="openUrl('https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=CllgCJTKWlzkCCxCNsgQXQPjDnzXDtLHDsbJxFPFzXLgJstCZvdbfPHXRFmrTNBjBpMpCrzsWpg')">
+             <span class="icon"><img src="assets/img_public/email.svg" ></span><span class="text">Icpc.sohag.community&#64;gmail.com</span>
+          </div>
+          <div class="flex items-center gap-2 cursor-pointer" (click)="openUrl('https://www.facebook.com/icpcsohag')">
+             <span class="icon"><img src="assets/img_public/meta.svg"></span><span class="text">Meta</span>
+          </div>
+          <div class="flex items-center gap-2 cursor-pointer" (click)="openUrl('https://codeforces.com/profile/IcpcSohag')">
+             <span class="icon"><img src="assets/img_public/chart.svg"></span><span class="text">CodeForce</span>
+          </div>
+          <div class="flex items-center gap-2 cursor-pointer" (click)="openUrl('https://www.linkedin.com/company/78806205/admin/dashboard/')">
+             <span class="icon"><img src="assets/img_public/linkedin.svg"></span><span class="text">LinkedIn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Third div with double the width of the first -->
+      <div class="flex items-center justify- location w-1/2">
+        <div class=" flex flex-col items-start justify-center self-start gap-4">
+          <h2 class="header">
+            Location
+          </h2>
+          <div class="flex items-center gap-2 cursor-pointer" (click)="openUrl('https://maps.app.goo.gl/ZnL4buV8GVb76x8m6')">
+             <span class="icon"><img src="assets/img_public/location.svg"></span><span class="text">Sohag University, Egypt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="footer self-center flex mt-28 mb-4 justify-between items-center w-1/2 ml-auto mr-36 b-black ">
+    <p class="pt-5">© 2024 ICPC SOHAG All rights reserved.</p>
+    <div class="links flex items-center justify-between gap-8">
+      <span>Terms</span>
+      <span>Privacy</span>
+      <span>Cookies</span>
+    </div>
+  </div>
+
+</footer>

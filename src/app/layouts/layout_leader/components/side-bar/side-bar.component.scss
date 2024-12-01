@@ -1,0 +1,22 @@
+.activeLink {
+  color: #3d91c7;
+  font-weight: 600;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #caced2;
+}
+
+li {
+  list-style: none;
+}

@@ -1,0 +1,18 @@
+<section class="founders mt-28 relative" id="founders">
+   <div class="headers ml-28  relative ">
+     <h1 class="mb-36">
+       Founders
+     </h1>
+   </div>
+   <div class="right-circale w-fit absolute ">
+   </div>
+   <div class="flex justify-between items-center w-11/12 mx-auto">
+     @for (founder of founders; track founder.id) {
+       <div class="card flex flex-col items-center gap-4">
+         <img [ngSrc]="founder.img" width="250" height="250" class="w-1/2" [alt]="founder.name">
+         <h4>{{founder.name}}</h4>
+       </div>
+     }
+   </div>
+
+</section>

@@ -1,0 +1,33 @@
+.ng-select,
+.ng-select:focus {
+  height: 50px;
+}
+
+.ng-select .ng-select-container {
+  width: 98% !important;
+}
+
+.ng-select .ng-select-container .ng-value-container {
+  height: 51.2px !important;
+}
+
+.ng-select span {
+  padding-left: 0;
+}
+
+.ng-select.ng .ng-select-container .ng-value-container .ng-input {
+  display: none;
+}
+
+.ng-select .ng-select-container .ng-value-container div.ng-placeholder {
+  font-size: 18px;
+  font-weight: 500;
+  color: #c4c3c3;
+}
+
+.ng-select span.ng-value-label {
+  background-color: transparent;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 8px;
+}

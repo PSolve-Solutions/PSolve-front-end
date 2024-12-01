@@ -1,0 +1,55 @@
+.warpper{
+  display: grid;
+  grid-template-columns: repeat(3 , 1fr );
+  gap: 1rem;
+}
+
+.header-card {
+  background-image: url('../../../../../../assets/img_trainee/Card_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1/4;
+  // place-items: center; /* Center horizontally and vertically */
+  align-items: end; /* Align content at the bottom */
+
+
+  h5{
+    font-weight: 700;
+    line-height: 45.1px;
+    // text-align: left;
+  }
+}
+small{
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 30.26px;
+}
+
+
+@media screen and (max-width:640px) {
+  .header-card{
+    // width: 95%;
+    // margin: 0 auto;
+    // margin-bottom: 15px;
+    grid-row: span 3;
+    align-items:center; /* Align content at the bottom */
+
+
+  }
+  small{
+    font-size: 12px;
+    text-wrap: nowrap;
+  }
+  .warpper{
+    display: grid;
+    grid-template-columns: repeat(1 , 1fr );
+    gap: .5rem;
+    grid-auto-rows: minmax(auto,.5fr); /* Cards will have equal height */
+  }
+}
+

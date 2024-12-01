@@ -1,0 +1,30 @@
+table {
+  border-collapse: separate;
+  border-spacing: 0px 12px;
+}
+
+thead th {
+  border-spacing: 0; /* Ensure no spacing for the table header */
+}
+
+tbody tr {
+  border-collapse: separate; /* Ensure it affects only tbody rows */
+  border-spacing: 0px 12px; /* Apply spacing between rows in tbody */
+}
+.scroll-host-table::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.scroll-host-table::-webkit-scrollbar-track {
+  background: #abd0e7;
+  border-radius: 2px;
+}
+
+.scroll-host-table::-webkit-scrollbar-thumb {
+  background: #3d91c7;
+  border-radius: 10px;
+}
+
+.scroll-host-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

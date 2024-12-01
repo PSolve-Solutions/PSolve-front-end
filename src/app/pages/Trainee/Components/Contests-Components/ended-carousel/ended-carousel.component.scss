@@ -1,0 +1,27 @@
+.bg-img {
+  width: 100%;
+  height: 100%; /* Ensure it covers the card */
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
+  border-radius: 20px; /* Match the rounded corners */
+}
+
+.arrow-img {
+  width: auto; /* Adjust as necessary */
+  height: 40px; /* Example height */
+}
+
+.head{
+font-size: 2.5rem;
+font-weight: 700;
+text-align: left;
+color: #E69C24;
+}
+.next,.prev{
+  cursor: pointer!important;
+}
+.no-contest{
+  text-align: center;
+  color: rgb(152, 7, 7);
+  font-size: 2rem;
+  font-weight: 600;
+}

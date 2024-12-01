@@ -1,0 +1,111 @@
+<div class="relative w-full p-4 space-y-2 sm:p-6 sm:ps-4">
+  <div class="flex items-center px-12 py-6 bg-white gap-x-6 rounded-xl">
+    <div class="flex items-center justify-between px-2 font-bold">
+      <button
+        [ngClass]="{
+          'bg-mainblue text-white': activeTab === 'tab1',
+          'text-black hover:text-mainblue': activeTab !== 'tab1'
+        }"
+        (click)="selectTab('tab1')"
+        class="flex items-center px-4 py-1.5 text-lg text-white rounded-xl w-fit"
+      >
+        Dashboard
+      </button>
+      <div class="flex items-center justify-between px-2">
+        <button
+          [ngClass]="{
+            'bg-mainblue text-white': activeTab === 'tab2',
+            'text-black hover:text-mainblue': activeTab !== 'tab2'
+          }"
+          (click)="selectTab('tab2')"
+          class="flex items-center px-4 py-1.5 text-lg text-white rounded-xl w-fit"
+        >
+          Standing
+        </button>
+      </div>
+    </div>
+  </div>
+  @if( isLoading()) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div class="pt-4">
+    @if (activeTab === 'tab1') {
+    <app-dashboard-charts-hoc [dashboardData]="dashboardData" />
+
+    }@else {
+    <div class="flex items-center justify-center gap-x-4">
+      <h2
+        class="w-10/12 py-4 text-3xl font-bold text-center bg-white border-2 text-mainblue border-mainblue rounded-l-xl"
+      >
+        HALL OF FAME @if (!isLoading()) { “{{ standingData.campName }}” }
+      </h2>
+      <div
+        (click)="downloadExcel()"
+        class="w-[70px] p-4 bg-white border-2 cursor-pointer border-mainblue rounded-r-xl"
+      >
+        @if (isExporting()) {
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+        }@else {
+
+        <img src="assets/img/excel.png" class="w-full" alt="" />
+        }
+      </div>
+    </div>
+    <table class="min-w-full text-center">
+      <thead class="sticky top-[72px] bg-[#F4F5F8] z-[5]">
+        <tr class="bg-transparent text-[#6B7088] text-lg">
+          <th class="py-2 text-left pe-4 ps-8">Name</th>
+          <th class="p-2">Handle</th>
+          <th class="p-2">Mentor</th>
+          <th class="p-2">Solve</th>
+          <th class="p-2">Points</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of standingData.achivers; track item.id) {
+        <tr
+          [ngClass]="
+            (item.solvedProblems / standingData.totalProblems) * 100 <= 50
+              ? 'bg-mainRed'
+              : (item.solvedProblems / standingData.totalProblems) * 100 > 50 &&
+                (item.solvedProblems / standingData.totalProblems) * 100 <= 80
+              ? 'bg-mainYellow'
+              : 'bg-mainGreen'
+          "
+          class="my-6 font-medium text-center text-white rounded-lg"
+        >
+          <td class="p-4 text-left rounded-s-xl">
+            {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+          </td>
+          <td class="p-4 border-b">{{ item.codeForceHandle }}</td>
+          <td class="p-4">{{ item.mentorName }}</td>
+          <td class="p-4">
+            {{ item.solvedProblems }}/{{ standingData.totalProblems }}
+          </td>
+          <td class="p-4 rounded-e-xl">{{ item.points }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    @if (!isLoading() && standingData.achivers.length === 0) {
+    <div class="flex items-center justify-center py-4">
+      <h2 class="text-2xl font-medium text-mainRed">No Standing</h2>
+    </div>
+
+    } }
+  </div>
+  }
+</div>

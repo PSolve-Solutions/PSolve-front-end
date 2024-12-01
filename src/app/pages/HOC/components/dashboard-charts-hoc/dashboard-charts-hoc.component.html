@@ -1,0 +1,138 @@
+<div class="flex items-center justify-center space-x-3">
+  <div class="w-[40%] relative h-[380px] rounded-2xl px-4 bg-white shadow-lg">
+    <div class="flex items-center justify-center w-full p-4 gap-x-6">
+      <div class="flex flex-col items-center basis-1/2">
+        <h3 class="mt-2 text-lg font-semibold">Number of Trainees</h3>
+        <div class="w-[150px] h-[150px] mt-8 mb-12">
+          <canvas #traineesCanvas class="block w-full h-full"></canvas>
+        </div>
+        <div class="flex flex-col gap-y-4">
+          <div class="flex items-center justify-between gap-x-4">
+            <div class="w-6 h-4 bg-[#3D91C7] rounded-2xl"></div>
+            <span>Male</span>
+            <span>{{ dashboardData.traineesMaleCount }}</span>
+          </div>
+          <div class="flex items-center justify-between gap-x-4">
+            <div class="w-6 h-4 bg-[#EA82E0] rounded-2xl"></div>
+            <span>Female</span>
+            <span>{{ dashboardData.traineesFemaleCount }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center basis-1/2">
+        <h3 class="mt-2 text-lg font-semibold">Number of Mentors</h3>
+        <div class="w-[150px] h-[150px] mt-8 mb-12">
+          <canvas #mentorsCanvas class="block w-full h-full"></canvas>
+        </div>
+        <div class="flex flex-col gap-y-4">
+          <div class="flex items-center justify-between gap-x-4">
+            <div class="w-6 h-4 bg-[#3D91C7] rounded-2xl"></div>
+            <span>Male</span>
+            <span>{{ dashboardData.mentorsMaleCount }}</span>
+          </div>
+          <div class="flex items-center justify-between gap-x-4">
+            <div class="w-6 h-4 bg-[#EA82E0] rounded-2xl"></div>
+            <span>Female</span>
+            <span>{{ dashboardData.mentorsFemaleCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-[28%] relative h-[380px] overflow-y-auto scroll-host rounded-2xl px-2 bg-white shadow-lg"
+  >
+    <div
+      class="flex flex-col items-center justify-center w-full px-2 py-4 gap-y-2"
+    >
+      <h3 class="self-start mt-2 mb-4 text-lg font-semibold">
+        Trainees Collage
+      </h3>
+      <div class="flex flex-col w-full gap-y-8">
+        @for (c of dashboardData.colleges; track c.name; let odd = $odd) {
+        <div class="relative w-full bg-transparent border-2 rounded-full h-9">
+          <div
+            [ngClass]="odd ? 'bg-[#3D91C7]' : 'bg-[#F4B626]'"
+            class="h-full rounded-full"
+            [style.width.%]="
+              (c.count /
+                (dashboardData.traineesMaleCount +
+                  dashboardData.traineesFemaleCount)) *
+              100
+            "
+          ></div>
+          <div
+            [ngClass]="
+              (c.count /
+                (dashboardData.traineesMaleCount +
+                  dashboardData.traineesFemaleCount)) *
+                100 >=
+              50
+                ? 'text-white'
+                : 'text-black'
+            "
+            class="absolute inset-0 flex items-center justify-start text-sm font-semibold ps-6"
+          >
+            {{ c.name }}
+          </div>
+          <div
+            [ngClass]="odd ? 'text-[#3D91C7]' : 'text-[#F4B626]'"
+            class="absolute top-[-22px] right-0 text-xs font-semibold pe-4"
+          >
+            {{ c.count }}/{{
+              dashboardData.traineesMaleCount +
+                dashboardData.traineesFemaleCount
+            }}
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="w-[32%] relative h-[380px] rounded-2xl px-4 bg-white shadow-lg">
+    <div
+      class="flex flex-col items-center justify-center w-full px-2 py-4 gap-y-2"
+    >
+      <h3 class="self-start mt-2 mb-4 text-lg font-semibold">Camp Progress</h3>
+      <div class="w-[180px] h-[180px] mb-2">
+        <canvas #campProgressCanvas></canvas>
+      </div>
+      <div class="w-10/12">
+        <div class="flex justify-start font-semibold text-[#878787]">
+          Deadline:
+        </div>
+        <div class="relative w-full h-3 mt-1 bg-[#D9D9D9] rounded-full">
+          <div
+            class="h-full bg-[#50E167] rounded-full"
+            [style.width.%]="
+              ((dashboardData.totalDays - dashboardData.remainDays) /
+                dashboardData.totalDays) *
+              100
+            "
+          ></div>
+        </div>
+        <div
+          class="flex justify-start mt-1 text-sm font-semibold text-gray-600"
+        >
+          {{ dashboardData.remainDays }} days left
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-full bg-white p-4 h-[450px] shadow-lg px-6 my-6 rounded-2xl">
+  <h3 class="self-start mt-2 mb-5 text-xl font-semibold">
+    Average solutions per sheet
+  </h3>
+  <canvas #barChartCanvas class="w-full !h-[350px]"></canvas>
+</div>
+
+<div class="w-full bg-white shadow-lg rounded-2xl">
+  <h2 class="pt-5 text-xl font-semibold ps-5">Average solutions per contest</h2>
+  <div class="w-full h-[400px] px-6 my-6">
+    <canvas #lineChartCanvas class="w-full"></canvas>
+  </div>
+</div>

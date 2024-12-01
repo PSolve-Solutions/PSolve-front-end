@@ -1,0 +1,91 @@
+<div
+  [ngClass]="isLoading() ? '' : 'p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6'"
+  class="relative w-full"
+>
+  @for (report of dataReport; track report; let i = $index) { @for (item of
+  report.data; track item.id) {
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <h2
+      #topSection
+      [id]="'section-' + item.id"
+      class="self-start mb-4 text-3xl font-medium ps-10"
+    >
+      {{ item.name }}
+    </h2>
+
+    <!-- Expanding div -->
+    <div class="relative w-full px-4 bg-gray-100">
+      @if (reportInfo) { @if (isLoadingReportInfo() ) {
+      <div class="flex justify-center gap-2 mb-4">
+        <div class="w-5 h-5 bg-blue-600 rounded-full animate-pulse"></div>
+        <div class="w-5 h-5 bg-blue-600 rounded-full animate-pulse"></div>
+        <div class="w-5 h-5 bg-blue-600 rounded-full animate-pulse"></div>
+      </div>
+      }@else {
+      <div
+        [ngClass]="{
+          'max-h-0': !isExpanded(item.id),
+          'max-h-fit mb-4': isExpanded(item.id)
+        }"
+        class="overflow-hidden transition-all duration-500 ease-in-out"
+      >
+        <app-above-report [reportInfo]="reportInfo[item.id]" />
+      </div>
+      } }
+
+      <div class="flex flex-col px-4 gap-y-4">
+        <div class="w-full bg-white shadow-lg rounded-2xl">
+          <h2 class="pt-5 text-2xl font-semibold ps-5">Sheets analysis</h2>
+          <app-barchart-reports [sheetsRates]="item.sheetsRates" />
+        </div>
+        <div class="w-full bg-white shadow-lg rounded-2xl">
+          <h2 class="pt-5 text-2xl font-semibold ps-5">Contests analysis</h2>
+
+          <app-line-chart [contestRates]="item.contestRates" />
+        </div>
+      </div>
+
+      <div
+        [ngClass]="{
+          'max-h-0': !isExpanded(item.id),
+          'max-h-[30vh] mb-4': isExpanded(item.id)
+        }"
+        class="overflow-hidden transition-all duration-500 ease-in-out custom-scrollbar"
+      >
+        <div class="w-full">
+          <app-testimonial
+            [inReport]="true"
+            [dashboardFeedbacks]="reportInfo[item.id]?.feedbacks"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Button to toggle expansion -->
+    <button
+      (click)="toggleExpand(item.id, i)"
+      class="px-8 py-2 mt-6 border rounded-2xl border-mainblue text-mainblue"
+    >
+      {{ isExpanded(item.id) ? "Show Less .." : "Show More .." }}
+    </button>
+  </div>
+  } }
+</div>
+@if (isLoading()) { @if (dataReport.length === 0) {
+
+<div class="fixed z-50 top-[40%] left-[50%] bg-opacity-60">
+  <div class="flex items-center">
+    <div
+      class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+    ></div>
+  </div>
+</div>
+}@else {
+<div class="flex items-center justify-center w-full my-6 bg-opacity-60">
+  <div class="flex items-center justify-center">
+    <div
+      class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+    ></div>
+  </div>
+</div>
+} }

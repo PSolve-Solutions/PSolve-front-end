@@ -1,0 +1,288 @@
+<div
+  style="height: calc(100vh - 72px)"
+  class="relative w-full p-4 space-y-4 sm:ps-4 sm:space-y-6"
+>
+  <div class="flex items-center justify-between px-12 py-4 bg-white rounded-xl">
+    <h2 class="text-xl font-bold">Mentors Tracking</h2>
+  </div>
+
+  @if( isLoading()&& dataRequest.length === 0) {
+  <div class="fixed z-50 top-[50%] left-[50%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div
+    style="max-height: calc(100vh - 200px)"
+    class="pb-8 overflow-y-auto pe-2 scroll-host-table rounded-xl"
+    (scroll)="loadMoreData($event)"
+  >
+    @for ( row of dataRequest; track $index) { @for (mentor of row.data; track
+    mentor.id) {
+    <div class="p-8 mt-6 bg-white rounded-xl">
+      <div
+        class="relative flex flex-col items-center justify-center w-full gap-y-2"
+      >
+        <div class="flex justify-between w-11/12 pe-20">
+          <div class="flex justify-between w-1/2 pe-4">
+            <div class="flex flex-col items-center gap-y-4">
+              <img
+                [src]="mentor.photoUrl || 'assets/img/user.jpeg'"
+                [alt]="mentor.firstName + mentor.lastName"
+                class="object-center border rounded-full w-28 h-28"
+              />
+              <h4 class="text-sm text-[#6B7088]">
+                {{ mentor.firstName }} {{ mentor.middleName }}
+                {{ mentor.lastName }}
+              </h4>
+            </div>
+            <div class="flex flex-col w-1/3">
+              <h4 class="text-xl">Tasks</h4>
+              <div class="flex text-[#6B7088] gap-y-3 w-full mt-4 flex-col">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-x-4">
+                    <div class="w-7 h-4 rounded-md bg-[#979797]"></div>
+                    <span>To Do</span>
+                  </div>
+                  <span>{{ mentor.toDoTasksCount }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-x-4">
+                    <div class="w-7 h-4 rounded-md bg-[#3D91C7]"></div>
+                    <span>In progress</span>
+                  </div>
+                  <span>{{ mentor.inProgressTasksCount }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-x-4">
+                    <div class="w-7 h-4 rounded-md bg-[#52B788]"></div>
+                    <span>Done</span>
+                  </div>
+                  <span>{{ mentor.completedTasksCount }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col w-3/12">
+            <h4 class="text-xl">Practice</h4>
+            <div class="flex text-[#6B7088] gap-y-3 w-full mt-4 flex-col">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-x-4">
+                  <div class="w-7 h-4 rounded-md bg-[#52B788]"></div>
+                  <span>Done</span>
+                </div>
+                <span>{{ mentor.compeletedPractices }}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-x-4">
+                  <span class="text-mainGreen">Last practice</span>
+                </div>
+                <span>
+                  @if (mentor.lastPracticeDate) {
+                  {{ mentor.lastPracticeDate | date : "dd/MM/yyyy" }}
+                  }@else { - }
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          (click)="getMentorId(mentor.id)"
+          class="absolute top-0 right-0 transition-transform duration-500"
+          [ngClass]="mentorId == mentor.id ? 'rotate-180' : 'rotate-0'"
+          type="button"
+        >
+          <svg
+            width="28"
+            height="14"
+            viewBox="0 0 30 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M27.6751 0.892527L15.9626 12.42C15.707 12.6728 15.362 12.8147 15.0026 12.8147C14.6431 12.8147 14.2981 12.6728 14.0426 12.42L2.32757 0.895027C2.06981 0.643524 1.72395 0.502745 1.36382 0.502745C1.00369 0.502745 0.657826 0.643524 0.400068 0.895027C0.273447 1.01847 0.172817 1.16601 0.104107 1.32895C0.035398 1.49189 0 1.66694 0 1.84378C0 2.02061 0.035398 2.19566 0.104107 2.3586C0.172817 2.52154 0.273447 2.66908 0.400068 2.79253L12.1101 14.3175C12.8814 15.0748 13.9191 15.4991 15.0001 15.4991C16.081 15.4991 17.1188 15.0748 17.8901 14.3175L29.6001 2.79253C29.7271 2.66905 29.828 2.52135 29.897 2.35818C29.9659 2.195 30.0014 2.01967 30.0014 1.84253C30.0014 1.66539 29.9659 1.49005 29.897 1.32688C29.828 1.1637 29.7271 1.01601 29.6001 0.892527C29.3423 0.641024 28.9964 0.500244 28.6363 0.500244C28.2762 0.500244 27.9303 0.641024 27.6726 0.892527"
+              fill="#686666"
+            />
+          </svg>
+        </button>
+        <div class="flex justify-between w-full px-6 mt-4">
+          <div class="flex space-x-2">
+            <div class="flex items-end space-x-1">
+              @for (bar of bars; track bar; let i = $index) {
+              <div
+                [ngClass]="{
+                  'bg-red-500':
+                    mentor.preformance <= 50 &&
+                    i < filledBars(mentor.preformance),
+                  'bg-yellow-500':
+                    mentor.preformance > 50 &&
+                    mentor.preformance <= 80 &&
+                    i < filledBars(mentor.preformance),
+                  'bg-green-500':
+                    mentor.preformance > 80 &&
+                    mentor.preformance <= 100 &&
+                    i < filledBars(mentor.preformance),
+                  'bg-gray-300': i >= filledBars(mentor.preformance)
+                }"
+                [style.height.px]="(i + 1) * 6"
+                class="w-1"
+              ></div>
+              }
+            </div>
+            <span class="self-end text-xs font-medium text-gray-500"
+              >Performance</span
+            >
+          </div>
+          <div
+            (mouseover)="showLable(mentor.id)"
+            (mouseleave)="hideLable()"
+            class="relative flex items-center cursor-pointer gap-x-2"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.3615 14.2746C21.57 14.2746 23.47 12.3026 23.47 9.73462C23.47 7.19762 21.56 5.31812 19.3615 5.31812C17.1635 5.31812 15.253 7.23862 15.253 9.75512C15.253 12.3026 17.153 14.2746 19.3615 14.2746ZM7.539 14.5111C9.4495 14.5111 11.114 12.7851 11.114 10.5561C11.114 8.34812 9.439 6.71462 7.539 6.71462C5.629 6.71462 3.944 8.38912 3.9545 10.5771C3.9545 12.7851 5.6185 14.5111 7.5395 14.5111M1.808 23.7861H9.614C8.546 22.2351 9.8505 19.1126 12.059 17.4076C10.919 16.6476 9.4495 16.0826 7.529 16.0826C2.8965 16.0821 0 19.5021 0 22.3476C0 23.2726 0.5135 23.7861 1.808 23.7861ZM12.901 23.7861H25.812C27.4245 23.7861 28 23.3236 28 22.4196C28 19.7696 24.682 16.1131 19.3515 16.1131C14.031 16.1131 10.713 19.7696 10.713 22.4201C10.713 23.3236 11.288 23.7861 12.901 23.7861Z"
+                fill="black"
+              />
+            </svg>
+            <p
+              [ngClass]="id === mentor.id ? 'scale-105' : 'scale-0'"
+              class="absolute right-0 px-4 py-1 text-lg font-semibold transition-all bg-gray-100 rounded-lg -top-12 text-mainYellow"
+            >
+              Trainees
+            </p>
+            <span>{{ mentor.traineesCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="rounded-lg border bg-[#6B70881F] mt-4 overflow-hidden transition-all duration-500"
+      [ngClass]="mentorId === mentor.id ? 'h-[480px] p-8' : 'h-0'"
+    >
+      <!-- Tabs -->
+      <div class="flex gap-4 mb-8 text-white ps-6">
+        <button
+          (click)="changeTaskTitle(0)"
+          class="px-6 py-2 text-sm font-semibold bg-gray-400 rounded-md"
+          [ngClass]="taskId === 0 ? 'bg-gray-500' : 'bg-gray-300'"
+        >
+          TO DO
+        </button>
+        <button
+          (click)="changeTaskTitle(1)"
+          class="px-6 py-2 text-sm font-semibold rounded-md"
+          [ngClass]="taskId === 1 ? 'bg-blue-500' : 'bg-blue-300'"
+        >
+          IN PROGRESS
+        </button>
+        <button
+          (click)="changeTaskTitle(2)"
+          class="px-6 py-2 text-sm font-semibold rounded-md"
+          [ngClass]="taskId === 2 ? 'bg-green-500' : 'bg-green-300'"
+        >
+          DONE
+        </button>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto overflow-y-auto h-96 scroll-host-table">
+        <table class="w-full rounded-lg shadow-sm table-auto">
+          <thead>
+            <tr
+              class="text-sm font-semibold text-left text-gray-700 bg-gray-200"
+            >
+              <th class="w-3/5 px-6 py-4">Name</th>
+              <th class="w-1/5 px-6 py-4 text-center">Start Time</th>
+              <th class="w-fit"></th>
+              <th class="w-1/5 px-6 py-4 text-center">End Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (task of allTasksData; track task.traineeId; let i = $index) {
+
+            <tr class="text-[#686666] border-b">
+              <td class="px-6 py-4">
+                <div class="flex items-start space-x-4">
+                  <span
+                    class="inline-flex items-center justify-center w-6 h-6 text-sm font-semibold text-blue-800 bg-[#EEEEEE] rounded-md"
+                  >
+                    {{ i + 1 }}
+                  </span>
+                  <!-- Name and Description -->
+                  <div>
+                    <div class="font-medium">
+                      {{ task.firstName }} {{ task.lastName }}
+                      {{ task.middleName }}
+                    </div>
+                    <div class="mt-1.5 text-sm">
+                      {{ task.title }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <!-- Start Time Column -->
+              <td class="px-6 py-4 text-sm text-center">
+                <span>{{ task.startTime | date : "MM/dd/yyyy hh:mm a" }}</span>
+              </td>
+              <td class="text-sm text-center">
+                <svg
+                  width="30"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.3469 5.61594C11.4487 5.53111 11.5801 5.4902 11.7121 5.5022C11.8441 5.5142 11.966 5.57813 12.0509 5.67994L15.3839 9.67994C15.465 9.78219 15.5029 9.91212 15.4896 10.042C15.4762 10.1718 15.4126 10.2913 15.3123 10.3748C15.212 10.4584 15.083 10.4994 14.9529 10.4892C14.8228 10.4789 14.7018 10.4182 14.6159 10.3199L11.2829 6.31994C11.198 6.21808 11.1571 6.08671 11.1691 5.95469C11.1811 5.82268 11.2451 5.70083 11.3469 5.61594Z"
+                    fill="black"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.3469 14.384C11.2451 14.2991 11.1811 14.1772 11.1691 14.0452C11.1571 13.9132 11.198 13.7818 11.2829 13.68L14.6159 9.67996C14.7018 9.58172 14.8228 9.52098 14.9529 9.51072C15.083 9.50047 15.212 9.5415 15.3123 9.62507C15.4126 9.70863 15.4762 9.82809 15.4896 9.95794C15.5029 10.0878 15.465 10.2177 15.3839 10.32L12.0509 14.32C11.966 14.4218 11.8441 14.4857 11.7121 14.4977C11.5801 14.5097 11.4487 14.4688 11.3469 14.384Z"
+                    fill="black"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15 10C15 10.1326 14.9473 10.2598 14.8536 10.3536C14.7598 10.4473 14.6326 10.5 14.5 10.5L5 10.5C4.86739 10.5 4.74021 10.4473 4.64645 10.3536C4.55268 10.2598 4.5 10.1326 4.5 10C4.5 9.86739 4.55268 9.74021 4.64645 9.64645C4.74021 9.55268 4.86739 9.5 5 9.5L14.5 9.5C14.6326 9.5 14.7598 9.55268 14.8536 9.64645C14.9473 9.74021 15 9.86739 15 10Z"
+                    fill="black"
+                  />
+                </svg>
+              </td>
+              <!-- End Time Column -->
+              <td class="px-6 py-4 text-sm text-center">
+                <span>{{ task.endTime | date : "MM/dd/yyyy hh:mm a" }}</span>
+              </td>
+            </tr>
+            }@empty {
+            <p class="w-full text-center text-mainRed">No data yet</p>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    } } @if (isLoading() && dataRequest.length !== 0) {
+    <div class="flex items-center justify-center w-full mt-4 bg-opacity-60">
+      <div class="flex items-center justify-center">
+        <div
+          class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

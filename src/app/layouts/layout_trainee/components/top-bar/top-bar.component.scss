@@ -1,0 +1,46 @@
+// Custom styles for the navigation underline effect
+.nav-link {
+  position: relative;
+
+  &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 2px;
+      width: 0;
+      background-color: #E69C24;
+      transition: width 0.3s ease-in-out;
+  }
+  &:hover{
+    color: #E69C24;
+  }
+  &:hover::after {
+      width: 100%;
+  }
+}
+ul{
+  list-style: none;
+}
+.linkActive {
+  color: #E69C24;
+  font-weight: 600;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 100% ;
+    background-color: #E69C24;
+    transition: width 0.3s ease-in-out;
+}
+}
+canvas{
+  min-width: 100%;
+}
+@media screen and (max-width:640px){
+  li{
+    margin: 0!important;
+  }
+}

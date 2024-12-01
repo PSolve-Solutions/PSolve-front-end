@@ -1,0 +1,490 @@
+<div class="w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
+  <form [formGroup]="addUserForm" (ngSubmit)="craeteUser()" class="w-full">
+    <div class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-bold">Personal Information</h2>
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="firstName"
+            >First Name <span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            formControlName="firstName"
+            [ngClass]="
+              addUserForm.controls['firstName'].errors && submitted
+                ? 'border-rose-600'
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+
+        <div class="flex flex-col basis-1/3">
+          <label for="middleName"
+            >Middle Name <span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="middleName"
+            name="middleName"
+            formControlName="middleName"
+            [ngClass]="
+              addUserForm.controls['middleName'].errors && submitted
+                ? 'border-rose-600 '
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <label for="lastName"
+            >Last Name <span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            formControlName="lastName"
+            [ngClass]="
+              addUserForm.controls['lastName'].errors && submitted
+                ? 'border-rose-600 '
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="birthDate"
+            >Birthdate <span class="text-red-600">*</span></label
+          >
+          <input
+            type="date"
+            id="birthDate"
+            name="birthDate"
+            formControlName="birthDate"
+            [ngClass]="
+              addUserForm.controls['birthDate'].errors && submitted
+                ? 'border-rose-600 '
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <label for="nationalId"
+            >National ID <span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="nationalId"
+            name="nationalId"
+            formControlName="nationalId"
+            [ngClass]="
+              addUserForm.controls['nationalId'].errors && submitted
+                ? 'border-rose-600 '
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <label for="profileImage">Profile Image</label>
+          <div
+            class="relative h-[35px] w-[250px] flex items-center overflow-hidden py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          >
+            <input
+              type="file"
+              id="profileImage"
+              name="profileImage"
+              formControlName="profileImage"
+              (change)="onFileSelected($event)"
+              class="hidden"
+            />
+            @if (uploadedFileName) {
+            <p class="text-sm truncate w-28">{{ uploadedFileName }}</p>
+            }
+            <label
+              for="profileImage"
+              class="absolute flex items-center px-4 py-1 font-semibold text-white bg-blue-500 rounded-lg cursor-pointer w-fit right-1 gap-x-1 hover:bg-blue-600"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.5 11H7.5C10 11 11 10 11 7.5V4.5C11 2 10 1 7.5 1H4.5C2 1 1 2 1 4.5V7.5C1 10 2 11 4.5 11Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4.5 4.75488L6 3.25488L7.5 4.75488"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 3.25488V7.25488"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M3 8.25488C4.945 8.90488 7.055 8.90488 9 8.25488"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span class="text-xs">Choose File</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <h4
+            [ngClass]="
+              addUserForm.controls['gender'].errors && submitted
+                ? 'text-rose-600 '
+                : ''
+            "
+            class="mb-2"
+          >
+            Gender <span class="text-red-600">*</span>
+          </h4>
+          <div class="flex items-center gap-x-10">
+            <label for="male" class="flex items-center justify-center gap-x-2">
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="0"
+                [ngClass]="
+                  addUserForm.controls['gender'].errors && submitted
+                    ? 'border-rose-600 '
+                    : ''
+                "
+                formControlName="gender"
+              />
+              male
+            </label>
+            <label for="female" class="flex items-center gap-x-2">
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="1"
+                formControlName="gender"
+              />
+              female
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col mt-6 gap-y-4">
+      <h2 class="text-2xl font-bold">Contact Information</h2>
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="email">Email <span class="text-red-600">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            formControlName="email"
+            [ngClass]="
+              addUserForm.controls['email'].errors && submitted
+                ? 'border-rose-600 '
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <label for="phoneNumber"
+            >Phone Number <span class="text-red-600">*</span></label
+          >
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            formControlName="phoneNumber"
+            [ngClass]="
+              addUserForm.controls['phoneNumber'].errors && submitted
+                ? 'border-rose-600'
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="basis-1/3"></div>
+      </div>
+    </div>
+    <div class="flex flex-col mt-6 gap-y-4">
+      <h2 class="text-2xl font-bold">Academic Information</h2>
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="college"
+            >college <span class="text-red-600">*</span></label
+          >
+          <div class="relative">
+            <ng-select
+              #collegeSelect
+              id="college"
+              [items]="allCollege"
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              formControlName="college"
+              (click)="toggleDropdownC()"
+              [ngClass]="
+                addUserForm.controls['college'].errors && submitted
+                  ? 'border-rose-600 '
+                  : ''
+              "
+              class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 cursor-none rounded-lg appearance-none focus:outline-none"
+            >
+            </ng-select>
+            <svg
+              (click)="toggleDropdownC()"
+              width="24"
+              height="24"
+              [ngClass]="foucsCollege ? 'rotate-180' : ''"
+              class="absolute top-[14px] z-[1100] cursor-pointer transition-transform left-[220px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                stroke="#A8A8A8"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <h4
+            [ngClass]="
+              addUserForm.controls['grade'].errors && submitted
+                ? 'text-rose-600 '
+                : ''
+            "
+            class="mb-2"
+          >
+            Year <span class="text-red-600">*</span>
+          </h4>
+          <div class="flex items-center gap-x-10">
+            <label for="1" class="flex items-center justify-center gap-x-2">
+              <input
+                type="radio"
+                id="1"
+                name="grade"
+                value="1"
+                formControlName="grade"
+              />
+              1
+            </label>
+            <label for="2" class="flex items-center gap-x-2">
+              <input
+                type="radio"
+                id="2"
+                name="grade"
+                value="2"
+                formControlName="grade"
+              />
+              2
+            </label>
+            <label for="3" class="flex items-center gap-x-2">
+              <input
+                type="radio"
+                id="3"
+                name="grade"
+                value="3"
+                formControlName="grade"
+              />
+              3
+            </label>
+            <label for="4" class="flex items-center gap-x-2">
+              <input
+                type="radio"
+                id="4"
+                name="grade"
+                value="4"
+                formControlName="grade"
+              />
+              4
+            </label>
+            <label for="5" class="flex items-center gap-x-2">
+              <input
+                type="radio"
+                id="5"
+                name="grade"
+                value="5"
+                formControlName="grade"
+              />
+              5
+            </label>
+          </div>
+        </div>
+        <div class="basis-1/3"></div>
+      </div>
+    </div>
+    <div class="flex flex-col mt-6 gap-y-4">
+      <h2 class="text-2xl font-bold">Professional Information</h2>
+      <div class="flex items-center w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="role">Role <span class="text-red-600">*</span></label>
+          <div class="flex items-center gap-x-4">
+            <div class="relative">
+              <ng-select
+                #roleSelect
+                [items]="allRoles"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="name"
+                formControlName="role"
+                (change)="getRole($event)"
+                (click)="toggleDropdownR()"
+                [ngClass]="
+                  addUserForm.controls['role'].errors && submitted
+                    ? 'border-rose-600'
+                    : ''
+                "
+                class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+              >
+              </ng-select>
+              <svg
+                (click)="toggleDropdownR()"
+                width="24"
+                height="24"
+                [ngClass]="foucsRole ? 'rotate-180' : ''"
+                class="absolute top-[14px] left-[220px] cursor-pointer transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col basis-1/3">
+          @if (isShow) {
+          <label for="camp">Camp <span class="text-red-600">*</span></label>
+          <div class="flex items-center gap-x-4">
+            <div class="relative">
+              <ng-select
+                #campSelect
+                [items]="allCamps"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                formControlName="campId"
+                (click)="toggleDropdownCamp()"
+                [ngClass]="
+                  addUserForm.controls['campId'].errors && submitted
+                    ? 'border-rose-600'
+                    : ''
+                "
+                class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+              >
+              </ng-select>
+              <svg
+                (click)="toggleDropdownCamp()"
+                width="24"
+                height="24"
+                [ngClass]="foucsCamp ? 'rotate-180' : ''"
+                class="absolute top-[14px] left-[220px] cursor-pointer transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          }
+        </div>
+        <div class="flex flex-col basis-1/3"></div>
+      </div>
+    </div>
+    <div class="flex flex-col mt-6 gap-y-4">
+      <h2 class="text-2xl font-bold">Online Profiles</h2>
+      <div class="flex items-center justify-between w-11/12 ps-4">
+        <div class="flex flex-col basis-1/3">
+          <label for="codeForceHandle"
+            >CodeForce Handle <span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="codeForceHandle"
+            name="codeForceHandle"
+            formControlName="codeForceHandle"
+            [ngClass]="
+              addUserForm.controls['codeForceHandle'].errors && submitted
+                ? 'border-rose-600'
+                : ''
+            "
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="flex flex-col basis-1/3">
+          <label for="vjudgeHandle">Vjudge Handle</label>
+          <input
+            type="text"
+            id="vjudgeHandle"
+            name="vjudgeHandle"
+            formControlName="vjudgeHandle"
+            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
+          />
+        </div>
+        <div class="basis-1/3"></div>
+      </div>
+    </div>
+    <div class="flex items-center justify-end w-11/12 mt-7">
+      <button
+        type="submit"
+        class="px-6 py-1 text-2xl text-white rounded-lg w-fit bg-activeLink"
+      >
+        @if (isLoading) {
+        <div
+          class="w-8 h-8 border-8 border-purple-800 border-dashed rounded-full animate-spin border-t-transparent"
+        ></div>
+        }@else { Save }
+      </button>
+    </div>
+  </form>
+</div>

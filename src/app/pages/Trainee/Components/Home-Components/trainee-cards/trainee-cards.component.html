@@ -1,0 +1,138 @@
+<div class="header-content  mt-3 md:mt-40 gap-5">
+
+  <div class="warpper">
+    <!-- Card for Current Sheet -->
+  <div class="header-card rounded-[12px]  shadow-[0px_1px_50px_0px_#00000014] cursor-pointer p-3 sm:p-6"
+  (click)="openLink(currentSheet.sheetLink)">
+ @if (currentSheet != null) {
+  <!-- Card Top Section -->
+  <p class="md:text-2xl">Current Sheet</p>
+  <h5 class=" mb-4 text-2xl md:text-[1.75rem] self-center sm:text-start text-center">
+    {{ currentSheet ? currentSheet.name : 'No Sheet For Now'}}
+  </h5>
+
+<!-- Card Footer Section -->
+<div class="card-footer w-full flex justify-between px-1 sm:px-4 items-center self-end sm:self-auto">
+  <div class="footer-text flex flex-col justify-between">
+    <!-- Start Date -->
+    <span class="flex items-center mb-2 sm:mb-4">
+      <i class="fa-regular fa-clock mr-2"></i>
+      <small>Starts in {{ currentSheet.startDate | formatDate }}</small>
+    </span>
+    <!-- End Date -->
+    <span class="flex items-center mb-2 sm:mb-4">
+      <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+      <small>Ended in {{currentSheet.endDate | formatDate}}</small>
+    </span>
+  </div>
+  <!-- Problem Count -->
+  <div class="bg-white rounded-full size-14 sm:size-20 flex justify-center items-center">
+    <span class="text-[#93518D] font-bold">
+      {{currentSheet ? currentSheet.problemSolvedCount : '0'}}/{{currentSheet ? currentSheet.problemCount : '0'}}
+    </span>
+  </div>
+</div>
+ }
+ @else {
+  <p class=" text-2xl font-bold">
+    No Sheets Available
+  </p>
+ }
+
+</div>
+
+<!-- Card for Next Session -->
+<div class="header-card rounded-[12px]  shadow-[0px_1px_50px_0px_#00000014] cursor-pointer p-3 sm:p-6"
+  (click)="openLink(nextSession.locationLink)">
+ @if(nextSession!= null){
+    <!-- Card Top Section -->
+    <p class="sm:text-xl">Next Session</p>
+    <h5 class=" mb-4 text-2xl md:text-[1.75rem] self-center sm:text-start text-center">
+      {{nextSession ? nextSession.topic : 'No Sessions Coming'}}
+    </h5>
+
+  <!-- Card Footer Section -->
+  <div class="card-footer w-full flex justify-between pl-2 sm:pl-0 items-center self-end">
+    <div class="footer-text flex flex-col justify-between">
+      <!-- Session Dates -->
+      <span class="flex items-center mb-1 sm:mb-2">
+        <i class="fa-regular fa-clock mr-2"></i>
+        <small class="hidden sm:block">{{formatEventDates(nextSession.startDate, nextSession.endDate,true)}}</small>
+        <small class="block sm:hidden">{{formatEventDates(nextSession.startDate, nextSession.endDate,false)}}</small>
+
+      </span>
+      <!-- Instructor Name -->
+      <span class="flex items-center mb-1 sm:mb-2">
+        <i class="fa-regular fa-user mr-2"></i>
+        <small>Instructor: {{nextSession.instructorName}}</small>
+      </span>
+      <!-- Topic -->
+      <span class="flex items-center mb-1 sm:mb-2">
+        <i class="fa-solid fa-book-open mr-2"></i>
+        <small>Topic: {{nextSession.topic}}</small>
+      </span>
+      <!-- Location -->
+      <span class="flex items-center">
+        <i class="fa-solid fa-location-dot mr-2"></i>
+        <small>Location: {{nextSession.locationName}}</small>
+      </span>
+    </div>
+  </div>
+ }
+ @else {
+  <p class=" text-2xl font-bold">
+    No Next Session
+  </p>
+ }
+
+  </div>
+  <!-- Card for Next Contest -->
+  <div class="header-card rounded-[12px] shadow-[0px_1px_50px_0px_#00000014] cursor-pointer p-3 sm:p-6"
+    (click)="openLink(inComingContest.link)">
+  @if (inComingContest != null) {
+      <!-- Card Top Section -->
+      <p class="sm:text-xl self-center">Next Contest</p>
+
+      <h5 class=" text-2xl sm:text-[2rem] self-start text-center sm:text-start">
+        {{inComingContest.name ? inComingContest.name : 'No Contest '}}
+      </h5>
+
+      <!-- Card Footer Section -->
+      <div class="card-footer w-full pl-1 sm:self-auto self-end">
+        <div class="footer-text">
+          <!-- Remaining Time -->
+          <div>
+            @if(days>0){
+              <div class="flex items-center justify-around mb-2">
+                <span class="text-xl sm:text-2xl">Before Start:</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{days}}</span>
+                <span class="text-xl sm:text-2xl font-normal">D</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{hours}}</span>
+                <span class="text-xl sm:text-2xl font-normal">H</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{min}}</span>
+                <span class="text-xl sm:text-2xl font-normal">M</span>
+              </div>
+            }
+            @else{
+              <div class="flex items-center justify-around mb-2">
+                <span class="text-xl sm:text-2xl">Before Start:</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{hours}}</span>
+                <span class="text-xl sm:text-2xl font-normal">H</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{min}}</span>
+                <span class="text-xl sm:text-2xl font-normal">M</span>
+                <span class="text-2xl sm:text-4xl font-bold">{{second}}</span>
+                <span class="text-xl sm:text-2xl font-normal">sec</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+  }
+  @else {
+    <p class=" text-2xl font-bold">
+      No Contest Incoming
+    </p>
+  }
+  </div>
+</div>
+</div>

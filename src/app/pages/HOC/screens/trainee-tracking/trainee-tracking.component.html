@@ -1,0 +1,191 @@
+<div
+  style="height: calc(100vh - 72px)"
+  class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4"
+>
+  <div class="flex items-center px-12 py-4 mb-8 bg-white rounded-xl">
+    <h2 class="text-xl font-bold">Trainee Tracking</h2>
+  </div>
+
+  @if( isLoading() && dataRequest.length === 0) {
+  <div class="fixed z-50 top-[45%] left-[55%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div class="bg-white rounded-xl">
+    <div class="flex space-x-2 bg-[#F4F5F8]">
+      <button
+        class="px-6 py-2 text-xl font-semibold rounded-t-md focus:outline-none"
+        [ngClass]="{
+          'bg-white text-mainblue': activeTab === 'tab1',
+          'text-[#6B7088] hover:text-mainblue': activeTab !== 'tab1'
+        }"
+        (click)="selectTab('tab1')"
+      >
+        Sheets
+      </button>
+      <button
+        class="px-6 py-2 text-xl font-semibold rounded-t-md focus:outline-none"
+        [ngClass]="{
+          'bg-white text-mainblue': activeTab === 'tab2',
+          'text-[#6B7088] hover:text-mainblue': activeTab !== 'tab2'
+        }"
+        (click)="selectTab('tab2')"
+      >
+        Contests
+      </button>
+    </div>
+    <div class="pt-6">
+      @if (activeTab === 'tab1') {
+      <div
+        style="max-height: calc(100vh - 260px)"
+        class="pb-4 overflow-auto scroll-host-table"
+        (scroll)="loadMoreData($event)"
+      >
+        <table class="min-w-full text-center bg-white rounded-lg">
+          <thead class="sticky top-0 z-50 text-sm">
+            <tr class="border-b shadow-md text-[#6B7088]">
+              <th class="sticky left-0 z-50 p-4 text-left bg-white rounded-lg">
+                Name
+              </th>
+              @for (s of allSheets; track s.id; let colIndex = $index) {
+              <th
+                [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
+                class="p-4 font-extrabold whitespace-nowrap"
+              >
+                {{ s.name }}
+              </th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (allData of dataRequest; track $index) { @for (item of
+            allData.data; track item.id; let rowIndex = $index) {
+            <tr
+              class="my-6 bg-white border-b-2 text-[#6B7088] text-center text-base font-medium rounded-lg"
+            >
+              <td
+                [ngClass]="{
+                  '!bg-blue-200': hoveredRow === rowIndex
+                }"
+                (mouseover)="onHover(rowIndex, 0)"
+                (mouseleave)="onLeave()"
+                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+              >
+                {{ item.firstName }} {{ item.middleName }}
+              </td>
+              @for (s of item.tracking; track s.sheetId; let colIndex = $index)
+              {
+              <td
+                class="p-4"
+                [ngClass]="{
+              'bg-gray-200 cursor-cell':
+                (hoveredRow !== null && hoveredRow === rowIndex) ||
+                (hoveredCol !== null &&
+                  hoveredCol === colIndex &&
+                  rowIndex <= (hoveredRow ?? -1) &&
+                  rowIndex !== hoveredRow),
+            }"
+                (mouseover)="onHover(rowIndex, colIndex)"
+                (mouseleave)="onLeave()"
+              >
+                {{ s.solvedCount }} / {{ problemCountSheet }}
+              </td>
+              }
+            </tr>
+            } }
+          </tbody>
+        </table>
+        @if (isLoading()) { @if (dataRequest.length !== 0) {
+
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+        } }
+      </div>
+      } @else {
+      <div
+        style="max-height: calc(100vh - 260px)"
+        class="pb-4 overflow-auto scroll-host-table"
+        (scroll)="loadMoreDataContest($event)"
+      >
+        <table class="min-w-full text-center bg-white rounded-lg">
+          <thead class="sticky top-0 z-50 text-sm">
+            <tr class="border-b shadow-md text-[#6B7088]">
+              <th
+                class="sticky left-0 z-50 p-4 text-left bg-white rounded-lg whitespace-nowrap"
+              >
+                Name
+              </th>
+              @for (s of allContests; track s.id; let colIndex = $index) {
+              <th
+                [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
+                class="p-4 font-extrabold whitespace-nowrap"
+              >
+                {{ s.name }}
+              </th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of dataRequest; track $index) { @for (item of row.data;
+            track item.id; let rowIndex = $index) {
+            <tr
+              class="my-6 bg-white border-b-2 text-[#6B7088] text-center text-base font-medium rounded-lg"
+            >
+              <td
+                [ngClass]="{
+                  '!bg-blue-200': hoveredRow === rowIndex
+                }"
+                (mouseover)="onHover(rowIndex, 0)"
+                (mouseleave)="onLeave()"
+                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+              >
+                {{ item.firstName }} {{ item.middleName }}
+              </td>
+              @for (s of item.tracking; track s.sheetId; let colIndex = $index)
+              {
+              <td
+                class="p-4"
+                [ngClass]="{
+              'bg-gray-200 cursor-cell':
+                (hoveredRow !== null && hoveredRow === rowIndex) ||
+                (hoveredCol !== null &&
+                  hoveredCol === colIndex &&
+                  rowIndex <= (hoveredRow ?? -1) &&
+                  rowIndex !== hoveredRow),
+            }"
+                (mouseover)="onHover(rowIndex, colIndex)"
+                (mouseleave)="onLeave()"
+              >
+                {{ s.solvedCount }} / {{ problemCountSheet }}
+              </td>
+              }
+            </tr>
+            } }
+          </tbody>
+        </table>
+        @if (isLoading()) { @if (dataRequest.length !== 0) {
+
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+        } }
+      </div>
+      }
+    </div>
+  </div>
+
+  }
+</div>

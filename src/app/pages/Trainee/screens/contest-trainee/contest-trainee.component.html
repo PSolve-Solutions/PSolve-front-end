@@ -1,0 +1,14 @@
+@if( _contestService.isLoading) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+    <app-contest-header/>
+    <app-next-contest/>
+    <app-contest-carousel/>
+    <app-ended-carousel/>
+  }

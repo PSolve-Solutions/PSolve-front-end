@@ -1,0 +1,79 @@
+<div class="relative w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
+  <div class="flex items-center justify-center gap-x-4">
+    <h2
+      class="w-10/12 py-4 text-3xl font-bold text-center bg-white border-2 text-mainblue border-mainblue rounded-l-xl"
+    >
+      HALL OF FAME @if (!isLoading()) { “{{ achiverCamp.campName }}” }
+    </h2>
+    <div
+      (click)="downloadExcel()"
+      class="w-[70px] p-4 bg-white border-2 cursor-pointer border-mainblue rounded-r-xl"
+    >
+      @if (isExporting()) {
+      <div class="flex items-center justify-center w-full bg-opacity-60">
+        <div class="flex items-center justify-center">
+          <div
+            class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
+      </div>
+      }@else {
+
+      <img src="assets/img/excel.png" class="w-full" alt="" />
+      }
+    </div>
+  </div>
+
+  @if( isLoading()) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <table class="min-w-full text-center">
+    <thead class="sticky top-[72px] bg-[#F4F5F8] z-[5]">
+      <tr class="bg-transparent text-[#6B7088] text-2xl">
+        <th class="p-4">Achievers</th>
+        <th class="p-4">Handle</th>
+        <th class="p-4">Mentor</th>
+        <th class="p-4">Solve</th>
+        <th class="p-4">Points</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (item of achiverCamp.achivers; track $index) {
+      <tr
+        [ngClass]="
+          (item.solvedProblems / achiverCamp.totalProblems) * 100 <= 50
+            ? 'bg-mainRed'
+            : (item.solvedProblems / achiverCamp.totalProblems) * 100 > 50 &&
+              (item.solvedProblems / achiverCamp.totalProblems) * 100 <= 80
+            ? 'bg-mainYellow'
+            : 'bg-mainGreen'
+        "
+        class="my-6 text-xl font-medium text-center text-white rounded-lg"
+      >
+        <td class="p-4 rounded-s-xl">
+          {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+        </td>
+        <td class="p-4 border-b">{{ item.codeForceHandle }}</td>
+        <td class="p-4">{{ item.mentorName }}</td>
+        <td class="p-4">
+          {{ item.solvedProblems }}/{{ achiverCamp.totalProblems }}
+        </td>
+        <td class="p-4 rounded-e-xl">{{ item.points }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  @if (!isLoading() && achiverCamp.achivers.length === 0) {
+  <div class="flex items-center justify-center py-4">
+    <h2 class="text-2xl font-medium text-mainRed">No Standing</h2>
+  </div>
+
+  } }
+</div>

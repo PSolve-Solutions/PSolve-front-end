@@ -1,0 +1,142 @@
+<div
+  style="height: calc(100vh - 72px)"
+  class="relative w-full p-4 space-y-2 sm:p-6 sm:ps-4"
+>
+  <div class="flex items-center justify-between px-12 py-4 bg-white rounded-xl">
+    <h2 class="text-2xl font-bold">Sessions</h2>
+    <div class="flex items-center justify-between px-2">
+      <button
+        (click)="goToActionSession(0)"
+        class="flex items-center px-8 py-1 text-lg text-white rounded-md w-fit bg-activeLink"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+
+  @if( isLoading() && dataRequest.length === 0) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+  <div
+    style="max-height: calc(100vh - 180px)"
+    class="overflow-y-auto pe-2 scroll-host-table"
+    (scroll)="loadMoreData($event)"
+  >
+    <table class="min-w-full text-center table-auto">
+      <thead class="sticky top-0 bg-[#f4f5f8]">
+        <tr class="bg-transparent text-[#6B7088]">
+          <th class="p-4 text-left">Instructor Name</th>
+          <th class="p-4">Topic</th>
+          <th class="p-4">Start Date</th>
+          <th class="p-4">End Date</th>
+          <th class="p-4">Location Name</th>
+          <th class="p-4">Edit</th>
+          <th class="p-4">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (session of dataRequest; track $index) { @for (item of
+        session.data; track $index) {
+        <tr
+          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
+        >
+          <td class="p-4 text-left rounded-s-lg">{{ item.instructorName }}</td>
+          <td class="p-4">
+            {{ item.topic }}
+          </td>
+          <td class="p-4">
+            {{ item.startDate | date : "MM/dd/yyyy hh:mm a" }}
+          </td>
+          <td class="p-4">
+            {{ item.endDate | date : "MM/dd/yyyy hh:mm a" }}
+          </td>
+          <td class="p-4">
+            <a
+              [href]="item.locationLink"
+              target="_blank"
+              class="flex items-center justify-center gap-x-2 whitespace-nowrap hover:text-activeLink"
+            >
+              <span>{{ item.locationName }}</span>
+
+              <svg
+                class="size-5 hover:text-activeLink"
+                viewBox="0 0 30 30"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.5 6.25H10.25C8.85 6.25 8.15 6.25 7.615 6.5225C7.14456 6.76211 6.76211 7.14456 6.5225 7.615C6.25 8.15 6.25 8.85 6.25 10.25V19.75C6.25 21.15 6.25 21.85 6.5225 22.385C6.76218 22.8554 7.14462 23.2378 7.615 23.4775C8.14875 23.75 8.84875 23.75 10.2462 23.75H19.7538C21.1513 23.75 21.85 23.75 22.3837 23.4775C22.855 23.2375 23.2375 22.855 23.4775 22.385C23.75 21.85 23.75 21.1513 23.75 19.7538V17.5M25 11.25V5M25 5H18.75M25 5L16.25 13.75"
+                  stroke="#686666"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </td>
+          <td
+            (click)="goToActionSession(item.id)"
+            class="px-4 py-2 cursor-pointer"
+          >
+            <svg
+              class="flex justify-center w-full hover:fill-green-500 size-5 fill-[#6B7088]"
+              viewBox="0 0 32 32 "
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
+              />
+              <path
+                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
+              />
+              <path
+                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
+              />
+            </svg>
+          </td>
+
+          <td
+            (click)="showConfirmDelete(item.id)"
+            class="px-4 py-2 cursor-pointer rounded-e-lg"
+          >
+            <svg
+              class="flex justify-center w-full hover:fill-red-500 size-5 fill-[#6B7088]"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.0526 4.55V4.9H16.9474V4.55C16.9474 3.80739 16.6368 3.0952 16.0841 2.5701C15.5314 2.045 14.7817 1.75 14 1.75C13.2183 1.75 12.4686 2.045 11.9159 2.5701C11.3632 3.0952 11.0526 3.80739 11.0526 4.55ZM9.21053 4.9V4.55C9.21053 3.34326 9.71513 2.18595 10.6133 1.33266C11.5115 0.479373 12.7298 0 14 0C15.2702 0 16.4885 0.479373 17.3867 1.33266C18.2849 2.18595 18.7895 3.34326 18.7895 4.55V4.9H27.0789C27.3232 4.9 27.5575 4.99219 27.7302 5.15628C27.903 5.32038 28 5.54294 28 5.775C28 6.00706 27.903 6.22962 27.7302 6.39372C27.5575 6.55781 27.3232 6.65 27.0789 6.65H24.9296L23.4559 23.3492C23.3439 24.6173 22.7345 25.7992 21.7485 26.6606C20.7625 27.522 19.4718 28.0001 18.1322 28H9.86779C8.52835 27.9999 7.23783 27.5218 6.25196 26.6604C5.26608 25.799 4.6568 24.6172 4.54484 23.3492L3.07116 6.65H0.921053C0.676774 6.65 0.442501 6.55781 0.26977 6.39372C0.0970392 6.22962 0 6.00706 0 5.775C0 5.54294 0.0970392 5.32038 0.26977 5.15628C0.442501 4.99219 0.676774 4.9 0.921053 4.9H9.21053ZM6.38032 23.2029C6.45366 24.0337 6.85285 24.808 7.49877 25.3723C8.1447 25.9367 8.99022 26.2499 9.86779 26.25H18.1322C19.0099 26.2501 19.8556 25.9369 20.5017 25.3726C21.1478 24.8082 21.5471 24.0338 21.6204 23.2029L23.0808 6.65H4.91916L6.38032 23.2029ZM12.1579 11.375C12.1579 11.2601 12.1341 11.1463 12.0878 11.0402C12.0415 10.934 11.9737 10.8375 11.8881 10.7563C11.8026 10.675 11.7011 10.6106 11.5893 10.5666C11.4776 10.5226 11.3578 10.5 11.2368 10.5C11.1159 10.5 10.9961 10.5226 10.8844 10.5666C10.7726 10.6106 10.6711 10.675 10.5856 10.7563C10.5 10.8375 10.4322 10.934 10.3859 11.0402C10.3396 11.1463 10.3158 11.2601 10.3158 11.375V21.525C10.3158 21.6399 10.3396 21.7537 10.3859 21.8598C10.4322 21.966 10.5 22.0625 10.5856 22.1437C10.6711 22.225 10.7726 22.2894 10.8844 22.3334C10.9961 22.3774 11.1159 22.4 11.2368 22.4C11.3578 22.4 11.4776 22.3774 11.5893 22.3334C11.7011 22.2894 11.8026 22.225 11.8881 22.1437C11.9737 22.0625 12.0415 21.966 12.0878 21.8598C12.1341 21.7537 12.1579 21.6399 12.1579 21.525V11.375ZM16.7632 10.5C17.2716 10.5 17.6842 10.892 17.6842 11.375V21.525C17.6842 21.7571 17.5872 21.9796 17.4144 22.1437C17.2417 22.3078 17.0074 22.4 16.7632 22.4C16.5189 22.4 16.2846 22.3078 16.1119 22.1437C15.9391 21.9796 15.8421 21.7571 15.8421 21.525V11.375C15.8421 10.892 16.2547 10.5 16.7632 10.5Z"
+              />
+            </svg>
+          </td>
+        </tr>
+        } }
+      </tbody>
+    </table>
+    @if (isLoading()) { @if (dataRequest.length !== 0) {
+
+    <div class="flex items-center justify-center w-full bg-opacity-60">
+      <div class="flex items-center justify-center">
+        <div
+          class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+    </div>
+    } }
+  </div>
+  } @if (showModal) {
+  <app-confirm-delete-hoc
+    (closeModal)="handleClose($event)"
+    [itemId]="selectedItemId"
+    [lable]="'session'"
+  />
+  }
+</div>

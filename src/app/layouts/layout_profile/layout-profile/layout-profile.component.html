@@ -1,0 +1,12 @@
+@if (currentPath.includes('trainee')) {
+<app-top-bar />
+}@else if (currentPath.includes('mentor')) {
+<app-mentornav />
+}@else {
+<app-second-navbar />
+}
+<app-sidebar-profile />
+
+<main class="w-full lg:ps-[400px] min-h-fit">
+  <router-outlet />
+</main>

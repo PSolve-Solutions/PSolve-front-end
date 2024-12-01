@@ -1,0 +1,43 @@
+<div class="w-[80vw] sm:w-[400px] py-16 px-6 flex flex-wrap items-stretch">
+  <div class="w-full mb-4">
+    <h1 class="text-4xl font-bold">Forget password</h1>
+    <p>Enter your e-mail to send a code</p>
+  </div>
+
+  <form #form="ngForm" (ngSubmit)="find(email)" class="w-full">
+    <input
+      type="email"
+      name="email"
+      ngModel
+      required
+      email
+      #email="ngModel"
+      (keydown)="sub()"
+      placeholder="E-mail"
+      class="w-full bg-transparent border focus:outline-0 border-white rounded-[12px] text-white placeholder-white py-2 px-3"
+    />
+    <small
+      *ngIf="email.errors?.['required'] && email.touched"
+      class="text-red-500"
+      > Email is required.</small
+    >
+    <small *ngIf="email.errors?.['email'] && email.touched" class="text-red-500"
+      > Please enter a valid email.</small
+    >
+    <small *ngIf="found" class="text-red-500"> E-mail Not Found </small>
+    <button
+      type="submit"
+      [disabled]="form.invalid || isLoading"
+      class="flex justify-center items-center w-full py-2 text-center rounded-xl mt-5 bg-gradient-to-r from-[#3D91C7] via-[#3591C9] to-[#63ABFD]"
+    >
+      @if (isLoading) {
+      <img
+        class="w-8 h-8 animate-spin text-purple-950"
+        src="https://www.svgrepo.com/show/474682/loading.svg"
+        alt="Loading icon"
+        loading="lazy"
+      />
+      } @else { Send OTP }
+    </button>
+  </form>
+</div>

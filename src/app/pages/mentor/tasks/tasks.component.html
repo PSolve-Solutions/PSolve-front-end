@@ -1,0 +1,392 @@
+<div class="flex justify-between items-center sm:pr-10 pr-2"   (click)="onClickOutside($event)">
+  <div class="flex gap-x-5 lg:flex-row flex-col gap-y-4">
+    <app-mentor-header></app-mentor-header>
+    <div class="flex  items-center gap-3 justify-end sm:px-10 px-7 pb-[32px] lg:py-[32px] bg-transparent">
+      <div class="sm:text-[20px] text-sm text-[#686666] px-2">Task To</div>
+      <div class="relative inline-block sm:text-[20px] text-sm text-left sm:min-w-[200px] min-w-[140px] bg-[#EEEEEE]  h-[40px] rounded-full">
+      
+      <button 
+        (click)="show('select')"
+        class="flex selBut  items-center pl-4 justify-between w-full py-1 h-full font-medium text-black pe-6"
+      >
+      {{this.selName | truncate}}
+      <svg [ngClass]="selArr ? 'rotate-180' : ''" class="duration-200" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6031 0.735614L9.57559 7.65211C9.42226 7.80381 9.21528 7.88889 8.99959 7.88889C8.7839 7.88889 8.57692 7.80381 8.42359 7.65211L1.39459 0.737114C1.23993 0.586212 1.03242 0.501745 0.816338 0.501745C0.60026 0.501745 0.392743 0.586212 0.238088 0.737114C0.162115 0.81118 0.101737 0.899703 0.0605112 0.997469C0.0192857 1.09523 -0.00195312 1.20026 -0.00195312 1.30636C-0.00195312 1.41247 0.0192857 1.51749 0.0605112 1.61526C0.101737 1.71302 0.162115 1.80155 0.238088 1.87561L7.26409 8.79062C7.72687 9.245 8.34952 9.49958 8.99809 9.49958C9.64666 9.49958 10.2693 9.245 10.7321 8.79062L17.7581 1.87561C17.8343 1.80152 17.8949 1.71291 17.9362 1.615C17.9776 1.5171 17.9989 1.4119 17.9989 1.30561C17.9989 1.19933 17.9776 1.09413 17.9362 0.996223C17.8949 0.898319 17.8343 0.809703 17.7581 0.735614C17.6034 0.584712 17.3959 0.500244 17.1798 0.500244C16.9638 0.500244 16.7562 0.584712 16.6016 0.735614" fill="#696969"/>
+          </svg>
+      </button>
+  
+      <div
+        id="select"
+        class="absolute hidden selDrop border rounded-xl bg-[#EEEEEE] z-20  w-[200px] text-[20px]  mt-2 transition-all duration-500 py-3 "
+      >
+      <button  (click)="sel('all')"  class="block w-full px-3 py-1 text-left hover:bg-[#3591C9] hover:text-white"> All </button> 
+        <button *ngFor="let selTrain of assign; let i = index" (click)="sel(selTrain)"  class="block w-full px-3 py-1 text-left hover:bg-[#3591C9] hover:text-white"> {{selTrain.firstName}} {{selTrain.middleName}} {{selTrain.lastName}}  </button> 
+  
+      </div>
+    </div>
+  </div>
+  </div>
+    
+    
+    <button *ngIf="id!= null" (click)="show('add')" class="bg-[#3D91C7] hover:bg-[#2679AF] sm:text-md text-sm text-white font-semibold h-[48px] px-4 rounded-[24px]">
+        Add Task
+      </button>
+</div>
+@if (isLoading) {
+  <img
+    class="w-8 h-8 block mx-auto my-12 animate-spin text-purple-950"
+    src="https://www.svgrepo.com/show/474682/loading.svg"
+    alt="Loading icon"
+  />
+  } @else { 
+<div *ngIf="id!= null" class="flex flex-wrap lg:flex-nowrap justify-around px-8 items-start gap-4">
+    <!-- To Do Column -->
+    <div class="lg:w-1/3 w-[90%] m-auto lg:h-[80vh] overflow-auto bg-white rounded-lg shadow p-4" style="border: 0.5px solid #3D91C7">
+      <h2 class="text-[28px] font-bold mb-4 text-[#3D91C7]">Incoming</h2>
+      <!-- Task Card -->
+      <div  *ngFor="let item of tasks ; let i = index" id="D{{item.id}}" >
+        <div  *ngIf="getStat(item.startTime , item.endTime) == 2 && (selTrainee == item.traineeId || selTrainee == 'all')" class="bg-[#3D91C733] rounded-lg p-4 mb-4">
+        <!-- Avatar and Name -->
+         
+        <div class="flex items-center mb-2 justify-between"  >
+          <!--  img tag for the avatar -->
+          <div class="flex items-center mb-2">
+            <img alt=" " class="w-8 h-8 bg-gray-300 rounded-lg mr-2" src="{{item.photoUrl?item.photoUrl : '../../../../../../assets/img/user.jpeg'}}">
+          <span class="font-semibold">{{item.firstName}} {{item.middleName}} {{item.lastName}}  </span>
+          </div>
+          <div class="relative inline-block text-left">
+            <div class="self-start">
+                <button (click)="show('to'+i)" class="self-start"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10Z" stroke="#878787" stroke-width="1.5"/>
+                    <path d="M19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10Z" stroke="#878787" stroke-width="1.5"/>
+                    <path d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z" stroke="#878787" stroke-width="1.5"/>
+                    </svg>
+                    </button>
+            </div>
+          
+            <!-- Dropdown Menu -->
+            <div  id="{{'to'+i}}" (click)="show('to'+i)"  class="dropdown hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div class="py-1">
+               
+                <button (click)="edit(item)"  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                  Edit
+                </button>
+                
+                <button (click)="del(item.id)"  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+          
+            
+        </div>
+        <p class="text-sm">• {{item.title}}</p>
+        <div class="flex justify-between mt-3">
+          <div>
+            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
+            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+          </div>
+          <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="5.5" stroke="white"/>
+              </svg>
+              TO DO
+          </div>
+          <div *ngIf="item.status == 1" class="bg-[#3D91C7] xl:flex hidden text-[10px] rounded-[10px] text-white  items-center px-2 justify-between gap-1">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.00098 2.36046C5.00098 2.23646 5.00098 2.17396 5.02948 2.12296C5.05571 2.07938 5.09461 2.04485 5.14098 2.02396C5.19498 2.00196 5.24998 2.00896 5.35998 2.02196C5.85249 2.0814 6.32258 2.26205 6.72815 2.54773C7.13371 2.83341 7.46211 3.21521 7.68392 3.65895C7.90574 4.10268 8.01405 4.59449 7.99917 5.09036C7.98428 5.58622 7.84667 6.07065 7.59863 6.50028C7.3506 6.92991 6.9999 7.29132 6.57792 7.55217C6.15595 7.81301 5.67588 7.96514 5.18069 7.99493C4.6855 8.02472 4.19065 7.93125 3.74044 7.72288C3.29024 7.51451 2.89873 7.19775 2.60098 6.80096C2.53448 6.71196 2.50098 6.66746 2.49348 6.60996C2.4883 6.55921 2.49877 6.50808 2.52348 6.46346C2.55348 6.41346 2.60698 6.38246 2.71448 6.32046L4.82098 5.10446C4.88648 5.06646 4.91948 5.04746 4.94298 5.02096C4.96361 4.99716 4.97956 4.96968 4.98998 4.93996C5.00098 4.90646 5.00098 4.86846 5.00098 4.79246V2.36046Z" fill="white"/>
+              <path d="M5 9.25C7.34721 9.25 9.25 7.34721 9.25 5C9.25 2.65279 7.34721 0.75 5 0.75C2.65279 0.75 0.75 2.65279 0.75 5C0.75 7.34721 2.65279 9.25 5 9.25Z" stroke="white"/>
+              </svg>              
+              IN PROGRESS
+          </div>
+          <div *ngIf="item.status == 2" class="bg-[#52B788] xl:flex hidden text-[12px] rounded-[10px] text-white  items-center px-3 justify-between gap-1">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="5.5" stroke="white"/>
+              <circle cx="5.99979" cy="5.99979" r="4.10526" fill="white"/>
+              </svg>                            
+              DONE
+          </div>
+        </div>
+        
+      </div>
+      </div>
+      <!-- Repeat the task card structure for more tasks -->
+    </div>
+  
+    <!-- In Progress Column -->
+    <div class="lg:w-1/3 w-[90%] m-auto lg:h-[80vh] overflow-auto bg-white rounded-lg shadow p-4"  style="border: 0.5px solid #3D91C7">
+      <h2 class="text-[28px] font-bold mb-4 text-[#3D91C7]">Current</h2>
+      <!-- Task Card -->
+       <div *ngFor="let item of tasks ; let i = index" id="D{{item.id}}">
+        <div  *ngIf="getStat(item.startTime , item.endTime) == 1 && (selTrainee == item.traineeId || selTrainee == 'all')"   class="bg-[#3D91C733] rounded-lg p-4 mb-4">
+          <!-- Avatar and Name -->
+          
+          <div class="flex items-center mb-2 justify-between"  >
+            <!-- Replace with an img tag for the avatar -->
+            <div class="flex items-center mb-2">
+              <img alt=" " class="w-8 h-8 bg-gray-300 rounded-lg mr-2" src="{{item.photoUrl?item.photoUrl : '../../../../../../assets/img/user.jpeg'}}">
+            <span class="font-semibold">{{item.firstName}} {{item.middleName}} {{item.lastName}}  </span>
+            </div>
+            <div class="relative inline-block text-left">
+              <div class="self-start">
+                  <button (click)="show('in'+i)" class="self-start"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10Z" stroke="#878787" stroke-width="1.5"/>
+                      <path d="M19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10Z" stroke="#878787" stroke-width="1.5"/>
+                      <path d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z" stroke="#878787" stroke-width="1.5"/>
+                      </svg>
+                      </button>
+              </div>
+            
+              <!-- Dropdown Menu -->
+              <div id="{{'in'+i}}" (click)="show('in'+i)" class="hidden dropdown origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div class="py-1">
+                
+                  <button (click)="edit(item)"  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                    Edit
+                  </button>
+                  
+                  <button (click)="del(item.id)"  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+              
+          </div>
+          <p class="text-sm">• {{item.title}}</p>
+          <div class="flex justify-between mt-3">
+            <div>
+              <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
+              <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+            </div>
+            <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="6" r="5.5" stroke="white"/>
+                </svg>
+                TO DO
+            </div>
+            <div *ngIf="item.status == 1" class="bg-[#3D91C7] xl:flex hidden text-[10px] rounded-[10px] text-white  items-center px-2 justify-between gap-1">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.00098 2.36046C5.00098 2.23646 5.00098 2.17396 5.02948 2.12296C5.05571 2.07938 5.09461 2.04485 5.14098 2.02396C5.19498 2.00196 5.24998 2.00896 5.35998 2.02196C5.85249 2.0814 6.32258 2.26205 6.72815 2.54773C7.13371 2.83341 7.46211 3.21521 7.68392 3.65895C7.90574 4.10268 8.01405 4.59449 7.99917 5.09036C7.98428 5.58622 7.84667 6.07065 7.59863 6.50028C7.3506 6.92991 6.9999 7.29132 6.57792 7.55217C6.15595 7.81301 5.67588 7.96514 5.18069 7.99493C4.6855 8.02472 4.19065 7.93125 3.74044 7.72288C3.29024 7.51451 2.89873 7.19775 2.60098 6.80096C2.53448 6.71196 2.50098 6.66746 2.49348 6.60996C2.4883 6.55921 2.49877 6.50808 2.52348 6.46346C2.55348 6.41346 2.60698 6.38246 2.71448 6.32046L4.82098 5.10446C4.88648 5.06646 4.91948 5.04746 4.94298 5.02096C4.96361 4.99716 4.97956 4.96968 4.98998 4.93996C5.00098 4.90646 5.00098 4.86846 5.00098 4.79246V2.36046Z" fill="white"/>
+                <path d="M5 9.25C7.34721 9.25 9.25 7.34721 9.25 5C9.25 2.65279 7.34721 0.75 5 0.75C2.65279 0.75 0.75 2.65279 0.75 5C0.75 7.34721 2.65279 9.25 5 9.25Z" stroke="white"/>
+                </svg>              
+                IN PROGRESS
+            </div>
+            <div *ngIf="item.status == 2" class="bg-[#52B788] xl:flex hidden text-[12px] rounded-[10px] text-white  items-center px-3 justify-between gap-1">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="6" r="5.5" stroke="white"/>
+                <circle cx="5.99979" cy="5.99979" r="4.10526" fill="white"/>
+                </svg>                            
+                DONE
+            </div>
+          </div>
+        </div>
+      <!-- Repeat the task card structure for more tasks -->
+        </div>
+    </div>
+  
+    <!-- Done Column -->
+    <div class="lg:w-1/3 w-[90%] m-auto lg:h-[80vh] overflow-auto bg-white rounded-lg shadow p-4" style="border: 0.5px solid #3D91C7">
+      <h2 class="text-[28px] font-bold mb-4 text-[#3D91C7]">Ended</h2>
+      <!-- Task Card -->
+       <div *ngFor="let item of tasks ; let i = index" id="D{{item.id}}" class="text-sm" >
+      <div  *ngIf="getStat(item.startTime , item.endTime) == 0 && (selTrainee == item.traineeId || selTrainee == 'all')"  class="bg-[#3D91C733] rounded-lg p-4 mb-4">
+        <!-- Avatar and Name -->
+         
+        <div class="flex items-center mb-2 justify-between" >
+          <!-- Replace with an img tag for the avatar -->
+          <div class="flex items-center mb-2">
+            <img alt=" " class="w-8 h-8 bg-gray-300 rounded-lg mr-2" src="{{item.photoUrl?item.photoUrl : '../../../../../../assets/img/user.jpeg'}}">
+          <span class="font-semibold">{{item.firstName}} {{item.middleName}} {{item.lastName}}  </span>
+          </div>
+          <div class="relative inline-block text-left">
+            <div class="self-start">
+                <button (click)="show('done'+i)" class="self-start"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10Z" stroke="#878787" stroke-width="1.5"/>
+                    <path d="M19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10Z" stroke="#878787" stroke-width="1.5"/>
+                    <path d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z" stroke="#878787" stroke-width="1.5"/>
+                    </svg>
+                    </button>
+            </div>
+          
+            <!-- Dropdown Menu -->
+            <div  id="{{'done'+i}}" (click)="show('done'+i)" class="dropdown hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div class="py-1">
+               
+                <button (click)="edit(item)"   class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                  Edit
+                </button>
+                
+                <button (click)="del(item.id)"  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+          
+            
+        </div>
+        <p class="text-sm">• {{item.title}}</p>
+        <div class="flex justify-between mt-3">
+          <div>
+            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
+            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+          </div>
+          <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="5.5" stroke="white"/>
+              </svg>
+              TO DO
+          </div>
+          <div *ngIf="item.status == 1" class="bg-[#3D91C7] xl:flex hidden text-[10px] rounded-[10px] text-white  items-center px-2 justify-between gap-1">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.00098 2.36046C5.00098 2.23646 5.00098 2.17396 5.02948 2.12296C5.05571 2.07938 5.09461 2.04485 5.14098 2.02396C5.19498 2.00196 5.24998 2.00896 5.35998 2.02196C5.85249 2.0814 6.32258 2.26205 6.72815 2.54773C7.13371 2.83341 7.46211 3.21521 7.68392 3.65895C7.90574 4.10268 8.01405 4.59449 7.99917 5.09036C7.98428 5.58622 7.84667 6.07065 7.59863 6.50028C7.3506 6.92991 6.9999 7.29132 6.57792 7.55217C6.15595 7.81301 5.67588 7.96514 5.18069 7.99493C4.6855 8.02472 4.19065 7.93125 3.74044 7.72288C3.29024 7.51451 2.89873 7.19775 2.60098 6.80096C2.53448 6.71196 2.50098 6.66746 2.49348 6.60996C2.4883 6.55921 2.49877 6.50808 2.52348 6.46346C2.55348 6.41346 2.60698 6.38246 2.71448 6.32046L4.82098 5.10446C4.88648 5.06646 4.91948 5.04746 4.94298 5.02096C4.96361 4.99716 4.97956 4.96968 4.98998 4.93996C5.00098 4.90646 5.00098 4.86846 5.00098 4.79246V2.36046Z" fill="white"/>
+              <path d="M5 9.25C7.34721 9.25 9.25 7.34721 9.25 5C9.25 2.65279 7.34721 0.75 5 0.75C2.65279 0.75 0.75 2.65279 0.75 5C0.75 7.34721 2.65279 9.25 5 9.25Z" stroke="white"/>
+              </svg>              
+              IN PROGRESS
+          </div>
+          <div *ngIf="item.status == 2" class="bg-[#52B788] xl:flex hidden text-[12px] rounded-[10px] text-white  items-center px-3 justify-between gap-1">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="5.5" stroke="white"/>
+              <circle cx="5.99979" cy="5.99979" r="4.10526" fill="white"/>
+              </svg>                            
+              DONE
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Repeat the task card structure for more tasks -->
+    </div>
+  </div>
+  <!-- Modal Container -->
+   <div (click)="show('add')" id="add" class="hidden flex items-center justify-center bg-[#D9D9D9B2] h-[calc(100vh-72px)] w-full fixed top-[72px]">
+        <div (click)="handleClick($event)" class="bg-[#F3F3F3] max-h-[calc(100vh-72px)] overflow-y-auto rounded-lg shadow-lg p-6 md:w-[600px] w-[90%]   ">
+            <!-- Assigned to -->
+            <div class="mb-4">
+                
+                <div class="relative mt-2 rounded-[8px] ">
+                    
+                    <div class="flex ">
+                      <button (click)="show('names')" class="w-[160px] ml-2 flex gap-6 items-center border border-[#97979780] rounded-md px-2 py-1" id="rel" >
+                        Assigned to  
+                          <svg id="rel" [ngClass]="isShow ? 'rotate-360' : 'rotate-180'" class="duration-200" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path id="rel" d="M2.7193 10.0332L7.06596 5.68654C7.5793 5.1732 8.4193 5.1732 8.93263 5.68654L13.2793 10.0332" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+
+                        </button>
+                        <div  *ngFor="let item of chars ; let i = index" class="text-center" >
+                          <div *ngIf="i<6" class="min-w-[35px] ml-1 py-1 text-white font-bold flex justify-center items-center pr-1 rounded-full bg-[#0D99FF]">{{item}}</div>
+                          <div *ngIf="i==6" class="min-w-[35px] ml-1 py-1 text-white font-bold flex justify-center items-center pr-1 rounded-full bg-[#0D99FF]">...</div>
+                        </div>
+                    </div>
+                    <div id="names" (click)="handle($event)" class="hidden origin-top-right absolute left-0 mt-2 text-center  rounded-md shadow-lg bg-[#F3F3F3] ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div class="py-1 overflow-auto custom-scrollbar max-h-60">
+                        <div (click)="gen()"   class="flex cursor-pointer hover:bg-[#3D91C7]  justify-between px-4 py-2 text-sm text-gray-700 ">
+                          General
+                          <div class="w-[18px] hidden" id="gen">
+                            <svg class="ml-1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.00065 14.6673H10.0007C13.334 14.6673 14.6673 13.334 14.6673 10.0007V6.00065C14.6673 2.66732 13.334 1.33398 10.0007 1.33398H6.00065C2.66732 1.33398 1.33398 2.66732 1.33398 6.00065V10.0007C1.33398 13.334 2.66732 14.6673 6.00065 14.6673Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M5.16602 7.99995L7.05268 9.88661L10.8327 6.11328" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                          </div>
+                      </div>
+                        <div (click)="add('n' + item.id , item.id ,item.lastName ,item.firstName )" *ngFor="let item of assign ; let i = index"  class="flex cursor-pointer hover:bg-[#0D99FF]  justify-between px-4 py-2 text-sm text-gray-700 ">
+                          {{item.firstName}} {{item.middleName}} {{item.lastName}}
+                          <div class="w-[18px] hidden" id="n{{item.id}}">
+                            <svg class="ml-1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.00065 14.6673H10.0007C13.334 14.6673 14.6673 13.334 14.6673 10.0007V6.00065C14.6673 2.66732 13.334 1.33398 10.0007 1.33398H6.00065C2.66732 1.33398 1.33398 2.66732 1.33398 6.00065V10.0007C1.33398 13.334 2.66732 14.6673 6.00065 14.6673Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M5.16602 7.99995L7.05268 9.88661L10.8327 6.11328" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Due to -->
+            <div class="mb-4 flex gap-6 items-center">
+                <label class="flex items-center text-sm font-medium ">Start Time</label>
+                <input #startTime type="datetime-local" class="mt-2 w-[170px] px-4 py-2  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]">
+            </div>
+            <div class="mb-4 flex gap-6 items-center">
+              <label class="flex items-center text-sm font-medium ">End Time&nbsp;&nbsp;</label>
+              <input #endTime type="datetime-local" class="mt-2 w-[170px] px-4 py-2  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]">
+          </div>
+
+            <!-- Tasks' agenda -->
+            <div class="mb-4">
+                <label class="block text-[20px] font-medium text-[#979797]">Tasks' agenda</label>
+               <div class="border rounded-lg mt-2">
+                <input type="text" disabled placeholder="Tasks" class=" text-black placeholder-black w-full px-4 py-2    ">
+                <div id="tasks" class="max-h-[200px] overflow-auto custom-scrollbar">
+                  <div *ngFor="let i of this.taskNo , let ind = index"  >
+                    <div *ngIf="i!=null" class=" w-full flex justify-between  px-4 py-2 border">
+                      
+                      <textarea style="resize: none;" class="w-full" type="text" #val name="" id="{{'en'+ind}}" value="{{i}}" (keydown)="en($event, ind , val)" disabled style="resize: none;"></textarea>
+                    <p class="flex gap-3 items-center">
+                    <svg (click)="enable('en'+ ind)" class="cursor-pointer" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2.33297 13.6676C2.8863 14.2209 3.77964 14.2209 4.33297 13.6676L12.9996 5.00094C13.553 4.4476 13.553 3.55427 12.9996 3.00094C12.4463 2.4476 11.553 2.4476 10.9996 3.00094L2.33297 11.6676C1.77964 12.2209 1.77964 13.1143 2.33297 13.6676Z" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M12.0068 5.99414L10.0068 3.99414" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M5.66699 1.62732L6.66699 1.33398L6.37366 2.33398L6.66699 3.33398L5.66699 3.04065L4.66699 3.33398L4.96033 2.33398L4.66699 1.33398L5.66699 1.62732Z" stroke="#52B788" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 5.62732L4 5.33398L3.70667 6.33398L4 7.33398L3 7.04065L2 7.33398L2.29333 6.33398L2 5.33398L3 5.62732Z" stroke="#52B788" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M13 8.95935L14 8.66602L13.7067 9.66602L14 10.666L13 10.3727L12 10.666L12.2933 9.66602L12 8.66602L13 8.95935Z" stroke="#52B788" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <svg class="cursor-pointer" (click)="removeGrandparent('x' + ind , ind)" id="{{'x' +ind}}" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 3.98763C11.78 3.76763 9.54667 3.6543 7.32 3.6543C6 3.6543 4.68 3.72096 3.36 3.8543L2 3.98763" stroke="#EF4A50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5.66699 3.31398L5.81366 2.44065C5.92033 1.80732 6.00033 1.33398 7.12699 1.33398H8.87366C10.0003 1.33398 10.087 1.83398 10.187 2.44732L10.3337 3.31398" stroke="#EF4A50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.5669 6.09375L12.1336 12.8071C12.0603 13.8537 12.0003 14.6671 10.1403 14.6671H5.86026C4.00026 14.6671 3.94026 13.8537 3.86693 12.8071L3.43359 6.09375" stroke="#EF4A50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.88672 11H9.10672" stroke="#EF4A50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.33301 8.33398H9.66634" stroke="#EF4A50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>                        
+                    </p>
+                    </div>
+                      
+                      
+                  </div>
+                </div>
+                
+                <textarea (keydown)="onKeydown($event, task)" #task type="text" placeholder="+ Add text " class=" w-full  px-4 py-2 border-t focus:outline-none " style="resize: none;"></textarea>
+               </div>
+            </div>
+            <div *ngFor="let error of crError" class="text-[#EF4A50]">{{ error }}</div>
+            <!-- Create Button -->
+            <div class="flex justify-end">
+                <button (click)="create(task, startTime, endTime)" class="bg-[#3D91C7] hover:bg-[#2679AF] text-white px-4 py-2 rounded-lg  focus:outline-none">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+    <div (click)="show('edit')" id="edit" class="hidden flex items-center justify-center bg-[#D9D9D9B2] h-[calc(100vh-72px)] w-full fixed top-[72px]">
+      <div (click)="handleClick($event)" class="bg-white rounded-lg shadow-lg md:w-[500px] w-[90%] p-6 relative">
+        <!-- Modal Content -->
+        <div class="flex items-center mb-4">
+            <img src="{{this.ed.photoUrl?? './../../../../../assets/img/user.jpeg'}}" alt="User Image" class="w-10 h-10 rounded-lg mr-3">
+            <div>
+                <p class="text-lg font-semibold">{{this.ed.firstName}} {{this.ed.middleName}} {{this.ed.lastName}}</p>
+                <!-- <p class="text-gray-500 text-sm">Deadline: {{this.ed.deadLine | utcToLocal}}</p> -->
+                <label class="text-gray-500 text-sm" for="sdateEdit">Start Time: </label>  <input #stTime id="sdateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.startTime ">
+                <br>
+                <label class="text-gray-500 text-sm" for="edateEdit">End Time:&nbsp;&nbsp;</label>  <input #enTime id="edateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.endTime">
+            </div>
+        </div>
+
+        <!-- Task Input -->
+   
+  <textarea   
+  #taskEd id="edTitle"
+ class="w-full border rounded p-2 mb-4 " style="resize: none;"></textarea>
+
+
+ <div *ngFor="let error of errors" class="text-[#EF4A50]">{{ error }}</div>
+        <!-- Action Buttons -->
+        <div class="flex justify-center space-x-2 mt-10">
+            <button (click)="show('edit')" class="bg-[#EF4A50] text-white px-6 py-1 rounded ">Cancel</button>
+            <button (click)="updateTitle(taskEd, stTime , enTime)" class="bg-[#3D91C7] hover:bg-[#2679AF] text-white px-6 py-1 rounded ">Save</button>
+        </div>
+    </div>
+  </div>
+}

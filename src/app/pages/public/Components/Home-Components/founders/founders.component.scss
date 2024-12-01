@@ -1,0 +1,39 @@
+.founders{
+  .right-circale{
+    width: 1100px;
+    height: 1050px;
+    background: #EF4A5024;
+    border-radius: 50%;
+    left: 60%;
+    top: 30%;
+    z-index: -1;
+  }
+  .card{
+    h4{
+      font-family: Inter;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 30.26px;
+      text-align: left;
+    }
+  }
+}
+.headers{
+  h1{
+    font-family: Cormorant;
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 84.77px;
+    text-align:start;
+    text-transform: uppercase;
+  }
+  ::after{
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 22%;
+    background: #000;
+    left: 0;
+    bottom: 0;
+  }
+}

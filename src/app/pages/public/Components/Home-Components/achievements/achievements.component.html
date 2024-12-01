@@ -1,0 +1,44 @@
+<section class="achievements mt-36 relative" id="achievements">
+  <div class="headers ml-28  relative ">
+    <h1 class="mb-36">
+      Achievements
+    </h1>
+  </div>
+  <div class="left-circale absolute "></div>
+  <div class="content flex flex-col justify-between">
+    @for (achievement of achievements; track achievement.id ; let odd = $odd) {
+      <div class="box flex items-stretch  justify-between w-10/12 mx-auto" [ngClass]="achievement.id==3 ? 'mt-24' : 'my-24'" *ngIf="!odd">
+        <div class="content-card flex-1 p-7 flex flex-col justify-between">
+          <div class="badge text-white flex items-center justify-center size-14 rounded-xl" [ngClass]="achievement.id==3 ? 'bg-[#EF4A50]' : 'bg-[#3D91C7]'">
+            <span>
+              {{achievement.id}}
+            </span>
+          </div>
+          <p class="flex items-center flex-1 pl-16">
+            {{achievement.text}}
+          </p>
+        </div>
+          <img [ngSrc]="achievement.img" width="600" height="500" class="flex-1" alt="ICPC - sohag - Achievement">
+      </div>
+      <div class="box flex items-stretch justify-between w-10/12 mx-auto " *ngIf="odd">
+        <img [ngSrc]="achievement.img"
+          width="600"
+          height="500"
+          class="flex-1"
+          alt="ICPC - sohag - Achievement">
+
+        <div class="content-card flex-1 p-7 flex flex-col justify-between  ">
+          <div class="badge text-white flex items-center justify-center bg-[#E69C24] size-14 rounded-xl">
+            <span>
+              {{achievement.id}}
+            </span>
+          </div>
+          <p class="flex-1 flex items-center ">
+            {{achievement.text}}
+          </p>
+        </div>
+
+      </div>
+    }
+  </div>
+</section>

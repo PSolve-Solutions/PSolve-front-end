@@ -1,0 +1,23 @@
+.custom-scrollbar {
+  
+    overflow: auto; /* Ensure scroll bars appear when needed */
+  }
+  
+  /* WebKit scroll bar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px; /* Width of the vertical scroll bar */
+    height: 12px; /* Height of the horizontal scroll bar */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #C8DDEC; /* Background color of the track */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3D91C7; /* Color of the scroll thumb */
+    border-radius: 10px; /* Rounded corners for the thumb */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3D91C7; /* Color of the thumb when hovered */
+  }

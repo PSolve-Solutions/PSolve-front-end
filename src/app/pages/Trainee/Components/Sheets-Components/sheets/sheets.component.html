@@ -1,0 +1,91 @@
+@if( isLoading) {
+  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+    <div class="flex items-center">
+      <div
+        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+      ></div>
+    </div>
+  </div>
+  } @else {
+    @if(this.sheets.length>0){
+      <div class="flex">
+        <!-- Left Column: List of Sheets -->
+        <div class="left w-[50%] overflow-y-scroll scroll p-3">
+          <div class="flex flex-col 2xl:items-center">
+            <!-- Loop through sheets and create a card for each sheet -->
+            @for (sheet of sheets; track sheet.id; let last = $last ; let first =$first) {
+              <div [id]="sheet.id" class="card card-bg-img rounded-[12px] xl:w-[34rem] 2xl:w-[39rem]"  [ngClass]="{'mb-2': !last , 'mt-5':!first}">
+                <div class=" h-[24rem] content rounded-[12px] relative flex flex-col justify-between items-center px-5 py-7 text-white cursor-pointer" (click)="openLink(sheet.sheetLink)">
+                  <!-- Sheet Name -->
+                  <h1 class=" self-start ">{{ sheet.name }}</h1>
+                  <div class="card-footer w-full">
+                    <div class="footer-text flex flex-col justify-between mb-3">
+                      <!-- Display the Start Date -->
+                      <span class="flex items-center mb-2 gap-3">
+                        <i class="fa-regular fa-clock"></i>
+                        <small>Start in {{ sheet.startDate | formatDate }}</small>
+                      </span>
+                      <!-- Display the End Date -->
+                      <span class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <small>Ended in {{ sheet.endDate | formatDate}}</small>
+                      </span>
+                    </div>
+                    <!-- Problem Count Badge -->
+                    <div class="absolute size-[4rem] bg-white text-[#5D7BAD] flex items-center justify-center rounded-full 2xl:top-[61%] left-[73%] xl:top-[59%]">
+                      {{ sheet.problemSolved + '/' + sheet.problemCount }}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- Button to View Materials for the Selected Sheet -->
+              <button [id]="sheet.id" class=" btn flex justify-between items-center text-white bg-[#5D7BAD] xl:w-[34rem] 2xl:w-[39rem] py-2 px-4 rounded-[12px] mt-3" (click)="updateMatrial(sheet.id, sheet.name)">
+                <span>Materials</span>
+                <img src="assets/img_trainee/solar_map-arrow-up-bold.svg" alt="Arrow icon">
+              </button>
+
+            }
+          </div>
+        </div>
+        @if(loadingSheet){
+          <div class="fixed z-50 top-[40%] lg:top-[50%] lg:left-[75%] left-[40%] bg-opacity-60">
+            <div class="flex items-center">
+              <div
+                class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+              ></div>
+            </div>
+          </div>
+        }@else {
+          <!-- Right Column: Selected Sheet Materials -->
+        <div class="right w-[50%] overflow-y-scroll scroll p-6">
+          <!-- Display the materials of the selected sheet if any -->
+          <div class="flex items-center flex-col border rounded-[12px] sheet bg-white w-full h-fit" *ngIf="sheetMatrial.length > 0">
+            <div class="header border-b w-full">
+              <!-- Selected Sheet Name -->
+              <h1 class="text-[#5D7BAD] font-bold text-[2.5rem] p-4 py-9 w-full text-center">
+                {{ matrialName }}
+              </h1>
+            </div>
+            <div class="content w-full">
+              <!-- Loop through the materials and create a list -->
+              @for (matrial of sheetMatrial; track $index) {
+                <p class="text-[#6B7088] text-[1.9rem] font-bold p-3 w-full border-b cursor-pointer text-center" (click)="openLinkMatrial(matrial.link)">
+                  {{ matrial.title }}
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+        }
+
+      </div>
+    }
+    @else {
+      <div class="h-[60vh] flex items-center justify-center">
+        <p class="text-red-600 text-4xl font-semibold">
+          No Sheets Available
+        </p>
+      </div>
+    }
+  }

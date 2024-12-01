@@ -1,0 +1,126 @@
+<header
+  class="sticky top-0 inset-x-0 flex justify-start h-20 z-10 w-full bg-mainColor4 text-sm pt-2.5 lg:ps-[260px]"
+>
+  <nav
+    class="flex items-center w-full px-10 sm:pe-8 basis-full text-mainColor1"
+  >
+    <div class="flex items-center justify-end w-full pb-2.5 border-b-2 gap-x-3">
+      <div class="flex flex-row items-center justify-end gap-1">
+        <button
+          type="button"
+          (click)="openNotification()"
+          class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100"
+        >
+          <svg
+            class="shrink-0 size-4"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+          </svg>
+          @if (isAnewNotification) {
+          <span
+            class="absolute w-2 h-2 bg-red-600 rounded-full top-1.5 right-2.5"
+          ></span>
+          }
+        </button>
+
+        <!-- Dropdown -->
+        <div class="relative inline-flex">
+          <div class="flex items-center">
+            <div
+              [routerLink]="
+                currentPath.includes('leader')
+                  ? ['/profile/leader']
+                  : currentPath.includes('head_of_camp')
+                  ? ['/profile/head_of_camp']
+                  : ''
+              "
+              class="relative cursor-pointer"
+            >
+              <img
+                class="object-cover w-10 h-10 border rounded-full border-mainColor1"
+                [src]="profilePhoto || './../../../../../assets/img/user.jpeg'"
+                alt="Avatar"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 rounded-full shadow-inner"></div>
+            </div>
+            <div class="ml-4">
+              <h2 class="font-medium text-mainblue">
+                {{ currentUser.firstName }}
+                {{ currentUser.middleName }}
+              </h2>
+              <!-- component -->
+
+              <div class="relative inline-block text-left w-fit">
+                <button
+                  (click)="showRoles()"
+                  class="inline-flex items-center w-full py-1 font-medium text-mainColor1 pe-6"
+                >
+                  @if (currentPath.includes('leader')) {
+
+                  <span>Leader</span>
+                  }@else if(currentPath.includes('psovle')) {
+                  <span>Admin</span>
+                  }@else {
+                  <span>Head Of Camp</span>
+
+                  }
+
+                  <svg
+                    [ngClass]="isShow ? 'rotate-180' : ''"
+                    class="w-4 h-4 ml-2 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </button>
+
+                <div
+                  [ngClass]="isShow ? 'scale-100' : 'scale-0'"
+                  class="absolute z-[1150] mt-2 transition-all origin-top duration-500 bg-white border border-gray-200 rounded-md shadow-lg top-6 right-2 w-fit"
+                >
+                  <div class="py-1 text-sm text-gray-700 w-fit">
+                    @for (item of roles; track $index; let last = $last) {
+
+                    <button
+                      (click)="goSpecificRole(item)"
+                      [ngClass]="last ? '' : 'border-b border-activeLink'"
+                      class="block w-full px-4 py-2 font-semibold transition-colors hover:text-activeLink text-start"
+                    >
+                      {{ item }}
+                    </button>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Dropdown -->
+      </div>
+    </div>
+  </nav>
+</header>
+
+<app-notification
+  [isOpen]="isOpenNotification"
+  [newNotificationCheck]="newNotificationCheck"
+/>

@@ -1,0 +1,211 @@
+<div
+  id="hs-application-sidebar"
+  [ngClass]="
+    currentPath.includes('trainee') || currentPath.includes('mentor')
+      ? 'mt-12 bg-transparent'
+      : 'bg-white'
+  "
+  class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform w-[400px] h-full hidden fixed inset-y-0 start-0 z-[20] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0"
+>
+  <aside
+    class="h-full font-dm overflow-y-auto flex flex-col justify-start pt-10 items-center [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+  >
+    <div class="relative px-5 py-10">
+      <div class="flex-none inline-block focus:outline-none focus:opacity-80">
+        <img
+          [src]="currentUser.photoUrl || 'assets/img/user.jpeg'"
+          alt="image profile"
+          loading="lazy"
+          width="320"
+          height="320"
+          class="object-cover border-2 rounded-full"
+        />
+      </div>
+      <button
+        type="button"
+        (click)="openPopup()"
+        class="absolute w-10 h-10 p-1 rounded-full bottom-24 right-9 bg-mainblue"
+      >
+        <img
+          src="assets/img/edit-profile.png"
+          alt="edit-icon"
+          class="w-full h-full"
+        />
+      </button>
+    </div>
+    <nav class="flex flex-col flex-wrap w-full ps-10">
+      <ul class="flex flex-col gap-y-2">
+        <li>
+          <a
+            class="flex items-center py-1.5 gap-x-3.5 text-2xl tracking-wide text-sidebarColor hover:text-activeLink transition-colors"
+            [routerLink]="
+              currentPath.includes('leader')
+                ? '/profile/leader'
+                : currentPath.includes('head_of_camp')
+                ? '/profile/head_of_camp'
+                : currentPath.includes('trainee')
+                ? '/profile/trainee'
+                : '/profile/mentor'
+            "
+            [routerLinkActive]="
+              currentPath.includes('trainee')
+                ? 'activeLinkTrainee'
+                : 'activeLink'
+            "
+            ariaCurrentWhenActive="page"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <svg
+              class="size-8"
+              viewBox="0 0 48 48"
+              stroke="currentColor"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24.2404 25.5609C24.1004 25.5409 23.9204 25.5409 23.7604 25.5609C20.2404 25.4409 17.4404 22.5609 17.4404 19.0209C17.4404 15.4009 20.3604 12.4609 24.0004 12.4609C27.6204 12.4609 30.5604 15.4009 30.5604 19.0209C30.5404 22.5609 27.7604 25.4409 24.2404 25.5609Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M37.4795 38.7611C33.9195 42.0211 29.1995 44.0011 23.9995 44.0011C18.7995 44.0011 14.0795 42.0211 10.5195 38.7611C10.7195 36.8811 11.9195 35.0411 14.0595 33.6011C19.5395 29.9611 28.4995 29.9611 33.9395 33.6011C36.0795 35.0411 37.2795 36.8811 37.4795 38.7611Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            Informations
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex items-center gap-x-3.5 py-1.5 text-2xl tracking-wide text-sidebarColor hover:text-activeLink transition-colors"
+            [routerLink]="
+              currentPath.includes('leader')
+                ? '/profile/leader/settings'
+                : currentPath.includes('head_of_camp')
+                ? '/profile/head_of_camp/settings'
+                : currentPath.includes('trainee')
+                ? 'trainee/account'
+                : '/profile/mentor/account'
+            "
+            [routerLinkActive]="
+              currentPath.includes('trainee')
+                ? 'activeLinkTrainee'
+                : 'activeLink'
+            "
+            ariaCurrentWhenActive="page"
+          >
+            <svg
+              class="size-8"
+              viewBox="0 0 48 48"
+              stroke="currentColor"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24 30C27.3137 30 30 27.3137 30 24C30 20.6863 27.3137 18 24 18C20.6863 18 18 20.6863 18 24C18 27.3137 20.6863 30 24 30Z"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4 25.7589V22.2389C4 20.1589 5.7 18.4389 7.8 18.4389C11.42 18.4389 12.9 15.8789 11.08 12.7389C10.04 10.9389 10.66 8.5989 12.48 7.5589L15.94 5.5789C17.52 4.6389 19.56 5.1989 20.5 6.7789L20.72 7.1589C22.52 10.2989 25.48 10.2989 27.3 7.1589L27.52 6.7789C28.46 5.1989 30.5 4.6389 32.08 5.5789L35.54 7.5589C37.36 8.5989 37.98 10.9389 36.94 12.7389C35.12 15.8789 36.6 18.4389 40.22 18.4389C42.3 18.4389 44.02 20.1389 44.02 22.2389V25.7589C44.02 27.8389 42.32 29.5589 40.22 29.5589C36.6 29.5589 35.12 32.1189 36.94 35.2589C37.98 37.0789 37.36 39.3989 35.54 40.4389L32.08 42.4189C30.5 43.3589 28.46 42.7989 27.52 41.2189L27.3 40.8389C25.5 37.6989 22.54 37.6989 20.72 40.8389L20.5 41.2189C19.56 42.7989 17.52 43.3589 15.94 42.4189L12.48 40.4389C10.66 39.3989 10.04 37.0589 11.08 35.2589C12.9 32.1189 11.42 29.5589 7.8 29.5589C5.7 29.5589 4 27.8389 4 25.7589Z"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            Account
+          </a>
+        </li>
+        @if (currentPath.includes('leader') ||
+        currentPath.includes('head_of_camp')) {
+        <li>
+          <a
+            class="flex items-center gap-x-3.5 py-1.5 text-2xl tracking-wide text-sidebarColor hover:text-activeLink transition-colors"
+            [routerLink]="
+              currentPath.includes('leader')
+                ? '/leader'
+                : currentPath.includes('head_of_camp')
+                ? '/head_of_camp'
+                : currentPath.includes('trainee')
+                ? 'trainee/account'
+                : '/profile/mentor/account'
+            "
+            ariaCurrentWhenActive="page"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24 36V30"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M20.1464 5.6397L6.28639 16.7397C4.72639 17.9797 3.72639 20.5997 4.06639 22.5597L6.72639 38.4797C7.20639 41.3197 9.92639 43.6197 12.8064 43.6197H35.2064C38.0664 43.6197 40.8064 41.2997 41.2864 38.4797L43.9464 22.5597C44.2664 20.5997 43.2664 17.9797 41.7264 16.7397L27.8664 5.6597C25.7264 3.9397 22.2664 3.9397 20.1464 5.6397Z"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <button
+            type="button"
+            (click)="authService.logout()"
+            class="flex items-center gap-x-3.5 py-1.5 text-2xl tracking-wide text-sidebarColor hover:text-activeLink transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+              />
+            </svg>
+
+            Log out
+          </button>
+        </li>
+        }
+      </ul>
+    </nav>
+  </aside>
+</div>
+
+@if (showPopup) {
+
+<app-edit-image-pop
+  [profileImage]="currentUser.photoUrl"
+  (closePopup)="closePopup()"
+/>
+}
