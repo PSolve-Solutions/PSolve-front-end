@@ -5,7 +5,7 @@
   <div class="flex flex-col space-y-10">
     <div class="flex items-center justify-between">
       <button
-        routerLink="add-admin"
+        [routerLink]="['upsert-admin/', 0]"
         class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
       >
         <svg
@@ -24,7 +24,7 @@
         <span>Add new admin</span>
       </button>
       <button
-        class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor3 w-fit bg-mainColor2 text-mainColor4"
+        class="items-center hidden px-4 py-2 space-x-2 transition-colors md:flex rounded-xl hover:bg-subColor3 w-fit bg-mainColor2 text-mainColor4"
       >
         <svg
           width="16"
@@ -38,15 +38,14 @@
             fill="#F7F8F3"
           />
         </svg>
-
         <span>Delete all</span>
       </button>
     </div>
     <app-table-admin
-      (currentPage)="getCurrentPage($event)"
-      (rowsPerPage)="getRowsPerPage($event)"
-      [allAdmins]="allAdmins"
+      (pageParams)="getPageParams($event)"
       [isLoading]="isLoading"
+      [allDataTable]="allAdmins"
+      [whatPlace]="'admin'"
     />
   </div>
 </div>

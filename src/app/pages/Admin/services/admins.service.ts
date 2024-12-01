@@ -24,8 +24,8 @@ export class AdminsService {
     );
   }
 
-  deleteAdmin(id: number): Observable<ResponseHeader> {
-    return this.http.delete<any>(
+  deleteAdmin(id: string): Observable<ResponseHeader> {
+    return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/admins/${id}`
     );
   }

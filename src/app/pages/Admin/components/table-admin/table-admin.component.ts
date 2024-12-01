@@ -18,12 +18,16 @@ import { Admins } from '../../model/admins';
   styleUrl: './table-admin.component.scss',
 })
 export class TableAdminComponent implements OnChanges {
-  @Output() currentPage = new EventEmitter<number>();
-  @Output() rowsPerPage = new EventEmitter<number>();
-  @Input('allAdmins') allDataTable!: Admins;
+  @Output() pageParams = new EventEmitter<{
+    currentPage: number;
+    rowsPerPage: number;
+  }>();
+  @Input() allDataTable!: Admins;
+  @Input() whatPlace: string = '';
   @Input() isLoading: boolean = false;
   selectedItems = new Set<string>();
   isAllSelected: boolean = false;
+  rowsPerPage: number = 1;
   currPage: number = 1;
   pageSize: number = 1;
   totalPages: number = 1;
@@ -71,7 +75,11 @@ export class TableAdminComponent implements OnChanges {
 
   selectRowsPerPage(option: number): void {
     this.isDropdownOpen = false;
-    this.rowsPerPage.emit(option);
+    this.rowsPerPage = option;
+    this.pageParams.emit({
+      currentPage: this.currPage,
+      rowsPerPage: this.rowsPerPage,
+    });
   }
 
   generatePages(): void {
@@ -95,7 +103,10 @@ export class TableAdminComponent implements OnChanges {
   changePage(page: number): void {
     if (page > 0 && page <= this.allDataTable?.totalPages) {
       this.currPage = page;
-      this.currentPage.emit(this.currPage);
+      this.pageParams.emit({
+        currentPage: this.currPage,
+        rowsPerPage: this.rowsPerPage,
+      });
       this.generatePages();
     }
   }

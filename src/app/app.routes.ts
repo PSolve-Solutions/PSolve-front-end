@@ -64,8 +64,8 @@ import { TraineeTrackingComponent } from './pages/HOC/screens/trainee-tracking/t
 import { LayoutAdminComponent } from './layouts/layout_admin/layout-admin/layout-admin.component';
 import { AdminHomeComponent } from './pages/Admin/screens/admin-home/admin-home.component';
 import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin-clients.component';
-import { AddAdminComponent } from './pages/Admin/screens/add-admin/add-admin.component';
 import { UpsertClientComponent } from './pages/Admin/screens/upsert-client/upsert-client.component';
+import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -142,17 +142,20 @@ export const routes: Routes = [
         title: 'Admins - PSolve',
       },
       {
-        path: 'add-admin',
-        component: AddAdminComponent,
+        path: 'upsert-admin/:id',
+        component: UpsertAdminComponent,
         title: 'Admins / Add Admin - PSolve',
       },
       {
         path: 'clients',
         component: AdminClientsComponent,
         title: 'Clients - PSolve',
+      },
+      {
+        path: 'clients',
         children: [
           {
-            path: 'upsert-client',
+            path: 'upsert-client/:id',
             component: UpsertClientComponent,
             title: 'Clients / Actions Client - PSolve',
           },

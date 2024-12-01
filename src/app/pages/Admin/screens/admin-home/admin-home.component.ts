@@ -13,21 +13,17 @@ import { RouterLink } from '@angular/router';
 })
 export class AdminHomeComponent implements OnInit {
   adminsService = inject(AdminsService);
-  currentPage: number = 1;
-  rowsPerPage: number = 10;
   isLoading: boolean = false;
   allAdmins!: Admins;
   ngOnInit() {
-    this.getAllAdminsPagination(this.currentPage, this.rowsPerPage);
+    this.getAllAdminsPagination(1, 10);
   }
 
-  getRowsPerPage(rowsPerPage: number): void {
-    this.rowsPerPage = rowsPerPage;
-    this.getAllAdminsPagination(this.currentPage, rowsPerPage);
-  }
-  getCurrentPage(currentPage: number): void {
-    this.currentPage = currentPage;
-    this.getAllAdminsPagination(this.currentPage, this.rowsPerPage);
+  getPageParams(pageParams: {
+    currentPage: number;
+    rowsPerPage: number;
+  }): void {
+    this.getAllAdminsPagination(pageParams.currentPage, pageParams.rowsPerPage);
   }
 
   getAllAdminsPagination(currentPage: number, pageSize: number): void {
