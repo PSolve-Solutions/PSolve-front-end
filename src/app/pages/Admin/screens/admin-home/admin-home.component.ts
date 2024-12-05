@@ -3,20 +3,23 @@ import { TableAdminComponent } from '../../components/table-admin/table-admin.co
 import { AdminsService } from '../../services/admins.service';
 import { Admins, Data } from '../../model/admins';
 import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-admin-home',
   standalone: true,
-  imports: [TableAdminComponent, RouterLink],
+  imports: [TableAdminComponent, RouterLink, NgClass],
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.scss',
 })
 export class AdminHomeComponent implements OnInit {
   adminsService = inject(AdminsService);
+  ocSidebarService = inject(OcSidebarService);
   isLoading: boolean = false;
   allAdmins!: Admins;
   ngOnInit() {
-    this.getAllAdminsPagination(1, 10);
+    this.getAllAdminsPagination(1, 5);
   }
 
   getPageParams(pageParams: {

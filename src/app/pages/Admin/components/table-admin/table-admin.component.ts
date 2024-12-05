@@ -2,6 +2,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -9,24 +10,27 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Admins } from '../../model/admins';
+import { RouterLink } from '@angular/router';
+import { DeleteUserComponent } from '../delete-user/delete-user.component';
+import { CasheService } from '../../../../shared/services/cashe.service';
+import { Clinets } from '../../model/clients';
 
 @Component({
   selector: 'app-table-admin',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, RouterLink, DeleteUserComponent],
   templateUrl: './table-admin.component.html',
   styleUrl: './table-admin.component.scss',
 })
 export class TableAdminComponent implements OnChanges {
+  casheService = inject(CasheService);
   @Output() pageParams = new EventEmitter<{
     currentPage: number;
     rowsPerPage: number;
   }>();
-  @Input() allDataTable!: Admins;
-  @Input() whatPlace: string = '';
+  @Input() allDataTable!: any;
   @Input() isLoading: boolean = false;
-  selectedItems = new Set<string>();
-  isAllSelected: boolean = false;
+  @Input() whatPlace: string = '';
   rowsPerPage: number = 1;
   currPage: number = 1;
   pageSize: number = 1;
@@ -36,6 +40,9 @@ export class TableAdminComponent implements OnChanges {
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   isDropdownOpen: boolean = false;
+  showModalDelete: boolean = false;
+  selectedUserId: string | null = null;
+  isPastDate: boolean = false;
 
   ngOnChanges() {
     this.generatePages();
@@ -44,35 +51,34 @@ export class TableAdminComponent implements OnChanges {
     this.totalCount = this.allDataTable?.totalCount;
   }
 
-  toggleSelectAll() {
-    this.isAllSelected = !this.isAllSelected;
-    if (this.isAllSelected) {
-      this.allDataTable.data.forEach((user) => this.selectedItems.add(user.id));
-    } else {
-      this.selectedItems.clear();
+  checkEndDateForClinet(endDate: string): boolean {
+    const currentDate = new Date();
+    const apiEndDate = new Date(endDate);
+
+    // Compare dates
+    this.isPastDate = apiEndDate > currentDate;
+    console.log(this.isPastDate);
+    return this.isPastDate;
+  }
+
+  showConfirmDelete(id: string) {
+    this.selectedUserId = id;
+    this.showModalDelete = true;
+  }
+
+  handleClose(confirmed: boolean) {
+    if (confirmed && this.selectedUserId !== null) {
+      this.casheService.clearCache();
+      this.allDataTable.data = this.allDataTable.data.filter(
+        (user: any) => user.id !== this.selectedUserId
+      );
     }
+    this.showModalDelete = false;
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-
-  toggleSelectOne(id: string) {
-    if (this.selectedItems.has(id)) {
-      this.selectedItems.delete(id);
-      this.isAllSelected = false;
-    } else {
-      this.selectedItems.add(id);
-      this.isAllSelected =
-        this.selectedItems.size === this.allDataTable.data.length;
-    }
-  }
-
-  deleteRow(id: string, index: number) {
-    this.allDataTable.data.splice(index, 1);
-    // fun Api
-  }
-
   selectRowsPerPage(option: number): void {
     this.isDropdownOpen = false;
     this.rowsPerPage = option;

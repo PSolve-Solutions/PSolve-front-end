@@ -58,14 +58,14 @@ import { LayoutProfileComponent } from './layouts/layout_profile/layout-profile/
 import { ProfileDetailsComponent } from './pages/leader_profile/screens/profile-details/profile-details.component';
 import { LeaderSettingsComponent } from './pages/leader_profile/screens/leader-settings/leader-settings.component';
 import { ProfileTraineeComponent } from './pages/trainee-profile/screens/profile-trainee/profile-trainee.component';
-import { MentorProfileComponent } from './pages/mentor-profile/mentor-profile.component';
 import { MentorsTrackingComponent } from './pages/HOC/screens/mentors-tracking/mentors-tracking.component';
 import { TraineeTrackingComponent } from './pages/HOC/screens/trainee-tracking/trainee-tracking.component';
 import { LayoutAdminComponent } from './layouts/layout_admin/layout-admin/layout-admin.component';
 import { AdminHomeComponent } from './pages/Admin/screens/admin-home/admin-home.component';
 import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin-clients.component';
-import { UpsertClientComponent } from './pages/Admin/screens/upsert-client/upsert-client.component';
 import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
+import { ClientDetailsComponent } from './pages/Admin/screens/client-details/client-details.component';
+import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -155,9 +155,14 @@ export const routes: Routes = [
         path: 'clients',
         children: [
           {
-            path: 'upsert-client/:id',
-            component: UpsertClientComponent,
-            title: 'Clients / Actions Client - PSolve',
+            path: 'add-client',
+            component: AddClientComponent,
+            title: 'Clients / Add Client - PSolve',
+          },
+          {
+            path: 'client-details/:id',
+            component: ClientDetailsComponent,
+            title: 'Clients / Client Details - PSolve',
           },
         ],
       },

@@ -8,56 +8,69 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AdminsService } from '../../services/admins.service';
 import { ToastrService } from 'ngx-toastr';
-import { OneAdmin } from '../../model/admins';
+import { ClientsService } from '../../services/clients.service';
 
 @Component({
-  selector: 'app-upsert-admin',
+  selector: 'app-add-client',
   standalone: true,
   imports: [NgClass, ReactiveFormsModule, RouterLink],
-  templateUrl: './upsert-admin.component.html',
-  styleUrl: './upsert-admin.component.scss',
+  templateUrl: './add-client.component.html',
+  styleUrl: './add-client.component.scss',
 })
-export class UpsertAdminComponent implements OnInit {
+export class AddClientComponent implements OnInit {
   ocSidebarService = inject(OcSidebarService);
-  adminsService = inject(AdminsService);
+  clientsService = inject(ClientsService);
   fb = inject(FormBuilder);
-  route = inject(ActivatedRoute);
   router = inject(Router);
   toastr = inject(ToastrService);
-  adminForm!: FormGroup;
-  adminId: string = '';
+  clientForm!: FormGroup;
+  clientId: string = '';
   gender: string = '';
+  grade: number = 0;
   submitted: boolean = true;
   isLoading: boolean = false;
   isDropdownOpen: boolean = false;
+  isDropdownGrade: boolean = false;
+  isDropdownCollege: boolean = false;
   profileImage: string = '';
-  isReadOnly: boolean = false;
+  allCollege: { id: number; name: string }[] = [];
+  collegeName: string = '';
+  logoName: string = '';
 
   constructor() {
-    this.route.params.subscribe((params) => {
-      this.adminId = params['id'];
-      if (this.adminId !== '0') {
-        this.getAdminById(this.adminId);
-        this.isReadOnly = true;
-      } else {
-        this.isReadOnly = false;
-      }
-    });
+    this.allCollege = [
+      { id: 0, name: 'Computer and Ai' },
+      { id: 1, name: 'EELU' },
+      { id: 2, name: 'Science' },
+      { id: 3, name: 'Engineering' },
+      { id: 4, name: 'Commerce' },
+      { id: 5, name: 'Law' },
+      { id: 6, name: 'Others' },
+    ];
   }
-
   ngOnInit(): void {
-    this.adminForm = this.fb.group({
+    this.clientForm = this.fb.group({
+      ClientName: ['', [Validators.required]],
       FirstName: ['', [Validators.required]],
       MiddleName: ['', [Validators.required]],
       LastName: ['', [Validators.required]],
       Email: ['', [Validators.required, Validators.email]],
+      CommunityGmail: ['', [Validators.required]],
       NationalId: [''],
       BirthDate: ['', [Validators.required]],
       PhoneNumber: [''],
+      College: ['', [Validators.required]],
+      CodeForceHandle: [''],
+      FacebookLink: [''],
+      CommunityFacebookLink: [''],
+      Grade: ['', [Validators.required]],
       Gender: ['', [Validators.required]],
+      VjudgeHandle: [''],
+      StartDate: ['', [Validators.required]],
+      EndDate: ['', [Validators.required]],
       ProfileImage: [null],
+      Logo: [null, [Validators.required]],
     });
   }
 
@@ -72,27 +85,27 @@ export class UpsertAdminComponent implements OnInit {
     return filteredData;
   }
 
-  addAdmin() {
+  addClient() {
     this.submitted = true;
-    if (this.adminForm.invalid) {
+    if (this.clientForm.invalid) {
       this.displayFormErrors();
       return;
     }
     this.isLoading = true;
-    const myForm = this.filterNullValues(this.adminForm);
+    const myForm = this.filterNullValues(this.clientForm);
     const formData = new FormData();
     Object.keys(myForm).forEach((key) => {
-      const value = this.adminForm.get(key)?.value;
+      const value = this.clientForm.get(key)?.value;
       formData.append(key, value);
     });
-    this.adminsService.actionsAdmin(formData).subscribe({
+    this.clientsService.createClient(formData).subscribe({
       next: ({ statusCode, message, errors }) => {
         if (statusCode === 200) {
           this.toastr.success(message);
-          this.adminForm.reset();
+          this.clientForm.reset();
           this.isLoading = false;
           this.submitted = false;
-          this.router.navigate(['/psovle']);
+          this.router.navigate(['/psovle/clients']);
         } else if (statusCode === 400) {
           this.toastr.error(message);
           this.isLoading = false;
@@ -114,8 +127,8 @@ export class UpsertAdminComponent implements OnInit {
   }
 
   displayFormErrors() {
-    Object.keys(this.adminForm.controls).forEach((field) => {
-      const control = this.adminForm.get(field);
+    Object.keys(this.clientForm.controls).forEach((field) => {
+      const control = this.clientForm.get(field);
       if (control?.invalid) {
         if (control.errors?.['required']) {
           this.toastr.error(`${field} is required`);
@@ -124,64 +137,73 @@ export class UpsertAdminComponent implements OnInit {
     });
   }
 
-  getAdminById(id: string): void {
-    this.isLoading = true;
-    this.adminsService.getAdminById(id).subscribe({
-      next: ({ statusCode, data }) => {
-        if (statusCode == 200) {
-          this.isLoading = false;
-          const admin = data as OneAdmin;
-          this.gender = admin.gender;
-          this.profileImage = admin.photoUrl || 'assets/img/user.jpeg';
-          this.adminForm.patchValue({
-            FirstName: admin.firstName,
-            MiddleName: admin.middleName,
-            LastName: admin.lastName,
-            Email: admin.email,
-            PhoneNumber: admin.phoneNumber,
-            NationalId: admin.nationalId,
-            BirthDate: admin.birthDate,
-          });
-        } else {
-          this.isLoading = false;
-        }
-      },
-    });
-  }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      this.adminForm.get('ProfileImage')?.setValue(file);
+      this.clientForm.get('ProfileImage')?.setValue(file);
       const reader = new FileReader();
-
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.profileImage = e.target?.result as string;
       };
-
       reader.readAsDataURL(file);
     }
   }
+
+  onLogoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.logoName = input.files[0].name;
+      this.clientForm.get('Logo')?.setValue(file);
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const targetElement = event.target as HTMLElement;
     const isInsideDropdown = targetElement.closest('#dropdown');
+    const isInsideDropdownCollege = targetElement.closest('#college');
+    const isInsideDropdownGrade = targetElement.closest('#grade');
     if (!isInsideDropdown) {
       this.isDropdownOpen = false;
+    }
+    if (!isInsideDropdownGrade) {
+      this.isDropdownGrade = false;
+    }
+    if (!isInsideDropdownCollege) {
+      this.isDropdownCollege = false;
     }
   }
 
   toggleDropdown() {
-    if (this.isReadOnly) {
-      this.isDropdownOpen = false;
-    } else {
-      this.isDropdownOpen = !this.isDropdownOpen;
-    }
+    this.isDropdownOpen = !this.isDropdownOpen;
+    this.isDropdownGrade = false;
+    this.isDropdownCollege = false;
   }
   selectGender(option: { id: number; name: string }): void {
     this.gender = option.name;
     this.isDropdownOpen = false;
-    this.adminForm.get('Gender')?.setValue(option.id);
+    this.clientForm.get('Gender')?.setValue(option.id);
+  }
+  toggleDropdownGrade() {
+    this.isDropdownGrade = !this.isDropdownGrade;
+    this.isDropdownCollege = false;
+    this.isDropdownOpen = false;
+  }
+  selectGrade(option: number): void {
+    this.grade = option;
+    this.isDropdownGrade = false;
+    this.clientForm.get('Grade')?.setValue(option);
+  }
+  toggleDropdownCollege() {
+    this.isDropdownCollege = !this.isDropdownCollege;
+    this.isDropdownGrade = false;
+    this.isDropdownOpen = false;
+  }
+  selectCollege(option: { id: number; name: string }): void {
+    this.collegeName = option.name;
+    this.isDropdownCollege = false;
+    this.clientForm.get('College')?.setValue(option.id);
   }
 }

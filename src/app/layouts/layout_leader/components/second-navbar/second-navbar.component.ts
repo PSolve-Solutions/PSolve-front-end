@@ -15,6 +15,7 @@ import { NotificationComponent } from '../../../../shared/Components/notificatio
 import { NotificationService } from '../../../../shared/services/notification.service';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 dayjs.extend(relativeTime);
 @Component({
   selector: 'app-second-navbar',
@@ -25,6 +26,7 @@ dayjs.extend(relativeTime);
 })
 export class SecondNavbarComponent implements OnInit {
   authService = inject(AuthService);
+  ocSidebarService = inject(OcSidebarService);
   notificationService = inject(NotificationService);
   elementRef = inject(ElementRef);
   cdr = inject(ChangeDetectorRef);

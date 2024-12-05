@@ -2,30 +2,37 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ClientsService } from '../../services/clients.service';
 import { TableAdminComponent } from '../../components/table-admin/table-admin.component';
 import { RouterLink } from '@angular/router';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { NgClass } from '@angular/common';
+import { Clinets } from '../../model/clients';
 
 @Component({
   selector: 'app-admin-clients',
   standalone: true,
-  imports: [TableAdminComponent, RouterLink],
+  imports: [TableAdminComponent, RouterLink, NgClass],
   templateUrl: './admin-clients.component.html',
   styleUrl: './admin-clients.component.scss',
 })
 export class AdminClientsComponent implements OnInit {
   clientsService = inject(ClientsService);
+  ocSidebarService = inject(OcSidebarService);
   isLoading: boolean = false;
-  allClients!: any;
+  allClients!: Clinets;
   ngOnInit() {
-    this.getAllAdminsPagination(1, 10);
+    this.getAllClientsPagination(1, 5);
   }
 
   getPageParams(pageParams: {
     currentPage: number;
     rowsPerPage: number;
   }): void {
-    this.getAllAdminsPagination(pageParams.currentPage, pageParams.rowsPerPage);
+    this.getAllClientsPagination(
+      pageParams.currentPage,
+      pageParams.rowsPerPage
+    );
   }
 
-  getAllAdminsPagination(currentPage: number, pageSize: number): void {
+  getAllClientsPagination(currentPage: number, pageSize: number): void {
     this.isLoading = true;
     this.clientsService
       .getAllClientsPagination(currentPage, pageSize)
