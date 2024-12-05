@@ -1,1 +1,330 @@
-<p>add-admin works!</p>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
+  >
+    Add Admin
+  </h1>
+  <form [formGroup]="adminForm" (ngSubmit)="addAdmin()">
+    <div
+      class="flex flex-col items-center w-full lg:items-start gap-x-8 gap-y-8 lg:justify-between lg:flex-row"
+    >
+      <div class="flex flex-col w-full lg:w-2/3 gap-y-10">
+        <div class="flex flex-col gap-y-4">
+          <div class="flex flex-col gap-y-6">
+            <h2 class="text-xl font-semibold text-mainColor1">
+              Personal Information
+            </h2>
+            <div
+              class="grid grid-cols-2 grid-rows-3 gap-2 lg:grid-rows-2 lg:grid-cols-3"
+            >
+              <div class="flex flex-col gap-y-1">
+                <label
+                  for="firstName"
+                  class="font-bold text-[#002C3D4D] text-lg"
+                  >FirstName
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <input
+                  type="text"
+                  id="firstName"
+                  formControlName="FirstName"
+                  [readonly]="isReadOnly"
+                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                />
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <label
+                  for="middleName"
+                  class="font-bold text-[#002C3D4D] text-lg"
+                  >Middle Name
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <input
+                  type="text"
+                  id="middleName"
+                  formControlName="MiddleName"
+                  [readonly]="isReadOnly"
+                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                />
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <label for="lastName" class="font-bold text-[#002C3D4D] text-lg"
+                  >Last Name
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <input
+                  type="text"
+                  id="lastName"
+                  formControlName="LastName"
+                  [readonly]="isReadOnly"
+                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                />
+              </div>
+              <div
+                id="dropdown"
+                class="relative flex flex-col lg:hidden gap-y-1"
+              >
+                <label for="gender" class="font-bold text-[#002C3D4D] text-lg"
+                  >Gender
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <button
+                  type="button"
+                  (click)="toggleDropdown()"
+                  class="flex items-center justify-between px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                >
+                  @if (gender) { {{ gender }} }@else {
+
+                  <span class="text-[#002C3D4D]">Gender</span>
+                  }
+                  <svg
+                    class="ml-2 transition-transform rotate-0 size-4"
+                    [class.rotate-180]="isDropdownOpen == true"
+                    viewBox="0 0 11 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                      fill="#285C6A"
+                    />
+                  </svg>
+                </button>
+                @if (isDropdownOpen) {
+                <div
+                  class="absolute right-0 top-[80px] z-10 w-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg focus:outline-none"
+                >
+                  <ul>
+                    @for (option of [{id: 0, name:'Male'}, {id: 1, name:
+                    'Female'}]; track option.id) {
+
+                    <li
+                      (click)="selectGender(option)"
+                      [class.text-subColor1]="option.name === gender"
+                      class="px-3 py-2 font-semibold cursor-pointer text-mainColor1 hover:bg-blue-100"
+                    >
+                      {{ option.name }}
+                    </li>
+                    }
+                  </ul>
+                </div>
+                }
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <label
+                  for="birthDate"
+                  class="font-bold text-[#002C3D4D] text-lg"
+                  >BirthDate
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+
+                <input
+                  type="date"
+                  id="birthDate"
+                  formControlName="BirthDate"
+                  [readonly]="isReadOnly"
+                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                />
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <label
+                  for="nationalId"
+                  class="font-bold text-[#002C3D4D] text-lg"
+                  >National Id
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <input
+                  type="text"
+                  id="nationalId"
+                  formControlName="NationalId"
+                  [readonly]="isReadOnly"
+                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                />
+              </div>
+              <div
+                id="dropdown"
+                class="relative flex-col hidden lg:flex gap-y-1"
+              >
+                <label for="gender" class="font-bold text-[#002C3D4D] text-lg"
+                  >Gender
+                  <span class="text-lg font-bold text-red-600">*</span></label
+                >
+                <button
+                  type="button"
+                  (click)="toggleDropdown()"
+                  class="flex items-center justify-between px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                >
+                  @if (gender) { {{ gender }} }@else {
+
+                  <span class="text-[#002C3D4D]">Gender</span>
+                  }
+                  <svg
+                    class="ml-2 transition-transform rotate-0 size-4"
+                    [class.rotate-180]="isDropdownOpen == true"
+                    viewBox="0 0 11 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                      fill="#285C6A"
+                    />
+                  </svg>
+                </button>
+                @if (isDropdownOpen) {
+                <div
+                  class="absolute right-0 top-[80px] z-10 w-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg focus:outline-none"
+                >
+                  <ul>
+                    @for (option of [{id: 0, name:'Male'}, {id: 1, name:
+                    'Female'}]; track option.id) {
+
+                    <li
+                      (click)="selectGender(option)"
+                      [class.text-subColor1]="option.name === gender"
+                      class="px-3 py-2 font-semibold cursor-pointer text-mainColor1 hover:bg-blue-100"
+                    >
+                      {{ option.name }}
+                    </li>
+                    }
+                  </ul>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-y-6">
+          <h2 class="text-xl font-semibold text-mainColor1">
+            Contact Information
+          </h2>
+          <div
+            class="grid grid-cols-1 grid-rows-2 gap-2 lg:grid-rows-1 lg:grid-cols-2"
+          >
+            <div class="flex flex-col gap-y-1">
+              <label for="email" class="font-bold text-[#002C3D4D] text-lg"
+                >E-mail
+                <span class="text-lg font-bold text-red-600">*</span></label
+              >
+              <input
+                type="email"
+                id="email"
+                formControlName="Email"
+                [readonly]="isReadOnly"
+                class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label
+                for="phoneNumber"
+                class="font-bold text-[#002C3D4D] text-lg"
+                >Phone number
+                <span class="text-lg font-bold text-red-600">*</span></label
+              >
+              <input
+                type="text"
+                id="phoneNumber"
+                formControlName="PhoneNumber"
+                [readonly]="isReadOnly"
+                class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-center w-2/3 py-6 rounded-lg lg:w-1/3 bg-mainColor3"
+        [class.bg-mainColor3]="!profileImage"
+      >
+        <div class="flex flex-col items-center justify-center gap-y-6">
+          <label
+            class="flex items-center justify-center border-4 rounded-full cursor-pointer w-52 h-52 md:w-72 md:h-72 bg-mainColor1"
+            [class.bg-mainColor1]="!profileImage"
+          >
+            @if (profileImage) {
+            <img
+              [src]="profileImage"
+              alt="Profile Picture"
+              class="object-cover w-full h-full rounded-full"
+            />
+            }@else {
+
+            <svg
+              width="77"
+              height="65"
+              viewBox="0 0 77 65"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M76.8501 32.4895C76.8501 22.0295 68.2901 13.4595 57.8201 13.4595C57.1301 13.4595 56.44 13.5295 55.75 13.6195C51.96 5.89954 44.18 0.769531 35.63 0.769531C24.25 0.769531 15.02 9.09952 13.62 20.0695C6.21 21.4295 0.75 27.7895 0.75 35.6495C0.75 44.0695 7.01999 50.7695 15.24 51.4495C15.6 51.5895 15.99 51.6595 16.39 51.6595H26.26C28.36 51.6595 29.71 50.1595 29.51 47.9695C29.36 46.3495 27.9601 45.1195 26.3301 45.1195H16.4601C16.3301 45.1195 16.2101 45.1195 16.0901 45.1395C10.9601 44.8795 7.09009 40.8695 7.09009 35.6495C7.09009 30.4295 11.2101 26.1395 16.6001 26.1395C18.5001 26.1395 19.77 24.8695 19.77 22.9695C19.77 14.0895 26.75 7.11954 35.62 7.11954C42.6 7.11954 48.62 11.5595 50.52 18.2195C51.15 19.8095 53.06 20.7595 54.64 20.1195C54.77 20.0995 54.9 20.0695 55.02 20.0295C55.91 19.8195 56.9801 19.7995 57.8101 19.7995C64.7901 19.7995 70.49 25.5095 70.49 32.4795C70.49 39.4495 64.9901 44.9295 58.2001 45.1395C58.1201 45.1395 58.0501 45.1195 57.9701 45.1195H51.37C49.27 45.1195 47.92 46.6195 48.12 48.8095C48.27 50.4295 49.67 51.6595 51.3 51.6595H57.9C58.35 51.6595 58.77 51.5895 59.14 51.4595C68.98 50.7695 76.8301 42.4995 76.8301 32.4895H76.8501Z"
+                fill="white"
+                stroke="#002C3D"
+                stroke-width="0.11"
+                stroke-miterlimit="10"
+              />
+              <path
+                d="M48.3097 42.0093C49.2597 42.0093 49.8996 41.6893 50.5296 41.0593C51.7996 39.7893 51.7996 37.8893 50.5296 36.6193L41.6496 27.7393C41.2096 26.2893 39.8896 25.4393 38.1196 25.5993C36.6296 25.7393 35.4897 26.9293 35.3097 28.3893L27.0697 36.6293C25.7997 37.8993 25.7997 39.7993 27.0697 41.0693C27.6997 41.6993 28.3397 42.0193 29.2897 42.0193C30.2397 42.0193 30.8796 41.6993 31.5096 41.0693L35.2696 37.3093V61.5993C35.2696 63.2293 36.4896 64.6293 38.1196 64.7793C40.3096 64.9793 41.8097 63.6293 41.8097 61.5293V36.7793L46.0997 41.0693C46.7297 41.6993 47.3697 42.0193 48.3197 42.0193L48.3097 42.0093Z"
+                fill="white"
+                stroke="#002C3D"
+                stroke-width="0.11"
+                stroke-miterlimit="10"
+              />
+            </svg>
+            }
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              class="hidden"
+              id="fileUpload"
+              [readonly]="isReadOnly"
+            />
+          </label>
+          @if (!isReadOnly) {
+          <div
+            class="flex flex-col items-center justify-center text-lg font-bold gap-y-3"
+          >
+            <h4 class="text-subColor1">Browse File to upload!</h4>
+            <h4 class="text-mainColor1">Profile picture</h4>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-center justify-center w-full mt-20 text-lg font-semibold lg:w-2/3 gap-x-6 text-mainColor4"
+    >
+      @if (!isReadOnly) {
+      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+        @if (!isLoading) {Save}@else {
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="border-4 border-dashed rounded-full w-7 h-7 border-subColor2 animate-spin"
+            ></div>
+          </div>
+        </div>
+        }
+      </button>
+      }
+      <button
+        type="button"
+        routerLink="/"
+        class="px-6 py-2 rounded-md"
+        [ngClass]="isReadOnly ? 'bg-mainColor1' : 'bg-mainColor2'"
+      >
+        @if (!isLoading) { {{ isReadOnly ? "Back" : "Cancel" }} }@else {
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="border-4 border-dashed rounded-full w-7 h-7 border-mainColor1 animate-spin"
+            ></div>
+          </div>
+        </div>
+        }
+      </button>
+    </div>
+  </form>
+</div>

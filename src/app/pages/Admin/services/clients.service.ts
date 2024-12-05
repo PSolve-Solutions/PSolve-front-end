@@ -30,4 +30,23 @@ export class ClientsService {
       `${environment.BASE_URL}/api/Admin/clients/${id}`
     );
   }
+
+  createClient(formData: any): Observable<ResponseHeader> {
+    return this.http.post<any>(
+      `${environment.BASE_URL}/api/Admin/clients`,
+      formData
+    );
+  }
+
+  getClientById(id: string): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Admin/clients/${id}`
+    );
+  }
+  updateSubscribtion(info: any): Observable<ResponseHeader> {
+    return this.http.put<ResponseHeader>(
+      `${environment.BASE_URL}/api/Admin/clients/subscribtion`,
+      info
+    );
+  }
 }
