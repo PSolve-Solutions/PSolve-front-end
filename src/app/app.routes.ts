@@ -66,6 +66,7 @@ import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin
 import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
 import { ClientDetailsComponent } from './pages/Admin/screens/client-details/client-details.component';
 import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
+import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -121,12 +122,14 @@ export const routes: Routes = [
         component: CampsPublicComponent,
         title: 'Camps - ICPC',
       },
-      {
-        path: 'registration',
-        component: FormsCampsPublicComponent,
-        title: 'Camps - ICPC',
-      },
     ],
+  },
+
+  {
+    path: 'registration',
+    // component: FormsCampsPublicComponent,
+    component: RegistrationTraineeComponent,
+    title: 'Apply Now - PSolve',
   },
 
   // Admin Routes
@@ -386,31 +389,29 @@ export const routes: Routes = [
     path: 'login',
     component: LoginLayoutComponent,
     canActivate: [authGuardLoggdIn],
-    title: 'Login',
+    title: 'PSovle - Login',
     children: [
       {
         path: '',
         component: LogComponent,
-        title: 'Login',
+        title: 'PSovle - Login',
       },
       {
         path: 'forget',
         component: ForgetComponent,
-        title: 'Forget Password',
+        title: 'PSovle - Forget Password',
       },
       {
         path: 'set/:token/:email',
         component: SetpassComponent,
-        title: 'Reset Password',
+        title: 'PSovle - Reset Password',
+      },
+      {
+        path: 'otp/:email',
+        component: OtpComponent,
+        title: 'PSovle - OTP',
       },
     ],
-  },
-  {
-    path: 'otp/:email',
-    component: OtpComponent,
-    // canActivate: [authGuardLoggdIn],
-    title: 'OTP',
-    children: [],
   },
 
   // Profile Pages

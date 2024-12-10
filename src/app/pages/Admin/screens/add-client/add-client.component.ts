@@ -178,8 +178,6 @@ export class AddClientComponent implements OnInit {
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
-    this.isDropdownGrade = false;
-    this.isDropdownCollege = false;
   }
   selectGender(option: { id: number; name: string }): void {
     this.gender = option.name;
@@ -188,8 +186,6 @@ export class AddClientComponent implements OnInit {
   }
   toggleDropdownGrade() {
     this.isDropdownGrade = !this.isDropdownGrade;
-    this.isDropdownCollege = false;
-    this.isDropdownOpen = false;
   }
   selectGrade(option: number): void {
     this.grade = option;
@@ -198,8 +194,6 @@ export class AddClientComponent implements OnInit {
   }
   toggleDropdownCollege() {
     this.isDropdownCollege = !this.isDropdownCollege;
-    this.isDropdownGrade = false;
-    this.isDropdownOpen = false;
   }
   selectCollege(option: { id: number; name: string }): void {
     this.collegeName = option.name;

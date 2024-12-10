@@ -1,45 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ForgetService } from '../services/forget.service';
-import { FormGroup, FormControl, Validators,FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ResponseHeader } from '../../../../shared/model/responseHeader';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forget',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './forget.component.html',
-  styleUrl: './forget.component.scss'
+  styleUrl: './forget.component.scss',
 })
 export class ForgetComponent {
-  constructor(private serv : ForgetService,private router: Router ){
-
-  }
-  sub(){
-this.found = false;
-  }
-  isLoading:boolean = false;
-  found = false;
+  forgetService = inject(ForgetService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
+  isLoading: boolean = false;
   emailForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
-find(email: any) {
-  this.isLoading = true;
-  this.found = false;
-  
-this.serv.otp(email.value).subscribe((d:ResponseHeader)=>{
- 
-  if(d.isSuccess){
-    this.router.navigate(['/otp' , email.value]);
-    this.isLoading = false;
-  }
-  else{
-    
-    this.found = true;
-    this.isLoading = false;
-  }
-});
-}
 
+  findEmail() {
+    if (this.emailForm.invalid) {
+      this.toastr.error('Email is required');
+      return;
+    }
+    this.isLoading = true;
+    const { email } = this.emailForm.value;
+    this.forgetService.forgetPassword(email ? email : '').subscribe({
+      next: ({ statusCode, message }) => {
+        if (statusCode == 200) {
+          this.toastr.success(message);
+          this.router.navigate(['/login/otp', email ? email : '']);
+          this.isLoading = false;
+        } else if (statusCode === 400) {
+          this.isLoading = false;
+          this.toastr.error(message);
+        } else {
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.log(err);
+      },
+    });
+  }
 }

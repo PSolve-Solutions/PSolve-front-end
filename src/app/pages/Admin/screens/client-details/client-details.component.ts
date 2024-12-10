@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { OneClient } from '../../model/clients';
 import { ClientsService } from '../../services/clients.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-client-details',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './client-details.component.html',
   styleUrl: './client-details.component.scss',
 })
