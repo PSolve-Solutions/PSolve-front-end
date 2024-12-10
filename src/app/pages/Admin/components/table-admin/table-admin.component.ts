@@ -54,10 +54,7 @@ export class TableAdminComponent implements OnChanges {
   checkEndDateForClinet(endDate: string): boolean {
     const currentDate = new Date();
     const apiEndDate = new Date(endDate);
-
-    // Compare dates
     this.isPastDate = apiEndDate > currentDate;
-    console.log(this.isPastDate);
     return this.isPastDate;
   }
 

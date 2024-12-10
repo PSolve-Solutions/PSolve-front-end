@@ -1,22 +1,37 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
+import { ResponseHeader } from '../../../../shared/model/responseHeader';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ForgetService {
-email:any;
-token:any;
-  constructor(private http:HttpClient, private route: ActivatedRoute) { }
-  otp(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.BASE_URL}/api/Auth/forget-password?email=${data}`, data); 
+  http = inject(HttpClient);
+  route = inject(ActivatedRoute);
+  forgetPassword(email: string): Observable<ResponseHeader> {
+    return this.http.post<ResponseHeader>(
+      `${environment.BASE_URL}/api/Auth/forget-password?email=${email}`,
+      email
+    );
   }
-  ngOnInit(): void {
-    this.email = this.route.snapshot.paramMap.get('email')!;
-    this.token = this.route.snapshot.paramMap.get('token')!;
-    
+
+  checkResetOtp(email: string, otp: string): Observable<ResponseHeader> {
+    const params = new HttpParams().set('otp', otp).set('email', email);
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Auth/checkResetOtp`,
+      {
+        params,
+      }
+    );
+  }
+
+  resetPassword(data: any): Observable<ResponseHeader> {
+    return this.http.post<ResponseHeader>(
+      `${environment.BASE_URL}/api/Auth/reset-password`,
+      data
+    );
   }
 }

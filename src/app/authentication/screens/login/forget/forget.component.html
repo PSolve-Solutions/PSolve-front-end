@@ -1,42 +1,38 @@
-<div class="w-[80vw] sm:w-[400px] py-16 px-6 flex flex-wrap items-stretch">
-  <div class="w-full mb-4">
-    <h1 class="text-4xl font-bold">Forget password</h1>
-    <p>Enter your e-mail to send a code</p>
+<div
+  class="flex flex-col justify-start w-full h-full mt-20 font-montserrat md:ps-6 md:pe-8"
+>
+  <div class="flex flex-col mb-6 w-fit">
+    <h1 class="text-3xl font-extrabold md:text-4xl text-mainColor1">
+      Forget password
+    </h1>
+    <p class="mt-2 text-lg font-semibold md:text-2xl text-mainColor1">
+      Enter your e-mail to send a code
+    </p>
   </div>
-
-  <form #form="ngForm" (ngSubmit)="find(email)" class="w-full">
+  <form
+    [formGroup]="emailForm"
+    (ngSubmit)="findEmail()"
+    class="flex flex-col w-full gap-3 mt-3"
+  >
     <input
       type="email"
       name="email"
-      ngModel
-      required
-      email
-      #email="ngModel"
-      (keydown)="sub()"
       placeholder="E-mail"
-      class="w-full bg-transparent border focus:outline-0 border-white rounded-[12px] text-white placeholder-white py-2 px-3"
+      formControlName="email"
+      class="border focus:outline-0 border-[#e1e4e4] rounded-xl text-mainColor1 font-semibold bg-[#eef3f3] py-4 px-6 text-lg"
     />
-    <small
-      *ngIf="email.errors?.['required'] && email.touched"
-      class="text-red-500"
-      > Email is required.</small
-    >
-    <small *ngIf="email.errors?.['email'] && email.touched" class="text-red-500"
-      > Please enter a valid email.</small
-    >
-    <small *ngIf="found" class="text-red-500"> E-mail Not Found </small>
     <button
+      class="flex items-center self-center justify-center py-2 mt-5 text-lg font-bold text-center text-white w-fit bg-mainColor1 px-14 rounded-xl"
       type="submit"
-      [disabled]="form.invalid || isLoading"
-      class="flex justify-center items-center w-full py-2 text-center rounded-xl mt-5 bg-gradient-to-r from-[#3D91C7] via-[#3591C9] to-[#63ABFD]"
     >
       @if (isLoading) {
-      <img
-        class="w-8 h-8 animate-spin text-purple-950"
-        src="https://www.svgrepo.com/show/474682/loading.svg"
-        alt="Loading icon"
-        loading="lazy"
-      />
+      <div class="flex items-center justify-center w-full bg-opacity-60">
+        <div class="flex items-center justify-center">
+          <div
+            class="border-4 border-blue-600 border-dashed rounded-full w-7 h-7 animate-spin"
+          ></div>
+        </div>
+      </div>
       } @else { Send OTP }
     </button>
   </form>
