@@ -352,7 +352,6 @@ export class RegistrationTraineeComponent implements OnInit {
 
   swipPage(num: number): void {
     if (num === 1) {
-      debugger;
       if (this.currentTab === 1) {
         if (this.hasLab && this.campName) {
           this.currentTab = 2;

@@ -1,19 +1,18 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
   inject,
   Input,
   OnChanges,
-  OnInit,
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Admins } from '../../model/admins';
 import { RouterLink } from '@angular/router';
 import { DeleteUserComponent } from '../delete-user/delete-user.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
-import { Clinets } from '../../model/clients';
+import { ToastrService } from 'ngx-toastr';
+import { ClientsService } from '../../services/clients.service';
 
 @Component({
   selector: 'app-table-admin',
@@ -24,6 +23,8 @@ import { Clinets } from '../../model/clients';
 })
 export class TableAdminComponent implements OnChanges {
   casheService = inject(CasheService);
+  clientsService = inject(ClientsService);
+  toastr = inject(ToastrService);
   @Output() pageParams = new EventEmitter<{
     currentPage: number;
     rowsPerPage: number;
@@ -31,7 +32,7 @@ export class TableAdminComponent implements OnChanges {
   @Input() allDataTable!: any;
   @Input() isLoading: boolean = false;
   @Input() whatPlace: string = '';
-  rowsPerPage: number = 1;
+  rowsPerPage: number = 5;
   currPage: number = 1;
   pageSize: number = 1;
   totalPages: number = 1;
@@ -43,12 +44,38 @@ export class TableAdminComponent implements OnChanges {
   showModalDelete: boolean = false;
   selectedUserId: string | null = null;
   isPastDate: boolean = false;
+  isLocked: boolean = false;
 
   ngOnChanges() {
     this.generatePages();
     this.totalPages = this.allDataTable?.totalPages;
     this.pageSize = this.allDataTable?.pageSize;
     this.totalCount = this.allDataTable?.totalCount;
+  }
+
+  changeLockStatus(clientId: string): void {
+    console.log(clientId);
+    this.clientsService.changeLockStatus(clientId).subscribe({
+      next: ({ statusCode, message }) => {
+        if (statusCode === 200) {
+          this.isLocked = true;
+          this.toastr.success(message);
+        } else if (statusCode === 400) {
+          this.toastr.error(message);
+          this.isLoading = false;
+        } else if (statusCode === 404) {
+          this.toastr.error(message);
+
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      },
+    });
   }
 
   checkEndDateForClinet(endDate: string): boolean {
@@ -87,7 +114,7 @@ export class TableAdminComponent implements OnChanges {
 
   generatePages(): void {
     this.pages = [];
-    if (this.allDataTable?.totalPages <= 5) {
+    if (this.allDataTable?.totalPages <= 3) {
       for (let i = 1; i <= this.allDataTable?.totalPages; i++) {
         this.pages.push(i);
       }

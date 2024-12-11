@@ -6,9 +6,9 @@
     >
       <thead class="text-sm font-semibold uppercase bg-[#DEDFE1]">
         <tr>
-          <th class="py-4 ps-6 pe-3">Profile</th>
-          <th class="hidden py-4 ps-6 pe-3 md:table-cell">E-mail</th>
-          <th class="hidden py-4 ps-6 pe-3 md:table-cell">Phone</th>
+          <th class="py-4 md:ps-6 ps-3 pe-3">Profile</th>
+          <th class="hidden py-4 md:ps-6 ps-3 pe-3 md:table-cell">E-mail</th>
+          <th class="hidden py-4 md:ps-6 ps-3 pe-3 md:table-cell">Phone</th>
           <th class="hidden py-4 text-center ps-6 pe-3 md:table-cell">
             National ID
           </th>
@@ -25,7 +25,7 @@
         >
           <td
             [routerLink]="['upsert-admin/', row.id]"
-            class="flex items-center py-4 space-x-2 cursor-pointer ps-6 pe-3"
+            class="flex items-center py-4 space-x-2 cursor-pointer md:ps-6 ps-3 pe-3"
           >
             <div class="w-8 h-8">
               <img
@@ -95,8 +95,10 @@
     >
       <thead class="text-sm font-semibold uppercase bg-[#DEDFE1]">
         <tr>
-          <th class="py-4 ps-6 pe-3">Clients Profile</th>
-          <th class="hidden py-4 ps-6 pe-3 md:table-cell">Community E-mail</th>
+          <th class="py-4 md:ps-6 ps-3 pe-3">Clients Profile</th>
+          <th class="hidden py-4 md:ps-6 ps-3 pe-3 md:table-cell">
+            Community E-mail
+          </th>
           <th class="relative hidden py-4 text-center ps-12 md:table-cell">
             <div
               class="absolute top-0 px-4 py-2.5 text-white rounded-bl-md rounded-br-md bg-mainColor1 w-fit"
@@ -104,8 +106,10 @@
               Subscribe End
             </div>
           </th>
-          <th class="hidden py-4 text-center ps-6 pe-3 md:table-cell">Block</th>
-          <th class="py-4 text-center ps-6 pe-3">Delete</th>
+          <th class="hidden py-4 text-center md:ps-6 ps-3 pe-3 md:table-cell">
+            Block
+          </th>
+          <th class="py-4 text-center md:ps-6 ps-3 pe-3">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -141,17 +145,23 @@
             >
           </td>
           <td class="hidden py-4 text-center ps-6 pe-3 md:table-cell">
-            <label class="relative inline-flex items-center cursor-pointer">
+            <button
+              (click)="changeLockStatus(row.id)"
+              class="relative inline-flex items-center cursor-pointer"
+            >
+              <input type="checkbox" [(ngModel)]="isLocked" class="sr-only" />
               <div
-                class="h-6 rounded-full w-11 peer-focus:outline-none"
-                [ngClass]="
-                  row.isLocked
-                    ? 'bg-teal-500 after:translate-x-5 after:border-white'
-                    : 'bg-mainColor2  after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all'
-                "
-              ></div>
-            </label>
+                class="h-6 transition-colors duration-300 rounded-full w-11 bg-mainColor2"
+                [class.bg-teal-500]="isLocked"
+              >
+                <div
+                  class="absolute top-[2px] left-[2px] h-5 w-5 rounded-full bg-white border border-gray-300 transition-transform duration-300"
+                  [class.translate-x-5]="isLocked"
+                ></div>
+              </div>
+            </button>
           </td>
+
           <td class="py-4 text-center ps-6 pe-3">
             <button
               (click)="showConfirmDelete(row.id)"
@@ -203,7 +213,7 @@
     class="flex items-center justify-between py-3 rounded-br-lg rounded-bl-lg md:ps-6 ps-3 pe-2 bg-[#DEDFE1] mt-2 text-sm text-mainColor1"
   >
     <div class="flex items-center font-semibold gap-x-2 md:gap-x-6">
-      <span class="text-[12px] md:text-sm">Rows per page</span>
+      <span class="hidden md:block md:text-sm">Rows per page</span>
 
       <div class="relative inline-block text-left">
         <button

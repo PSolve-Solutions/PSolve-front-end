@@ -1,9 +1,20 @@
 <div
-  class="flex items-center justify-center min-h-screen font-montserrat bg-mainColor4"
+  class="flex flex-col items-center justify-center min-h-screen md:flex-row font-montserrat bg-mainColor4"
 >
-  <!-- Main Container -->
-  <div class="flex w-full max-w-5xl p-3 bg-white shadow-2xl rounded-3xl">
-    <!-- Left Panel: Illustration -->
+  <div
+    class="self-start px-6 py-2 my-10 rounded-lg ms-8 md:hidden bg-mainColor1"
+  >
+    <img
+      src="assets/img/logo.png"
+      alt="Psovle"
+      width="90"
+      height="30"
+      class="object-cover"
+    />
+  </div>
+  <div
+    class="flex w-full max-w-5xl p-3 mx-2 my-4 bg-white shadow-2xl rounded-3xl"
+  >
     @if (superTab === 1) {
 
     <div
@@ -23,8 +34,7 @@
       />
     </div>
 
-    <!-- Right Panel: Form -->
-    <div class="flex flex-col w-full py-6 pt-2 pb-4 ps-6 pe-4 md:w-2/3">
+    <div class="flex flex-col w-full pt-2 pb-4 md:ps-6 md:pe-4 md:w-2/3">
       <div class="flex items-center justify-end mb-2">
         <a routerLink="/login" class="font-semibold text-mainColor1"
           >Already have an account?
@@ -39,7 +49,7 @@
 
       <form
         [formGroup]="registrationForm"
-        class="p-4 mt-4 bg-white border h-[450px] rounded-lg shadow-lg"
+        class="p-4 mt-4 bg-white border min-h-[450px] rounded-lg shadow-lg"
       >
         @if (currentTab === 1) {
         <!-- Step 1 -->
@@ -803,7 +813,9 @@
               fill="#484DC4"
             />
           </svg>
-          <h3 class="text-4xl font-extrabold tracking-wide text-mainColor1">
+          <h3
+            class="text-2xl font-extrabold tracking-wide md:text-4xl text-mainColor1"
+          >
             Request Completed
           </h3>
         </div>
