@@ -21,55 +21,67 @@
               <div class="flex flex-col col-span-1 lg:col-span-2 gap-y-1">
                 <label
                   for="firstName"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >FirstName
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <input
                   type="text"
                   id="firstName"
                   formControlName="FirstName"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div class="flex flex-col col-span-1 lg:col-span-2 gap-y-1">
                 <label
                   for="middleName"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Middle Name
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <input
                   type="text"
                   id="middleName"
                   formControlName="MiddleName"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div class="flex flex-col col-span-1 lg:col-span-2 gap-y-1">
-                <label for="lastName" class="font-bold text-[#002C3D4D] text-lg"
+                <label
+                  for="lastName"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Last Name
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <input
                   type="text"
                   id="lastName"
                   formControlName="LastName"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div
                 id="dropdown"
                 class="relative flex flex-col col-span-1 gap-y-1"
               >
-                <label for="gender" class="font-bold text-[#002C3D4D] text-lg"
+                <label
+                  for="gender"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Gender
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <button
                   type="button"
                   (click)="toggleDropdown()"
-                  class="flex items-center justify-between px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (gender) { {{ gender }} }@else {
 
@@ -115,39 +127,49 @@
               <div class="flex flex-col col-span-1 lg:col-span-3 gap-y-1">
                 <label
                   for="birthDate"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >BirthDate
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
 
                 <input
                   type="date"
                   id="birthDate"
                   formControlName="BirthDate"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div class="flex flex-col col-span-1 gap-y-1 lg:col-span-3">
-                <label for="email" class="font-bold text-[#002C3D4D] text-lg"
+                <label
+                  for="email"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >E-mail
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <input
                   type="email"
                   id="email"
                   formControlName="Email"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div id="grade" class="relative flex flex-col gap-y-1 ol-span-1">
-                <label for="grade" class="font-bold text-[#002C3D4D] text-lg"
+                <label
+                  for="grade"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Year
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <button
                   type="button"
                   (click)="toggleDropdownGrade()"
-                  class="flex items-center justify-between px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (grade) { {{ grade }} }@else {
 
@@ -190,27 +212,27 @@
               <div class="flex flex-col gap-y-1">
                 <label
                   for="nationalId"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >National Id</label
                 >
                 <input
                   type="text"
                   id="nationalId"
                   formControlName="NationalId"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div class="flex flex-col gap-y-1">
                 <label
                   for="phoneNumber"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Phone number</label
                 >
                 <input
                   type="text"
                   id="phoneNumber"
                   formControlName="PhoneNumber"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
             </div>
@@ -218,26 +240,30 @@
               <div class="flex flex-col gap-y-1">
                 <label
                   for="FacebookLink"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Facebook Link</label
                 >
                 <input
                   type="text"
                   id="FacebookLink"
                   formControlName="FacebookLink"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
 
               <div id="college" class="relative flex flex-col gap-y-1">
-                <label for="College" class="font-bold text-[#002C3D4D] text-lg"
+                <label
+                  for="College"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >College
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <button
                   type="button"
                   (click)="toggleDropdownCollege()"
-                  class="flex items-center justify-between px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (collegeName) { {{ collegeName }} }@else {
 
@@ -280,28 +306,30 @@
               <div class="flex flex-col gap-y-1">
                 <label
                   for="VjudgeHandle"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >Vjudge Handle</label
                 >
                 <input
                   type="text"
                   id="VjudgeHandle"
                   formControlName="VjudgeHandle"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
               <div class="flex flex-col gap-y-1">
                 <label
                   for="CodeForceHandle"
-                  class="font-bold text-[#002C3D4D] text-lg"
+                  class="font-bold text-[#002C3D4D] md:text-lg text-sm"
                   >CodeForce Handle
-                  <span class="text-lg font-bold text-red-600">*</span></label
+                  <span class="text-sm font-bold text-red-600 md:text-lg"
+                    >*</span
+                  ></label
                 >
                 <input
                   type="text"
                   id="CodeForceHandle"
                   formControlName="CodeForceHandle"
-                  class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+                  class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
             </div>
@@ -357,7 +385,7 @@
             />
           </label>
           <div
-            class="flex flex-col items-center justify-center text-lg font-bold gap-y-3"
+            class="flex flex-col items-center justify-center text-sm font-bold md:text-lg gap-y-3"
           >
             <h4 class="text-subColor1">Browse File to upload!</h4>
             <h4 class="text-mainColor1">Profile picture</h4>
@@ -373,55 +401,65 @@
       <div class="flex flex-col w-full gap-y-2 lg:flex-row gap-x-4">
         <div class="grid w-full grid-cols-2 gap-2 lg:w-7/12">
           <div class="flex flex-col gap-y-1">
-            <label for="ClientName" class="font-bold text-[#002C3D4D] text-lg"
+            <label
+              for="ClientName"
+              class="font-bold text-[#002C3D4D] md:text-lg text-sm"
               >Community Name
-              <span class="text-lg font-bold text-red-600">*</span></label
+              <span class="text-sm font-bold text-red-600 md:text-lg"
+                >*</span
+              ></label
             >
             <input
               type="text"
               id="ClientName"
               formControlName="ClientName"
-              class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
             />
           </div>
           <div class="flex flex-col gap-y-1">
             <label
               for="CommunityGmail"
-              class="font-bold text-[#002C3D4D] text-lg"
+              class="font-bold text-[#002C3D4D] md:text-lg text-sm"
               >Community E-mail
-              <span class="text-lg font-bold text-red-600">*</span></label
+              <span class="text-sm font-bold text-red-600 md:text-lg"
+                >*</span
+              ></label
             >
             <input
               type="text"
               id="CommunityGmail"
               formControlName="CommunityGmail"
-              class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
             />
           </div>
-          <div class="flex flex-col gap-y-1">
+          <div class="flex flex-col pt-1 gap-y-1">
             <label
               for="CommunityFacebookLink"
-              class="font-bold text-sm text-[#002C3D4D] lg:text-lg"
+              class="font-bold text-xs text-[#002C3D4D] lg:md:text-lg"
               >Community Facebook Link</label
             >
             <input
               type="text"
               id="CommunityFacebookLink"
               formControlName="CommunityFacebookLink"
-              class="px-4 py-2 text-lg font-semibold border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
             />
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="Logo" class="font-bold text-[#002C3D4D] text-lg"
+            <label
+              for="Logo"
+              class="font-bold text-[#002C3D4D] md:text-lg text-sm"
               >Community Logo
-              <span class="text-lg font-bold text-red-600">*</span></label
+              <span class="text-sm font-bold text-red-600 md:text-lg"
+                >*</span
+              ></label
             >
             <div
               class="flex items-center overflow-hidden border rounded-md border-mainColor1"
             >
               <label
                 for="logo"
-                class="px-4 py-2.5 text-sm lg:text-base font-semibold cursor-pointer bg-mainColor1 text-mainColor4"
+                class="md:px-4 w-fit py-2.5 text-xs lg:text-base font-semibold cursor-pointer bg-mainColor1 text-mainColor4"
               >
                 Choose File
               </label>
@@ -433,17 +471,19 @@
                 (change)="onLogoSelected($event)"
               />
               <span
-                class="px-2 text-sm font-semibold lg:px-4 lg:text-base text-mainColor1"
-                >{{ logoName || "No file chosen" }}</span
+                class="px-1 text-xs font-semibold truncate lg:px-4 lg:text-base text-mainColor1"
+                >{{ logoName || "File" }}</span
               >
             </div>
           </div>
         </div>
         <div class="grid w-full gap-2 lg:w-5/12">
-          <div class="flex flex-col w-2/3">
-            <h4 class="font-semibold pb-1.5 text-[#002C3D4D] text-lg">
+          <div class="flex flex-col w-full md:w-2/3">
+            <h4
+              class="font-semibold pb-1.5 text-[#002C3D4D] md:text-lg text-sm"
+            >
               Subscribe Date
-              <span class="text-lg font-bold text-red-600">*</span>
+              <span class="text-sm font-bold text-red-600 md:text-lg">*</span>
             </h4>
             <div
               class="flex flex-col p-4 bg-white border rounded-md border-mainColor1 text-mainColor1"
@@ -550,7 +590,7 @@
       </button>
       <button
         type="button"
-        routerLink="/"
+        routerLink="/psovle/clients"
         class="px-6 py-2 rounded-md bg-mainColor2"
       >
         Cancel
