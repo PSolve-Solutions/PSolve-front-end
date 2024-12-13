@@ -5,16 +5,19 @@ import { ConfirmCampComponent } from '../../Components/confirm-camp/confirm-camp
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { EmptyCampComponent } from '../../Components/empty-camp/empty-camp.component';
 import { CampInfo } from '../../model/camp';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-camps-leader',
   standalone: true,
-  imports: [ConfirmCampComponent, EmptyCampComponent],
+  imports: [ConfirmCampComponent, NgClass, EmptyCampComponent],
   templateUrl: './camps-leader.component.html',
   styleUrl: './camps-leader.component.scss',
 })
 export class CampsLeaderComponent implements OnInit {
   campLeaderService = inject(CampLeaderService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   router = inject(Router);
   allCampsInfo!: CampInfo;
@@ -23,10 +26,15 @@ export class CampsLeaderComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedEmptyId: number | null = null;
   isLoading = signal<boolean>(false);
-  startPageIndex: number = 0;
-  maxVisiblePages: number = 4;
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 1;
+  showEllipsis: boolean = false;
+  showLastPage: boolean = false;
+  pages: number[] = [];
+
   ngOnInit() {
-    this.fetchAllWithPagination(1, 10);
+    this.fetchAllWithPagination(this.currentPage, this.pageSize);
   }
 
   fetchAllWithPagination(currentPage: number, pageSize: number): void {
@@ -37,6 +45,8 @@ export class CampsLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.allCampsInfo = res;
+            this.totalPages = this.allCampsInfo.totalPages;
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -57,7 +67,7 @@ export class CampsLeaderComponent implements OnInit {
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.casheService.clearCache();
-      this.fetchAllWithPagination(this.allCampsInfo?.currentPage, 10);
+      this.fetchAllWithPagination(this.currentPage, this.pageSize);
     }
     this.showModal = false;
   }
@@ -72,43 +82,39 @@ export class CampsLeaderComponent implements OnInit {
     this.showEmptyModal = false;
   }
 
-  nextPage() {
-    if (this.allCampsInfo.hasNextPage) {
-      this.fetchAllWithPagination(this.allCampsInfo.currentPage + 1, 10);
+  campId: number = 0;
+
+  toggleDetails(id: number) {
+    if (id === this.campId) {
+      this.campId = 0;
+    } else {
+      this.campId = id;
     }
   }
 
-  previousPage() {
-    if (this.allCampsInfo.hasPreviousPage) {
-      this.fetchAllWithPagination(this.allCampsInfo.currentPage - 1, 10);
+  generatePages(): void {
+    this.pages = [];
+    if (this.allCampsInfo?.totalPages <= 3) {
+      for (let i = 1; i <= this.allCampsInfo?.totalPages; i++) {
+        this.pages.push(i);
+      }
+    } else {
+      const start = Math.max(this.currentPage - 2, 1);
+      const end = Math.min(this.currentPage + 2, this.allCampsInfo?.totalPages);
+      for (let i = start; i <= end; i++) {
+        this.pages.push(i);
+      }
+
+      this.showEllipsis = end < this.allCampsInfo?.totalPages - 1;
+      this.showLastPage = this.showEllipsis;
     }
   }
 
-  getPageRange(): number[] {
-    const totalPages = this.allCampsInfo.totalPages;
-    const currentPage = this.allCampsInfo.currentPage;
-    const visiblePages = [];
-
-    if (currentPage > this.startPageIndex + this.maxVisiblePages) {
-      this.startPageIndex = currentPage - this.maxVisiblePages;
-    } else if (currentPage <= this.startPageIndex) {
-      this.startPageIndex = currentPage - 1;
+  changePage(page: number): void {
+    if (page > 0 && page <= this.allCampsInfo?.totalPages) {
+      this.currentPage = page;
+      this.generatePages();
     }
-
-    const endPage = Math.min(
-      this.startPageIndex + this.maxVisiblePages,
-      totalPages
-    );
-
-    for (let i = this.startPageIndex + 1; i <= endPage; i++) {
-      visiblePages.push(i);
-    }
-
-    return visiblePages;
-  }
-
-  gotoPage(pageNum: number): void {
-    this.fetchAllWithPagination(pageNum, 10);
   }
 
   goToActionCamp(id: number): void {

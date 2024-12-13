@@ -175,7 +175,7 @@ export const routes: Routes = [
   // Leader Routes
   {
     path: 'leader',
-    component: LayoutLeaderComponent,
+    component: LayoutAdminComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'Leader - ICPC',
     children: [

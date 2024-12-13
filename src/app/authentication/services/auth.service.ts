@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { ResponseHeader } from '../../shared/model/responseHeader';
+import { CurrentUser, ResponseHeader } from '../../shared/model/responseHeader';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AuthService {
   router = inject(Router);
 
   // Varibles
-  currentUser = signal<any>(null);
+  currentUser = signal<CurrentUser>({} as CurrentUser);
   isAuth = signal<boolean>(false);
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
@@ -37,9 +37,9 @@ export class AuthService {
     username: string;
     password: string;
     rememberMe: boolean;
-  }): Observable<any> {
+  }): Observable<ResponseHeader> {
     return this.http
-      .post<any>(`${environment.BASE_URL}/api/Auth/login`, userBody)
+      .post<ResponseHeader>(`${environment.BASE_URL}/api/Auth/login`, userBody)
       .pipe(
         tap(({ statusCode, data }: ResponseHeader) => {
           if (statusCode === 200) {

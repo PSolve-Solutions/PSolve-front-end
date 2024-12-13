@@ -20,6 +20,7 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actios-camp',
@@ -39,6 +40,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class ActiosCampComponent implements OnInit {
   campLeaderService = inject(CampLeaderService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
@@ -80,6 +82,9 @@ export class ActiosCampComponent implements OnInit {
       headsIds: [null],
       mentorsIds: [null],
       openForRegister: [false, [Validators.required]],
+      isRequiredCodeforce: [false],
+      isRequiredVjudge: [false],
+      isOnSite: [false],
       durationInWeeks: [
         null,
         [Validators.required, this.positiveNumberValidator],
@@ -194,6 +199,9 @@ export class ActiosCampComponent implements OnInit {
             term: data.term,
             durationInWeeks: data.durationInWeeks,
             openForRegister: data.openForRegister,
+            isOnSite: data.isOnSite,
+            isRequiredVjudge: data.isRequiredVjudge,
+            isRequiredCodeforce: data.isRequiredCodeforce,
             headsIds: this.allHeadsOfCamp
               .filter((item: any) => item.inCamp)
               .map((item: any) => item.id),

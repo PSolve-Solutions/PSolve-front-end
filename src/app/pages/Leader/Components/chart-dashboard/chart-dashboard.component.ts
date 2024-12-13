@@ -22,6 +22,12 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
     this.percentagefemales = Math.round(
       (this.femalesCount / this.traineesCount) * 100
     );
+    const lables = ['Male'];
+    const lables2 = ['Female', 'No'];
+    const data = [this.percentageMales, this.percentageMales - 100];
+    const data2 = [this.percentagefemales, this.percentagefemales - 100];
+    this.renderChart(lables, data);
+    this.renderChart2(lables2, data2);
   }
 
   ngAfterViewInit(): void {
@@ -97,7 +103,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
           {
             data: data,
             label: 'Male',
-            backgroundColor: ['#3D91C7', '#d0e5f2'],
+            backgroundColor: ['#78BDC4', '#c4e0e0'],
             borderColor: 'transparent',
             borderWidth: 0,
             borderRadius: 12,
@@ -127,7 +133,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
       } as any,
 
       plugins: [
-        this.createDoughnutBackgroundPlugin('#d0e5f2'),
+        this.createDoughnutBackgroundPlugin('#c4e0e0'),
         this.createCenterTextPlugin(
           this.percentageMales ? String(this.percentageMales) : '0',
           'bold 24px Arial',
@@ -146,7 +152,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
           {
             data: data,
             label: 'Female',
-            backgroundColor: ['#E69C24', '#f9e7ca'],
+            backgroundColor: ['#F7BCBC', '#f7e0dd'],
             borderWidth: 0,
             borderRadius: 12,
           },
@@ -174,7 +180,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
         },
       } as any,
       plugins: [
-        this.createDoughnutBackgroundPlugin('#f9e7ca'),
+        this.createDoughnutBackgroundPlugin('#f7e0dd'),
         this.createCenterTextPlugin(
           this.percentagefemales ? String(this.percentagefemales) : '0',
           'bold 24px Arial',

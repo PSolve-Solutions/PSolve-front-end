@@ -17,12 +17,14 @@ export class SidebarAdminComponent {
   ocSidebarService = inject(OcSidebarService);
   @Output() isOpen = new EventEmitter<boolean>();
   isShow: boolean = true;
+  roles: string[] = [];
   constructor() {
     this.isShow = this.ocSidebarService.isOpen();
+    this.roles = this.authService.currentUser().roles;
+    console.log(this.roles);
   }
 
   show(): void {
-    debugger;
     this.ocSidebarService.openSidebar();
     this.isShow = this.ocSidebarService.isOpen();
     this.isOpen.emit(this.isShow);
