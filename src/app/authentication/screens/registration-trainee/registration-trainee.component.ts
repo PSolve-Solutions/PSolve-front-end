@@ -58,7 +58,6 @@ export class RegistrationTraineeComponent implements OnInit {
   gender: string = '';
   isLoading: boolean = false;
   showLoader: boolean = false;
-  isCheckContactInfo: boolean = false;
   isCheckNationalId: boolean = false;
   checkRequiredField: RequiredFields = {
     isRequiredTraineeNationalId: false,
@@ -73,16 +72,16 @@ export class RegistrationTraineeComponent implements OnInit {
       FirstName: ['', [Validators.required]],
       MiddleName: ['', [Validators.required]],
       LastName: ['', [Validators.required]],
-      NationalId: [null, [Validators.maxLength(14), Validators.minLength(14)]],
+      NationalId: ['', [Validators.maxLength(14), Validators.minLength(14)]],
       BirthDate: ['', [Validators.required]],
       Grade: ['', [Validators.required]],
       College: ['', [Validators.required]],
       Gender: ['', [Validators.required]],
-      CodeForceHandle: [null],
+      CodeForceHandle: [''],
+      VjudgeHandle: [''],
       FacebookLink: [null],
-      VjudgeHandle: [null],
       Email: ['', [Validators.required, Validators.email]],
-      PhoneNumber: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+      PhoneNumber: ['', [Validators.maxLength(11), Validators.minLength(11)]],
       Photo: [null],
       HasLaptop: [null, [Validators.required]],
       otp: [null, [Validators.required, Validators.maxLength(4)]],
@@ -118,23 +117,6 @@ export class RegistrationTraineeComponent implements OnInit {
   }
 
   registration(): void {
-    if (this.registrationForm.invalid) {
-      this.displayFormErrors();
-      return;
-    }
-    const contactInfo = {
-      communityId: this.communityId,
-      campId: this.registrationForm.get('CampId')?.value,
-      email: this.registrationForm.get('Email')?.value,
-      phoneNumber: this.registrationForm.get('PhoneNumber')?.value,
-      codeforces: this.registrationForm.get('CodeForceHandle')?.value,
-      vjudgeHandle: this.registrationForm.get('VjudgeHandle')?.value,
-      otp: this.registrationForm.get('otp')?.value,
-    };
-    this.checkContactInfo(contactInfo);
-    if (!this.isCheckContactInfo) {
-      return;
-    }
     this.isLoading = true;
     const myForm = this.filterNullValues(this.registrationForm);
     const formData = new FormData();
@@ -270,13 +252,25 @@ export class RegistrationTraineeComponent implements OnInit {
     });
   }
 
-  checkContactInfo(contactInfo: any): void {
+  checkContactInfo(): void {
+    if (this.registrationForm.invalid) {
+      this.displayFormErrors();
+      return;
+    }
+    const contactInfo = {
+      communityId: this.communityId,
+      campId: this.registrationForm.get('CampId')?.value,
+      email: this.registrationForm.get('Email')?.value,
+      phoneNumber: this.registrationForm.get('PhoneNumber')?.value,
+      codeforces: this.registrationForm.get('CodeForceHandle')?.value,
+      vjudgeHandle: this.registrationForm.get('VjudgeHandle')?.value,
+      otp: this.registrationForm.get('otp')?.value,
+    };
     this.registerationService.checkContactInfo(contactInfo).subscribe({
       next: ({ statusCode, message }) => {
         if (statusCode === 200) {
-          this.isCheckContactInfo = true;
+          this.registration();
         } else {
-          this.isCheckContactInfo = false;
           this.toastr.error(message);
           console.log('error');
         }

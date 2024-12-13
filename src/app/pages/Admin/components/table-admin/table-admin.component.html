@@ -149,14 +149,18 @@
               (click)="changeLockStatus(row.id)"
               class="relative inline-flex items-center cursor-pointer"
             >
-              <input type="checkbox" [(ngModel)]="isLocked" class="sr-only" />
+              <input
+                type="checkbox"
+                [(ngModel)]="row.isLocked"
+                class="sr-only"
+              />
               <div
                 class="h-6 transition-colors duration-300 rounded-full w-11 bg-mainColor2"
-                [class.bg-teal-500]="isLocked"
+                [class.bg-teal-500]="row.isLocked"
               >
                 <div
                   class="absolute top-[2px] left-[2px] h-5 w-5 rounded-full bg-white border border-gray-300 transition-transform duration-300"
-                  [class.translate-x-5]="isLocked"
+                  [class.translate-x-5]="row.isLocked"
                 ></div>
               </div>
             </button>
@@ -257,6 +261,7 @@
         >{{ currPage }}-{{ totalPages }} of {{ totalCount }}</span
       >
     </div>
+
     <div
       class="flex items-center justify-center p-2 space-x-2 text-sm font-semibold rounded-lg"
     >

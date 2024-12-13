@@ -1,7 +1,8 @@
 <div
-  class="flex flex-col items-center justify-center min-h-screen md:flex-row font-montserrat bg-mainColor4"
+  class="flex flex-col items-center justify-center min-h-screen px-3 md:flex-row font-montserrat bg-mainColor4"
 >
   <div
+    routerLink="/"
     class="self-start px-6 py-2 my-10 rounded-lg ms-8 md:hidden bg-mainColor1"
   >
     <img
@@ -9,7 +10,7 @@
       alt="Psovle"
       width="90"
       height="30"
-      class="object-cover"
+      class="object-cover cursor-pointer"
     />
   </div>
   <div
@@ -30,7 +31,8 @@
         alt="Psovle"
         width="105"
         height="38"
-        class="object-cover"
+        class="object-cover cursor-pointer"
+        routerLink="/"
       />
     </div>
 
@@ -696,6 +698,29 @@
             </button>
           </div>
         </div>
+        <div class="flex items-center mt-4 gap-x-3">
+          <div
+            class="flex items-center justify-center w-5 h-5 border border-black rounded"
+          >
+            @if (checkRequiredField.isOnSite) {
+            <svg
+              width="14"
+              height="15"
+              viewBox="0 0 22 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 11.2432L8.14634 20L20 2"
+                stroke="#2A8E9E"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+            }
+          </div>
+          <h4 class="text-[#A3B3B9] font-semibold">Accept to Attend Onside</h4>
+        </div>
         <div class="mt-4">
           <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">Online Profiles</h3>
 
@@ -778,10 +803,22 @@
             }@else {
             <button
               type="submit"
-              (click)="registration()"
+              (click)="checkContactInfo()"
               class="px-4 py-0.5 rounded-lg text-white bg-mainColor1"
+              [class.py-1.5]="isLoading"
             >
-              Apply
+              @if (isLoading) {
+              <div class="flex items-center py-1 gap-x-2">
+                <span class="sr-only">Loading...</span>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"
+                ></div>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"
+                ></div>
+                <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+              </div>
+              }@else { Apply }
             </button>
             }
           </div>
