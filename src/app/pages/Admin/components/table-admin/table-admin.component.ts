@@ -59,6 +59,7 @@ export class TableAdminComponent implements OnChanges {
     this.clientsService.changeLockStatus(clientId).subscribe({
       next: ({ statusCode, message }) => {
         if (statusCode === 200) {
+          this.casheService.clearCache();
           const i = this.allDataTable.data.find((t: any) => t.id == clientId);
           this.isLocked = i.isLocked;
           this.toastr.success(message);

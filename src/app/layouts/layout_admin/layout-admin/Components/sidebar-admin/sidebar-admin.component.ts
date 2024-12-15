@@ -15,7 +15,6 @@ import { OcSidebarService } from '../../../../../shared/services/oc-sidebar.serv
 export class SidebarAdminComponent {
   authService = inject(AuthService);
   ocSidebarService = inject(OcSidebarService);
-  @Output() isOpen = new EventEmitter<boolean>();
   isShow: boolean = true;
   roles: string[] = [];
   constructor() {
@@ -27,6 +26,5 @@ export class SidebarAdminComponent {
   show(): void {
     this.ocSidebarService.openSidebar();
     this.isShow = this.ocSidebarService.isOpen();
-    this.isOpen.emit(this.isShow);
   }
 }

@@ -1,28 +1,24 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { DropdownRolesComponent } from '../../Components/dropdown-roles/dropdown-roles.component';
 import { TraineesLeaderService } from '../../services/trainees-leader.service';
 import { OnTraineeInfo, TraineeInfo } from '../../model/trainees-leader';
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-trainees-leader',
   standalone: true,
-  imports: [
-    DropdownRolesComponent,
-    NgSelectModule,
-    ReactiveFormsModule,
-    NgClass,
-  ],
+  imports: [DropdownRolesComponent, NgSelectModule, NgClass],
   templateUrl: './trainees-leader.component.html',
   styleUrl: './trainees-leader.component.scss',
 })
 export class TraineesLeaderComponent implements OnInit {
   traineesLeaderService = inject(TraineesLeaderService);
+  ocSidebarService = inject(OcSidebarService);
   authService = inject(AuthService);
   rolesService = inject(RolesService);
   casheService = inject(CasheService);
@@ -38,18 +34,17 @@ export class TraineesLeaderComponent implements OnInit {
   keywordSearch: string = '';
   sortbyNum: number = 0 | 1 | 2;
   deletedRoles: any[] = [];
-  startPageIndex: number = 0;
-  maxVisiblePages: number = 4;
   focusOrder: boolean = false;
 
-  searchForm!: FormGroup;
-  ngOnInit() {
-    this.searchForm = new FormGroup({
-      searchInput: new FormControl(''),
-      sortNumber: new FormControl(null),
-    });
+  currentPage: number = 1;
+  pageSize: number = 8;
+  totalPages: number = 1;
+  showEllipsis: boolean = false;
+  showLastPage: boolean = false;
+  pages: number[] = [];
 
-    this.traineesWithPagination(1, 10, this.keywordSearch, this.sortbyNum);
+  ngOnInit() {
+    this.traineesWithPagination(this.currentPage, this.pageSize);
   }
 
   traineesWithPagination(
@@ -65,6 +60,8 @@ export class TraineesLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
+            this.totalPages = this.allTraineesInfo.totalPages;
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -77,17 +74,27 @@ export class TraineesLeaderComponent implements OnInit {
       });
   }
 
-  onSearchInput(event: Event) {
-    const searchTerm = (event.target as HTMLInputElement).value;
-    this.keywordSearch = searchTerm;
+  onSearchInput(keyWord: string) {
+    this.keywordSearch = keyWord;
     this.casheService.clearCache();
-    this.traineesWithPagination(1, 10, searchTerm, this.sortbyNum);
+    this.traineesWithPagination(
+      this.currentPage,
+      this.pageSize,
+      keyWord,
+      this.sortbyNum
+    );
   }
 
-  sortStaff(item: any): void {
-    this.sortbyNum = item;
-    this.traineesWithPagination(1, 10, this.keywordSearch, this.sortbyNum);
+  sortBy(item: number): void {
     this.casheService.clearCache();
+    this.sortbyNum = item;
+    console.log(item, this.sortbyNum);
+    this.traineesWithPagination(
+      this.currentPage,
+      this.pageSize,
+      this.keywordSearch,
+      this.sortbyNum
+    );
   }
 
   showSideBar(id: string) {
@@ -167,58 +174,39 @@ export class TraineesLeaderComponent implements OnInit {
     });
   }
 
-  nextPage() {
-    if (this.allTraineesInfo.hasNextPage) {
+  generatePages(): void {
+    this.pages = [];
+    if (this.allTraineesInfo?.totalPages <= 3) {
+      for (let i = 1; i <= this.allTraineesInfo?.totalPages; i++) {
+        this.pages.push(i);
+      }
+    } else {
+      const start = Math.max(this.currentPage - 2, 1);
+      const end = Math.min(
+        this.currentPage + 2,
+        this.allTraineesInfo?.totalPages
+      );
+      for (let i = start; i <= end; i++) {
+        this.pages.push(i);
+      }
+
+      this.showEllipsis = end < this.allTraineesInfo?.totalPages - 1;
+      this.showLastPage = this.showEllipsis;
+    }
+  }
+
+  changePage(page: number): void {
+    console.log(page);
+    if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
+      this.currentPage = page;
       this.traineesWithPagination(
-        this.allTraineesInfo.currentPage + 1,
-        10,
+        this.currentPage,
+        this.pageSize,
         this.keywordSearch,
         this.sortbyNum
       );
+      this.generatePages();
     }
-  }
-
-  previousPage() {
-    if (this.allTraineesInfo.hasPreviousPage) {
-      this.traineesWithPagination(
-        this.allTraineesInfo.currentPage - 1,
-        10,
-        this.keywordSearch,
-        this.sortbyNum
-      );
-    }
-  }
-
-  getPageRange(): number[] {
-    const totalPages = this.allTraineesInfo.totalPages;
-    const currentPage = this.allTraineesInfo.currentPage;
-    const visiblePages = [];
-
-    if (currentPage > this.startPageIndex + this.maxVisiblePages) {
-      this.startPageIndex = currentPage - this.maxVisiblePages;
-    } else if (currentPage <= this.startPageIndex) {
-      this.startPageIndex = currentPage - 1;
-    }
-
-    const endPage = Math.min(
-      this.startPageIndex + this.maxVisiblePages,
-      totalPages
-    );
-
-    for (let i = this.startPageIndex + 1; i <= endPage; i++) {
-      visiblePages.push(i);
-    }
-
-    return visiblePages;
-  }
-
-  gotoPage(pageNum: number): void {
-    this.traineesWithPagination(
-      pageNum,
-      10,
-      this.keywordSearch,
-      this.sortbyNum
-    );
   }
 
   handleOverlayClick(event: MouseEvent) {

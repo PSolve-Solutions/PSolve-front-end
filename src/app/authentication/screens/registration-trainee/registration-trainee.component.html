@@ -698,29 +698,24 @@
             </button>
           </div>
         </div>
+        @if (checkRequiredField.isOnSite) {
+
         <div class="flex items-center mt-4 gap-x-3">
           <div
             class="flex items-center justify-center w-5 h-5 border border-black rounded"
           >
-            @if (checkRequiredField.isOnSite) {
-            <svg
-              width="14"
-              height="15"
-              viewBox="0 0 22 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 11.2432L8.14634 20L20 2"
-                stroke="#2A8E9E"
-                stroke-width="3"
-                stroke-linecap="round"
-              />
-            </svg>
-            }
+            <input
+              id="AcceptAttendType"
+              type="checkbox"
+              formControlName="AcceptAttendType"
+              class="w-5 h-5"
+            />
           </div>
-          <h4 class="text-[#A3B3B9] font-semibold">Accept to Attend Onside</h4>
+          <label for="AcceptAttendType" class="text-[#A3B3B9] font-semibold"
+            >Accept to Attend OnSite</label
+          >
         </div>
+        }
         <div class="mt-4">
           <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">Online Profiles</h3>
 

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarAdminComponent } from './Components/sidebar-admin/sidebar-admin.component';
 import { NavbarAdminComponent } from './Components/navbar-admin/navbar-admin.component';
 import { NgClass } from '@angular/common';
 import { SecondNavbarComponent } from '../../layout_leader/components/second-navbar/second-navbar.component';
+import { OcSidebarService } from '../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-layout-admin',
@@ -19,9 +20,5 @@ import { SecondNavbarComponent } from '../../layout_leader/components/second-nav
   styleUrl: './layout-admin.component.scss',
 })
 export class LayoutAdminComponent {
-  isShow: boolean = true;
-  newValue(newValue: boolean) {
-    console.log(newValue);
-    this.isShow = newValue;
-  }
+  os = inject(OcSidebarService);
 }
