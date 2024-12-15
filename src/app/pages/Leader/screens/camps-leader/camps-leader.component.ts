@@ -27,17 +27,17 @@ export class CampsLeaderComponent implements OnInit {
   selectedEmptyId: number | null = null;
   isLoading = signal<boolean>(false);
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 8;
   totalPages: number = 1;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
 
   ngOnInit() {
-    this.fetchAllWithPagination(this.currentPage, this.pageSize);
+    this.getAllCamps(this.currentPage, this.pageSize);
   }
 
-  fetchAllWithPagination(currentPage: number, pageSize: number): void {
+  getAllCamps(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.campLeaderService
       .getAllWithPagination(currentPage, pageSize)
@@ -67,7 +67,7 @@ export class CampsLeaderComponent implements OnInit {
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.casheService.clearCache();
-      this.fetchAllWithPagination(this.currentPage, this.pageSize);
+      this.getAllCamps(this.currentPage, this.pageSize);
     }
     this.showModal = false;
   }
@@ -114,6 +114,7 @@ export class CampsLeaderComponent implements OnInit {
     if (page > 0 && page <= this.allCampsInfo?.totalPages) {
       this.currentPage = page;
       this.generatePages();
+      this.getAllCamps(this.currentPage, this.pageSize);
     }
   }
 

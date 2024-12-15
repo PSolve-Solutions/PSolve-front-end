@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, authGuardLoggdIn } from './authentication/guard/auth.guard';
 import { rolesGuard } from './authentication/guard/roles.guard';
-import { LayoutLeaderComponent } from './layouts/layout_leader/layout-leader.component';
 import { DashboardComponent } from './pages/Leader/screens/dashboard/dashboard.component';
 import { LayoutTraineeComponent } from './layouts/layout_trainee/layout-trainee.component';
 import { HomeTraineeComponent } from './pages/Trainee/screens/home-trainee/home-trainee.component';
@@ -52,7 +51,6 @@ import { LayoutPublicComponent } from './layouts/layout_public/layout-public.com
 import { HomePublicComponent } from './pages/public/screens/home-public/home-public.component';
 import { BlankComponent } from './pages/mentor/blank/blank.component';
 import { CampsPublicComponent } from './pages/public/screens/camps-public/camps-public.component';
-import { FormsCampsPublicComponent } from './pages/public/screens/forms-camps-public/forms-camps-public.component';
 
 import { LayoutProfileComponent } from './layouts/layout_profile/layout-profile/layout-profile.component';
 import { ProfileDetailsComponent } from './pages/leader_profile/screens/profile-details/profile-details.component';
@@ -67,6 +65,7 @@ import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-
 import { ClientDetailsComponent } from './pages/Admin/screens/client-details/client-details.component';
 import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
 import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
+import { CommunityLeaderComponent } from './pages/Leader/screens/community-leader/community-leader.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -239,6 +238,11 @@ export const routes: Routes = [
         path: 'archive',
         component: ArchiveLeaderComponent,
         title: 'Leader / Archive - ICPC',
+      },
+      {
+        path: 'community',
+        component: CommunityLeaderComponent,
+        title: 'Leader / community - ICPC',
       },
     ],
   },

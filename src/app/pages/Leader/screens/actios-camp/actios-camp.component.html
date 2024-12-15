@@ -1,12 +1,17 @@
 <div class="flex flex-col w-full">
   <h1
-    class="absolute top-7 font-bold hidden md:block z-[50] text-xl transition-all duration-500"
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
     [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
   >
     {{ id === 0 ? "Add" : "Update" }} Camp
   </h1>
+  <h1
+    class="self-start mb-2 text-lg font-bold transition-all duration-500 ps-4 md:hidden"
+  >
+    {{ id === 0 ? "Add" : "Update" }} Camp
+  </h1>
   <form [formGroup]="campForm" (ngSubmit)="craeteNewCamp()">
-    <div class="flex flex-col w-10/12 gap-y-6">
+    <div class="flex flex-col w-full lg:w-10/12 gap-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
         <div class="relative flex flex-col">
           <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
@@ -111,7 +116,7 @@
           }
         </div>
 
-        <div class="flex flex-col">
+        <div class="relative flex flex-col">
           <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
             >Term</label
           >
@@ -133,7 +138,7 @@
           <button (click)="toggleDropdownT()" type="button" class="">
             <svg
               [ngClass]="foucsTerm ? 'rotate-180' : ''"
-              class="absolute transition-transform z-[1100] top-[10px] size-6 right-4"
+              class="absolute transition-transform z-[1100] top-10 size-6 right-4"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +190,7 @@
 
       <!-- HOC  -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
-        <div class="flex flex-col">
+        <div class="relative flex flex-col">
           <label class="text-lg text-[#002C3D4D] ps-2 font-semibold"
             >Heads of camp</label
           >
@@ -233,7 +238,7 @@
             </ng-template>
           </ng-select>
           <button
-            class="absolute z-[1100] transition-transform cursor-pointer top-[10px] size-6 right-4"
+            class="absolute z-[1100] transition-transform cursor-pointer top-10 size-6 right-4"
             (click)="toggleDropdownH()"
             type="button"
           >
@@ -256,7 +261,7 @@
           </button>
         </div>
 
-        <div class="flex flex-col">
+        <div class="relative flex flex-col">
           <label class="text-lg text-[#002C3D4D] ps-2 font-semibold"
             >Mentors</label
           >
@@ -301,7 +306,7 @@
             </ng-template>
           </ng-select>
           <button
-            class="absolute z-[1100] transition-transform cursor-pointer top-[10px] size-6 right-4"
+            class="absolute z-[1100] transition-transform cursor-pointer top-10 size-6 right-4"
             (click)="toggleDropdown()"
             type="button"
           >
@@ -340,8 +345,8 @@
           />
         </div>
 
-        <div class="flex items-center justify-between pt-5">
-          <label class="text-lg text-[#002C3D4D] font-semibold"
+        <div class="flex items-center justify-between px-2 pt-5">
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
             >Open For Register</label
           >
           <div>
@@ -353,7 +358,7 @@
             />
             <label
               for="openForRegister"
-              class="relative inline-flex items-center h-10 rounded-full cursor-pointer w-28"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
             >
               <span
                 class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
@@ -367,7 +372,7 @@
               <span
                 class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
                 [ngClass]="{
-                  'translate-x-[75px] text-[#52B788]':
+                  'md:translate-x-[75px] translate-x-[60px] text-[#52B788]':
                     campForm.get('openForRegister')?.value,
                   'translate-x-2 text-[#EF4A50]':
                     !campForm.get('openForRegister')?.value
@@ -378,9 +383,9 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+      <div class="grid grid-cols-1 px-2 md:grid-cols-2 gap-x-16 gap-y-4">
         <div class="flex items-center justify-between pt-5">
-          <label class="text-lg text-[#002C3D4D] font-semibold"
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
             >Required codeforces handle</label
           >
           <div>
@@ -392,7 +397,7 @@
             />
             <label
               for="isRequiredCodeforce"
-              class="relative inline-flex items-center h-10 rounded-full cursor-pointer w-28"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
             >
               <span
                 class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
@@ -406,9 +411,8 @@
               <span
                 class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
                 [ngClass]="{
-                  'translate-x-[75px] text-[#52B788]': campForm.get(
-                    'isRequiredCodeforce'
-                  )?.value,
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
+                    campForm.get('isRequiredCodeforce')?.value,
                   'translate-x-2 text-[#EF4A50]': !campForm.get(
                     'isRequiredCodeforce'
                   )?.value
@@ -419,7 +423,7 @@
           </div>
         </div>
         <div class="flex items-center justify-between pt-5">
-          <label class="text-lg text-[#002C3D4D] font-semibold"
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
             >Required vjudge handle</label
           >
           <div>
@@ -431,7 +435,7 @@
             />
             <label
               for="isRequiredVjudge"
-              class="relative inline-flex items-center h-10 rounded-full cursor-pointer w-28"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
             >
               <span
                 class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
@@ -445,7 +449,7 @@
               <span
                 class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
                 [ngClass]="{
-                  'translate-x-[75px] text-[#52B788]':
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
                     campForm.get('isRequiredVjudge')?.value,
                   'translate-x-2 text-[#EF4A50]':
                     !campForm.get('isRequiredVjudge')?.value
@@ -457,11 +461,11 @@
         </div>
       </div>
       <div
-        class="grid grid-cols-1 md:grid-cols-2 place-content-center gap-x-16 gap-y-4"
+        class="grid grid-cols-1 px-2 md:grid-cols-2 place-content-center gap-x-16 gap-y-4"
       >
         <div class="flex items-center justify-between pt-5">
-          <label class="text-lg text-[#002C3D4D] font-semibold"
-            >Onsite camp</label
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
+            >OnSite camp</label
           >
           <div>
             <input
@@ -472,7 +476,7 @@
             />
             <label
               for="isOnSite"
-              class="relative inline-flex items-center h-10 rounded-full cursor-pointer w-28"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
             >
               <span
                 class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
@@ -486,7 +490,7 @@
               <span
                 class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
                 [ngClass]="{
-                  'translate-x-[75px] text-[#52B788]':
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
                     campForm.get('isOnSite')?.value,
                   'translate-x-2 text-[#EF4A50]':
                     !campForm.get('isOnSite')?.value
@@ -500,7 +504,7 @@
     </div>
 
     <div
-      class="flex items-center justify-end w-full mt-20 mb-10 text-lg font-semibold gap-x-6 pe-16 text-mainColor4"
+      class="flex items-center justify-end w-full mt-20 mb-10 text-lg font-semibold gap-x-6 md:w-10/12 text-mainColor4"
     >
       <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
         @if (!isLoading) {Save}@else {

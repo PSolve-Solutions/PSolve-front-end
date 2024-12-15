@@ -9,16 +9,16 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DashboardService } from '../../services/dashboard.service';
 import { StaffLeaderService } from '../../services/staff-leader.service';
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dropdown-roles',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './dropdown-roles.component.html',
   styleUrl: './dropdown-roles.component.scss',
 })
@@ -26,32 +26,23 @@ export class DropdownRolesComponent implements OnInit {
   @Output() staffRequested = new EventEmitter<string>();
   @Input() selectedStaffId: string = '';
   dashboardService = inject(DashboardService);
+  toastr = inject(ToastrService);
   authService = inject(AuthService);
   staffLeaderService = inject(StaffLeaderService);
   rolesService = inject(RolesService);
-  fb = inject(FormBuilder);
-  roleForm!: FormGroup;
+  elementRef = inject(ElementRef);
   roles: any[] = [];
   allCamps: any[] = [];
   roleInfo!: { userId: string; role: string; campId: number };
   filteredRoles: any[] = [];
-  extraRoles: any[] = [];
-  newRole: any | null = null;
   selectedRole: any | null = null;
   dropdownOpen: boolean = false;
   dropdownCampForT: boolean = false;
   dropdownCampForH: boolean = false;
-  constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-    this.roleForm = this.fb.group({
-      roleName: [''],
-    });
     this.fetchAllRoles();
     this.fetchAllCamps();
-    this.roleForm.get('roleName')?.valueChanges.subscribe((value) => {
-      this.onSearchOrCreate();
-    });
   }
 
   fetchAllRoles(): void {
@@ -59,19 +50,6 @@ export class DropdownRolesComponent implements OnInit {
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.roles = data;
-          const basedRole = [
-            'Leader',
-            'Mentor',
-            'Head_Of_Camp',
-            'Trainee',
-            'Instructor',
-          ];
-          this.extraRoles = this.roles.filter(
-            (r) => !basedRole.includes(r.name)
-          );
-          this.filteredRoles = this.roles.filter(
-            (r) => !this.extraRoles.includes(r)
-          );
         } else {
           console.log('error');
         }
@@ -97,30 +75,11 @@ export class DropdownRolesComponent implements OnInit {
     });
   }
 
-  onSearchOrCreate() {
-    const searchTerm = this.roleForm.get('roleName')?.value || '';
+  onSearch(value: string) {
     this.filteredRoles = this.roles.filter((role) =>
-      role.name.toLowerCase().includes(searchTerm.toLowerCase())
+      role.name.toLowerCase().includes(value.toLowerCase())
     );
-    if (searchTerm && !this.roles.some((role) => role.name === searchTerm)) {
-      this.newRole = { name: searchTerm };
-    } else {
-      this.newRole = null;
-    }
-    this.dropdownOpen = true;
   }
-
-  onAddRole() {
-    if (this.newRole) {
-      this.filteredRoles.push(this.newRole);
-      this.selectedRole = this.newRole;
-      this.addNewRole(this.newRole.name);
-      this.roleForm.reset();
-      this.newRole = null;
-      this.dropdownOpen = false;
-    }
-  }
-
   selectRole(role: any) {
     this.selectedRole = role;
     if (this.selectedRole.name === 'Trainee') {
@@ -155,12 +114,13 @@ export class DropdownRolesComponent implements OnInit {
 
   saveNewRoles(roleInfo: any): void {
     this.rolesService.assignToRole(roleInfo).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           if (this.authService.currentUser().id === roleInfo.userId) {
             this.authService.updateUserRoles(roleInfo.role, 'add');
           }
           this.staffRequested.emit(this.selectedStaffId);
+          this.toastr.success(message);
         } else {
           console.log('error');
         }

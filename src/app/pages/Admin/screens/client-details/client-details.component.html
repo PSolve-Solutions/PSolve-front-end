@@ -8,7 +8,7 @@
           Leaders Information
         </h2>
         <div
-          class="h-64 overflow-y-auto scroll-host-table pe-3"
+          class="h-64 overflow-y-auto scroll-host-table"
           [class.h-64]="!isLoading && client.leaders.length >= 3 ? true : false"
         >
           <table
@@ -106,7 +106,7 @@
             >Community Facebook Link</label
           >
           <div
-            class="px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            class="px-4 py-2 mt-1 text-sm font-semibold bg-white border rounded-md outline-none appearance-none lg:mt-0 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
           >
             {{ client.facebookLink || "facebookLink" }}
           </div>

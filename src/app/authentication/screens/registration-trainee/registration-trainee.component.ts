@@ -88,6 +88,7 @@ export class RegistrationTraineeComponent implements OnInit {
       CampId: [null, [Validators.required]],
       University: [null, [Validators.required]],
       Comment: [null],
+      AcceptAttendType: [false],
     });
     this.allUCollege = [
       { id: 0, name: 'Computer and Ai' },
@@ -117,7 +118,6 @@ export class RegistrationTraineeComponent implements OnInit {
   }
 
   registration(): void {
-    this.isLoading = true;
     const myForm = this.filterNullValues(this.registrationForm);
     const formData = new FormData();
     Object.keys(myForm).forEach((key) => {
@@ -257,6 +257,7 @@ export class RegistrationTraineeComponent implements OnInit {
       this.displayFormErrors();
       return;
     }
+    this.isLoading = true;
     const contactInfo = {
       communityId: this.communityId,
       campId: this.registrationForm.get('CampId')?.value,
