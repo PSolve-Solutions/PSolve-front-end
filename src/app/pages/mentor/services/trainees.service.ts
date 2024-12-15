@@ -17,10 +17,10 @@ export class TraineesService {
   }
   trainees(id:any): Observable<ResponseHeader>{
     
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees?campId=${id}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees?campId=${Number(id)}`)
   }
   info(id:any): Observable<ResponseHeader>{
     
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees/${id}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees/${Number(id)}`)
   }
 }

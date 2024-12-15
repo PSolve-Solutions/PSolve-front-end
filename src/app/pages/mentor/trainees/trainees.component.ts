@@ -35,7 +35,7 @@ export class TraineesComponent {
   constructor(private renderer: Renderer2 , private serv:TraineesService){
     
 this.isLoading = true;
-  let campid = localStorage.getItem("camp");
+  let campid = Number(localStorage.getItem("camp"));
     if(campid){
       this.serv.trainees(campid).subscribe((response: ResponseHeader) => {
         if (response.isSuccess) {

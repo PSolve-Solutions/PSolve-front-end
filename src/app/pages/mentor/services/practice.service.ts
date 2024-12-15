@@ -11,7 +11,7 @@ export class PracticeService {
 
   constructor(private http:HttpClient) { }
   getData(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/practices/${id}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/practices/${Number(id)}`)
   }
   addPractice(data: any): Observable<any> {
     return this.http.post<any>(`${environment.BASE_URL}/api/Mentor/practices`, data); 
