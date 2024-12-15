@@ -58,14 +58,15 @@ import { LayoutProfileComponent } from './layouts/layout_profile/layout-profile/
 import { ProfileDetailsComponent } from './pages/leader_profile/screens/profile-details/profile-details.component';
 import { LeaderSettingsComponent } from './pages/leader_profile/screens/leader-settings/leader-settings.component';
 import { ProfileTraineeComponent } from './pages/trainee-profile/screens/profile-trainee/profile-trainee.component';
-import { MentorProfileComponent } from './pages/mentor-profile/mentor-profile.component';
 import { MentorsTrackingComponent } from './pages/HOC/screens/mentors-tracking/mentors-tracking.component';
 import { TraineeTrackingComponent } from './pages/HOC/screens/trainee-tracking/trainee-tracking.component';
 import { LayoutAdminComponent } from './layouts/layout_admin/layout-admin/layout-admin.component';
 import { AdminHomeComponent } from './pages/Admin/screens/admin-home/admin-home.component';
 import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin-clients.component';
-import { AddAdminComponent } from './pages/Admin/screens/add-admin/add-admin.component';
-import { UpsertClientComponent } from './pages/Admin/screens/upsert-client/upsert-client.component';
+import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
+import { ClientDetailsComponent } from './pages/Admin/screens/client-details/client-details.component';
+import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
+import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -121,12 +122,14 @@ export const routes: Routes = [
         component: CampsPublicComponent,
         title: 'Camps - ICPC',
       },
-      {
-        path: 'registration',
-        component: FormsCampsPublicComponent,
-        title: 'Camps - ICPC',
-      },
     ],
+  },
+
+  {
+    path: 'registration',
+    // component: FormsCampsPublicComponent,
+    component: RegistrationTraineeComponent,
+    title: 'Apply Now - PSolve',
   },
 
   // Admin Routes
@@ -142,19 +145,27 @@ export const routes: Routes = [
         title: 'Admins - PSolve',
       },
       {
-        path: 'add-admin',
-        component: AddAdminComponent,
+        path: 'upsert-admin/:id',
+        component: UpsertAdminComponent,
         title: 'Admins / Add Admin - PSolve',
       },
       {
         path: 'clients',
         component: AdminClientsComponent,
         title: 'Clients - PSolve',
+      },
+      {
+        path: 'clients',
         children: [
           {
-            path: 'upsert-client',
-            component: UpsertClientComponent,
-            title: 'Clients / Actions Client - PSolve',
+            path: 'add-client',
+            component: AddClientComponent,
+            title: 'Clients / Add Client - PSolve',
+          },
+          {
+            path: 'client-details/:id',
+            component: ClientDetailsComponent,
+            title: 'Clients / Client Details - PSolve',
           },
         ],
       },
@@ -164,7 +175,7 @@ export const routes: Routes = [
   // Leader Routes
   {
     path: 'leader',
-    component: LayoutLeaderComponent,
+    component: LayoutAdminComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'Leader - ICPC',
     children: [
@@ -378,31 +389,29 @@ export const routes: Routes = [
     path: 'login',
     component: LoginLayoutComponent,
     canActivate: [authGuardLoggdIn],
-    title: 'Login',
+    title: 'PSovle - Login',
     children: [
       {
         path: '',
         component: LogComponent,
-        title: 'Login',
+        title: 'PSovle - Login',
       },
       {
         path: 'forget',
         component: ForgetComponent,
-        title: 'Forget Password',
+        title: 'PSovle - Forget Password',
       },
       {
         path: 'set/:token/:email',
         component: SetpassComponent,
-        title: 'Reset Password',
+        title: 'PSovle - Reset Password',
+      },
+      {
+        path: 'otp/:email',
+        component: OtpComponent,
+        title: 'PSovle - OTP',
       },
     ],
-  },
-  {
-    path: 'otp/:email',
-    component: OtpComponent,
-    // canActivate: [authGuardLoggdIn],
-    title: 'OTP',
-    children: [],
   },
 
   // Profile Pages

@@ -5,3 +5,12 @@ export interface ResponseHeader {
   message: string;
   errors: any;
 }
+export interface CurrentUser {
+  id: string;
+  firstName: string;
+  middleName: string;
+  roles: string[];
+  token: string;
+  photoUrl: any;
+  communityLogo: string;
+}

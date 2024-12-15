@@ -1,11 +1,12 @@
 .ng-select,
 .ng-select:focus {
-  height: 50px;
+  height: 47px;
 }
 
 .ng-select.ng-select-multiple .ng-select-container,
 .ng-select .ng-select-container {
   width: 98% !important;
+  border-radius: 12px;
 }
 
 .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
@@ -30,8 +31,8 @@
   div.ng-placeholder,
 .ng-select .ng-select-container .ng-value-container div.ng-placeholder {
   font-size: 18px;
-  font-weight: 500;
-  color: #c4c3c3;
+  font-weight: 600;
+  color: #002c3d4d;
 }
 
 .ng-select.ng-select-multiple
@@ -39,7 +40,8 @@
   .ng-value-container
   .ng-value
   .ng-value-label {
-  background-color: #3c8fc5;
+  background-color: #285c6a;
+  font-weight: 600;
   color: white;
   padding: 4px 8px;
   border-radius: 8px;
@@ -64,4 +66,8 @@
 
 .scroll-host::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background: #78bdc4;
 }

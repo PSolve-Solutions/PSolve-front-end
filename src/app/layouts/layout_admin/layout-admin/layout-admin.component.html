@@ -9,12 +9,11 @@
 </div>
 
 <main
-  #main
   style="min-height: calc(100vh - 80px)"
-  class="w-full mt-20 transition-all duration-500 md:mt-0 ps-0 bg-mainColor4"
-  [ngClass]="isShow ? 'ps-[250px]' : ' ps-[90px]'"
+  class="w-full mt-20 transition-all !font-montserrat duration-500 md:mt-0 ps-0 bg-mainColor4"
+  [ngClass]="isShow ? 'md:ps-[250px]' : 'md:ps-[90px]'"
 >
-  <div class="p-4 md:p-8 lg:px-10 lg:py-6">
+  <div class="px-2 py-4 md:p-8 lg:px-10 lg:py-6">
     <router-outlet />
   </div>
 </main>

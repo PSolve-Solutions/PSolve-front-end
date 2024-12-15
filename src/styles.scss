@@ -179,6 +179,39 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  #toast-container {
+    margin: 20px 0;
+
+    .toast-error,
+    .toast-success,
+    .toast-info,
+    .toast-warning {
+      display: flex;
+      min-width: 250px;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      width: fit-content;
+      padding: 6px 20px 6px 60px;
+      border-left-width: 10px;
+      box-shadow: none;
+      .toast-message {
+        font-size: 16px;
+        padding-right: 18px;
+      }
+    }
+    .toast-success,
+    .toast-warning,
+    .toast-error {
+      background-size: 28px !important;
+    }
+    .toast-close-button {
+      font-size: 30px;
+    }
+  }
+}
+
 .toast-success {
   background: #dff2e3 url("./assets/img/Success.png") no-repeat 15px center;
   background-size: 36px !important;

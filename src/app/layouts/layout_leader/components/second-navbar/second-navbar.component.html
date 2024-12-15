@@ -1,10 +1,11 @@
 <header
-  class="sticky top-0 inset-x-0 flex justify-start h-20 z-10 w-full bg-mainColor4 text-sm pt-2.5 lg:ps-[260px]"
+  class="sticky top-0 inset-x-0 flex justify-start h-20 z-10 w-full bg-mainColor4 text-sm pt-2.5 ps-[260px]"
+  [ngClass]="ocSidebarService.isOpen() ? 'lg:ps-[260px]' : 'lg:ps-[80px]'"
 >
-  <nav
-    class="flex items-center w-full px-10 sm:pe-8 basis-full text-mainColor1"
-  >
-    <div class="flex items-center justify-end w-full pb-2.5 border-b-2 gap-x-3">
+  <nav class="flex items-center w-full px-10 basis-full text-mainColor1">
+    <div
+      class="flex items-center justify-end w-full sm:pe-10 pb-2.5 border-b-2 gap-x-3"
+    >
       <div class="flex flex-row items-center justify-end gap-1">
         <button
           type="button"
@@ -59,7 +60,6 @@
                 {{ currentUser.firstName }}
                 {{ currentUser.middleName }}
               </h2>
-              <!-- component -->
 
               <div class="relative inline-block text-left w-fit">
                 <button
@@ -67,15 +67,12 @@
                   class="inline-flex items-center w-full py-1 font-medium text-mainColor1 pe-6"
                 >
                   @if (currentPath.includes('leader')) {
-
                   <span>Leader</span>
                   }@else if(currentPath.includes('psovle')) {
                   <span>Admin</span>
                   }@else {
                   <span>Head Of Camp</span>
-
-                  }
-
+                  } @if (!currentPath.includes('psovle')) {
                   <svg
                     [ngClass]="isShow ? 'rotate-180' : ''"
                     class="w-4 h-4 ml-2 transition-transform"
@@ -91,8 +88,9 @@
                       d="M19 9l-7 7-7-7"
                     ></path>
                   </svg>
+                  }
                 </button>
-
+                @if (!currentPath.includes('psovle')) {
                 <div
                   [ngClass]="isShow ? 'scale-100' : 'scale-0'"
                   class="absolute z-[1150] mt-2 transition-all origin-top duration-500 bg-white border border-gray-200 rounded-md shadow-lg top-6 right-2 w-fit"
@@ -110,6 +108,7 @@
                     }
                   </div>
                 </div>
+                }
               </div>
             </div>
           </div>

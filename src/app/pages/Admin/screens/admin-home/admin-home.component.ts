@@ -3,31 +3,30 @@ import { TableAdminComponent } from '../../components/table-admin/table-admin.co
 import { AdminsService } from '../../services/admins.service';
 import { Admins, Data } from '../../model/admins';
 import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-admin-home',
   standalone: true,
-  imports: [TableAdminComponent, RouterLink],
+  imports: [TableAdminComponent, RouterLink, NgClass],
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.scss',
 })
 export class AdminHomeComponent implements OnInit {
   adminsService = inject(AdminsService);
-  currentPage: number = 1;
-  rowsPerPage: number = 10;
+  ocSidebarService = inject(OcSidebarService);
   isLoading: boolean = false;
   allAdmins!: Admins;
   ngOnInit() {
-    this.getAllAdminsPagination(this.currentPage, this.rowsPerPage);
+    this.getAllAdminsPagination(1, 5);
   }
 
-  getRowsPerPage(rowsPerPage: number): void {
-    this.rowsPerPage = rowsPerPage;
-    this.getAllAdminsPagination(this.currentPage, rowsPerPage);
-  }
-  getCurrentPage(currentPage: number): void {
-    this.currentPage = currentPage;
-    this.getAllAdminsPagination(this.currentPage, this.rowsPerPage);
+  getPageParams(pageParams: {
+    currentPage: number;
+    rowsPerPage: number;
+  }): void {
+    this.getAllAdminsPagination(pageParams.currentPage, pageParams.rowsPerPage);
   }
 
   getAllAdminsPagination(currentPage: number, pageSize: number): void {

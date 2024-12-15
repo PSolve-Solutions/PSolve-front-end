@@ -1,52 +1,35 @@
 <div class="flex flex-col w-full">
-  <h1 class="pb-6 text-xl font-medium">
+  <h1
+    class="absolute top-7 hidden md:block z-[50] text-xl transition-all duration-500 font-medium"
+    [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
+  >
     All Administrators : {{ !isLoading ? allAdmins.totalCount : 0 }}
   </h1>
   <div class="flex flex-col space-y-10">
-    <div class="flex items-center justify-between">
-      <button
-        routerLink="add-admin"
-        class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    <button
+      [routerLink]="['upsert-admin/', 0]"
+      class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    >
+      <svg
+        width="20"
+        height="19"
+        viewBox="0 0 20 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          width="20"
-          height="19"
-          viewBox="0 0 20 19"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10.0104 0C5.00044 0 0.94043 4.06 0.94043 9.07C0.94043 14.08 5.00044 18.14 10.0104 18.14C15.0204 18.14 19.0804 14.08 19.0804 9.07C19.0804 4.06 15.0204 0 10.0104 0ZM14.5404 10.21H11.1404V13.61H8.88043V10.19H5.48044V7.93H8.88043V4.53H11.1404V7.93H14.5404V10.21Z"
-            fill="#F7F8F3"
-          />
-        </svg>
+        <path
+          d="M10.0104 0C5.00044 0 0.94043 4.06 0.94043 9.07C0.94043 14.08 5.00044 18.14 10.0104 18.14C15.0204 18.14 19.0804 14.08 19.0804 9.07C19.0804 4.06 15.0204 0 10.0104 0ZM14.5404 10.21H11.1404V13.61H8.88043V10.19H5.48044V7.93H8.88043V4.53H11.1404V7.93H14.5404V10.21Z"
+          fill="#F7F8F3"
+        />
+      </svg>
 
-        <span>Add new admin</span>
-      </button>
-      <button
-        class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor3 w-fit bg-mainColor2 text-mainColor4"
-      >
-        <svg
-          width="16"
-          height="15"
-          viewBox="0 0 16 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.57007 3.56001L2.13013 12.63C2.13013 13.66 3.1801 14.49 4.4801 14.49H12.2601C13.5601 14.49 14.6101 13.66 14.6101 12.63L15.1501 3.56001H1.56018H1.57007ZM15.8301 2.92001C15.8301 2.54001 15.8301 2.51001 15.8301 2.49001C15.8301 1.49001 15.1001 0.940002 14.1101 0.940002H11.3701C11.3701 0.420002 10.7401 0 10.0901 0H6.67017C6.02017 0 5.37012 0.420002 5.37012 0.940002H2.63013C1.54013 0.940002 0.910156 1.61001 0.910156 2.49001C0.910156 2.52001 0.910156 2.54001 0.910156 2.92001H15.8301ZM10.7201 5.95C10.7201 5.66 11.0201 5.42 11.3801 5.43C11.7401 5.44 12.0101 5.68001 12.0101 5.96001V11.95C12.0101 12.23 11.7301 12.47 11.3801 12.48C11.0301 12.49 10.7201 12.25 10.7201 11.96V5.96001V5.95ZM7.70007 5.95C7.70007 5.63 8.06009 5.38 8.47009 5.43C8.79009 5.47 9.01013 5.70001 9.01013 5.96001V11.94C9.01013 12.2 8.78009 12.42 8.47009 12.47C8.06009 12.53 7.70007 12.27 7.70007 11.95V5.95ZM4.70007 5.95C4.70007 5.63 5.06009 5.38 5.47009 5.43C5.77009 5.47 6.01013 5.71001 6.01013 5.96001V11.94C6.01013 12.18 5.77009 12.43 5.47009 12.47C5.06009 12.52 4.70007 12.27 4.70007 11.95V5.95Z"
-            fill="#F7F8F3"
-          />
-        </svg>
-
-        <span>Delete all</span>
-      </button>
-    </div>
+      <span>Add Admin</span>
+    </button>
     <app-table-admin
-      (currentPage)="getCurrentPage($event)"
-      (rowsPerPage)="getRowsPerPage($event)"
-      [allAdmins]="allAdmins"
+      (pageParams)="getPageParams($event)"
       [isLoading]="isLoading"
+      [allDataTable]="allAdmins"
+      [whatPlace]="'admin'"
     />
   </div>
 </div>

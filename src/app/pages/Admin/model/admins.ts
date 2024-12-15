@@ -22,3 +22,16 @@ export interface Data {
   nationalId: string;
   photoUrl: any;
 }
+
+export interface OneAdmin {
+  id: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  nationalId: string;
+  birthDate: string;
+  phoneNumber: string;
+  email: string;
+  photoUrl: string;
+  gender: string;
+}
