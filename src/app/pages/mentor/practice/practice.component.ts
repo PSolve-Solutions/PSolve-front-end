@@ -179,7 +179,7 @@ export class PracticeComponent {
       meetingLink: this.link,
       note: this.notes,
       time: this.date,
-      campId: localStorage.getItem('camp'),
+      campId: Number(localStorage.getItem('camp')),
     };
 
     this.err = [];
