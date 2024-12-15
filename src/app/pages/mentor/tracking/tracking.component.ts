@@ -45,10 +45,10 @@ id = localStorage.getItem("camp") || null;
     let a1 = document.getElementById('cont');
     this.con = false;
     this.sh = true;
-    e1?.classList.add('bg-[#3591C9]', 'text-white');
-    e1?.classList.remove('border', 'text-[#3591C9]', 'border-[#3591C9]');
-    a1?.classList.remove('bg-[#3591C9]', 'text-white');
-    a1?.classList.add('border', 'text-[#3591C9]', 'border-[#3591C9]');
+    e1?.classList.add('bg-[#2A8E9E]', 'text-white');
+    e1?.classList.remove('border', 'text-[#2A8E9E]', 'border-[#2A8E9E]');
+    a1?.classList.remove('bg-[#2A8E9E]', 'text-white');
+    a1?.classList.add('border', 'text-[#2A8E9E]', 'border-[#2A8E9E]');
     
     this.isLoading = false
   }
@@ -77,10 +77,10 @@ id = localStorage.getItem("camp") || null;
     let a = document.getElementById('contest');
     let a1 = document.getElementById('she');
    
-    e1?.classList.add('bg-[#3591C9]', 'text-white');
-    e1?.classList.remove('border', 'text-[#3591C9]', 'border-[#3591C9]');
-    a1?.classList.remove('bg-[#3591C9]', 'text-white');
-    a1?.classList.add('border', 'text-[#3591C9]', 'border-[#3591C9]');
+    e1?.classList.add('bg-[#2A8E9E]', 'text-white');
+    e1?.classList.remove('border', 'text-[#2A8E9E]', 'border-[#2A8E9E]');
+    a1?.classList.remove('bg-[#2A8E9E]', 'text-white');
+    a1?.classList.add('border', 'text-[#2A8E9E]', 'border-[#2A8E9E]');
     this.con = true;
     this.sh = false;
     

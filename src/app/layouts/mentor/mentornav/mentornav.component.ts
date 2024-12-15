@@ -75,17 +75,17 @@ export class MentornavComponent implements OnInit {
       this.isOpenNotification = false;
     }
   }
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    // Check if the click was outside the dropdown and the related button
-    if (!target.closest('.trag')) {
-      document.getElementById('nav')?.classList.add('hidden');
-    }
-    if (!target.closest('.drop')) {
-      this.isShow = false;
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onClickOutside(event: MouseEvent): void {
+  //   const target = event.target as HTMLElement;
+  //   // Check if the click was outside the dropdown and the related button
+  //   if (!target.closest('.trag')) {
+  //     document.getElementById('nav')?.classList.add('hidden');
+  //   }
+  //   if (!target.closest('.drop')) {
+  //     this.isShow = false;
+  //   }
+  // }
   goSpecificRole(role: string): void {
     this.router.navigate(['/', role.toLowerCase()]);
   }
