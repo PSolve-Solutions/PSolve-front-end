@@ -3,7 +3,7 @@ import { CasheService } from '../../../../shared/services/cashe.service';
 import { StaffLeaderService } from '../../services/staff-leader.service';
 import { OnStaffInfo, StaffInfo } from '../../model/staff';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { DropdownRolesComponent } from '../../Components/dropdown-roles/dropdown-roles.component';
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
@@ -193,7 +193,6 @@ export class StaffLeaderComponent implements OnInit {
   }
 
   changePage(page: number): void {
-    console.log(page);
     if (page > 0 && page <= this.allStaffInfo?.totalPages) {
       this.currentPage = page;
       this.staffWithPagination(

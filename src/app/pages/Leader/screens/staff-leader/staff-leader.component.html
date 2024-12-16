@@ -15,7 +15,7 @@
     <form class="flex items-center justify-between px-2">
       <div class="relative w-full">
         <input
-          class="md:w-[350px] w-52 px-3 py-2.5 pl-10 leading-tight text-mainColor1 font-semibold transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-mainColor1 focus:outline-none focus:ring-mainColor1 focus:mainColor1 focus:shadow-outline"
+          class="lg:w-[350px] md:w-60 w-52 px-3 py-2.5 pl-10 leading-tight text-mainColor1 font-semibold transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-mainColor1 focus:outline-none focus:ring-mainColor1 focus:mainColor1 focus:shadow-outline"
           type="text"
           #search
           (keyup)="onSearchInput(search.value)"
@@ -83,8 +83,8 @@
               <th class="p-4 text-left truncate">Name</th>
               <th class="hidden p-4 lg:table-cell">E-mail</th>
               <th class="hidden p-4 lg:table-cell">Faculty</th>
-              <th class="hidden p-4 lg:table-cell">Year</th>
               <th class="p-4">Codeforces</th>
+              <th class="hidden p-4 lg:table-cell">Year</th>
               <th class="flex items-center justify-center p-4">
                 <svg
                   class="size-5 pt-0.5"
@@ -273,10 +273,8 @@
     class="flex z-[1200] items-center fixed justify-end inset-0 !m-0"
   >
     <div
-      [ngClass]="
-        showSideInfo ? 'translate-x-0 right-6 md:right-0' : 'translate-x-full'
-      "
-      class="relative flex flex-col overflow-y-auto font-semibold custom-scrollbar-side bg-mainColor1 items-center text-mainColor4 h-screen md:w-[450px] w-[380px] p-6 transition-transform duration-700 ease-in-out shadow-lg rounded-tl-lg rounded-bl-lg"
+      [ngClass]="showSideInfo ? 'translate-x-0 ' : 'translate-x-full'"
+      class="relative flex right-3 md:right-0 max-h-[85vh] rounded-lg md:rounded-tl-lg md:rounded-bl-lg mt-[4.5rem] md:mt-0 md:max-h-full flex-col overflow-y-auto font-semibold custom-scrollbar-side bg-mainColor1 items-center text-mainColor4 h-screen md:w-[450px] w-[350px] p-6 transition-transform duration-700 ease-in-out shadow-lg"
     >
       <span
         (click)="handleClose()"

@@ -95,7 +95,13 @@ export class AddClientComponent implements OnInit {
     const myForm = this.filterNullValues(this.clientForm);
     const formData = new FormData();
     Object.keys(myForm).forEach((key) => {
-      const value = this.clientForm.get(key)?.value;
+      let value = this.clientForm.get(key)?.value;
+      if (key === 'StartDate' || key === 'EndDate') {
+        if (value) {
+          const date = new Date(value);
+          value = date.toISOString().split('T')[0];
+        }
+      }
       formData.append(key, value);
     });
     this.clientsService.createClient(formData).subscribe({

@@ -1,10 +1,16 @@
 .ng-select,
 .ng-select:focus {
-  height: 38px;
+  height: 45.5px;
+}
+
+.ng-select.ng-select-multiple .ng-select-container,
+.ng-select .ng-select-container {
+  width: 98% !important;
+  border-radius: 12px;
 }
 
 .ng-value-label[ng-reflect-escape="true"] {
-  background-color: #3c8fc5 !important;
+  background-color: #002c3d !important;
   color: white !important;
   padding: 4px 8px !important;
   border-radius: 8px !important;

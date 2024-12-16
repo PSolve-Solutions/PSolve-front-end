@@ -99,7 +99,7 @@
           <th class="hidden py-4 md:ps-6 ps-3 pe-3 md:table-cell">
             Community E-mail
           </th>
-          <th class="relative hidden py-4 text-center ps-12 md:table-cell">
+          <th class="relative hidden py-4 text-center md:table-cell">
             <div
               class="absolute top-0 px-4 py-2.5 text-white rounded-bl-md rounded-br-md bg-mainColor1 w-fit"
             >
@@ -133,8 +133,8 @@
             </div>
             <span class="whitespace-nowrap">{{ row.clientName }}</span>
           </td>
-          <td class="hidden py-4 ps-6 pe-3 md:table-cell">{{ row.gmail }}</td>
-          <td class="hidden py-4 text-center ps-6 pe-3 md:table-cell">
+          <td class="hidden py-4 md:table-cell">{{ row.gmail }}</td>
+          <td class="hidden py-4 text-center pe-16 md:table-cell">
             <span
               [ngClass]="
                 !checkEndDateForClinet(row.endDate)

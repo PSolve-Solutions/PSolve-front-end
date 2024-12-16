@@ -1,21 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommunityService } from '../../services/community.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommunityInfo } from '../../model/community';
 
 @Component({
   selector: 'app-community-leader',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, RouterLink],
+  imports: [NgClass, ReactiveFormsModule, DatePipe],
   templateUrl: './community-leader.component.html',
   styleUrl: './community-leader.component.scss',
 })
@@ -101,6 +100,11 @@ export class CommunityLeaderComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  convertToLocal(date: string): Date {
+    const localDate = new Date(date);
+    return localDate;
   }
 
   displayFormErrors() {

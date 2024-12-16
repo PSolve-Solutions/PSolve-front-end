@@ -1,358 +1,327 @@
-<div class="w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
-  <form [formGroup]="addUserForm" (ngSubmit)="craeteUser()" class="w-full">
-    <div class="flex flex-col gap-y-4">
-      <h2 class="text-2xl font-bold">Personal Information</h2>
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="firstName"
-            >First Name <span class="text-red-600">*</span></label
-          >
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            formControlName="firstName"
-            [ngClass]="
-              addUserForm.controls['firstName'].errors && submitted
-                ? 'border-rose-600'
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
+  >
+    Add User
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Add User
+  </h1>
+  <form [formGroup]="addUserForm" (ngSubmit)="craeteUser()">
+    <div class="flex flex-col w-full px-2 md:px-0 md:w-11/12">
+      <div class="flex flex-col gap-y-4">
+        <h2 class="text-2xl font-semibold text-mainColor1">
+          Personal Information
+        </h2>
+        <div
+          class="grid grid-cols-2 grid-rows-4 gap-x-2 md:gap-x-8 gap-y-4 lg:grid-rows-3 lg:grid-cols-3"
+        >
+          <div class="flex flex-col">
+            <label for="firstName" class="font-bold ps-2 text-[#002C3D4D]"
+              >First Name <span class="font-bold text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              formControlName="firstName"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="middleName" class="font-bold ps-2 text-[#002C3D4D]"
+              >Middle Name <span class="font-bold text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="middleName"
+              name="middleName"
+              formControlName="middleName"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="lastName" class="font-bold ps-2 text-[#002C3D4D]"
+              >Last Name <span class="font-bold text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              formControlName="lastName"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="birthDate" class="font-bold ps-2 text-[#002C3D4D]"
+              >Birth Date<span class="font-bold text-red-600">*</span></label
+            >
+            <input
+              type="date"
+              id="birthDate"
+              name="birthDate"
+              formControlName="birthDate"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="nationalId" class="font-bold ps-2 text-[#002C3D4D]"
+              >National ID</label
+            >
+            <input
+              type="text"
+              id="nationalId"
+              name="nationalId"
+              formControlName="nationalId"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="profileImage" class="font-bold ps-2 text-[#002C3D4D]"
+              >Profile Image</label
+            >
+            <div
+              class="px-4 py-2 text-base font-semibold bg-white border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            >
+              <input
+                type="file"
+                id="profileImage"
+                name="profileImage"
+                (change)="onFileSelected($event)"
+                class="hidden"
+              />
 
-        <div class="flex flex-col basis-1/3">
-          <label for="middleName"
-            >Middle Name <span class="text-red-600">*</span></label
-          >
-          <input
-            type="text"
-            id="middleName"
-            name="middleName"
-            formControlName="middleName"
-            [ngClass]="
-              addUserForm.controls['middleName'].errors && submitted
-                ? 'border-rose-600 '
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="flex flex-col basis-1/3">
-          <label for="lastName"
-            >Last Name <span class="text-red-600">*</span></label
-          >
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            formControlName="lastName"
-            [ngClass]="
-              addUserForm.controls['lastName'].errors && submitted
-                ? 'border-rose-600 '
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
+              <p
+                class="flex items-center justify-between w-full text-sm truncate"
+              >
+                <span class="truncate">{{ uploadedFileName || "File" }}</span>
+
+                <label
+                  for="profileImage"
+                  class="flex items-center px-4 py-1.5 font-semibold text-white bg-black rounded-lg cursor-pointer w-fit right-1 gap-x-1 hover:bg-subColor1"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4.5 11H7.5C10 11 11 10 11 7.5V4.5C11 2 10 1 7.5 1H4.5C2 1 1 2 1 4.5V7.5C1 10 2 11 4.5 11Z"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4.5 4.75488L6 3.25488L7.5 4.75488"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M6 3.25488V7.25488"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M3 8.25488C4.945 8.90488 7.055 8.90488 9 8.25488"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="text-xs">Choose File</span>
+                </label>
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-col basis-1/3">
+            <h4 class="mb-2 font-bold text-[#002C3D4D]">
+              Gender <span class="text-red-600">*</span>
+            </h4>
+            <div class="flex items-center gap-x-10">
+              <label
+                for="male"
+                class="flex items-center justify-center gap-x-2"
+              >
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="0"
+                  class="size-4"
+                  formControlName="gender"
+                />
+                <span class="text-lg font-semibold">Male</span>
+              </label>
+              <label for="female" class="flex items-center gap-x-2">
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="1"
+                  class="size-4"
+                  formControlName="gender"
+                />
+                <span class="text-lg font-semibold">Female</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="birthDate"
-            >Birthdate <span class="text-red-600">*</span></label
-          >
-          <input
-            type="date"
-            id="birthDate"
-            name="birthDate"
-            formControlName="birthDate"
-            [ngClass]="
-              addUserForm.controls['birthDate'].errors && submitted
-                ? 'border-rose-600 '
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="flex flex-col basis-1/3">
-          <label for="nationalId"
-            >National ID <span class="text-red-600">*</span></label
-          >
-          <input
-            type="text"
-            id="nationalId"
-            name="nationalId"
-            formControlName="nationalId"
-            [ngClass]="
-              addUserForm.controls['nationalId'].errors && submitted
-                ? 'border-rose-600 '
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="flex flex-col basis-1/3">
-          <label for="profileImage">Profile Image</label>
-          <div
-            class="relative h-[35px] w-[250px] flex items-center overflow-hidden py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          >
-            <input
-              type="file"
-              id="profileImage"
-              name="profileImage"
-              formControlName="profileImage"
-              (change)="onFileSelected($event)"
-              class="hidden"
-            />
-            @if (uploadedFileName) {
-            <p class="text-sm truncate w-28">{{ uploadedFileName }}</p>
-            }
-            <label
-              for="profileImage"
-              class="absolute flex items-center px-4 py-1 font-semibold text-white bg-blue-500 rounded-lg cursor-pointer w-fit right-1 gap-x-1 hover:bg-blue-600"
+      <div class="flex flex-col mt-6 gap-y-4">
+        <h2 class="text-2xl font-semibold text-mainColor1">
+          Contact Information
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-8">
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="email" class="font-bold ps-2 text-[#002C3D4D]"
+              >Email <span class="text-red-600">*</span></label
             >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              formControlName="email"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="phoneNumber" class="font-bold ps-2 text-[#002C3D4D]"
+              >Phone Number <span class="text-red-600">*</span></label
+            >
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              formControlName="phoneNumber"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col mt-6 gap-y-4">
+        <h2 class="text-2xl font-semibold text-mainColor1">
+          Academic Information
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-8">
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="college" class="font-bold ps-2 text-[#002C3D4D]"
+              >college <span class="text-red-600">*</span></label
+            >
+            <div class="relative">
+              <ng-select
+                #collegeSelect
+                id="college"
+                [items]="allCollege"
+                [closeOnSelect]="true"
+                bindLabel="name"
+                bindValue="id"
+                formControlName="college"
+                (click)="toggleDropdownC()"
+                class="relative block font-semibold bg-white border border-gray-200 appearance-none md:text-lg rounded-xl focus:border-subColor1 text-mainColor1 cursor-none focus:outline-none"
+              >
+              </ng-select>
               <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
+                (click)="toggleDropdownC()"
+                width="28"
+                height="28"
+                [ngClass]="foucsCollege ? 'rotate-180' : ''"
+                class="absolute md:top-2 top-[10px] z-[1100] cursor-pointer transition-transform left-[135px] md:left-[300px]"
+                viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M4.5 11H7.5C10 11 11 10 11 7.5V4.5C11 2 10 1 7.5 1H4.5C2 1 1 2 1 4.5V7.5C1 10 2 11 4.5 11Z"
-                  stroke="white"
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
                   stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M4.5 4.75488L6 3.25488L7.5 4.75488"
-                  stroke="white"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M6 3.25488V7.25488"
-                  stroke="white"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M3 8.25488C4.945 8.90488 7.055 8.90488 9 8.25488"
-                  stroke="white"
-                  stroke-width="1.5"
+                  stroke-miterlimit="10"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
               </svg>
-              <span class="text-xs">Choose File</span>
-            </label>
+            </div>
+          </div>
+          <div class="flex flex-col basis-full md:mt-2 md:basis-1/3">
+            <h4 class="mb-2 font-bold ps-2 text-[#002C3D4D]">
+              Year <span class="text-red-600">*</span>
+            </h4>
+            <div class="flex flex-wrap items-center gap-x-10">
+              <label for="1" class="flex items-center justify-center gap-x-2">
+                <input
+                  type="radio"
+                  id="1"
+                  name="grade"
+                  value="1"
+                  formControlName="grade"
+                />
+                1
+              </label>
+              <label for="2" class="flex items-center gap-x-2">
+                <input
+                  type="radio"
+                  id="2"
+                  name="grade"
+                  value="2"
+                  formControlName="grade"
+                />
+                2
+              </label>
+              <label for="3" class="flex items-center gap-x-2">
+                <input
+                  type="radio"
+                  id="3"
+                  name="grade"
+                  value="3"
+                  formControlName="grade"
+                />
+                3
+              </label>
+              <label for="4" class="flex items-center gap-x-2">
+                <input
+                  type="radio"
+                  id="4"
+                  name="grade"
+                  value="4"
+                  formControlName="grade"
+                />
+                4
+              </label>
+              <label for="5" class="flex items-center gap-x-2">
+                <input
+                  type="radio"
+                  id="5"
+                  name="grade"
+                  value="5"
+                  formControlName="grade"
+                />
+                5
+              </label>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <h4
-            [ngClass]="
-              addUserForm.controls['gender'].errors && submitted
-                ? 'text-rose-600 '
-                : ''
-            "
-            class="mb-2"
-          >
-            Gender <span class="text-red-600">*</span>
-          </h4>
-          <div class="flex items-center gap-x-10">
-            <label for="male" class="flex items-center justify-center gap-x-2">
-              <input
-                type="radio"
-                id="male"
-                name="gender"
-                value="0"
-                [ngClass]="
-                  addUserForm.controls['gender'].errors && submitted
-                    ? 'border-rose-600 '
-                    : ''
-                "
-                formControlName="gender"
-              />
-              male
-            </label>
-            <label for="female" class="flex items-center gap-x-2">
-              <input
-                type="radio"
-                id="female"
-                name="gender"
-                value="1"
-                formControlName="gender"
-              />
-              female
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col mt-6 gap-y-4">
-      <h2 class="text-2xl font-bold">Contact Information</h2>
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="email">Email <span class="text-red-600">*</span></label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            formControlName="email"
-            [ngClass]="
-              addUserForm.controls['email'].errors && submitted
-                ? 'border-rose-600 '
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="flex flex-col basis-1/3">
-          <label for="phoneNumber"
-            >Phone Number <span class="text-red-600">*</span></label
-          >
-          <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            formControlName="phoneNumber"
-            [ngClass]="
-              addUserForm.controls['phoneNumber'].errors && submitted
-                ? 'border-rose-600'
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="basis-1/3"></div>
-      </div>
-    </div>
-    <div class="flex flex-col mt-6 gap-y-4">
-      <h2 class="text-2xl font-bold">Academic Information</h2>
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="college"
-            >college <span class="text-red-600">*</span></label
-          >
-          <div class="relative">
-            <ng-select
-              #collegeSelect
-              id="college"
-              [items]="allCollege"
-              [closeOnSelect]="true"
-              bindLabel="name"
-              bindValue="id"
-              formControlName="college"
-              (click)="toggleDropdownC()"
-              [ngClass]="
-                addUserForm.controls['college'].errors && submitted
-                  ? 'border-rose-600 '
-                  : ''
-              "
-              class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 cursor-none rounded-lg appearance-none focus:outline-none"
+      <div class="flex flex-col mt-6 gap-y-4">
+        <h2 class="text-2xl font-semibold text-mainColor1">
+          Professional Information
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-8">
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="role" class="font-bold ps-2 text-[#002C3D4D]"
+              >Role <span class="text-red-600">*</span></label
             >
-            </ng-select>
-            <svg
-              (click)="toggleDropdownC()"
-              width="24"
-              height="24"
-              [ngClass]="foucsCollege ? 'rotate-180' : ''"
-              class="absolute top-[14px] z-[1100] cursor-pointer transition-transform left-[220px]"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-                stroke="#A8A8A8"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-        </div>
-        <div class="flex flex-col basis-1/3">
-          <h4
-            [ngClass]="
-              addUserForm.controls['grade'].errors && submitted
-                ? 'text-rose-600 '
-                : ''
-            "
-            class="mb-2"
-          >
-            Year <span class="text-red-600">*</span>
-          </h4>
-          <div class="flex items-center gap-x-10">
-            <label for="1" class="flex items-center justify-center gap-x-2">
-              <input
-                type="radio"
-                id="1"
-                name="grade"
-                value="1"
-                formControlName="grade"
-              />
-              1
-            </label>
-            <label for="2" class="flex items-center gap-x-2">
-              <input
-                type="radio"
-                id="2"
-                name="grade"
-                value="2"
-                formControlName="grade"
-              />
-              2
-            </label>
-            <label for="3" class="flex items-center gap-x-2">
-              <input
-                type="radio"
-                id="3"
-                name="grade"
-                value="3"
-                formControlName="grade"
-              />
-              3
-            </label>
-            <label for="4" class="flex items-center gap-x-2">
-              <input
-                type="radio"
-                id="4"
-                name="grade"
-                value="4"
-                formControlName="grade"
-              />
-              4
-            </label>
-            <label for="5" class="flex items-center gap-x-2">
-              <input
-                type="radio"
-                id="5"
-                name="grade"
-                value="5"
-                formControlName="grade"
-              />
-              5
-            </label>
-          </div>
-        </div>
-        <div class="basis-1/3"></div>
-      </div>
-    </div>
-    <div class="flex flex-col mt-6 gap-y-4">
-      <h2 class="text-2xl font-bold">Professional Information</h2>
-      <div class="flex items-center w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="role">Role <span class="text-red-600">*</span></label>
-          <div class="flex items-center gap-x-4">
             <div class="relative">
               <ng-select
                 #roleSelect
@@ -363,12 +332,7 @@
                 formControlName="role"
                 (change)="getRole($event)"
                 (click)="toggleDropdownR()"
-                [ngClass]="
-                  addUserForm.controls['role'].errors && submitted
-                    ? 'border-rose-600'
-                    : ''
-                "
-                class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                class="relative block font-semibold bg-white border border-gray-200 appearance-none md:text-lg rounded-xl focus:border-subColor1 text-mainColor1 cursor-none focus:outline-none"
               >
               </ng-select>
               <svg
@@ -376,7 +340,7 @@
                 width="24"
                 height="24"
                 [ngClass]="foucsRole ? 'rotate-180' : ''"
-                class="absolute top-[14px] left-[220px] cursor-pointer transition-transform"
+                class="absolute md:top-2 top-[10px] z-[1100] cursor-pointer transition-transform left-[135px] md:left-[300px]"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -392,12 +356,12 @@
               </svg>
             </div>
           </div>
-        </div>
 
-        <div class="flex flex-col basis-1/3">
-          @if (isShow) {
-          <label for="camp">Camp <span class="text-red-600">*</span></label>
-          <div class="flex items-center gap-x-4">
+          <div class="flex flex-col basis-full md:basis-1/3">
+            @if (isShow) {
+            <label for="camp" class="font-bold ps-2 text-[#002C3D4D]"
+              >Camp <span class="text-red-600">*</span></label
+            >
             <div class="relative">
               <ng-select
                 #campSelect
@@ -407,12 +371,7 @@
                 bindValue="id"
                 formControlName="campId"
                 (click)="toggleDropdownCamp()"
-                [ngClass]="
-                  addUserForm.controls['campId'].errors && submitted
-                    ? 'border-rose-600'
-                    : ''
-                "
-                class="relative block w-[250px] my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+                class="relative block font-semibold bg-white border border-gray-200 appearance-none md:text-lg rounded-xl focus:border-subColor1 text-mainColor1 cursor-none focus:outline-none"
               >
               </ng-select>
               <svg
@@ -420,7 +379,7 @@
                 width="24"
                 height="24"
                 [ngClass]="foucsCamp ? 'rotate-180' : ''"
-                class="absolute top-[14px] left-[220px] cursor-pointer transition-transform"
+                class="absolute md:top-2 top-[10px] z-[1100] cursor-pointer transition-transform left-[135px] md:left-[300px]"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -435,55 +394,61 @@
                 />
               </svg>
             </div>
+            }
           </div>
-          }
         </div>
-        <div class="flex flex-col basis-1/3"></div>
+      </div>
+
+      <div class="flex flex-col mt-6 gap-y-4">
+        <h2 class="text-2xl font-semibold text-mainColor1">Online Profiles</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-8">
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="codeForceHandle" class="font-bold ps-2 text-[#002C3D4D]"
+              >CodeForce Handle</label
+            >
+            <input
+              type="text"
+              id="codeForceHandle"
+              name="codeForceHandle"
+              formControlName="codeForceHandle"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col basis-full md:basis-1/3">
+            <label for="vjudgeHandle" class="font-bold ps-2 text-[#002C3D4D]"
+              >Vjudge Handle</label
+            >
+            <input
+              type="text"
+              id="vjudgeHandle"
+              name="vjudgeHandle"
+              formControlName="vjudgeHandle"
+              class="px-4 py-2 text-base font-semibold border border-gray-200 outline-none appearance-none md:text-lg rounded-xl text-mainColor1 focus:border-subColor1"
+            />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="flex flex-col mt-6 gap-y-4">
-      <h2 class="text-2xl font-bold">Online Profiles</h2>
-      <div class="flex items-center justify-between w-11/12 ps-4">
-        <div class="flex flex-col basis-1/3">
-          <label for="codeForceHandle"
-            >CodeForce Handle <span class="text-red-600">*</span></label
-          >
-          <input
-            type="text"
-            id="codeForceHandle"
-            name="codeForceHandle"
-            formControlName="codeForceHandle"
-            [ngClass]="
-              addUserForm.controls['codeForceHandle'].errors && submitted
-                ? 'border-rose-600'
-                : ''
-            "
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
+    <div
+      class="flex items-center justify-end w-full mt-20 text-lg font-semibold lg:w-11/12 gap-x-6 text-mainColor4"
+    >
+      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+        @if (!isLoading) {Save}@else {
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="border-4 border-dashed rounded-full w-7 h-7 border-subColor2 animate-spin"
+            ></div>
+          </div>
         </div>
-        <div class="flex flex-col basis-1/3">
-          <label for="vjudgeHandle">Vjudge Handle</label>
-          <input
-            type="text"
-            id="vjudgeHandle"
-            name="vjudgeHandle"
-            formControlName="vjudgeHandle"
-            class="relative block w-[250px] py-1 pl-2 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none focus:border-activeLink"
-          />
-        </div>
-        <div class="basis-1/3"></div>
-      </div>
-    </div>
-    <div class="flex items-center justify-end w-11/12 mt-7">
+        }
+      </button>
       <button
-        type="submit"
-        class="px-6 py-1 text-2xl text-white rounded-lg w-fit bg-activeLink"
+        type="button"
+        routerLink="/leader"
+        class="px-6 py-2 rounded-md bg-mainColor2"
       >
-        @if (isLoading) {
-        <div
-          class="w-8 h-8 border-8 border-purple-800 border-dashed rounded-full animate-spin border-t-transparent"
-        ></div>
-        }@else { Save }
+        Cancel
       </button>
     </div>
   </form>

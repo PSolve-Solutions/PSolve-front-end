@@ -116,7 +116,7 @@
               <label
                 for="GoogleCredentialPassword"
                 class="font-bold ps-2 text-[#002C3D4D]"
-                >GoogleCredentialPassword
+                >Google Credential Password
                 <span class="text-lg font-bold text-red-600">*</span></label
               >
               <input
@@ -274,7 +274,7 @@
               <div
                 class="px-4 py-2 text-lg font-semibold bg-white border border-gray-200 outline-none appearance-none rounded-xl text-mainColor1 focus:border-subColor1"
               >
-                {{ startDate }}
+                {{ convertToLocal(startDate) | date : "dd-MM-YYYY" }}
               </div>
             </div>
             <div class="flex flex-col">
@@ -282,7 +282,7 @@
               <div
                 class="px-4 py-2 text-lg font-semibold bg-white border border-gray-200 outline-none appearance-none rounded-xl text-mainColor1 focus:border-subColor1"
               >
-                {{ endDate }}
+                {{ convertToLocal(endDate) | date : "dd-MM-YYYY" }}
               </div>
             </div>
           </div>
@@ -380,7 +380,7 @@
     </div>
 
     <div
-      class="flex items-center justify-center w-full mt-20 text-lg font-semibold lg:w-2/3 gap-x-6 text-mainColor4"
+      class="flex items-center justify-end w-full mt-20 text-lg font-semibold lg:w-11/12 gap-x-6 text-mainColor4"
     >
       <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
         @if (!isLoading) {Save}@else {
@@ -395,7 +395,7 @@
       </button>
       <button
         type="button"
-        routerLink="/"
+        (click)="getCommunityById()"
         class="px-6 py-2 rounded-md bg-mainColor2"
       >
         Cancel

@@ -23,7 +23,6 @@ export class AuthService {
   constructor() {
     const savedIsAuth = localStorage.getItem(this.IS_AUTH);
     this.isAuth.set(savedIsAuth ? JSON.parse(savedIsAuth) : false);
-
     const savedCurrentUser = localStorage.getItem(this.CURRENT_USER);
     this.currentUser.set(
       savedCurrentUser ? JSON.parse(savedCurrentUser) : null
