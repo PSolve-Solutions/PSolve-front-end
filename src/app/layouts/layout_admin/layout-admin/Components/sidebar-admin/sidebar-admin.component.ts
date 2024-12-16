@@ -17,7 +17,6 @@ export class SidebarAdminComponent {
   authService = inject(AuthService);
   ocSidebarService = inject(OcSidebarService);
   sanitizer = inject(DomSanitizer);
-  isShow: 'hide' | 'semi' | 'show' = 'show';
   roles: string[] = [];
 
   leaderLinks: { name: string; link: string; icon: SafeHtml }[] = [];
@@ -303,18 +302,19 @@ export class SidebarAdminComponent {
         ),
       },
     ];
-    this.isShow = this.ocSidebarService.isOpen();
     this.roles = this.authService.currentUser().roles;
   }
 
   show(): void {
     if (this.ocSidebarService.isOpen() === 'show') {
       this.ocSidebarService.openSidebar('semi');
-      this.isShow = this.ocSidebarService.isOpen();
     } else {
       this.ocSidebarService.openSidebar('show');
-      this.isShow = this.ocSidebarService.isOpen();
     }
-    console.log(this.isShow, this.ocSidebarService.isOpen());
+    console.log(this.ocSidebarService.isOpen());
+  }
+
+  hideSidebar(): void {
+    this.ocSidebarService.openSidebar('hide');
   }
 }

@@ -175,7 +175,7 @@
         <ul class="flex flex-col">
           @for (item of leaderLinks; track item.icon) {
           <li
-            (click)="ocSidebarService.openSidebar('hide')"
+            (click)="hideSidebar()"
             class="flex items-center cursor-pointer py-1.5 gap-x-3.5 px-2.5 text-xl font-semibold text-mainColor4 hover:text-activeLink transition-colors"
             [routerLink]="item.link"
             routerLinkActive="activeLinkLeader"
