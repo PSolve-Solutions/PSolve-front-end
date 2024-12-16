@@ -8,14 +8,14 @@
       #search
       (keyup)="onSearch(search.value)"
       [ngClass]="
-        dropdownOpen
+        dropdownOpen()
           ? 'placeholder:text-sm placeholder:text-gray-600'
           : 'placeholder:text-sm placeholder:text-black'
       "
       class="h-[28px] w-full px-4 py-2 focus:outline-none rounded-s-xl"
     />
     <svg
-      [ngClass]="dropdownOpen ? 'rotate-180' : ''"
+      [ngClass]="dropdownOpen() ? 'rotate-180' : ''"
       class="mr-2 transition-transform size-5"
       viewBox="0 0 24 24"
       fill="none"
@@ -32,21 +32,25 @@
     </svg>
   </div>
 
-  @if (dropdownOpen) {
+  @if (dropdownOpen()) {
   <ul
     class="absolute left-0 mt-4 bg-mainColor4 shadow-lg custom-scrollbar-roles font-semibold w-[230px] rounded-xl h-fit"
   >
-    @for (role of filteredRoles; track role.name) {
+    @for (role of filteredRoles; track role.name; let first = $first ; let last
+    = $last) {
     <li
-      class="flex items-center justify-between px-3 py-2 text-sm border-b cursor-pointer border-b-mainColor1"
+      class="flex items-center justify-between px-3 py-2 text-sm transition-colors border-b cursor-pointer hover:text-mainColor4 hover:bg-subColor1 border-b-mainColor1"
       (click)="selectRole(role)"
+      [class.rounded-tr-xl]="first"
+      [class.rounded-tl-xl]="first"
+      [class.rounded-bl-xl]="last"
+      [class.rounded-bl-xl]="last"
     >
       {{ role.name }}
     </li>
     @if (selectedRole?.name === role.name) { @if (dropdownCampForT) {
-
     <ul
-      class="w-full overflow-y-scroll text-sm custom-scrollbar-camp h-[95px] ps-5"
+      class="w-full overflow-y-scroll text-sm custom-scrollbar-camp border-b border-mainColor1 h-[95px] ps-5"
     >
       @for (item of allCamps; track $index) {
       <li
@@ -60,7 +64,7 @@
     </ul>
     } } @if (selectedRole?.name === role.name) { @if (dropdownCampForH) {
     <ul
-      class="w-full overflow-y-scroll text-sm custom-scrollbar-camp h-[95px] ps-5"
+      class="w-full overflow-y-scroll text-sm custom-scrollbar-camp border-b border-mainColor1 h-[95px] ps-5"
     >
       @for (item of allCamps; track $index) {
       <li

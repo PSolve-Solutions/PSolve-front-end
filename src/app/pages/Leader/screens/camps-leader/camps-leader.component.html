@@ -99,9 +99,11 @@
                 {{ row.name }}
               </td>
               <td class="hidden px-4 py-2 lg:table-cell">
-                {{ row.startDate }}
+                {{ convertToLocal(row.startDate) | date : "dd-MM-YYYY" }}
               </td>
-              <td class="hidden px-4 py-2 lg:table-cell">{{ row.endDate }}</td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ convertToLocal(row.endDate) | date : "dd-MM-YYYY" }}
+              </td>
               <td class="hidden px-4 py-2 lg:table-cell">
                 @switch (row.term) { @case (1) { First term } @case (2) { Second
                 term } @case (3) { Summer } @case (4) { Mid year } }

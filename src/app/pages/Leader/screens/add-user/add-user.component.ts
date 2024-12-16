@@ -1,11 +1,10 @@
 import {
   Component,
-  ElementRef,
   HostListener,
   inject,
   OnInit,
-  QueryList,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -17,6 +16,7 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { DashboardService } from '../../services/dashboard.service';
 import { NgClass } from '@angular/common';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-add-user',
@@ -24,9 +24,11 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
   imports: [ReactiveFormsModule, NgSelectModule, NgClass, ToastrModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddUserComponent implements OnInit {
   dashboardService = inject(DashboardService);
+  ocSidebarService = inject(OcSidebarService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   allRoles: { id: number; name: string }[] = [];
@@ -39,7 +41,6 @@ export class AddUserComponent implements OnInit {
   foucsCamp: boolean = false;
   submitted: boolean = false;
   isLoading: boolean = false;
-  imgFile!: File;
   addUserForm!: FormGroup;
 
   @ViewChild('collegeSelect') collegeSelect!: NgSelectComponent;
@@ -53,13 +54,13 @@ export class AddUserComponent implements OnInit {
       lastName: ['', [Validators.required]],
       birthDate: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      nationalId: ['', [Validators.required]],
+      nationalId: [''],
       phoneNumber: ['', [Validators.required]],
       college: [null, [Validators.required]],
       grade: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       profileImage: [null],
-      codeForceHandle: ['', [Validators.required]],
+      codeForceHandle: [''],
       vjudgeHandle: [null],
       campId: [null],
       role: [null, [Validators.required]],
@@ -140,8 +141,9 @@ export class AddUserComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    this.imgFile = event.target.files[0];
-    this.uploadedFileName = this.imgFile.name;
+    const imgFile = event.target.files[0];
+    this.uploadedFileName = imgFile.name;
+    this.addUserForm.get('profileImage')?.setValue(imgFile);
   }
 
   getRole(role: any): void {

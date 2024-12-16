@@ -8,6 +8,7 @@ import {
   Input,
   OnInit,
   Output,
+  signal,
 } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { StaffLeaderService } from '../../services/staff-leader.service';
@@ -36,7 +37,7 @@ export class DropdownRolesComponent implements OnInit {
   roleInfo!: { userId: string; role: string; campId: number };
   filteredRoles: any[] = [];
   selectedRole: any | null = null;
-  dropdownOpen: boolean = false;
+  dropdownOpen = signal<boolean>(false);
   dropdownCampForT: boolean = false;
   dropdownCampForH: boolean = false;
 
@@ -49,7 +50,7 @@ export class DropdownRolesComponent implements OnInit {
     this.dashboardService.roles().subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
-          this.roles = data;
+          this.roles = this.filteredRoles = data;
         } else {
           console.log('error');
         }
@@ -80,20 +81,21 @@ export class DropdownRolesComponent implements OnInit {
       role.name.toLowerCase().includes(value.toLowerCase())
     );
   }
+
   selectRole(role: any) {
     this.selectedRole = role;
     if (this.selectedRole.name === 'Trainee') {
-      this.dropdownOpen = true;
+      this.dropdownOpen.set(true);
       this.dropdownCampForT = true;
       this.dropdownCampForH = false;
     } else if (this.selectedRole.name === 'Head_Of_Camp') {
-      this.dropdownOpen = true;
+      this.dropdownOpen.set(true);
       this.dropdownCampForT = false;
       this.dropdownCampForH = true;
     } else {
       this.dropdownCampForH = false;
       this.dropdownCampForT = false;
-      this.dropdownOpen = false;
+      this.dropdownOpen.set(false);
       const roleInfo = {
         userId: this.selectedStaffId,
         role: this.selectedRole.name,
@@ -109,7 +111,7 @@ export class DropdownRolesComponent implements OnInit {
       campId: camp.id,
     };
     this.saveNewRoles(roleInfo);
-    this.dropdownOpen = false;
+    this.dropdownOpen.set(false);
   }
 
   saveNewRoles(roleInfo: any): void {
@@ -131,49 +133,17 @@ export class DropdownRolesComponent implements OnInit {
     });
   }
 
-  addNewRole(roleName: string): void {
-    this.rolesService.addNewRole(roleName).subscribe({
-      next: ({ statusCode, data }) => {
-        const roleInfo = {
-          userId: this.selectedStaffId,
-          role: roleName,
-        };
-        this.saveNewRoles(roleInfo);
-        if (statusCode === 200) {
-        } else {
-          console.log('error');
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  deleteRole(roleName: string) {
-    this.rolesService.removeRoleFromSystem(roleName).subscribe({
-      next: ({ statusCode, data }) => {
-        this.fetchAllRoles();
-        if (statusCode === 200) {
-        } else {
-          console.log('error');
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
   onDropdownFocus() {
-    this.dropdownOpen = true;
+    this.dropdownOpen.set(true);
   }
 
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
     const clickedInside = this.elementRef.nativeElement.contains(targetElement);
     if (!clickedInside && this.dropdownOpen) {
-      this.dropdownOpen = false;
+      this.dropdownOpen.set(false);
+    } else {
+      this.dropdownOpen.set(true);
     }
   }
   closeDropdown(): void {}

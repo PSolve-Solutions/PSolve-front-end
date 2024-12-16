@@ -6,12 +6,12 @@ import { CampLeaderService } from '../../services/camp-leader.service';
 import { EmptyCampComponent } from '../../Components/empty-camp/empty-camp.component';
 import { CampInfo } from '../../model/camp';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-camps-leader',
   standalone: true,
-  imports: [ConfirmCampComponent, NgClass, EmptyCampComponent],
+  imports: [ConfirmCampComponent, NgClass, DatePipe, EmptyCampComponent],
   templateUrl: './camps-leader.component.html',
   styleUrl: './camps-leader.component.scss',
 })
@@ -57,6 +57,11 @@ export class CampsLeaderComponent implements OnInit {
           this.isLoading.update((v) => (v = false));
         },
       });
+  }
+
+  convertToLocal(date: string): Date {
+    const localDate = new Date(date);
+    return localDate;
   }
 
   showConfirmDelete(id: number) {
