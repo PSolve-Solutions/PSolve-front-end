@@ -16,7 +16,13 @@ export class OcSidebarService {
   }
 
   openSidebar(keyword: 'hide' | 'semi' | 'show'): void {
-    this.isOpen.set(keyword);
+    console.log(keyword);
+    debugger;
+    if (keyword === 'hide' && window.innerWidth > 768) {
+      this.isOpen.set('show');
+    } else {
+      this.isOpen.set(keyword);
+    }
   }
   // showSidebar(): void {
   //   this.isOpenInMobile.set(!this.isOpenInMobile());
