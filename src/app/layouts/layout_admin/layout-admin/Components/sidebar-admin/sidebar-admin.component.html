@@ -169,6 +169,58 @@
             </h3>
           </li>
         </ul>
+        <ul
+          class="flex flex-col"
+          [class.items-center]="ocSidebarService.isOpen() === 'semi'"
+        >
+          <li
+            class="mb-2 font-bold"
+            [ngClass]="
+              ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
+            "
+          >
+            {{
+              ocSidebarService.isOpen() === "show" ? "University" : "UNIVERSITY"
+            }}
+          </li>
+          <li
+            class="ps-1.5 cursor-pointer flex group items-center py-1.5 gap-x-1 px-2.5"
+          >
+            <div
+              routerLink="university"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 border rounded-sm border-subColor1 peer group-hover:bg-subColor2 transition-colors bg-subColor1"
+            >
+              <svg
+                width="18"
+                height="17"
+                viewBox="0 0 18 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 0L8.6715 0.160994L1.17225 3.76757L0.75 3.97414V5.23784H17.25V3.97414L16.8278 3.76757L9.32775 0.160994L9 0ZM9 1.65405L13.4062 3.76757H4.59375L9 1.65405ZM2.25 5.97297V13.3243H1.5V14.7946H16.5V13.3243H15.75V5.97297H14.25V13.3243H12.75V5.97297H11.25V13.3243H9.75V5.97297H8.25V13.3243H6.75V5.97297H5.25V13.3243H3.75V5.97297H2.25ZM0 15.5297V17H18V15.5297H0Z"
+                  fill="#F7F8F3"
+                />
+              </svg>
+            </div>
+
+            <h3
+              routerLink="university"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 w-full border rounded-sm border-subColor1 bg-subColor1 group-hover:bg-subColor2 peer transition-colors"
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              University
+            </h3>
+          </li>
+        </ul>
       </nav>
       }@else {
       <nav class="flex flex-col flex-wrap w-full ps-3">

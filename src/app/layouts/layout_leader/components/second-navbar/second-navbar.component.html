@@ -1,6 +1,8 @@
 <header
   class="sticky top-0 inset-x-0 flex justify-start h-20 z-10 w-full bg-mainColor4 text-sm pt-2.5 ps-[260px]"
-  [ngClass]="ocSidebarService.isOpen() ? 'lg:ps-[260px]' : 'lg:ps-[80px]'"
+  [ngClass]="
+    ocSidebarService.isOpen() === 'show' ? 'lg:ps-[260px]' : 'lg:ps-[80px]'
+  "
 >
   <nav class="flex items-center w-full px-10 basis-full text-mainColor1">
     <div
