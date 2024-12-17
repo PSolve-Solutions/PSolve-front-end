@@ -40,4 +40,24 @@ export class AdminsService {
       `${environment.BASE_URL}/api/Admin/admins/${id}`
     );
   }
+
+  // Universities
+
+  deleteUniversity(name: string): Observable<ResponseHeader> {
+    return this.http.delete<ResponseHeader>(
+      `${environment.BASE_URL}/api/Admin/universities/${name}`
+    );
+  }
+  addUniversity(name: string): Observable<ResponseHeader> {
+    return this.http.post<ResponseHeader>(
+      `${environment.BASE_URL}/api/Admin/universities/${name}`,
+      name
+    );
+  }
+
+  getUniversities(): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Home/universities`
+    );
+  }
 }

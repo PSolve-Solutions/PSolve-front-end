@@ -78,7 +78,6 @@ export class DeleteUserComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted.set(false);
-
         this.isLoading.update((v) => (v = false));
       },
     });

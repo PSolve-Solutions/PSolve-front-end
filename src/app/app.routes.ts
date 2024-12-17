@@ -66,6 +66,7 @@ import { ClientDetailsComponent } from './pages/Admin/screens/client-details/cli
 import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
 import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
 import { CommunityLeaderComponent } from './pages/Leader/screens/community-leader/community-leader.component';
+import { UniversityAdminComponent } from './pages/Admin/screens/university-admin/university-admin.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -167,6 +168,11 @@ export const routes: Routes = [
             title: 'Clients / Client Details - PSolve',
           },
         ],
+      },
+      {
+        path: 'university',
+        component: UniversityAdminComponent,
+        title: 'University - PSolve',
       },
     ],
   },
