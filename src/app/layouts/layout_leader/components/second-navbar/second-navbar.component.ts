@@ -117,7 +117,6 @@ export class SecondNavbarComponent implements OnInit {
   }
 
   isIncludes(route: string): boolean {
-    debugger;
     if (this.currentPath.includes(route)) {
       return true;
     } else {
