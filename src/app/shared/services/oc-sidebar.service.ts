@@ -16,8 +16,6 @@ export class OcSidebarService {
   }
 
   openSidebar(keyword: 'hide' | 'semi' | 'show'): void {
-    console.log(keyword);
-    debugger;
     if (keyword === 'hide' && window.innerWidth > 768) {
       this.isOpen.set('show');
     } else {

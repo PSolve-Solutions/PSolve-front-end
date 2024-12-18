@@ -27,6 +27,7 @@
     </button>
     <app-table-admin
       (pageParams)="getPageParams($event)"
+      (clientId)="getClientId($event)"
       [isLoading]="isLoading"
       [allDataTable]="allClients"
       [whatPlace]="'clinet'"
