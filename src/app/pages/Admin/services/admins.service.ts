@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class AdminsService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   getAllAdminsPagination(
     currentPage: number,
     pageSize: number
@@ -24,8 +23,20 @@ export class AdminsService {
     );
   }
 
-  deleteAdmin(id: number): Observable<ResponseHeader> {
-    return this.http.delete<any>(
+  deleteAdmin(id: string): Observable<ResponseHeader> {
+    return this.http.delete<ResponseHeader>(
+      `${environment.BASE_URL}/api/Admin/admins/${id}`
+    );
+  }
+
+  actionsAdmin(formData: any): Observable<ResponseHeader> {
+    return this.http.post<any>(
+      `${environment.BASE_URL}/api/Admin/admins`,
+      formData
+    );
+  }
+  getAdminById(id: string): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/admins/${id}`
     );
   }

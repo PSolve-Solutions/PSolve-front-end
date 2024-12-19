@@ -127,6 +127,7 @@ export class AddUserComponent implements OnInit {
       },
     });
   }
+
   displayFormErrors() {
     Object.keys(this.addUserForm.controls).forEach((field) => {
       const control = this.addUserForm.get(field);

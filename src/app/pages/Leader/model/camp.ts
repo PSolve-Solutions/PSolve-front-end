@@ -18,6 +18,7 @@ export interface Camp {
   startDate: string;
   endDate: string;
   term: number;
+  joinRequestCount: number;
   durationInWeeks: number;
 }
 

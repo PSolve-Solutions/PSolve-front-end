@@ -1,5 +1,3 @@
-
-
 import { RouterOutlet } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import {
@@ -16,9 +14,9 @@ import { AuthService } from '../../../authentication/services/auth.service';
 @Component({
   selector: 'app-login-layout',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgClass, RouterLink,RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, RouterOutlet],
   templateUrl: './login-layout.component.html',
-  styleUrl: './login-layout.component.scss'
+  styleUrl: './login-layout.component.scss',
 })
 export class LoginLayoutComponent {
   authService = inject(AuthService);
@@ -47,10 +45,10 @@ export class LoginLayoutComponent {
 
   onLogin() {
     this.submitted = true;
-    
+
     this.isLoading = true;
     this.authService.loginUser(this.loginForm.value).subscribe({
-      next: ({ statusCode, data, msg }) => {
+      next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           if (data.roles[0] === 'Leader') {
             this.router.navigate(['/leader']);

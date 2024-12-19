@@ -92,7 +92,7 @@
                 (mouseover)="onHover(rowIndex, colIndex)"
                 (mouseleave)="onLeave()"
               >
-                {{ s.solvedCount }} / {{ problemCountSheet }}
+                {{ s.solvedCount }} / {{ problemCountMap[s.sheetId] || "N/A" }}
               </td>
               }
             </tr>
@@ -165,7 +165,8 @@
                 (mouseover)="onHover(rowIndex, colIndex)"
                 (mouseleave)="onLeave()"
               >
-                {{ s.solvedCount }} / {{ problemCountSheet }}
+                {{ s.solvedCount }} /
+                {{ problemCountContest[s.contestId] || "N/A" }}
               </td>
               }
             </tr>

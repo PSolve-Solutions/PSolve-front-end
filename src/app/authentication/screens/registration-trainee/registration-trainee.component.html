@@ -1,0 +1,872 @@
+<div
+  class="flex flex-col items-center justify-center min-h-screen px-3 md:flex-row font-montserrat bg-mainColor4"
+>
+  <div
+    routerLink="/"
+    class="self-start px-6 py-2 my-10 rounded-lg ms-8 md:hidden bg-mainColor1"
+  >
+    <img
+      src="assets/img/logo.png"
+      alt="Psovle"
+      width="90"
+      height="30"
+      class="object-cover cursor-pointer"
+    />
+  </div>
+  <div
+    class="flex w-full max-w-5xl p-3 mx-2 my-4 bg-white shadow-2xl rounded-3xl"
+  >
+    @if (superTab === 1) {
+
+    <div
+      class="flex-col items-center justify-between hidden w-1/3 py-16 overflow-hidden bg-mainColor1 md:flex rounded-3xl"
+    >
+      <img
+        src="assets/img/register-done.png"
+        alt="Illustration"
+        class="w-[750px] h-[390px] object-cover"
+      />
+      <img
+        src="assets/img/logo.png"
+        alt="Psovle"
+        width="105"
+        height="38"
+        class="object-cover cursor-pointer"
+        routerLink="/"
+      />
+    </div>
+
+    <div class="flex flex-col w-full pt-2 pb-4 md:ps-6 md:pe-4 md:w-2/3">
+      <div class="flex items-center justify-end mb-2">
+        <a routerLink="/login" class="font-semibold text-mainColor1"
+          >Already have an account?
+          <span class="font-extrabold transition-colors hover:text-subColor1"
+            >Login</span
+          ></a
+        >
+      </div>
+      <div class="w-fit ps-4">
+        <h1 class="text-3xl font-extrabold text-mainColor1">Apply Now</h1>
+      </div>
+
+      <form
+        [formGroup]="registrationForm"
+        class="p-4 mt-4 bg-white border min-h-[450px] rounded-lg shadow-lg"
+      >
+        @if (currentTab === 1) {
+        <!-- Step 1 -->
+        <div>
+          <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">
+            Training Details
+          </h3>
+          <div id="organization" class="relative flex flex-col gap-y-1">
+            <label for="organization" class="text-subColor1">
+              Organization
+              <span class="font-bold text-red-600">*</span>
+            </label>
+            <button
+              type="button"
+              (click)="toggleDropdown()"
+              class="flex items-center justify-between px-4 py-2.5 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            >
+              <div class="flex items-center gap-x-4">
+                @if (selectedOrganization?.logoUrl) {
+
+                <img
+                  [src]="selectedOrganization?.logoUrl"
+                  alt="{{ selectedOrganization?.clientName }}"
+                  class="border rounded-full border-mainColor1 size-9"
+                />
+                } @else {
+                <div class="rounded-full size-9 bg-[#002C3D4D]"></div>
+                }
+                <span
+                  [class.text-[#002C3D4D]]="!selectedOrganization?.clientName"
+                >
+                  {{ selectedOrganization?.clientName || "Community" }}
+                </span>
+              </div>
+              <svg
+                class="ml-2 transition-transform rotate-0 size-4"
+                [class.rotate-180]="isDropdownOrganization"
+                viewBox="0 0 11 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                  fill="#285C6A"
+                />
+              </svg>
+            </button>
+            @if (isDropdownOrganization) {
+            <div
+              class="absolute right-0 top-[80px] border max-h-64 overflow-y-auto border-mainColor1 z-10 w-full mt-5 bg-[#eef3f3] rounded-lg shadow-lg focus:outline-none"
+            >
+              <ul>
+                @for (option of allCommunities; track option.id; let last =
+                $last) {
+                <li
+                  (click)="selectOrganization(option)"
+                  [class.text-[#2A8E9E]]="
+                    option.clientName === selectedOrganization?.clientName
+                  "
+                  [class.bg-white]="
+                    option.clientName === selectedOrganization?.clientName
+                  "
+                  class="flex items-center px-3 py-4 font-semibold cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  [class.border-b]="!last"
+                >
+                  @if (option.logoUrl) {
+
+                  <img
+                    [src]="option.logoUrl"
+                    alt="{{ option.clientName }}"
+                    class="border rounded-full size-9"
+                  />
+                  }@else {
+                  <div class="rounded-full size-9 bg-mainColor1"></div>
+
+                  }
+                  {{ option.clientName }}
+                </li>
+                }
+              </ul>
+            </div>
+            }
+          </div>
+          <div
+            class="grid grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+          >
+            <div id="camp" class="relative flex flex-col gap-y-1">
+              <label for="camp" class="text-subColor1"
+                >Camp <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownCamp()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (campName) { {{ campName }} }@else {
+
+                <span class="text-[#002C3D4D]">Camp</span>
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownCamp == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownCamp) {
+              <div
+                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of allCamps; track option.id) {
+
+                  <li
+                    (click)="selectCamp(option)"
+                    [class.text-[#2A8E9E]]="option.name === campName"
+                    [class.bg-white]="option.name === campName"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option.name }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+            <div id="has" class="relative flex flex-col gap-y-1">
+              <label for="has" class="text-subColor1"
+                >Has Labtop <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownHas()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (hasLab) { {{ hasLab }} }@else {
+
+                <span class="text-[#002C3D4D]">Has Labtop</span>
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownHas == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownHas) {
+              <div
+                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of [{id: 0, name: 'Yes'}, {id: 1, name: 'No'}];
+                  track option.id) {
+
+                  <li
+                    (click)="selectHasLab(option)"
+                    [class.text-[#2A8E9E]]="option.name === hasLab"
+                    [class.bg-white]="option.name === hasLab"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option.name }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex flex-col mt-4 gap-y-1">
+            <label for="Any Comments" class="text-subColor1"
+              >Any Comments</label
+            >
+            <textarea
+              class="w-full p-3 ps-6 mb-4 rounded-lg focus:outline-none text-mainColor1 border-mainColor1 focus:border-subColor1 bg-[#eef3f3]"
+              placeholder="Comment here"
+              rows="4"
+              formControlName="Comment"
+            ></textarea>
+          </div>
+        </div>
+        } @if (currentTab === 2) {
+        <!-- Step 2 -->
+
+        <div>
+          <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">
+            Personal Information
+          </h3>
+
+          <div
+            class="grid w-full grid-cols-1 grid-rows-3 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-3"
+          >
+            <div class="flex flex-col gap-y-1">
+              <label for="firstName" class="text-subColor1"
+                >FirstName <span class="font-bold text-red-600">*</span></label
+              >
+              <input
+                type="text"
+                id="firstName"
+                formControlName="FirstName"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label for="middleName" class="text-subColor1"
+                >Middle Name
+                <span class="font-bold text-red-600">*</span></label
+              >
+              <input
+                type="text"
+                id="middleName"
+                formControlName="MiddleName"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label for="LastName" class="text-subColor1"
+                >LastName <span class="font-bold text-red-600">*</span></label
+              >
+              <input
+                type="text"
+                id="LastName"
+                formControlName="LastName"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+          >
+            <div id="university" class="relative flex flex-col gap-y-1">
+              <label for="university" class="text-subColor1"
+                >University <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownUniversity()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (universityName) {
+                <span class="w-11/12 text-left truncate">{{
+                  universityName
+                }}</span>
+                }@else {
+
+                <span class="text-[#002C3D4D] truncate text-left w-11/12"
+                  >university</span
+                >
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownUniversity == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownUniversity) {
+              <div
+                class="absolute right-0 top-[80px] max-h-72 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of allUniversity; track option.name) {
+
+                  <li
+                    (click)="selectUniversity(option)"
+                    [class.text-[#2A8E9E]]="option.name === universityName"
+                    [class.bg-white]="option.name === universityName"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option.name }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label for="NationalId" class="text-subColor1"
+                >National Id @if
+                (checkRequiredField.isRequiredTraineeNationalId) {
+                <span class="font-bold text-red-600">*</span>
+                }
+              </label>
+              <input
+                type="text"
+                id="NationalId"
+                formControlName="NationalId"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+          >
+            <div id="college" class="relative flex flex-col gap-y-1">
+              <label for="College" class="text-subColor1"
+                >College <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownCollege()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (collegeName) { {{ collegeName }} }@else {
+
+                <span class="text-[#002C3D4D]">College</span>
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownCollege == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownCollege) {
+              <div
+                class="absolute right-0 top-[80px] max-h-52 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of allUCollege; track option.id) {
+
+                  <li
+                    (click)="selectCollege(option)"
+                    [class.text-[#2A8E9E]]="option.name === collegeName"
+                    [class.bg-white]="option.name === collegeName"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option.name }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label for="Photo" class="text-subColor1">Profile Image</label>
+              <div
+                class="px-4 py-2.5 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                <input
+                  type="file"
+                  id="Photo"
+                  name="Photo"
+                  (change)="onFileSelected($event)"
+                  class="hidden"
+                />
+
+                <p
+                  class="flex items-center justify-between w-full text-sm truncate"
+                >
+                  <span class="truncate">{{ profileImageName || "File" }}</span>
+
+                  <label
+                    for="Photo"
+                    class="flex items-center px-4 py-1.5 font-semibold text-white bg-black rounded-lg cursor-pointer w-fit right-1 gap-x-1 hover:bg-subColor1"
+                  >
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.5 11H7.5C10 11 11 10 11 7.5V4.5C11 2 10 1 7.5 1H4.5C2 1 1 2 1 4.5V7.5C1 10 2 11 4.5 11Z"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M4.5 4.75488L6 3.25488L7.5 4.75488"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6 3.25488V7.25488"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M3 8.25488C4.945 8.90488 7.055 8.90488 9 8.25488"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <span class="text-xs">Choose File</span>
+                  </label>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 grid-rows-3 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-3"
+          >
+            <div class="flex flex-col gap-y-1">
+              <label for="BirthDate" class="text-subColor1"
+                >BirthDate <span class="font-bold text-red-600">*</span></label
+              >
+              <input
+                type="date"
+                id="BirthDate"
+                formControlName="BirthDate"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+            <div id="gender" class="relative flex flex-col gap-y-1">
+              <label for="gender" class="text-subColor1"
+                >Gender <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownGender()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (gender) { {{ gender }} }@else {
+
+                <span class="text-[#002C3D4D]">gender</span>
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownGender == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownGender) {
+              <div
+                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of [{id: 0, name:'Male'}, {id: 1, name:
+                  'Female'}]; track option.id) {
+
+                  <li
+                    (click)="selectGender(option)"
+                    [class.text-[#2A8E9E]]="option.name === gender"
+                    [class.bg-white]="option.name === gender"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option.name }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+            <div id="grade" class="relative flex flex-col gap-y-1">
+              <label for="grade" class="text-subColor1"
+                >Year <span class="font-bold text-red-600">*</span></label
+              >
+              <button
+                type="button"
+                (click)="toggleDropdownGrade()"
+                class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              >
+                @if (grade) { {{ grade }} }@else {
+
+                <span class="text-[#002C3D4D]">Year</span>
+                }
+                <svg
+                  class="ml-2 transition-transform rotate-0 size-4"
+                  [class.rotate-180]="isDropdownGrade == true"
+                  viewBox="0 0 11 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+                    fill="#285C6A"
+                  />
+                </svg>
+              </button>
+              @if (isDropdownGrade) {
+              <div
+                class="absolute right-0 max-h-32 overflow-y-auto top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+              >
+                <ul>
+                  @for (option of [1, 2, 3, 4, 5]; track option) {
+
+                  <li
+                    (click)="selectGrade(option)"
+                    [class.text-[#2A8E9E]]="option === grade"
+                    [class.bg-white]="option === grade"
+                    class="flex items-center px-3 py-4 font-semibold border-b cursor-pointer border-subColor1 text-mainColor1 hover:bg-white gap-x-4"
+                  >
+                    {{ option }}
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        } @if (currentTab === 3) {
+        <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">
+          Contact Information
+        </h3>
+
+        <div
+          class="grid w-full grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+        >
+          <div class="flex flex-col gap-y-1">
+            <label for="Email" class="text-subColor1"
+              >E-mail
+              <span class="font-bold text-red-600">*</span>
+            </label>
+            <input
+              type="email"
+              id="Email"
+              formControlName="Email"
+              class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="PhoneNumber" class="text-subColor1"
+              >Phone Number @if
+              (checkRequiredField.isRequiredTraineePhoneNumber) {
+              <span class="font-bold text-red-600">*</span>
+              }
+            </label>
+            <input
+              type="text"
+              id="PhoneNumber"
+              formControlName="PhoneNumber"
+              class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            />
+          </div>
+        </div>
+        <div
+          class="grid w-full grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+        >
+          <div class="flex flex-col gap-y-1">
+            <label for="FacebookLink" class="text-subColor1"
+              >Facebook Link
+            </label>
+            <input
+              type="text"
+              id="FacebookLink"
+              formControlName="FacebookLink"
+              class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            />
+          </div>
+          <div class="relative flex flex-col gap-y-1">
+            <label for="otp" class="text-subColor1"
+              >OTP <span class="font-bold text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="otp"
+              formControlName="otp"
+              placeholder="****"
+              maxlength="4"
+              class="px-4 py-3 placeholder:text-2xl font-semibold tracking-[10px] bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            />
+
+            <button
+              type="button"
+              (click)="sendOTP()"
+              class="flex absolute top-[38px] items-center px-4 py-1.5 font-semibold text-white bg-black rounded-lg cursor-pointer w-fit right-3 gap-x-2 hover:bg-subColor1"
+            >
+              @if (showLoader) {
+              <div class="flex items-center py-1 gap-x-2">
+                <span class="sr-only">Loading...</span>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"
+                ></div>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"
+                ></div>
+                <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+              </div>
+              }@else {
+
+              <span class="text-xs">Send OTP</span>
+              <svg
+                width="16"
+                height="17"
+                viewBox="0 0 16 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.31934 6.69785L1.31934 10.6547C1.31934 13.952 2.63828 15.271 5.93565 15.271L9.89248 15.271C13.1898 15.271 14.5088 13.952 14.5088 10.6547L14.5088 6.69785C14.5088 3.40049 13.1898 2.08154 9.89248 2.08154L5.93565 2.08154C2.63828 2.08154 1.31934 3.40049 1.31934 6.69785Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8.61143 6.7627L10.5898 8.74111L8.61143 10.7195"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10.5898 8.74121L5.31406 8.74121"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              }
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center mt-4 gap-x-3">
+          <div
+            class="flex items-center justify-center w-5 h-5 border border-black rounded"
+          >
+            @if (checkRequiredField.isOnSite) {
+            <svg
+              width="14"
+              height="15"
+              viewBox="0 0 22 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 11.2432L8.14634 20L20 2"
+                stroke="#2A8E9E"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+            }
+          </div>
+          <h4 class="text-[#A3B3B9] font-semibold">Accept to Attend Onside</h4>
+        </div>
+        <div class="mt-4">
+          <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">Online Profiles</h3>
+
+          <div
+            class="grid w-full grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
+          >
+            <div class="flex flex-col gap-y-1">
+              <label for="CodeForceHandle" class="text-subColor1"
+                >CodeForce Handle @if (checkRequiredField.isRequiredCodeforce) {
+                <span class="font-bold text-red-600">*</span>
+                }
+              </label>
+              <input
+                type="text"
+                id="CodeForceHandle"
+                formControlName="CodeForceHandle"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <label for="VjudgeHandle" class="text-subColor1"
+                >Vjudge Handle @if (checkRequiredField.isRequiredVjudge) {
+                <span class="font-bold text-red-600">*</span>
+                }
+              </label>
+              <input
+                type="text"
+                id="VjudgeHandle"
+                formControlName="VjudgeHandle"
+                class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+              />
+            </div>
+          </div>
+        </div>
+
+        }
+      </form>
+
+      <!-- Footer: Pagination -->
+      <div class="flex items-center justify-end w-full mt-6 pe-8">
+        <div class="flex items-center justify-between w-full md:w-1/2">
+          <div class="flex items-center justify-center gap-x-3">
+            <!-- @if (currentTab === 2 || currentTab == 3) { -->
+            <button
+              (click)="swipPage(0)"
+              type="button"
+              class="p-1 bg-white border rounded-lg disabled:bg-gray-200"
+              [disabled]="currentTab === 1"
+            >
+              <svg
+                class="rotate-180 size-4 fill-mainColor1"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.63613 1.60249L7.51895 4.4853L1.23848 4.4855C0.954102 4.4855 0.723633 4.71597 0.723633 5.00034C0.723633 5.28472 0.953907 5.51519 1.23848 5.51519L7.51895 5.51499L4.63594 8.39761C4.43496 8.59858 4.43496 8.92456 4.63594 9.12573C4.83691 9.32671 5.16289 9.32671 5.36406 9.12573L9.12578 5.36401C9.14961 5.34019 9.17109 5.31362 9.18985 5.2855C9.19824 5.2728 9.2041 5.25913 9.21133 5.24585C9.22031 5.22964 9.23008 5.21401 9.23711 5.19683C9.24434 5.17964 9.24844 5.16147 9.25352 5.1437C9.25762 5.12944 9.26328 5.11558 9.26621 5.10093C9.27949 5.03433 9.27949 4.96558 9.26621 4.89897C9.26348 4.88511 9.2582 4.87222 9.2543 4.85855C9.24902 4.83999 9.24453 4.82105 9.23711 4.80288C9.23027 4.78628 9.2207 4.77144 9.21231 4.75581C9.20488 4.74194 9.19863 4.72769 9.18985 4.7144C9.1709 4.68628 9.14961 4.65991 9.12578 4.63589L5.36406 0.874365C5.16309 0.673389 4.83711 0.673389 4.63594 0.874365C4.43496 1.07534 4.43496 1.40132 4.63613 1.60249Z"
+                />
+              </svg>
+            </button>
+            <!-- }  -->
+            @if (currentTab !== 3) {
+            <button
+              (click)="swipPage(1)"
+              type="button"
+              class="p-1 rounded-lg bg-mainColor1"
+            >
+              <svg
+                class="size-4"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.63613 1.60249L7.51895 4.4853L1.23848 4.4855C0.954102 4.4855 0.723633 4.71597 0.723633 5.00034C0.723633 5.28472 0.953907 5.51519 1.23848 5.51519L7.51895 5.51499L4.63594 8.39761C4.43496 8.59858 4.43496 8.92456 4.63594 9.12573C4.83691 9.32671 5.16289 9.32671 5.36406 9.12573L9.12578 5.36401C9.14961 5.34019 9.17109 5.31362 9.18985 5.2855C9.19824 5.2728 9.2041 5.25913 9.21133 5.24585C9.22031 5.22964 9.23008 5.21401 9.23711 5.19683C9.24434 5.17964 9.24844 5.16147 9.25352 5.1437C9.25762 5.12944 9.26328 5.11558 9.26621 5.10093C9.27949 5.03433 9.27949 4.96558 9.26621 4.89897C9.26348 4.88511 9.2582 4.87222 9.2543 4.85855C9.24902 4.83999 9.24453 4.82105 9.23711 4.80288C9.23027 4.78628 9.2207 4.77144 9.21231 4.75581C9.20488 4.74194 9.19863 4.72769 9.18985 4.7144C9.1709 4.68628 9.14961 4.65991 9.12578 4.63589L5.36406 0.874365C5.16309 0.673389 4.83711 0.673389 4.63594 0.874365C4.43496 1.07534 4.43496 1.40132 4.63613 1.60249Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+            }@else {
+            <button
+              type="submit"
+              (click)="checkContactInfo()"
+              class="px-4 py-0.5 rounded-lg text-white bg-mainColor1"
+              [class.py-1.5]="isLoading"
+            >
+              @if (isLoading) {
+              <div class="flex items-center py-1 gap-x-2">
+                <span class="sr-only">Loading...</span>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"
+                ></div>
+                <div
+                  class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"
+                ></div>
+                <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+              </div>
+              }@else { Apply }
+            </button>
+            }
+          </div>
+          <div class="text-sm font-bold text-center text-mainColor1">
+            Page {{ currentTab }} of 3
+          </div>
+        </div>
+      </div>
+    </div>
+    }@else {
+    <div class="flex flex-col items-center justify-center w-full py-8 gap-y-4">
+      <div class="w-fit">
+        <img
+          src="assets/img/register-done.png"
+          alt="register-done"
+          class="object-cover"
+        />
+      </div>
+      <div class="flex flex-col items-center justify-center gap-y-4">
+        <div class="flex items-center justify-center gap-x-3">
+          <svg
+            class="size-8"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 0C5.37291 0 0 5.37289 0 12C0 18.6271 5.37291 24 12 24C18.6271 24 24 18.6271 24 12C24 5.37289 18.6271 0 12 0ZM20.1098 8.67847L11.1922 17.8193C10.5226 18.5102 9.43312 18.5102 8.75819 17.8193L3.89017 12.8344C3.22056 12.1435 3.22056 11.0275 3.89017 10.3419C4.55979 9.65102 5.64923 9.65102 6.32416 10.3419L9.97522 14.0833L17.6812 6.19132C18.3508 5.50576 19.4402 5.50576 20.1151 6.19132C20.7848 6.8822 20.7848 7.99823 20.1151 8.68379L20.1098 8.67847Z"
+              fill="#484DC4"
+            />
+          </svg>
+          <h3
+            class="text-2xl font-extrabold tracking-wide md:text-4xl text-mainColor1"
+          >
+            Request Completed
+          </h3>
+        </div>
+        <p class="text-[#484DC4] font-bold text-sm">
+          Your request has been processed successfully
+        </p>
+      </div>
+      <a
+        routerLink="/"
+        class="bg-[#484DC4] text-white px-6 rounded-md py-1 self-end me-8 hover:bg-mainColor1 transition-colors"
+      >
+        Done
+      </a>
+    </div>
+    }
+  </div>
+</div>

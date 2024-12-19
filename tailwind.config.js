@@ -7,7 +7,7 @@ module.exports = {
     },
     extend: {
       transitionProperty: {
-        height: "height",
+        height: "width",
       },
       colors: {
         activeLink: "#3D91C7",

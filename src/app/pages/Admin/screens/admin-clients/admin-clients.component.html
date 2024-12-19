@@ -1,1 +1,35 @@
-<p>admin-clients works!</p>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 hidden md:block z-[50] text-xl transition-all duration-500 font-medium"
+    [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
+  >
+    All Clients : {{ !isLoading ? allClients.totalCount : 0 }}
+  </h1>
+  <div class="flex flex-col space-y-10">
+    <button
+      routerLink="add-client"
+      class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    >
+      <svg
+        width="20"
+        height="19"
+        viewBox="0 0 20 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.0104 0C5.00044 0 0.94043 4.06 0.94043 9.07C0.94043 14.08 5.00044 18.14 10.0104 18.14C15.0204 18.14 19.0804 14.08 19.0804 9.07C19.0804 4.06 15.0204 0 10.0104 0ZM14.5404 10.21H11.1404V13.61H8.88043V10.19H5.48044V7.93H8.88043V4.53H11.1404V7.93H14.5404V10.21Z"
+          fill="#F7F8F3"
+        />
+      </svg>
+
+      <span>Add Client</span>
+    </button>
+    <app-table-admin
+      (pageParams)="getPageParams($event)"
+      [isLoading]="isLoading"
+      [allDataTable]="allClients"
+      [whatPlace]="'clinet'"
+    />
+  </div>
+</div>
