@@ -1,10 +1,5 @@
-table {
-  border-collapse: separate;
-  border-spacing: 0px 12px;
-}
-
 .custom-scrollbar-request::-webkit-scrollbar-thumb:hover {
-  background: #ddd;
+  background: #285c6a;
 }
 
 .custom-scrollbar-request::-webkit-scrollbar {
@@ -12,11 +7,33 @@ table {
   height: 12px;
 }
 .custom-scrollbar-request::-webkit-scrollbar-track {
-  background: #fafafa;
+  background: #fff;
   border-radius: 10px;
 }
 
 .custom-scrollbar-request::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #002c3d;
   border-radius: 10px;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+// .ng-select .ng-select-container .ng-value-container {
+//   padding-left: 6px;
+// }
+
+.ng-select .ng-select-container {
+  width: 85% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    font-size: 14px !important;
+    font-weight: 600;
+    color: white;
+  }
 }

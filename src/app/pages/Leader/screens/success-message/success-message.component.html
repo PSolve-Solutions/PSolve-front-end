@@ -2,20 +2,29 @@
   class="fixed inset-0 z-[150] flex items-center justify-center bg-black bg-opacity-50"
 >
   <div
-    class="relative flex flex-col h-[350px] items-center justify-center w-full max-w-md p-6 bg-white shadow-lg rounded-xl"
+    class="relative flex flex-col items-center justify-center w-full max-w-lg px-8 py-10 border-2 shadow-lg border-mainColor1 bg-mainColor4 rounded-2xl"
   >
     <span
       (click)="cancel()"
       class="absolute text-lg font-semibold transition-colors cursor-pointer top-4 right-5 hover:text-red-500"
       >X</span
     >
-
-    <img
-      src="./../../../../../assets/img/correct.png"
-      alt="correct.png"
-      width="70"
-      height="70"
-    />
-    <h3 class="mt-4 mb-2 text-3xl font-semibold">Requests Confirmed</h3>
+    <div class="flex items-center justify-center w-full gap-x-4">
+      <svg
+        width="46"
+        height="46"
+        viewBox="0 0 46 46"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M23.2997 0.160156C10.8297 0.160156 0.719727 10.2701 0.719727 22.7401C0.719727 35.2101 10.8297 45.3201 23.2997 45.3201C35.7697 45.3201 45.8797 35.2101 45.8797 22.7401C45.8797 10.2701 35.7697 0.160156 23.2997 0.160156ZM38.5597 16.4901L21.7797 33.6902C20.5197 34.9902 18.4697 34.9902 17.1997 33.6902L8.03973 24.3102C6.77973 23.0102 6.77973 20.9101 8.03973 19.6201C9.29973 18.3201 11.3497 18.3201 12.6197 19.6201L19.4897 26.6602L33.9897 11.8102C35.2497 10.5202 37.2997 10.5202 38.5697 11.8102C39.8297 13.1102 39.8297 15.2102 38.5697 16.5002L38.5597 16.4901Z"
+          fill="#F8444F"
+        />
+      </svg>
+      <h3 class="text-xl font-semibold text-mainColor1">
+        Requests Confirmed Successfully!
+      </h3>
+    </div>
   </div>
 </div>

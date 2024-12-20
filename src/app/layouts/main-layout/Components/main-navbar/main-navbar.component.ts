@@ -10,21 +10,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../../authentication/services/auth.service';
-import { NotificationComponent } from '../../../../shared/Components/notification/notification.component';
-import { NotificationService } from '../../../../shared/services/notification.service';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { NotificationComponent } from '../../../../shared/Components/notification/notification.component';
+import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { NotificationService } from '../../../../shared/services/notification.service';
 dayjs.extend(relativeTime);
 @Component({
-  selector: 'app-second-navbar',
+  selector: 'app-main-navbar',
   standalone: true,
   imports: [NgClass, RouterLink, NotificationComponent],
-  templateUrl: './second-navbar.component.html',
-  styleUrl: './second-navbar.component.scss',
+  templateUrl: './main-navbar.component.html',
+  styleUrl: './main-navbar.component.scss',
 })
-export class SecondNavbarComponent implements OnInit {
+export class MainNavbarComponent implements OnInit {
   authService = inject(AuthService);
   ocSidebarService = inject(OcSidebarService);
   notificationService = inject(NotificationService);

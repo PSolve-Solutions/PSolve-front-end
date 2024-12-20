@@ -1,12 +1,9 @@
-<app-sidebar-admin />
-@if (currentPath.includes('psolve')) {
-<app-navbar-admin />
-}@else {
-<app-main-mobile-nav />
-}
-
+<app-main-sidebar />
+<div class="md:hidden">
+  <app-main-mobile-nav />
+</div>
 <div class="hidden md:block">
-  <app-second-navbar />
+  <app-main-navbar />
 </div>
 
 <main

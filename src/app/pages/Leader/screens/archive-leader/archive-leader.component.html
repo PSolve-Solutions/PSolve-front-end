@@ -892,8 +892,8 @@
     class="flex z-[150] items-center fixed justify-end inset-0 !m-0"
   >
     <div
-      [ngClass]="showSideInfo ? 'translate-x-0' : 'translate-x-full'"
-      class="relative flex flex-col bg-[#323232] items-center h-screen w-[450px] p-6 transition-transform duration-700 ease-in-out shadow-lg rounded-tl-lg rounded-bl-lg"
+      [ngClass]="showSideInfo ? 'translate-x-0 ' : 'translate-x-full'"
+      class="relative flex right-3 md:right-0 max-h-[85vh] rounded-lg md:rounded-tl-lg md:rounded-bl-lg mt-[4.5rem] md:mt-0 md:max-h-full flex-col overflow-y-auto font-semibold custom-scrollbar-side bg-mainColor1 items-center text-mainColor4 h-screen md:w-[450px] w-[350px] p-6 transition-transform duration-700 ease-in-out shadow-lg"
     >
       <span
         (click)="handleClose()"

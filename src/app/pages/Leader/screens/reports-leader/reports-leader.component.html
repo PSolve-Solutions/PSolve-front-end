@@ -1,20 +1,28 @@
-<div
-  [ngClass]="isLoading() ? '' : 'p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6'"
-  class="relative w-full"
->
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Camps Reports
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Camps Reports
+  </h1>
   @for (report of dataReport; track report; let i = $index) { @for (item of
   report.data; track item.id) {
   <div class="flex flex-col items-center justify-center min-h-screen">
     <h2
       #topSection
       [id]="'section-' + item.id"
-      class="self-start mb-4 text-3xl font-medium ps-10"
+      class="self-start mb-4 text-3xl font-semibold text-mainColor1"
     >
       {{ item.name }}
     </h2>
 
     <!-- Expanding div -->
-    <div class="relative w-full px-4 bg-gray-100">
+    <div class="relative w-full bg-gray-100">
       @if (reportInfo) { @if (isLoadingReportInfo() ) {
       <div class="flex justify-center gap-2 mb-4">
         <div class="w-5 h-5 bg-blue-600 rounded-full animate-pulse"></div>
@@ -33,13 +41,18 @@
       </div>
       } }
 
-      <div class="flex flex-col px-4 gap-y-4">
+      <div class="flex flex-col gap-y-4">
         <div class="w-full bg-white shadow-lg rounded-2xl">
-          <h2 class="pt-5 text-2xl font-semibold ps-5">Sheets analysis</h2>
+          <h2 class="pt-5 text-2xl font-semibold text-mainColor1 ps-5">
+            Sheets analysis
+          </h2>
           <app-barchart-reports [sheetsRates]="item.sheetsRates" />
         </div>
+
         <div class="w-full bg-white shadow-lg rounded-2xl">
-          <h2 class="pt-5 text-2xl font-semibold ps-5">Contests analysis</h2>
+          <h2 class="pt-5 text-2xl font-semibold text-mainColor1 ps-5">
+            Contests analysis
+          </h2>
 
           <app-line-chart [contestRates]="item.contestRates" />
         </div>
@@ -60,13 +73,11 @@
         </div>
       </div>
     </div>
-
-    <!-- Button to toggle expansion -->
     <button
       (click)="toggleExpand(item.id, i)"
-      class="px-8 py-2 mt-6 border rounded-2xl border-mainblue text-mainblue"
+      class="px-8 py-2 my-6 text-lg font-semibold border rounded-2xl border-mainColor1 text-mainColor1"
     >
-      {{ isExpanded(item.id) ? "Show Less .." : "Show More .." }}
+      {{ isExpanded(item.id) ? "See Less .." : "See More .." }}
     </button>
   </div>
   } }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../authentication/services/auth.service';
-import { OcSidebarService } from '../../services/oc-sidebar.service';
+import { AuthService } from '../../../../authentication/services/auth.service';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-main-mobile-nav',

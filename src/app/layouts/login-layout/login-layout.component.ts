@@ -7,9 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../authentication/services/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../authentication/services/auth.service';
 
 @Component({
   selector: 'app-login-layout',

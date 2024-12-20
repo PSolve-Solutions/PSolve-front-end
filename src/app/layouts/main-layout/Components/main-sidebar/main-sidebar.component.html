@@ -70,6 +70,7 @@
             }}
           </li>
           <li
+            (click)="hideSidebar()"
             class="ps-1.5 flex items-center cursor-pointer group py-1.5 gap-x-1 px-2.5"
           >
             <div
@@ -131,6 +132,7 @@
             class="ps-1.5 cursor-pointer flex group items-center py-1.5 gap-x-1 px-2.5"
           >
             <div
+              (click)="hideSidebar()"
               routerLink="clients"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"
@@ -222,7 +224,7 @@
           </li>
         </ul>
       </nav>
-      }@else {
+      }@else { @if (currentPath.includes('leader')) {
       <nav class="flex flex-col flex-wrap w-full ps-3">
         <ul class="flex flex-col">
           @for (item of leaderLinks; track item.icon) {
@@ -246,7 +248,31 @@
           }
         </ul>
       </nav>
-      }
+      }@else {
+      <nav class="flex flex-col flex-wrap w-full ps-3">
+        <ul class="flex flex-col">
+          @for (item of hocLinks; track item.icon) {
+          <li
+            (click)="hideSidebar()"
+            class="flex items-center cursor-pointer py-1.5 gap-x-3.5 px-2.5 text-xl font-semibold text-mainColor4 hover:text-activeLink transition-colors"
+            [routerLink]="item.link"
+            routerLinkActive="activeLinkLeader"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ariaCurrentWhenActive="page"
+          >
+            <div [innerHTML]="item.icon"></div>
+            <h3
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              {{ item.name }}
+            </h3>
+          </li>
+          }
+        </ul>
+      </nav>
+      } }
     </div>
     <button
       type="button"

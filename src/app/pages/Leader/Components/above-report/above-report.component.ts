@@ -103,7 +103,7 @@ export class AboveReportComponent
               this.reportInfo?.progressPrecentage,
               100 - this.reportInfo?.progressPrecentage,
             ],
-            backgroundColor: ['#3D91C7', '#FFf'],
+            backgroundColor: ['#002C3D', '#FFf'],
             borderColor: '#000000',
             borderWidth: 2,
           },

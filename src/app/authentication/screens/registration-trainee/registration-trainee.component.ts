@@ -271,13 +271,16 @@ export class RegistrationTraineeComponent implements OnInit {
       next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           this.registration();
+          this.isLoading = false;
         } else {
           this.toastr.error(message);
+          this.isLoading = false;
           console.log('error');
         }
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       },
     });
   }

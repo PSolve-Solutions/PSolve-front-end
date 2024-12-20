@@ -13,7 +13,7 @@
   <div class="flex flex-col space-y-10">
     <button
       (click)="goToActionCamp(0)"
-      class="flex items-center px-4 py-2 space-x-2 transition-colors rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+      class="flex items-center px-4 py-2 my-2 transition-colors gap-x-2 rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
     >
       <svg
         width="20"
@@ -370,10 +370,11 @@
     </div>
   </div>
 
-  @if (showModal) {
-  <app-confirm-camp
+  @if (showModalDelete) {
+  <app-delete-confirm-modal
     (closeModal)="handleClose($event)"
     [itemId]="selectedItemId"
+    [label]="'camps'"
   />
   } @if (showEmptyModal) {
   <app-empty-camp
@@ -382,3 +383,80 @@
   />
   }
 </div>
+
+<!-- 
+      <table class="min-w-full text-center">
+        <thead class="bg-white sticky top-0 z-[5] shadow-sm">
+          <tr class="bg-[#F4F5F8] text-[#6B7088] text-lg">
+            <th class="sticky left-0 bg-[#F4F5F8] z-[5] p-4">
+              <input
+                type="checkbox"
+                class="w-5 h-5 text-blue-600"
+                (change)="toggleAll($event)"
+                [checked]="areAllItemsSelected()"
+              />
+            </th>
+            <th class="sticky z-[5] px-4 py-3 bg-[#F4F5F8] text-left left-11">
+              Name
+            </th>
+            <th class="px-4 py-3">Codeforces</th>
+            <th class="px-4 py-3 whitespace-nowrap">Has laptop</th>
+            <th class="px-4 py-3">Year</th>
+            <th class="px-4 py-3">Collage</th>
+            <th class="px-4 py-3">Gender</th>
+            <th class="px-4 py-3">Comment</th>
+            <th class="px-4 py-3">Email</th>
+            <th class="px-4 py-3">Phone</th>
+            <th class="px-4 py-3 whitespace-nowrap">National ID</th>
+            <th class="px-4 py-3 whitespace-nowrap">Facebook link</th>
+            <th class="px-4 py-3 whitespace-nowrap">Birth date</th>
+            <th class="px-4 py-3">Vjudge</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (request of dataRequest; track $index) { @for (item of
+          request.data; track $index) {
+          <tr
+            class="my-6 text-base font-medium text-center text-black bg-white rounded-lg"
+          >
+            <td class="sticky left-0 z-[4] p-4 bg-white">
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-blue-600 form-checkbox"
+                (change)="toggleItem(item.id, $event)"
+                [checked]="selectedIds.includes(item.id)"
+              />
+            </td>
+            <td
+              class="sticky z-[4] px-4 py-2 text-left bg-white left-10 rounded-s-lg whitespace-nowrap"
+            >
+              {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+            </td>
+            <td class="p-4">{{ item.codeForceHandle }}</td>
+            <td class="p-4">@if (item.hasLaptop) { Yes }@else { NO }</td>
+            <td class="p-4">{{ item.grade }}</td>
+            <td class="p-4 whitespace-nowrap">{{ item.college }}</td>
+            <td class="p-4">
+              @if (item.gender === 0) { Male }@else { Female }
+            </td>
+            <td class="p-4 whitespace-nowrap">{{ item.comment }}</td>
+            <td class="p-4">{{ item.email }}</td>
+            <td class="p-4">{{ item.phoneNumber }}</td>
+            <td class="p-4 whitespace-nowrap">{{ item.nationalId }}</td>
+            <td class="p-4">
+              @if (item.facebookLink) {
+              <a
+                [href]="item.facebookLink"
+                target="_blank"
+                class="transition-colors hover:text-activeLink"
+                >Profile</a
+              >
+              }
+            </td>
+            <td class="p-4 whitespace-nowrap">{{ item.birthDate }}</td>
+            <td class="p-4 whitespace-nowrap">{{ item.vjudge }}</td>
+          </tr>
+          } }
+        </tbody>
+      </table> -->

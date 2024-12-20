@@ -23,14 +23,12 @@ import { TraineesLeaderComponent } from './pages/Leader/screens/trainees-leader/
 import { ArchiveLeaderComponent } from './pages/Leader/screens/archive-leader/archive-leader.component';
 import { SheetsTraineeComponent } from './pages/Trainee/screens/sheets-trainee/sheets-trainee.component';
 import { ContestTraineeComponent } from './pages/Trainee/screens/contest-trainee/contest-trainee.component';
-import { LoginLayoutComponent } from './layouts/login/login-layout/login-layout.component';
 
 import { ReportsLeaderComponent } from './pages/Leader/screens/reports-leader/reports-leader.component';
 import { RequestsLeaderComponent } from './pages/Leader/screens/requests-leader/requests-leader.component';
 
 import { StandingTraineeComponent } from './pages/Trainee/screens/standing-trainee/standing-trainee.component';
 
-import { HocLayoutComponent } from './layouts/hoc-layout/hoc-layout.component';
 import { ContestsHOCComponent } from './pages/HOC/screens/contests-hoc/contests-hoc.component';
 import { SessionsHOCComponent } from './pages/HOC/screens/sessions-hoc/sessions-hoc.component';
 import { ActionsContestsComponent } from './pages/HOC/screens/actions-contests/actions-contests.component';
@@ -58,7 +56,6 @@ import { LeaderSettingsComponent } from './pages/leader_profile/screens/leader-s
 import { ProfileTraineeComponent } from './pages/trainee-profile/screens/profile-trainee/profile-trainee.component';
 import { MentorsTrackingComponent } from './pages/HOC/screens/mentors-tracking/mentors-tracking.component';
 import { TraineeTrackingComponent } from './pages/HOC/screens/trainee-tracking/trainee-tracking.component';
-import { LayoutAdminComponent } from './layouts/layout_admin/layout-admin/layout-admin.component';
 import { AdminHomeComponent } from './pages/Admin/screens/admin-home/admin-home.component';
 import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin-clients.component';
 import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
@@ -67,6 +64,8 @@ import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.
 import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
 import { CommunityLeaderComponent } from './pages/Leader/screens/community-leader/community-leader.component';
 import { UniversityAdminComponent } from './pages/Admin/screens/university-admin/university-admin.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -135,7 +134,7 @@ export const routes: Routes = [
   // Admin Routes
   {
     path: 'psovle',
-    component: LayoutAdminComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'PSolve',
     children: [
@@ -180,7 +179,7 @@ export const routes: Routes = [
   // Leader Routes
   {
     path: 'leader',
-    component: LayoutAdminComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'Leader - ICPC',
     children: [
@@ -256,7 +255,7 @@ export const routes: Routes = [
   // HOC Pages
   {
     path: 'head_of_camp',
-    component: HocLayoutComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'HOC - Dashboard',
     children: [

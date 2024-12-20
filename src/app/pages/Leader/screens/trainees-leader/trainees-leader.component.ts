@@ -8,6 +8,7 @@ import { OnTraineeInfo, TraineeInfo } from '../../model/trainees-leader';
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-trainees-leader',
@@ -22,6 +23,7 @@ export class TraineesLeaderComponent implements OnInit {
   authService = inject(AuthService);
   rolesService = inject(RolesService);
   casheService = inject(CasheService);
+  toastr = inject(ToastrService);
   allTraineesInfo!: TraineeInfo;
   traineeInfo!: OnTraineeInfo;
   showSideInfo: boolean = false;
@@ -149,7 +151,7 @@ export class TraineesLeaderComponent implements OnInit {
   saveDeleteRoles(): void {
     this.isDeleted = true;
     this.rolesService.unAssignToRole(this.roleInfo).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           if (this.authService.currentUser().id === this.roleInfo.userId) {
             this.authService.updateUserRoles(
@@ -163,7 +165,13 @@ export class TraineesLeaderComponent implements OnInit {
             this.getTraineeById(this.selectedTraineeId);
           }
           this.isDeleted = false;
+          this.toastr.success(message, '', {
+            positionClass: 'toast-bottom-left',
+          });
         } else {
+          this.toastr.error(message, '', {
+            positionClass: 'toast-bottom-left',
+          });
           this.isDeleted = false;
         }
       },
