@@ -17,11 +17,12 @@
         ></div>
       </div>
     </div>
-    } @else { @if (isEmpty === false) {
+    } @else { @if (isDeleted() === false) {
     <h3
       class="mt-3 text-lg font-semibold leading-6 text-center text-mainColor1"
     >
-      Are you sure you want to empty this camp?
+      Are you sure you want to delete @switch (label) { @case ('request') {
+      these requests? } @case ('request') { this camp? } }
     </h3>
     }@else {
     <div class="flex items-center justify-center w-full gap-x-4">
@@ -39,10 +40,10 @@
       </svg>
 
       <h3 class="text-xl font-semibold text-mainColor1">
-        Camp emptied successfully!!
+        Deleted successfully!!
       </h3>
     </div>
-    } } @if (!isLoading() && !isEmpty) {
+    } } @if (!isLoading() && !isDeleted()) {
     <div
       class="flex items-center justify-center w-full mt-10 text-lg font-semibold lg:w-2/3 gap-x-6 text-mainColor4"
     >

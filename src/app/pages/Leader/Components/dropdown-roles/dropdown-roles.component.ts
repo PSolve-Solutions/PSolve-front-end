@@ -122,7 +122,9 @@ export class DropdownRolesComponent implements OnInit {
             this.authService.updateUserRoles(roleInfo.role, 'add');
           }
           this.staffRequested.emit(this.selectedStaffId);
-          this.toastr.success(message);
+          this.toastr.success(message, '', {
+            positionClass: 'toast-bottom-left',
+          });
         } else {
           console.log('error');
         }

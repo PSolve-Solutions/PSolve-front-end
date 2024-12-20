@@ -8,6 +8,7 @@ import { DropdownRolesComponent } from '../../Components/dropdown-roles/dropdown
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-staff-leader',
@@ -22,6 +23,7 @@ export class StaffLeaderComponent implements OnInit {
   authService = inject(AuthService);
   rolesService = inject(RolesService);
   casheService = inject(CasheService);
+  toastr = inject(ToastrService);
   allStaffInfo!: StaffInfo;
   staffInfo!: OnStaffInfo;
   showSideInfo: boolean = false;
@@ -149,7 +151,7 @@ export class StaffLeaderComponent implements OnInit {
   saveDeleteRoles(): void {
     this.isDeleted = true;
     this.rolesService.unAssignToRole(this.roleInfo).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           if (this.authService.currentUser().id === this.roleInfo.userId) {
             this.authService.updateUserRoles(
@@ -163,8 +165,14 @@ export class StaffLeaderComponent implements OnInit {
             this.getStaffById(this.selectedStaffId);
           }
           this.isDeleted = false;
+          this.toastr.success(message, '', {
+            positionClass: 'toast-bottom-left',
+          });
         } else {
           this.isDeleted = false;
+          this.toastr.error(message, '', {
+            positionClass: 'toast-bottom-left',
+          });
         }
       },
       error: (err) => {

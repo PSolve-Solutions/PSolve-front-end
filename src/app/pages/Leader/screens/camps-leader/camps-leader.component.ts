@@ -1,17 +1,17 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { Router } from '@angular/router';
-import { ConfirmCampComponent } from '../../Components/confirm-camp/confirm-camp.component';
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { EmptyCampComponent } from '../../Components/empty-camp/empty-camp.component';
 import { CampInfo } from '../../model/camp';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { DatePipe, NgClass } from '@angular/common';
+import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
 
 @Component({
   selector: 'app-camps-leader',
   standalone: true,
-  imports: [ConfirmCampComponent, NgClass, DatePipe, EmptyCampComponent],
+  imports: [DeleteConfirmModalComponent, NgClass, DatePipe, EmptyCampComponent],
   templateUrl: './camps-leader.component.html',
   styleUrl: './camps-leader.component.scss',
 })
@@ -21,7 +21,7 @@ export class CampsLeaderComponent implements OnInit {
   casheService = inject(CasheService);
   router = inject(Router);
   allCampsInfo!: CampInfo;
-  showModal: boolean = false;
+  showModalDelete: boolean = false;
   showEmptyModal: boolean = false;
   selectedItemId: number | null = null;
   selectedEmptyId: number | null = null;
@@ -66,7 +66,7 @@ export class CampsLeaderComponent implements OnInit {
 
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
-    this.showModal = true;
+    this.showModalDelete = true;
   }
 
   handleClose(confirmed: boolean) {
@@ -74,7 +74,7 @@ export class CampsLeaderComponent implements OnInit {
       this.casheService.clearCache();
       this.getAllCamps(this.currentPage, this.pageSize);
     }
-    this.showModal = false;
+    this.showModalDelete = false;
   }
 
   //Empty
