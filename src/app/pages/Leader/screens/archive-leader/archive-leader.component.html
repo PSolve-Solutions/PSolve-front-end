@@ -194,7 +194,7 @@
                     {{ row.campName }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.gender }}
+                    {{ row.gender === 0 ? "Male" : "Female" }}
                   </td>
                   <td
                     (click)="showSideBar(row.id)"
@@ -395,7 +395,7 @@
                     {{ row.role }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.gender }}
+                    {{ row.gender === 0 ? "Male" : "Female" }}
                   </td>
                   <td
                     (click)="showSideBar(row.id)"
@@ -875,7 +875,7 @@
 
           <span class="text-[#EEEEEE]">Gender:</span>
           <span>
-            @if (onetraineeArchiveInfo.gender === 0) { Male }@else { Female }
+            {{ onetraineeArchiveInfo.gender === 0 ? "Male" : "Female" }}
           </span>
         </div>
       </div>
@@ -1204,7 +1204,7 @@
 
           <span class="text-[#EEEEEE]">Gender:</span>
           <span>
-            @if (onestaffArchiveInfo.gender === 0) { Male }@else { Female }
+            {{ onestaffArchiveInfo.gender === 0 ? "Male" : "Female" }}
           </span>
         </div>
       </div>

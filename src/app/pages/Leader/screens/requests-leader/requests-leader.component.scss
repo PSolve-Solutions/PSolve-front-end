@@ -15,6 +15,23 @@
   background: #002c3d;
   border-radius: 10px;
 }
+.custom-scrollbar-request2::-webkit-scrollbar-thumb:hover {
+  background: #285c6a;
+}
+
+.custom-scrollbar-request2::-webkit-scrollbar {
+  width: 8px !important;
+  height: 12px;
+}
+.custom-scrollbar-request2::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 18px;
+}
+
+.custom-scrollbar-request2::-webkit-scrollbar-thumb {
+  background: #002c3d;
+  border-radius: 10px;
+}
 
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
   font-size: 16px;

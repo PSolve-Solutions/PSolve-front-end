@@ -19,6 +19,7 @@ import {
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Form, FormFilter, FormFilterV } from '../../model/requests';
 import { RegisterationService } from '../../../public/Services/registeration.service';
+import { RequestsLeaderService } from '../../services/requests-leader.service';
 
 @Component({
   selector: 'app-system-filter',
@@ -29,7 +30,7 @@ import { RegisterationService } from '../../../public/Services/registeration.ser
   encapsulation: ViewEncapsulation.None,
 })
 export class SystemFilterComponent implements OnInit {
-  registerationService = inject(RegisterationService);
+  requestsLeaderService = inject(RequestsLeaderService);
   allCommunities: { id: string; clientName: string }[] = [];
 
   @Input() codeforcesFilters: any;
@@ -89,8 +90,43 @@ export class SystemFilterComponent implements OnInit {
     this.updateLastRowValidation();
   }
 
+  isEableToSave(): boolean {
+    const formData = this.filterForm.value?.filtersC ?? [];
+    const formDataV = this.filterForm.value?.filtersV ?? [];
+    const rowHasValues = (row: any) => {
+      return row.sheetId && row.communityId && row.passingPrecent;
+    };
+    const rowHasValuesV = (row: any) => {
+      return row.sheetId || row.problemCount || row.passingPrecent;
+    };
+    const firstRow = formData[0];
+    const firstRowV = formDataV[0];
+    if (
+      rowHasValues(firstRow) &&
+      formData.length > 1 &&
+      !rowHasValuesV(firstRowV) &&
+      formDataV.length === 1
+    ) {
+      return false;
+    } else if (
+      !rowHasValues(firstRow) &&
+      formData.length === 1 &&
+      rowHasValuesV(firstRowV) &&
+      formDataV.length > 1
+    ) {
+      return false;
+    } else if (
+      rowHasValues(firstRow) &&
+      formData.length > 1 &&
+      rowHasValuesV(firstRowV) &&
+      formDataV.length > 1
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   saveCustomFilter(): void {
-    debugger;
     const formData = this.filterForm.value?.filtersC ?? [];
     const formDataV = this.filterForm.value?.filtersV ?? [];
     const rowHasValues = (row: any) => {
@@ -164,19 +200,18 @@ export class SystemFilterComponent implements OnInit {
 
   updateLastRowValidation() {
     const length = this.filtersC.length;
-
     this.filtersC.controls.forEach((filterGroup, index) => {
       if (index === length - 1) {
         filterGroup.get('sheetId')?.clearValidators();
-        filterGroup.get('community')?.clearValidators();
+        filterGroup.get('communityId')?.clearValidators();
         filterGroup.get('passingPrecent')?.clearValidators();
       } else {
         filterGroup.get('sheetId')?.setValidators([Validators.required]);
-        filterGroup.get('community')?.setValidators([Validators.required]);
+        filterGroup.get('communityId')?.setValidators([Validators.required]);
         filterGroup.get('passingPrecent')?.setValidators([Validators.required]);
       }
       filterGroup.get('sheetId')?.updateValueAndValidity();
-      filterGroup.get('community')?.updateValueAndValidity();
+      filterGroup.get('communityId')?.updateValueAndValidity();
       filterGroup.get('passingPrecent')?.updateValueAndValidity();
     });
   }
@@ -245,7 +280,7 @@ export class SystemFilterComponent implements OnInit {
   }
 
   getAllCommunities(): void {
-    this.registerationService.getCommunities().subscribe({
+    this.requestsLeaderService.getCommunities().subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.allCommunities = data;

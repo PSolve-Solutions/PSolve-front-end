@@ -15,13 +15,13 @@
   </h1>
   <div class="flex items-center justify-center w-full my-6 md:hidden">
     <label
-      class="relative flex items-center justify-center border-2 rounded-lg cursor-pointer w-52 h-52"
+      class="relative flex items-center justify-center border-2 cursor-pointer rounded-2xl w-52 h-52"
       [class.bg-mainColor1]="!logoImage"
     >
       <img
         [src]="logoImage"
         alt="Profile Picture"
-        class="object-fill w-full h-full"
+        class="object-fill w-full h-full rounded-2xl"
       />
 
       <input
@@ -97,8 +97,8 @@
             />
           </div>
         </div>
-        <details>
-          <summary>G-mail Account Info</summary>
+        <details open>
+          <summary class="w-fit">G-mail Account Info</summary>
           <div class="grid grid-cols-1 mt-4 gap-y-4 md:grid-cols-2 gap-x-12">
             <div class="flex flex-col">
               <label for="Gmail" class="font-bold ps-2 text-[#002C3D4D]"
@@ -129,7 +129,7 @@
           </div>
         </details>
         <details>
-          <summary>Codeforces settings</summary>
+          <summary class="w-fit">Codeforces settings</summary>
           <div
             class="grid mt-4"
             [ngClass]="
@@ -219,8 +219,8 @@
             </div>
           </div>
         </details>
-        <details>
-          <summary>Trainees’ data</summary>
+        <details open>
+          <summary class="w-fit">Trainees’ data</summary>
           <div class="grid grid-cols-1 grid-rows-2 mt-4">
             <div
               class="flex items-center justify-between w-full col-span-1 row-span-1 md:w-1/2 md:pe-8"
@@ -266,8 +266,8 @@
             </div>
           </div>
         </details>
-        <details>
-          <summary>Subscription</summary>
+        <details open>
+          <summary class="w-fit">Subscription</summary>
           <div class="grid grid-cols-1 mt-4 gap-y-4 md:grid-cols-2 gap-x-12">
             <div class="flex flex-col">
               <h4 class="font-bold ps-2 text-[#002C3D4D]">Start date</h4>
@@ -294,14 +294,14 @@
       >
         <div class="flex flex-col items-center justify-center gap-y-6">
           <label
-            class="relative flex items-center justify-center border-2 rounded-lg cursor-pointer w-60 h-60"
+            class="relative flex items-center justify-center border-2 cursor-pointer rounded-2xl w-60 h-60"
             [class.bg-mainColor1]="!logoImage"
           >
             @if (logoImage) {
             <img
               [src]="logoImage"
               alt="Profile Picture"
-              class="object-fill w-full h-full"
+              class="object-fill w-full h-full rounded-2xl"
             />
             }@else {
 
