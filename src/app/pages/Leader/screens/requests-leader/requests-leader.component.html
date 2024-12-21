@@ -425,11 +425,11 @@
       <!-- showFilterModel -->
       } @if (showFilterModel) {
       <div
-        class="fixed inset-0 z-[150] pt-32 md:pt-20 flex items-start justify-center bg-black bg-opacity-50"
+        class="fixed inset-0 z-[150] pt-32 md:pt-16 flex items-start justify-center bg-black bg-opacity-50"
         (click)="closeModalOnOutsideClick($event)"
       >
         <div
-          class="w-full md:max-w-[665px] max-w-[400px] md:p-6 p-4 bg-[#F4F5F8] rounded-2xl"
+          class="w-full md:max-w-[660px] max-w-[400px] max-h-[85vh] custom-scrollbar-request2 overflow-y-auto md:p-6 p-4 bg-[#F4F5F8] rounded-2xl"
           (click)="$event.stopPropagation()"
         >
           <app-system-filter

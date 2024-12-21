@@ -1,6 +1,6 @@
 <form [formGroup]="filterForm" (ngSubmit)="saveCustomFilter()">
   <div formArrayName="filtersC">
-    <h3 class="font-bold md:text-lg text-mainColor1">Codeforcse Filter</h3>
+    <h3 class="font-bold md:text-lg text-mainColor1">Codeforces Filter</h3>
     <table
       class="min-w-full overflow-x-auto text-sm border-collapse md:text-base"
     >
@@ -23,7 +23,7 @@
           *ngFor="let filter of filtersC.controls; let i = index"
           [formGroupName]="i"
         >
-          <td class="relative py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="text"
               formControlName="sheetId"
@@ -32,7 +32,7 @@
             <svg
               width="14"
               height="14"
-              class="absolute md:top-[25px] top-[23px] left-2"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@
             </svg>
           </td>
 
-          <td class="relative px-3 py-3 md:px-6">
+          <td class="relative w-32 py-3 ps-3 md:w-44 md:px-6">
             <ng-select
               [items]="allCommunities"
               id="college"
@@ -62,7 +62,7 @@
               bindLabel="clientName"
               bindValue="id"
               formControlName="communityId"
-              class="block w-24 pl-4 my-2 text-black bg-white rounded md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
+              class="flex items-center justify-center w-full pl-4 my-2 text-black bg-white rounded ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
             >
               <ng-option [value]="1">Sohag</ng-option>
               <ng-option [value]="2">Assiut</ng-option>
@@ -92,7 +92,7 @@
             </svg>
           </td>
 
-          <td class="relative py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="number"
               formControlName="passingPrecent"
@@ -101,7 +101,7 @@
             <svg
               width="14"
               height="14"
-              class="absolute md:top-[25px] top-[23px] left-2"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +218,7 @@
           *ngFor="let filter of filtersV.controls; let i = index"
           [formGroupName]="i"
         >
-          <td class="relative py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="text"
               formControlName="sheetId"
@@ -227,7 +227,7 @@
             <svg
               width="14"
               height="14"
-              class="absolute md:top-[25px] top-[23px] left-2"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -249,11 +249,11 @@
             </svg>
           </td>
 
-          <td class="relative px-3 py-3 md:px-6">
+          <td class="relative px-3 py-3 w-36 md:w-44 md:px-6">
             <input
               type="number"
               formControlName="problemCount"
-              class="block w-24 pl-6 my-2 text-black bg-white rounded md:pl-10 md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
+              class="flex justify-center w-full pl-6 my-2 text-black bg-white rounded md:pl-10 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
             />
             <svg
               width="14"
@@ -294,7 +294,7 @@
             </svg>
           </td>
 
-          <td class="relative py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="number"
               formControlName="passingPrecent"
@@ -303,7 +303,7 @@
             <svg
               width="14"
               height="14"
-              class="absolute md:top-[25px] top-[23px] left-2"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -399,7 +399,8 @@
 
   <button
     type="submit"
-    class="px-6 py-1.5 mt-2 text-mainColor4 rounded-lg bg-mainColor1"
+    [disabled]="isEableToSave()"
+    class="px-6 py-1.5 mt-2 disabled:bg-slate-500 disabled:cursor-not-allowed text-mainColor4 rounded-lg bg-mainColor1"
   >
     Done
   </button>
