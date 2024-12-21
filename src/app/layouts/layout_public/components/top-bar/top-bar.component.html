@@ -1,106 +1,34 @@
-<nav class="absolute w-full z-[1000] top-20">
-  <div
-    class="max-w-screen-xl bg-black bg-opacity-30 flex flex-wrap items-center justify-between mx-auto p-4 rounded-[10px]"
-  >
-    <a class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="assets/img_public/logo-dark.svg" class="h-16" alt="Icpc Logo" />
-    </a>
-    <div class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-      <button
-        routerLink="/login"
-        class="py-3 text-white rounded-lg login-btn px-14"
-      >
-        login
-      </button>
-      <button
-        data-collapse-toggle="navbar-sticky"
-        type="button"
-        class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2"
-        aria-controls="navbar-sticky"
-        aria-expanded="false"
-      >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 17 14"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15"
-          />
-        </svg>
-      </button>
+<nav class="bg-[#F5F9F9]">
+  <div class="flex justify-between px-3 sm:px-9">
+    <div class="right flex items-center gap-5 sm:gap-16">
+      <div class="logo px-3 sm:px-7 py-4 self-start">
+        <img src="assets/img/logo.png" class="w-[63px]" alt="">
     </div>
-    <div
-      class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-      id="navbar-sticky"
-    >
-      <ul
-        class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0"
-      >
+    <ul class="flex sm:pt-3">
+      <li>
+        <a>
+          Home
+        </a>
+      </li>
+      @if(!this.responsive.isSmallScreen){
         <li>
-          <a
-            routerLink="/"
-            fragment="header"
-            class="block px-3 py-2 text-white bg-blue-700 rounded cursor-pointer md:bg-transparent md:text-blue-700 md:p-0"
-            aria-current="page"
-            >Home</a
-          >
+          <a>
+            About us
+          </a>
         </li>
-        <li>
-          <a
-            routerLink="/"
-            fragment="about-us"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >About us</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/"
-            fragment="achievements"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >Achievements</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/"
-            fragment="founders"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >Founders</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/"
-            fragment="coaches"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >Coaches</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/"
-            fragment="feedback"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >Feedbacks</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/camps"
-            class="block px-3 py-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-            >Camps</a
-          >
-        </li>
-      </ul>
+      }
+      <li>
+        <a>
+          Founders
+        </a>
+      </li>
+    </ul>
+    </div>
+    <div class="left flex gap-4 items-center pt-2">
+      <div class="actions flex gap-[5px] flex-col sm:gap-4  sm:flex-row ">
+        <button class="login-btn">login</button>
+        @if (!this.responsive.isSmallScreen) {<button class="apply-btn">apply now</button>}@else{<button class="apply-btn">apply</button>}
+      </div>
     </div>
   </div>
 </nav>

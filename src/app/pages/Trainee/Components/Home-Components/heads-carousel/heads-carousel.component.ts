@@ -31,7 +31,6 @@ export class HeadsCarouselComponent implements OnInit {
   // Lifecycle hook to initialize component
   ngOnInit(): void {
     this.loadHeadsData();
-
   }
 
 
