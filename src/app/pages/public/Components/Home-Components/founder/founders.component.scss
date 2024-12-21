@@ -1,0 +1,23 @@
+.allfounders {
+  border: 1px solid #002C3D;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+}
+
+h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #002C3D;
+}
+
+@media screen and (max-width: 640px) {
+  .allfounders {
+    border: 0.25px solid rgba(0, 44, 61, 0.16);
+    border-radius: 14px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+}

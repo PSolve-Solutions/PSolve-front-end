@@ -1,29 +1,36 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { HomeHeroComponent } from '../../Components/Home-Components/home-hero/home-hero.component';
-import { AboutUsComponent } from "../../Components/Home-Components/about-us/about-us.component";
-import { AchievementsComponent } from "../../Components/Home-Components/achievements/achievements.component";
+import {  LeaderSlider } from "../../Components/Home-Components/leader-slider/leader.slider.component";
+import { HeadOfCampSlider } from "../../Components/Home-Components/Head-of-camp-slider/Head-of-camp-slider.component";
 import { CommonModule } from '@angular/common';
-import { FoundersComponent } from "../../Components/Home-Components/founders/founders.component";
-import { CoachesComponent } from "../../Components/Home-Components/coaches/coaches.component";
-import { FeedbackComponent } from "../../Components/Home-Components/feedback/feedback.component";
+import {  MentorsComponent } from "../../Components/Home-Components/Mentors/mentors.slider.component";
+import { FoundersComponent } from "../../Components/Home-Components/founder/founders.component";
+import { TraineeComponent } from "../../Components/Home-Components/trainee/trainee.slider.component";
 import { RouterLink } from '@angular/router';
 import { HomeService } from '../../Services/home.service';
+import { CommunitiesComponent } from '../../Components/Home-Components/Communities/Communities.component';
+import { AboutusComponent } from "../../Components/Home-Components/aboust-us/aboutus.component";
+import { FooterComponent } from "../../../../layouts/layout_public/components/footer/footer.component";
 
-declare var $: any;
 
 @Component({
   selector: 'app-home-public',
   standalone: true,
   imports: [
     HomeHeroComponent,
-    AboutUsComponent,
-    AchievementsComponent,
+    LeaderSlider,
+    HeadOfCampSlider,
     CommonModule,
+    MentorsComponent,
+    TraineeComponent,
     FoundersComponent,
-    CoachesComponent,
-    FeedbackComponent,
-    RouterLink,
-    CommonModule
+    CommunitiesComponent,
+    // CoachesComponent,
+    // FeedbackComponent,
+    // RouterLink,
+    CommonModule,
+    AboutusComponent,
+    FooterComponent
 ],
   templateUrl: './home-public.component.html',
   styleUrls: ['./home-public.component.scss']

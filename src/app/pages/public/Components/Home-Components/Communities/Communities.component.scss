@@ -1,0 +1,56 @@
+/* General Styles */
+.communities {
+  border-bottom: 1px solid #002C3D;
+  border-top: 1px solid #002C3D;
+}
+
+h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #002C3D;
+}
+
+/* Slider Container */
+.slider-container {
+  width: 100%;
+  overflow: hidden; /* Hides overflow for seamless sliding effect */
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  gap: 40px; /* Space between slides */
+  padding: 30px 70px; /* Inner padding for better alignment */
+  animation: slide 10s linear infinite; /* Smooth sliding effect */
+}
+
+.slide {
+  flex: 1 1 auto; /* Adjust slides to be flexible */
+}
+
+.slide img {
+  /* Add styles for images if necessary */
+  max-width: 100%; /* Ensure images don't overflow their containers */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Keyframes for Sliding Effect */
+@keyframes slide {
+  0% {
+    transform: translateX(0); /* Initial position */
+  }
+  100% {
+    transform: translateX(calc(-100%)); /* Shift slider by its full width */
+  }
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 640px) {
+  h2 {
+    font-size: 30px; /* Smaller font size for headings */
+  }
+  .slider {
+    gap: 7px; /* Reduce gap between slides */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+}
