@@ -81,7 +81,6 @@ export class CommunityLeaderComponent implements OnInit {
         if (statusCode === 200) {
           this.toastr.success(message);
           this.isLoading = false;
-          // this.router.navigate(['/psovle']);
         } else if (statusCode === 400) {
           this.toastr.error(message);
           this.isLoading = false;

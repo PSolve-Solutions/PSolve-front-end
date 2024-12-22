@@ -1,61 +1,66 @@
-<div
-  style="min-height: calc(100vh - 71px)"
-  class="relative w-full bg-[#f4f5f8] p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6"
->
-  <div class="flex flex-col px-12 pt-4 pb-8 bg-white rounded-xl">
-    <h2 class="pb-4 text-2xl font-bold border-b-2">Assign Trainees</h2>
-
-    <div class="flex items-center px-2 mt-4 gap-x-10">
-      <div class="w-[65%] flex items-center justify-between">
-        <h1 class="text-xl font-bold">Trainees</h1>
-        <input
-          class="w-[280px] px-3 py-2.5 pl-4 leading-tight text-gray-800 transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-gray-400 focus:outline-none focus:ring-mainblue focus:border-mainblue focus:shadow-outline"
-          id="searchInput"
-          type="text"
-          (keyup)="onSearchInput($event)"
-          placeholder="Search for Trainees"
-        />
-        <div class="relative">
-          <ng-select
-            [closeOnSelect]="true"
-            bindLabel="name"
-            bindValue="id"
-            formControlName="sortNumber"
-            (change)="sortTrainee($event)"
-            placeholder="Sort By"
-            class="relative block w-40 h-10 my-2 !text-white appearance-none rounded-xl !placeholder:text-white bg-mainblue cursor-none focus:outline-none"
-          >
-            <ng-option [value]="0">Year</ng-option>
-            <ng-option [value]="1">Gender</ng-option>
-            <ng-option [value]="2">College</ng-option>
-          </ng-select>
-          <svg
-            width="24"
-            height="24"
-            [ngClass]="{ 'rotate-180': focusOrder }"
-            class="absolute z-[1100] top-[14px] left-32 text-white transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-              stroke="#fff"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
+<!-- style="min-height: calc(100vh - 120px)" -->
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Assign Trainees
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Assign Trainees
+  </h1>
+  <div class="flex items-center px-12 py-5 bg-white mb-9 rounded-xl gap-x-10">
+    <div class="w-[65%] flex items-center justify-between">
+      <h1 class="text-xl font-bold text-mainColor1">Trainees</h1>
+      <input
+        class="w-[280px] px-3 py-2.5 pl-4 leading-tight text-mainColor1 font-semibold transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-mainColor1 focus:outline-none focus:ring-subColor1 focus:border-subColor1 focus:shadow-outline"
+        id="searchInput"
+        type="text"
+        (keyup)="onSearchInput($event)"
+        placeholder="Search for Trainees"
+      />
+      <div class="relative">
+        <ng-select
+          [closeOnSelect]="true"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="sortNumber"
+          (change)="sortTrainee($event)"
+          placeholder="Sort By"
+          class="relative block w-40 h-10 my-2 appearance-none rounded-xl bg-mainColor1 cursor-none focus:outline-none"
+        >
+          <ng-option [value]="0">Year</ng-option>
+          <ng-option [value]="1">Gender</ng-option>
+          <ng-option [value]="2">College</ng-option>
+        </ng-select>
+        <svg
+          width="24"
+          height="24"
+          [ngClass]="{ 'rotate-180': focusOrder }"
+          class="absolute z-[1100] top-[14px] left-32 text-white transition-transform"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+            stroke="#fff"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </div>
-      <h1 class="text-xl font-bold">Mentors</h1>
     </div>
+    <h1 class="text-xl font-bold text-mainColor1">Mentors</h1>
   </div>
 
   <div class="flex gap-x-2">
     <div
-      style="max-height: calc(100vh - 315px)"
+      style="max-height: calc(100vh - 260px)"
       class="w-8/12 overflow-y-auto scroll-host-table pe-1.5"
     >
       @if( isLoading()) {
@@ -68,8 +73,8 @@
       </div>
       } @else {
       <table class="relative w-full text-center">
-        <thead class="sticky top-0">
-          <tr class="bg-[#F4F5F8] text-[#6B7088]">
+        <thead class="sticky top-0 bg-mainColor4">
+          <tr class="text-[#6B7088]">
             <th class="pb-4 text-left ps-4">Name</th>
             <th class="pb-4">Year</th>
             <th class="pb-4">College</th>
@@ -81,14 +86,12 @@
         <tbody>
           @for (item of allTrainees; track $index) {
           <tr
-            class="my-6 text-base font-medium text-center text-black bg-white rounded-lg"
+            class="my-6 text-base font-medium text-center bg-white border-b-8 rounded-lg text-mainColor1 border-mainColor4"
           >
-            <td class="flex items-center p-4 rounded-s-lg gap-x-2">
+            <td class="flex items-center px-4 py-2 rounded-s-lg gap-x-2">
               <div class="w-8 h-8">
                 <img
-                  [src]="
-                    item.photoUrl || './../../../../../assets/img/user.jpeg'
-                  "
+                  [src]="item.photoUrl || 'assets/img/user.jpeg'"
                   [alt]="item.firstName"
                   class="object-cover w-full h-full rounded-full"
                 />
@@ -97,13 +100,12 @@
                 {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
               </span>
             </td>
-            <td class="p-4">{{ item.grade }}</td>
-            <td class="p-4">{{ item.college }}</td>
-            <td class="p-4">{{ item.gender }}</td>
-            <!-- (click)="showSideBar(item.id)" -->
+            <td class="px-4 py-2">{{ item.grade }}</td>
+            <td class="px-4 py-2">{{ item.college }}</td>
+            <td class="px-4 py-2">{{ item.gender }}</td>
             <td
               (click)="addToMentor(item)"
-              class="p-4 cursor-pointer rounded-e-lg text-3xl text-[#6B7088]"
+              class="px-4 py-2 cursor-pointer rounded-e-lg text-3xl text-[#6B7088]"
             >
               +
             </td>
@@ -114,7 +116,7 @@
       }
     </div>
     <div
-      style="max-height: calc(100vh - 315px)"
+      style="max-height: calc(100vh - 260px)"
       class="w-4/12 overflow-y-auto scroll-host-table pe-1.5"
     >
       @if( isLoading2()) {
@@ -127,13 +129,13 @@
       </div>
       } @else {
 
-      <div class="relative w-full h-auto mt-12">
+      <div class="relative w-full h-auto mt-10">
         @for (mentor of allMentor; track $index) {
         <div
           (click)="handleSelectMentor(mentor)"
-          class="flex items-center justify-between w-full p-4 mb-4 bg-white border-2 rounded-lg cursor-pointer"
+          class="flex items-center justify-between w-full p-4 mb-4 bg-white rounded-lg cursor-pointer"
           [ngClass]="
-            mentor.id === selectedMentor?.id ? 'border-2 border-blue-500' : ''
+            mentor.id === selectedMentor?.id ? 'border-2 border-mainColor1' : ''
           "
         >
           <div class="h-full text-[15px] self-start text-[#6B7088]">
@@ -153,14 +155,12 @@
               class="relative inline-block cursor-pointer"
             >
               <img
-                [src]="
-                  trainee.photoUrl || './../../../../../assets/img/user.jpeg'
-                "
+                [src]="trainee.photoUrl || 'assets/img/user.jpeg'"
                 [alt]="trainee.firstName"
                 class="object-cover border border-gray-300 rounded-full w-9 h-9"
               />
               <button
-                class="absolute -top-1 -right-1 text-xs h-4 w-4 text-white bg-[#3D91C7] rounded-full"
+                class="absolute w-4 h-4 text-xs text-white rounded-full -top-1 -right-1 bg-mainColor1"
                 (click)="removeFromMentor(trainee, mentor)"
               >
                 X
