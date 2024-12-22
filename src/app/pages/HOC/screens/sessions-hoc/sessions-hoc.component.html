@@ -1,138 +1,305 @@
-<div
-  style="height: calc(100vh - 72px)"
-  class="relative w-full p-4 space-y-2 sm:p-6 sm:ps-4"
->
-  <div class="flex items-center justify-between px-12 py-4 bg-white rounded-xl">
-    <h2 class="text-2xl font-bold">Sessions</h2>
-    <div class="flex items-center justify-between px-2">
-      <button
-        (click)="goToActionSession(0)"
-        class="flex items-center px-8 py-1 text-lg text-white rounded-md w-fit bg-activeLink"
-      >
-        Add
-      </button>
-    </div>
-  </div>
-
-  @if( isLoading() && dataRequest.length === 0) {
-  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
-    </div>
-  </div>
-  } @else {
-  <div
-    style="max-height: calc(100vh - 180px)"
-    class="overflow-y-auto pe-2 scroll-host-table"
-    (scroll)="loadMoreData($event)"
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    <table class="min-w-full text-center table-auto">
-      <thead class="sticky top-0 bg-[#f4f5f8]">
-        <tr class="bg-transparent text-[#6B7088]">
-          <th class="p-4 text-left">Instructor Name</th>
-          <th class="p-4">Topic</th>
-          <th class="p-4">Start Date</th>
-          <th class="p-4">End Date</th>
-          <th class="p-4">Location Name</th>
-          <th class="p-4">Edit</th>
-          <th class="p-4">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (session of dataRequest; track $index) { @for (item of
-        session.data; track $index) {
-        <tr
-          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
-        >
-          <td class="p-4 text-left rounded-s-lg">{{ item.instructorName }}</td>
-          <td class="p-4">
-            {{ item.topic }}
-          </td>
-          <td class="p-4">
-            {{ item.startDate | date : "MM/dd/yyyy hh:mm a" }}
-          </td>
-          <td class="p-4">
-            {{ item.endDate | date : "MM/dd/yyyy hh:mm a" }}
-          </td>
-          <td class="p-4">
-            <a
-              [href]="item.locationLink"
-              target="_blank"
-              class="flex items-center justify-center gap-x-2 whitespace-nowrap hover:text-activeLink"
-            >
-              <span>{{ item.locationName }}</span>
+    Sessions
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Sessions
+  </h1>
 
+  <div class="flex flex-col space-y-8">
+    <button
+      (click)="goToActionSession(0)"
+      class="flex items-center px-4 py-2 my-2 transition-colors gap-x-2 rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    >
+      <svg
+        width="20"
+        height="19"
+        viewBox="0 0 20 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.0104 0C5.00044 0 0.94043 4.06 0.94043 9.07C0.94043 14.08 5.00044 18.14 10.0104 18.14C15.0204 18.14 19.0804 14.08 19.0804 9.07C19.0804 4.06 15.0204 0 10.0104 0ZM14.5404 10.21H11.1404V13.61H8.88043V10.19H5.48044V7.93H8.88043V4.53H11.1404V7.93H14.5404V10.21Z"
+          fill="#F7F8F3"
+        />
+      </svg>
+      <span>Add Camp</span>
+    </button>
+    <div
+      style="max-height: calc(100vh - 180px)"
+      class="overflow-y-auto border-2 rounded-lg scroll-host-table"
+      (scroll)="loadMoreData($event)"
+    >
+      <table
+        class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+      >
+        <thead class="text-[13px] md:text-base font-semibold bg-[#DEDFE1]">
+          <tr>
+            <th class="py-4 text-left lg:hidden ps-4">
               <svg
-                class="size-5 hover:text-activeLink"
-                viewBox="0 0 30 30"
+                width="10"
+                height="14"
+                viewBox="0 0 7 14"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M12.5 6.25H10.25C8.85 6.25 8.15 6.25 7.615 6.5225C7.14456 6.76211 6.76211 7.14456 6.5225 7.615C6.25 8.15 6.25 8.85 6.25 10.25V19.75C6.25 21.15 6.25 21.85 6.5225 22.385C6.76218 22.8554 7.14462 23.2378 7.615 23.4775C8.14875 23.75 8.84875 23.75 10.2462 23.75H19.7538C21.1513 23.75 21.85 23.75 22.3837 23.4775C22.855 23.2375 23.2375 22.855 23.4775 22.385C23.75 21.85 23.75 21.1513 23.75 19.7538V17.5M25 11.25V5M25 5H18.75M25 5L16.25 13.75"
-                  stroke="#686666"
-                  stroke-width="2"
+                  d="M0.966797 1.7193L5.31346 6.06596C5.8268 6.5793 5.8268 7.4193 5.31346 7.93263L0.966797 12.2793"
+                  stroke="#002C3D"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
               </svg>
-            </a>
-          </td>
-          <td
-            (click)="goToActionSession(item.id)"
-            class="px-4 py-2 cursor-pointer"
+            </th>
+            <th class="p-4 text-left truncate">Instructor Name</th>
+            <th class="hidden p-4 lg:table-cell">Topic</th>
+            <th class="hidden p-4 lg:table-cell">Start Date</th>
+            <th class="hidden p-4 lg:table-cell">End Date</th>
+            <th class="hidden p-4 lg:table-cell">Location Name</th>
+            <th class="p-2 md:p-4">Edit</th>
+            <th class="p-2 md:p-4">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (!isLoading() ) { @for (session of dataRequest; track $index ) {
+          @for(row of session.data; track row.id; let first = $first) {
+          <tr
+            class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+            [class.border-t-8]="first"
           >
-            <svg
-              class="flex justify-center w-full hover:fill-green-500 size-5 fill-[#6B7088]"
-              viewBox="0 0 32 32 "
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <td
+              (click)="toggleDetails(row.id)"
+              class="py-2 text-left cursor-pointer lg:hidden ps-4"
             >
-              <path
-                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-              />
-              <path
-                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-              />
-              <path
-                d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-              />
-            </svg>
-          </td>
-
-          <td
-            (click)="showConfirmDelete(item.id)"
-            class="px-4 py-2 cursor-pointer rounded-e-lg"
-          >
-            <svg
-              class="flex justify-center w-full hover:fill-red-500 size-5 fill-[#6B7088]"
-              viewBox="0 0 28 28"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <svg
+                width="10"
+                height="14"
+                [class.rotate-90]="row.id === sessionId"
+                viewBox="0 0 7 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.966797 1.7193L5.31346 6.06596C5.8268 6.5793 5.8268 7.4193 5.31346 7.93263L0.966797 12.2793"
+                  stroke="#002C3D"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </td>
+            <td class="px-4 py-2 text-left whitespace-nowrap">
+              {{ row.instructorName }}
+            </td>
+            <td
+              class="hidden px-4 py-2 text-center lg:table-cell whitespace-nowrap"
             >
-              <path
-                d="M11.0526 4.55V4.9H16.9474V4.55C16.9474 3.80739 16.6368 3.0952 16.0841 2.5701C15.5314 2.045 14.7817 1.75 14 1.75C13.2183 1.75 12.4686 2.045 11.9159 2.5701C11.3632 3.0952 11.0526 3.80739 11.0526 4.55ZM9.21053 4.9V4.55C9.21053 3.34326 9.71513 2.18595 10.6133 1.33266C11.5115 0.479373 12.7298 0 14 0C15.2702 0 16.4885 0.479373 17.3867 1.33266C18.2849 2.18595 18.7895 3.34326 18.7895 4.55V4.9H27.0789C27.3232 4.9 27.5575 4.99219 27.7302 5.15628C27.903 5.32038 28 5.54294 28 5.775C28 6.00706 27.903 6.22962 27.7302 6.39372C27.5575 6.55781 27.3232 6.65 27.0789 6.65H24.9296L23.4559 23.3492C23.3439 24.6173 22.7345 25.7992 21.7485 26.6606C20.7625 27.522 19.4718 28.0001 18.1322 28H9.86779C8.52835 27.9999 7.23783 27.5218 6.25196 26.6604C5.26608 25.799 4.6568 24.6172 4.54484 23.3492L3.07116 6.65H0.921053C0.676774 6.65 0.442501 6.55781 0.26977 6.39372C0.0970392 6.22962 0 6.00706 0 5.775C0 5.54294 0.0970392 5.32038 0.26977 5.15628C0.442501 4.99219 0.676774 4.9 0.921053 4.9H9.21053ZM6.38032 23.2029C6.45366 24.0337 6.85285 24.808 7.49877 25.3723C8.1447 25.9367 8.99022 26.2499 9.86779 26.25H18.1322C19.0099 26.2501 19.8556 25.9369 20.5017 25.3726C21.1478 24.8082 21.5471 24.0338 21.6204 23.2029L23.0808 6.65H4.91916L6.38032 23.2029ZM12.1579 11.375C12.1579 11.2601 12.1341 11.1463 12.0878 11.0402C12.0415 10.934 11.9737 10.8375 11.8881 10.7563C11.8026 10.675 11.7011 10.6106 11.5893 10.5666C11.4776 10.5226 11.3578 10.5 11.2368 10.5C11.1159 10.5 10.9961 10.5226 10.8844 10.5666C10.7726 10.6106 10.6711 10.675 10.5856 10.7563C10.5 10.8375 10.4322 10.934 10.3859 11.0402C10.3396 11.1463 10.3158 11.2601 10.3158 11.375V21.525C10.3158 21.6399 10.3396 21.7537 10.3859 21.8598C10.4322 21.966 10.5 22.0625 10.5856 22.1437C10.6711 22.225 10.7726 22.2894 10.8844 22.3334C10.9961 22.3774 11.1159 22.4 11.2368 22.4C11.3578 22.4 11.4776 22.3774 11.5893 22.3334C11.7011 22.2894 11.8026 22.225 11.8881 22.1437C11.9737 22.0625 12.0415 21.966 12.0878 21.8598C12.1341 21.7537 12.1579 21.6399 12.1579 21.525V11.375ZM16.7632 10.5C17.2716 10.5 17.6842 10.892 17.6842 11.375V21.525C17.6842 21.7571 17.5872 21.9796 17.4144 22.1437C17.2417 22.3078 17.0074 22.4 16.7632 22.4C16.5189 22.4 16.2846 22.3078 16.1119 22.1437C15.9391 21.9796 15.8421 21.7571 15.8421 21.525V11.375C15.8421 10.892 16.2547 10.5 16.7632 10.5Z"
-              />
-            </svg>
-          </td>
-        </tr>
-        } }
-      </tbody>
-    </table>
-    @if (isLoading()) { @if (dataRequest.length !== 0) {
+              {{ row.topic }}
+            </td>
+            <td class="hidden px-4 py-2 lg:table-cell">
+              {{ convertToLocal(row.startDate) | date : "MM/dd/yyyy hh:mm a" }}
+            </td>
+            <td class="hidden px-4 py-2 lg:table-cell">
+              {{ convertToLocal(row.endDate) | date : "MM/dd/yyyy hh:mm a" }}
+            </td>
 
-    <div class="flex items-center justify-center w-full bg-opacity-60">
-      <div class="flex items-center justify-center">
-        <div
-          class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
-        ></div>
+            <td class="hidden px-4 py-2 lg:table-cell">
+              <a
+                [href]="row.locationLink"
+                target="_blank"
+                class="flex items-center justify-center gap-x-2 whitespace-nowrap hover:text-mainColor4"
+              >
+                <span>{{ row.locationName }}</span>
+
+                <svg
+                  class="size-5 hover:text-mainColor1"
+                  viewBox="0 0 30 30"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.5 6.25H10.25C8.85 6.25 8.15 6.25 7.615 6.5225C7.14456 6.76211 6.76211 7.14456 6.5225 7.615C6.25 8.15 6.25 8.85 6.25 10.25V19.75C6.25 21.15 6.25 21.85 6.5225 22.385C6.76218 22.8554 7.14462 23.2378 7.615 23.4775C8.14875 23.75 8.84875 23.75 10.2462 23.75H19.7538C21.1513 23.75 21.85 23.75 22.3837 23.4775C22.855 23.2375 23.2375 22.855 23.4775 22.385C23.75 21.85 23.75 21.1513 23.75 19.7538V17.5M25 11.25V5M25 5H18.75M25 5L16.25 13.75"
+                    stroke="#686666"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </td>
+
+            <td class="py-2 text-center lg:px-4">
+              <button
+                (click)="goToActionSession(row.id)"
+                class="bg-[#f4f4f4] rounded-lg p-2"
+              >
+                <svg
+                  class="md:size-5 size-4"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.08752 2.00474L1.86632 8.22594C1.62658 8.46568 1.39884 8.93317 1.35089 9.2688L1.01526 11.6422C0.895389 12.5053 1.49473 13.1046 2.35779 12.9847L4.73117 12.6491C5.0668 12.6012 5.53432 12.3734 5.77406 12.1337L11.9953 5.91247C13.0621 4.84563 13.5775 3.599 11.9953 2.01673C10.413 0.422468 9.16634 0.92592 8.08752 2.00474Z"
+                    stroke="#508D97"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.19922 2.89258C7.72664 4.77452 9.20103 6.2609 11.095 6.78832"
+                    stroke="#508D97"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td class="py-2 text-center lg:px-4">
+              <button
+                (click)="showConfirmDelete(row.id)"
+                class="text-red-500 bg-[#f4f4f4] rounded-lg p-2 hover:text-red-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="md:size-[22px] size-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22m-7 0V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2m8 0H7"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          @if (row.id === sessionId) {
+          <tr>
+            <td colspan="6" class="bg-white">
+              <div class="space-y-2">
+                <div
+                  class="flex items-center justify-between text-sm px-4 py-3 bg-[#f0f0f2]"
+                >
+                  <div
+                    class="flex items-center justify-center text-sm font-semibold text-mainColor1 gap-x-2"
+                  >
+                    <span>Topic:</span>
+                    <span>{{ row.topic }}</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-center font-semibold text-mainColor1 gap-x-1"
+                  >
+                    <span>Location Name:</span>
+                    <span>
+                      <a
+                        [href]="row.locationLink"
+                        target="_blank"
+                        class="flex items-center justify-center gap-x-2 whitespace-nowrap hover:text-activeLink"
+                      >
+                        <span>{{ row.locationName }}</span>
+
+                        <svg
+                          class="size-4 hover:text-activeLink"
+                          viewBox="0 0 30 30"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12.5 6.25H10.25C8.85 6.25 8.15 6.25 7.615 6.5225C7.14456 6.76211 6.76211 7.14456 6.5225 7.615C6.25 8.15 6.25 8.85 6.25 10.25V19.75C6.25 21.15 6.25 21.85 6.5225 22.385C6.76218 22.8554 7.14462 23.2378 7.615 23.4775C8.14875 23.75 8.84875 23.75 10.2462 23.75H19.7538C21.1513 23.75 21.85 23.75 22.3837 23.4775C22.855 23.2375 23.2375 22.855 23.4775 22.385C23.75 21.85 23.75 21.1513 23.75 19.7538V17.5M25 11.25V5M25 5H18.75M25 5L16.25 13.75"
+                            stroke="#686666"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg> </a
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between text-xs px-4 py-3 bg-[#f0f0f2]"
+                >
+                  <div
+                    class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                  >
+                    <span>Start date:</span>
+                    <span>{{
+                      row.startDate | date : "MM/dd/yyyy hh:mm a"
+                    }}</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                  >
+                    <span>End date:</span>
+                    <span>{{ row.endDate | date : "MM/dd/yyyy hh:mm a" }}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          } } } } @else { @for ( i of [1, 2, 3]; track i) {
+          <tr class="border-b-8 animate-pulse border-mainColor4">
+            <td class="py-2 text-center lg:hidden ps-1">
+              <div class="w-5 h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="hidden py-2 text-center lg:ps-4 lg:block">
+              <div class="w-48 h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="py-2 text-center w-36 lg:ps-2">
+              <div class="h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="hidden py-2 text-center lg:table-cell md:w-32 lg:ps-8">
+              <div class="w-20 h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="hidden py-2 text-center lg:table-cell md:w-32 lg:ps-8">
+              <div class="w-20 h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="hidden px-4 py-2 text-center w-52 lg:block md:ps-24">
+              <div class="h-5 rounded bg-mainColor3"></div>
+            </td>
+            <td class="py-2 text-center ps-4 md:ps-8">
+              <div class="w-8 h-8 rounded bg-mainColor3"></div>
+            </td>
+            <td class="py-2 text-center ps-4 lg:ps-10">
+              <div class="w-8 h-8 rounded bg-mainColor3"></div>
+            </td>
+          </tr>
+          } }
+        </tbody>
+        <tfoot class="bg-[#DEDFE1] rounded-lg">
+          <tr>
+            <td colspan="7" class="p-3 rounded-bl-lg rounded-br-lg"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      @if (isLoading()) { @if (dataRequest.length !== 0) {
+
+      <div class="flex items-center justify-center w-full bg-opacity-60">
+        <div class="flex items-center justify-center">
+          <div
+            class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
       </div>
+      } }
     </div>
-    } }
   </div>
-  } @if (showModal) {
+  @if (showModal) {
   <app-confirm-delete-hoc
     (closeModal)="handleClose($event)"
     [itemId]="selectedItemId"

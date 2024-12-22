@@ -4,18 +4,20 @@ import { CasheService } from '../../../../shared/services/cashe.service';
 import { Router } from '@angular/router';
 import { Sessions } from '../../model/sessions';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-sessions-hoc',
   standalone: true,
-  imports: [ConfirmDeleteHocComponent, DatePipe],
+  imports: [ConfirmDeleteHocComponent, DatePipe, NgClass],
   templateUrl: './sessions-hoc.component.html',
   styleUrl: './sessions-hoc.component.scss',
 })
 export class SessionsHOCComponent implements OnInit {
   sessionsHOCService = inject(SessionsHOCService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   router = inject(Router);
   allSessions!: Sessions;
   currentPage: number = 1;
@@ -24,35 +26,43 @@ export class SessionsHOCComponent implements OnInit {
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
-  dataRequest: any[] = [];
+  dataRequest: Sessions[] = [];
+  sessionId: number | null = null;
 
   ngOnInit() {
     this.getAllSessions(this.currentPage, this.pageSize);
   }
 
-  getAllSessions(
-    currentPage: number,
-    pageSize: number,
-    keyword?: string
-  ): void {
+  convertToLocal(date: string): Date {
+    const localDate = new Date(date);
+    return localDate;
+  }
+
+  getAllSessions(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
-    this.sessionsHOCService
-      .getAllSessions(currentPage, pageSize, keyword)
-      .subscribe({
-        next: (res) => {
-          if (res.statusCode === 200) {
-            this.allSessions = res;
-            this.dataRequest.push(this.allSessions);
-            this.isLoading.update((v) => (v = false));
-          } else {
-            this.isLoading.update((v) => (v = false));
-          }
-        },
-        error: (err) => {
-          console.log(err);
+    this.sessionsHOCService.getAllSessions(currentPage, pageSize).subscribe({
+      next: (res) => {
+        if (res.statusCode === 200) {
+          this.allSessions = res;
+          this.dataRequest.push(this.allSessions);
           this.isLoading.update((v) => (v = false));
-        },
-      });
+        } else {
+          this.isLoading.update((v) => (v = false));
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading.update((v) => (v = false));
+      },
+    });
+  }
+
+  toggleDetails(id: number) {
+    if (id === this.sessionId) {
+      this.sessionId = 0;
+    } else {
+      this.sessionId = id;
+    }
   }
 
   showConfirmDelete(id: number) {

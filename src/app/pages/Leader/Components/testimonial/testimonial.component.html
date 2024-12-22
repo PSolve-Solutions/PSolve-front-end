@@ -109,11 +109,7 @@
         <div class="flex items-center gap-5">
           <img
             class="rounded-full size-12"
-            [src]="
-              item.photoUrl
-                ? item.photoUrl
-                : './../../../../../assets/img/user.jpeg'
-            "
+            [src]="item.photoUrl ? item.photoUrl : 'assets/img/user.jpeg'"
             alt="avatar"
           />
           <div class="grid gap-1">

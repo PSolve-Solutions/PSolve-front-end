@@ -1,110 +1,134 @@
-<div class="w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    {{ id === 0 ? "Add" : "Update" }} Session
+  </h1>
+  <h1
+    class="self-start mb-2 text-lg font-bold transition-all duration-500 ps-4 md:hidden"
+  >
+    {{ id === 0 ? "Add" : "Update" }} Session
+  </h1>
   <form
     [formGroup]="sessionForm"
     (ngSubmit)="actionsSession()"
-    class="w-full py-8 bg-white px-14 rounded-xl"
+    class="py-8 bg-white ps-8 rounded-xl"
   >
-    <div class="flex flex-col gap-y-4">
-      <h2 class="w-full pb-6 text-3xl font-bold border-b-2">
-        @if (id === 0) { Add Session }@else { Edit Session }
-      </h2>
-
-      <div class="flex items-center justify-between w-full ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Instructor Name</label>
-          <div class="relative">
-            <input
-              type="text"
-              formControlName="instructorName"
-              class="relative block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              placeholder="Instructor Name"
-            />
-          </div>
+    <div class="flex flex-col w-full lg:w-11/12 gap-y-6 md:gap-y-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="flex flex-col">
+          <label
+            for="instructorName"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Instructor Name</label
+          >
+          <input
+            type="text"
+            formControlName="instructorName"
+            id="instructorName"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            placeholder="Instructor Name"
+          />
         </div>
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Topic</label>
-          <div class="relative">
-            <input
-              type="text"
-              formControlName="topic"
-              class="relative block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              placeholder="Topic"
-            />
-          </div>
+        <div class="flex flex-col">
+          <label for="topic" class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Topic</label
+          >
+          <input
+            type="text"
+            formControlName="topic"
+            id="topic"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            placeholder="Topic"
+          />
         </div>
       </div>
       <!-- Dates -->
-      <div class="flex items-center justify-between w-full mt-2 ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label for="startDate" class="text-lg">Start Date</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="flex flex-col">
+          <label
+            for="startDate"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Start Date</label
+          >
           <input
             type="datetime-local"
             id="startDate"
             formControlName="startDate"
             placeholder="Select Start Date"
-            class="block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg focus:outline-none"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
           />
         </div>
 
         <div class="flex flex-col basis-1/2">
-          <label for="endDate" class="text-lg">End Date</label>
+          <label
+            for="endDate"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >End Date</label
+          >
           <input
             type="datetime-local"
             id="endDate"
             formControlName="endDate"
             placeholder="Select End Date"
-            class="block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg focus:outline-none"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
           />
         </div>
       </div>
 
-      <div class="flex items-center justify-between w-full mt-2 ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Location Name</label>
-          <div class="relative">
-            <input
-              type="text"
-              formControlName="locationName"
-              class="relative block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              placeholder="Location Name"
-            />
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="flex flex-col">
+          <label
+            for="locationName"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Location Name</label
+          >
+          <input
+            type="text"
+            formControlName="locationName"
+            id="locationName"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            placeholder="Location Name"
+          />
         </div>
         <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Location Link</label>
-          <div class="relative">
-            <input
-              type="text"
-              formControlName="locationLink"
-              class="relative block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              placeholder="Location Link"
-            />
-          </div>
+          <label
+            for="locationLink"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Location Link</label
+          >
+          <input
+            type="text"
+            formControlName="locationLink"
+            id="locationLink"
+            class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            placeholder="Location Link"
+          />
         </div>
       </div>
     </div>
 
-    <div class="flex items-center justify-end w-11/12 mt-20 gap-x-8">
-      <button
-        routerLink="/head_of_camp/contests"
-        type="button"
-        class="px-6 py-1.5 text-xl text-[#6B7088] border rounded-lg w-fit bg-white"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="px-6 py-1.5 text-xl bg-white border rounded-lg text-activeLink w-fit"
-      >
-        @if (isLoading) {
+    <div
+      class="flex items-center justify-end w-full mt-20 text-lg font-semibold gap-x-6 md:w-11/12 text-mainColor4"
+    >
+      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+        @if (!isLoading) {Save}@else {
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
             <div
-              class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+              class="border-4 border-dashed rounded-full w-7 h-7 border-subColor2 animate-spin"
             ></div>
           </div>
         </div>
-        }@else { Save }
+        }
+      </button>
+      <button
+        type="button"
+        routerLink="/head_of_camp/contests"
+        class="px-6 py-2 rounded-md bg-mainColor2"
+      >
+        Cancel
       </button>
     </div>
   </form>
