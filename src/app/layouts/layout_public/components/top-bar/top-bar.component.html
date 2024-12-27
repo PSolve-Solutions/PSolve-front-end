@@ -5,20 +5,29 @@
         <img src="assets/img/logo.png" class="w-[63px]" alt="">
     </div>
     <ul class="flex sm:pt-3">
-      <li>
-        <a>
-          Home
-        </a>
-      </li>
       @if(!this.responsive.isSmallScreen){
         <li>
-          <a>
-            About us
+          <a
+          routerLink="/"
+          fragment="header"
+          >
+           Home
           </a>
         </li>
       }
+        <li>
+          <a
+          routerLink="/"
+          fragment="about-us"
+          >
+            About us
+          </a>
+        </li>
       <li>
-        <a>
+        <a
+          routerLink="/"
+          fragment="founders"
+            >
           Founders
         </a>
       </li>
@@ -26,8 +35,8 @@
     </div>
     <div class="left flex gap-4 items-center pt-2">
       <div class="actions flex gap-[5px] flex-col sm:gap-4  sm:flex-row ">
-        <button class="login-btn">login</button>
-        @if (!this.responsive.isSmallScreen) {<button class="apply-btn">apply now</button>}@else{<button class="apply-btn">apply</button>}
+        <button class="login-btn"  routerLink="/login" >login</button>
+        @if (!this.responsive.isSmallScreen) {<button class="apply-btn" routerLink="/registration">apply now</button>}@else{<button class="apply-btn" routerLink="/registration">apply</button>}
       </div>
     </div>
   </div>

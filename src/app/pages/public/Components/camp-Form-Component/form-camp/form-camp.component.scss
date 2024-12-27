@@ -1,0 +1,71 @@
+section{
+  // min-height: 350dvh;
+  position: relative;
+  overflow: hidden;
+  .wave{
+    left: -6%; top: -7%;
+  }
+  h2{
+    // font-family: Mulish;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 58px;
+    letter-spacing: -1.7999999523162842px;
+    color: #6B7088;
+    width: 100%;
+  }
+  .content{
+    width: 80%;
+    margin: 250px auto 0px;
+  }
+  .reg-form{
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    .form-elment{
+      margin-top: 33px;
+      display: flex;
+      flex-direction: column;
+      flex: 0 1 auto;
+      flex-basis: calc(33.333% - 10px);
+      margin-bottom: 10px;
+      .logo{
+        // font-family: Inter;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18.15px;
+        color: #fff;
+      }
+      input,select{
+        margin-top: 12px;
+        border: 1px solid #00000033;
+        border-radius: 8px;
+        outline: 0;
+        width: 93%;
+        padding: 0px 3px;
+        height: 44px;
+      }
+    }
+    label{
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 21.78px;
+      color: #6F6666;
+      sup{
+        color: #EF4A50;
+      }
+
+    }
+  }
+}
+.error{
+  // outline: #EF4A50 1px!important;
+  border: #EF4A50 solid 1px!important;
+}
+@media screen and (max-width:640px) {
+  section .reg-form{
+    display: block;
+  }
+
+}
+

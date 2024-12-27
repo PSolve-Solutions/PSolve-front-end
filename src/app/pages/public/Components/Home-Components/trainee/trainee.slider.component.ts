@@ -18,10 +18,10 @@ export class TraineeComponent {
 
 
   slides:any = [
-    { image: 'assets/for_carousel.png' , text:"PROVIDE FOR TRAINEE ALL INFORMATION NEEDS TO KEEP HIM/HER UPDATED WITH NEW IN TRAINING."},
-    { image: 'assets/for_carousel.png' , text:"PROVIDE QRCODE FOR EVERY TRAINEE TO FACILITATE TAKING ATTENDANCE PROCESS." },
-    { image: 'assets/for_carousel.png' , text:"PROVIDE ALL MATERIALS NEED TO KEEP TRAINEE MOVING FORWARD IN TRAINING." },
-    { image: 'assets/for_carousel.png' , text:"DISPLAY TRAINEE RANKING FOR HELP TRAINEE ANALYSIS HIS/HER STATUS." },
+    { image: 'assets/img_public/p_solve_home/t1.svg' , text:"PROVIDE FOR TRAINEE ALL INFORMATION NEEDS TO KEEP HIM/HER UPDATED WITH NEW IN TRAINING."},
+    { image: 'assets/img_public/p_solve_home/t2.svg' , text:"PROVIDE QRCODE FOR EVERY TRAINEE TO FACILITATE TAKING ATTENDANCE PROCESS." },
+    { image: 'assets/img_public/p_solve_home/t3.svg' , text:"PROVIDE ALL MATERIALS NEED TO KEEP TRAINEE MOVING FORWARD IN TRAINING." },
+    { image: 'assets/img_public/p_solve_home/t4.svg' , text:"DISPLAY TRAINEE RANKING FOR HELP TRAINEE ANALYSIS HIS/HER STATUS." },
   ];
 
 

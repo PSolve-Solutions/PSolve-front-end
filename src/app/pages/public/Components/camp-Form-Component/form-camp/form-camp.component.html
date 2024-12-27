@@ -1,0 +1,486 @@
+<section class="flex items-stretch">
+  <div class="absolute wave -z-10">
+    <img
+      ngSrc="assets/img_public/Register_img/Decore.svg"
+      width="700"
+      height="700"
+      class="w-full"
+    />
+  </div>
+  <div class="content">
+    <form class="reg-form" [formGroup]="registerForm">
+      <h2>Personal Information</h2>
+
+      <div class="form-elment">
+        <label for="FN">First name <sup>*</sup></label>
+        <input type="text" id="FN" formControlName="FirstName" [ngClass]="registerForm.get('FirstName')?.touched && registerForm.get('FirstName')?.getError('required') ? 'error' : ''"/>
+        <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('FirstName')?.touched && registerForm.get('FirstName')?.getError('required')">First Name is required</small>
+      </div>
+      <div class="form-elment">
+        <label for="MN">Middle name <sup>*</sup></label>
+        <input type="text" id="MN" formControlName="MiddleName" [ngClass]="registerForm.get('MiddleName')?.touched && registerForm.get('MiddleName')?.getError('required') ? 'error' : ''" />
+        <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('MiddleName')?.touched && registerForm.get('MiddleName')?.getError('required')">Middle Name is required</small>
+      </div>
+      <div class="form-elment">
+        <label for="LN">Last name <sup>*</sup></label>
+        <input type="text" id="LN" formControlName="LastName" [ngClass]="registerForm.get('LastName')?.touched && registerForm.get('LastName')?.getError('required') ? 'error' : ''"/>
+        <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('LastName')?.touched && registerForm.get('LastName')?.getError('required')">Last Name is required</small>
+      </div>
+      <div class="form-elment">
+        <div class="flex flex-col">
+          <label class="text-lg" for="BD">Birthdate <sup>*</sup></label>
+          <!-- <div class="relative">
+            <input
+              #startDateInput
+              type="text"
+              formControlName="BirthDate"
+              class="rblock w-full px-4 cursor-pointer py-2.5 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+              readonly
+              (click)="toggleCalendar()"
+              [ngClass]="registerForm.get('BirthDate')?.touched && registerForm.get('BirthDate')?.getError('required') ? 'error' : ''"
+            />
+            <div
+              #calendar
+              class="absolute left-0 z-[1200] hidden p-4 mt-2 w-[370px] bg-white border border-gray-200 rounded-md shadow-lg"
+            >
+              <div class="flex items-center justify-between mb-2">
+                <button
+                  type="button"
+                  (click)="changeMonth(-1)"
+                  class="focus:outline-none"
+                >
+                  &lt;
+                </button>
+                <div class="flex items-center font-semibold text-gray-700">
+                  <label for="year"> {{ monthYear }} {{ selectedYear }} </label>
+                  <div>
+                    <select
+                      id="year"
+                      class="h-20 border-0 outline-none max-w-5 max-h-3"
+                      (change)="selectYear($event.target)"
+                    >
+                      <option *ngFor="let year of allYears" [value]="year">
+                        {{ year }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  (click)="changeMonth(1)"
+                  class="focus:outline-none"
+                >
+                  &gt;
+                </button>
+              </div>
+              <div class="grid grid-cols-7 text-sm text-center text-gray-500">
+                @for (day of daysOfWeek; track $index) {
+                <div>
+                  {{ day }}
+                </div>
+
+                }
+              </div>
+              <div class="grid grid-cols-7 mt-2 text-sm text-center">
+                @for (day of startDays; track $index) {
+                <ng-container>
+                  <div
+                    [ngClass]="{
+                      'bg-activeLink text-white hover:text-black':
+                        selectedDay == day
+                    }"
+                    class="p-3 border cursor-pointer hover:bg-gray-200"
+                    (click)="selectDate(day, 'start')"
+                  >
+                    {{ day }}
+                  </div>
+                </ng-container>
+                }
+              </div>
+            </div>
+            <svg
+              class="absolute transition-transform cursor-pointer top-4 size-8 right-8"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              (click)="toggleCalendar()"
+            >
+              <path
+                d="M31.6654 6.66683H28.332V5.00016C28.332 4.55814 28.1564 4.13421 27.8439 3.82165C27.5313 3.50909 27.1074 3.3335 26.6654 3.3335C26.2233 3.3335 25.7994 3.50909 25.4869 3.82165C25.1743 4.13421 24.9987 4.55814 24.9987 5.00016V6.66683H14.9987V5.00016C14.9987 4.55814 14.8231 4.13421 14.5105 3.82165C14.198 3.50909 13.7741 3.3335 13.332 3.3335C12.89 3.3335 12.4661 3.50909 12.1535 3.82165C11.841 4.13421 11.6654 4.55814 11.6654 5.00016V6.66683H8.33203C7.00595 6.66683 5.73418 7.19361 4.7965 8.1313C3.85882 9.06898 3.33203 10.3407 3.33203 11.6668V31.6668C3.33203 32.9929 3.85882 34.2647 4.7965 35.2024C5.73418 36.14 7.00595 36.6668 8.33203 36.6668H31.6654C32.9914 36.6668 34.2632 36.14 35.2009 35.2024C36.1386 34.2647 36.6654 32.9929 36.6654 31.6668V11.6668C36.6654 10.3407 36.1386 9.06898 35.2009 8.1313C34.2632 7.19361 32.9914 6.66683 31.6654 6.66683ZM33.332 31.6668C33.332 32.1089 33.1564 32.5328 32.8439 32.8453C32.5313 33.1579 32.1074 33.3335 31.6654 33.3335H8.33203C7.89 33.3335 7.46608 33.1579 7.15352 32.8453C6.84096 32.5328 6.66536 32.1089 6.66536 31.6668V20.0002H33.332V31.6668ZM33.332 16.6668H6.66536V11.6668C6.66536 11.2248 6.84096 10.8009 7.15352 10.4883C7.46608 10.1758 7.89 10.0002 8.33203 10.0002H11.6654V11.6668C11.6654 12.1089 11.841 12.5328 12.1535 12.8453C12.4661 13.1579 12.89 13.3335 13.332 13.3335C13.7741 13.3335 14.198 13.1579 14.5105 12.8453C14.8231 12.5328 14.9987 12.1089 14.9987 11.6668V10.0002H24.9987V11.6668C24.9987 12.1089 25.1743 12.5328 25.4869 12.8453C25.7994 13.1579 26.2233 13.3335 26.6654 13.3335C27.1074 13.3335 27.5313 13.1579 27.8439 12.8453C28.1564 12.5328 28.332 12.1089 28.332 11.6668V10.0002H31.6654C32.1074 10.0002 32.5313 10.1758 32.8439 10.4883C33.1564 10.8009 33.332 11.2248 33.332 11.6668V16.6668Z"
+                fill="#D9D9D9"
+              />
+            </svg>
+            <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('BirthDate')?.touched && registerForm.get('BirthDate')?.getError('required')">Birthdate is required</small>
+          </div> -->
+          <input type="date" id="BD" formControlName="BirthDate" [ngClass]="registerForm.get('FirstName')?.touched && registerForm.get('FirstName')?.getError('required') ? 'error' : ''"/>
+        </div>
+      </div>
+      <div class="form-elment">
+        <label for="ID">National Id <sup>*</sup></label>
+        <input type="text" id="ID" formControlName="NationalId" [ngClass]="registerForm.get('NationalId')?.touched &&
+                                                                (registerForm.get('NationalId')?.hasError('required') ||
+                                                                registerForm.get('NationalId')?.hasError('maxlength') ||
+                                                                registerForm.get('NationalId')?.hasError('minlength')) ? 'error' : ''"/>
+          <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('NationalId')?.touched &&
+                                                                (registerForm.get('NationalId')?.hasError('required') ||
+                                                                registerForm.get('NationalId')?.hasError('maxlength') ||
+                                                                registerForm.get('NationalId')?.hasError('minlength'))">National Id is required and Must be 14 digits</small>
+
+      </div>
+      <div class="form-elment">
+        <label for="sex">Gender<sup>*</sup></label>
+        <div class="flex flex-col basis-1/3">
+          <div class="relative">
+            <ng-select
+              #genderSelect
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              formControlName="Gender"
+              placeholder="Select gender"
+              (click)="toggleDropdownGender(genderSelect)"
+              class="relative block text-lg h-[44px] mt-[12px] text-black border w-[93%] border-[#00000033] rounded-lg appearance-none focus:outline-none"
+            >
+              <ng-option [value]="0">Male</ng-option>
+              <ng-option [value]="1"> Female </ng-option>
+            </ng-select>
+            <button
+              (click)="toggleDropdownGender(genderSelect)"
+              type="button"
+              class=""
+            >
+              <svg
+                [ngClass]="genderTerm ? 'rotate-180' : ''"
+                class="absolute transition-transform z-[1100] size-8 right-9 top-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-elment">
+        <label for="PI">Profile Image</label>
+        <input
+          type="file"
+          id="PI"
+          class="hidden"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+        <div
+          class="border rounded-lg h-[44px] mt-[12px] flex items-center justify-between w-[93%] border-[#00000033] px-2"
+        >
+          <div>
+            <span
+              class="bg-[#3c8fc5] px-2 py-1 text-white rounded-lg"
+              *ngIf="fileName"
+            >
+              {{ fileName }}
+            </span>
+          </div>
+          <label
+            for="PI"
+            class="flex bg-[#3D91C7] w-fit px-2 py-1 rounded-lg text-white logo items-center cursor-pointer"
+          >
+            <img
+              src="assets/img_public/Register_img/send-square.svg"
+              class="mr-2"
+            />Choose file
+          </label>
+        </div>
+      </div>
+      <div class="form-elment">
+        <label for="collage">Collage<sup>*</sup></label>
+        <div class="flex flex-col basis-1/3">
+          <div class="relative">
+            <ng-select
+              #collageSelect
+              [closeOnSelect]="true"
+              bindLabel="name"
+              placeholder="Select Collage"
+              formControlName="College"
+              (click)="toggleDropdownC(collageSelect)"
+              class="relative block text-lg h-[44px] mt-[12px] text-black border w-[93%] border-[#00000033] rounded-lg appearance-none focus:outline-none"
+            >
+              <ng-option [value]="0">Computer and Ai</ng-option>
+              <ng-option [value]="1"> EELU </ng-option>
+              <ng-option [value]="2"> Science </ng-option>
+              <ng-option [value]="3"> Engineering </ng-option>
+              <ng-option [value]="4"> Commerce </ng-option>
+              <ng-option [value]="5"> Law </ng-option>
+              <ng-option [value]="6"> Others </ng-option>
+            </ng-select>
+            <button
+              (click)="toggleDropdownC(collageSelect)"
+              type="button"
+              class=""
+            >
+              <svg
+                [ngClass]="collageTerm ? 'rotate-180' : ''"
+                class="absolute transition-transform z-[1100] size-8 right-9 top-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-elment">
+        <label for="grade">Year<sup>*</sup></label>
+        <div class="flex flex-col basis-1/3">
+          <div class="relative">
+            <ng-select
+              #gradeSelect
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Grade"
+              formControlName="Grade"
+              (click)="toggleDropdownG(gradeSelect)"
+              class="relative block text-lg h-[44px] mt-[12px] text-black border w-[93%] border-[#00000033] rounded-lg appearance-none focus:outline-none"
+            >
+              <ng-option [value]="1">First</ng-option>
+              <ng-option [value]="2">Second</ng-option>
+              <ng-option [value]="3">Third</ng-option>
+              <ng-option [value]="4">Fourth</ng-option>
+              <ng-option [value]="5">Fifth</ng-option>
+            </ng-select>
+            <button
+              (click)="toggleDropdownG(gradeSelect)"
+              type="button"
+              class=""
+            >
+              <svg
+                [ngClass]="gradeTerm ? 'rotate-180' : ''"
+                class="absolute transition-transform z-[1100] size-8 right-9 top-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h2>Contact Information</h2>
+
+      <div class="form-elment">
+        <label for="EM">Email<sup>*</sup></label>
+        <input type="text" id="EM" formControlName="Email" />
+      </div>
+      <div class="form-elment">
+        <label for="PN">Phone number<sup>*</sup></label>
+        <input type="tel" id="PN" formControlName="PhoneNumber" />
+      </div>
+      <div class="form-elment">
+        <label for="FBL">Facebook Link</label>
+        <input type="url" id="FBL" formControlName="FacebookLink" />
+      </div>
+      <div class="form-elment OTP">
+        <label for="OTP">OTP <sup>*</sup></label>
+        <div class="flex items-center">
+          <input type="text" id="OTP" formControlName="otp" />
+        </div>
+      </div>
+      <div class="otp-btn self-end flex items-center mb-[12px]">
+        <button
+          class="w-fit bg-[#3D91C7] px-5 py-2 text-white rounded-lg"
+          (click)="sendOTP()"
+        >
+          Send OTP
+        </button>
+
+        <div role="status" class="ml-2" *ngIf="showLoader">
+          <svg
+            aria-hidden="true"
+            class="w-8 h-8 text-gray-200 animate-spin fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+        </div>
+        <span class="ml-3 text-[#3D91C7]">{{ messageOTP }}</span>
+      </div>
+
+      <h2>Online Profiles</h2>
+
+      <div class="form-elment">
+        <label for="codeH">CodeForce Handle<sup>*</sup></label>
+        <input type="text" id="codeH" formControlName="CodeForceHandle" />
+      </div>
+      <div class="form-elment">
+        <label for="vjH">Vjudge Handle</label>
+        <input type="text" id="vjH" formControlName="VjudgeHandle" />
+      </div>
+
+      <h2>Additional Information</h2>
+      <div class="form-elment">
+        <label for="Camp">Camp<sup>*</sup></label>
+        <div class="flex flex-col basis-1/3">
+          <div class="relative">
+            <ng-select
+              #campSelect
+              [items]="allCamps"
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select camp"
+              formControlName="CampId"
+              (click)="toggleDropdownCamp(campSelect)"
+              class="relative block text-lg h-[44px] mt-[12px] text-black border w-[93%] border-[#00000033] rounded-lg appearance-none focus:outline-none"
+            >
+            </ng-select>
+            <button
+              (click)="toggleDropdownCamp(campSelect)"
+              type="button"
+              class=""
+            >
+              <svg
+                [ngClass]="campTerm ? 'rotate-180' : ''"
+                class="absolute transition-transform z-[1100] size-8 right-9 top-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-elment">
+        <label for="lab">Have Laptop<sup>*</sup></label>
+        <div class="flex flex-col basis-1/3">
+          <div class="relative">
+            <ng-select
+              #lapSelect
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select lap"
+              formControlName="HasLaptop"
+              (click)="toggleDropdownL(lapSelect)"
+              class="relative block text-lg h-[44px] mt-[12px] text-black border w-[93%] border-[#00000033] rounded-lg appearance-none focus:outline-none"
+            >
+              <ng-option [value]="true">Yes</ng-option>
+              <ng-option [value]="false">No</ng-option>
+            </ng-select>
+            <button (click)="toggleDropdownL(lapSelect)" type="button" class="">
+              <svg
+                [ngClass]="lapTerm ? 'rotate-180' : ''"
+                class="absolute transition-transform z-[1100] size-8 right-9 top-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                  stroke="#A8A8A8"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <label for="comment">Any Comment</label>
+        <textarea
+          type="text"
+          id="comment"
+          cols="180"
+          rows="5"
+          class="focus:outline-none border w-[62.7%] min-h-40 max-h-40 rounded-lg border-[#00000033] p-1 mt-3"
+          formControlName="Comment"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        (click)="onSubmit()"
+        class="bg-[#3D91C7] py-[7px] px-[85px] rounded-lg text-white mx-auto mt-16 mb-10"
+      >
+        Apply now
+      </button>
+    </form>
+
+    <div role="status" class="flex justify-center mt-3" *ngIf="show">
+      <svg
+        aria-hidden="true"
+        class="w-8 h-8 text-gray-200 animate-spin fill-blue-600"
+        viewBox="0 0 100 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+          fill="currentColor"
+        />
+        <path
+          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+          fill="currentFill"
+        />
+      </svg>
+    </div>
+    <p
+      class="text-[#2fca2f] text-center mt-2"
+      *ngIf="succssesMessage != ''"
+    >
+      {{ succssesMessage }}
+    </p>
+    <p
+      class="text-[#ca342f] text-center mt-2"
+      *ngIf="errorMessage != ''"
+    >
+      {{ errorMessage }}
+    </p>
+  </div>
+</section>

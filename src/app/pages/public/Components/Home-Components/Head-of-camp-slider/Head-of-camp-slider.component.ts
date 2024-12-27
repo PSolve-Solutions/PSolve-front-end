@@ -13,10 +13,10 @@ export class HeadOfCampSlider {
   currentStep:number = 0;
 
   slides:any = [
-    { image: 'assets/for_carousel.png' , text:"TRACKING CAMP STATUS AND PROGRESS, TAKE DECISIONS BASED ON DATA ANALYSIS FOR TRAINING. " },
-    { image: 'assets/for_carousel.png' , text:"ASSIGN SUITABLE MENTOR FOR TRAINEE. WHICH INCREASE PERCENTAGE OF TRAINING SUCCESS." },
-    { image: 'assets/for_carousel.png' , text:"TRACKING YOUR MENTORS PERFORMANCE TO KEEP YOUR TRAINING EFFECTIVE IN PROGRESS."},
-    { image: 'assets/for_carousel.png' , text:"UNQUALIFIED TRAINEES DETECTION, WHICH KEEPS TRAINING STATUS IN IMPROVEMENT AND PREVENT ANY DELAYS OR CONFUSIONS FOR CURRENT TRAINEES." }
+    { image: 'assets/img_public/p_solve_home/h1.svg' , text:"TRACKING CAMP STATUS AND PROGRESS, TAKE DECISIONS BASED ON DATA ANALYSIS FOR TRAINING. " },
+    { image: 'assets/img_public/p_solve_home/h2.svg' , text:"ASSIGN SUITABLE MENTOR FOR TRAINEE. WHICH INCREASE PERCENTAGE OF TRAINING SUCCESS." },
+    { image: 'assets/img_public/p_solve_home/h3.svg' , text:"TRACKING YOUR MENTORS PERFORMANCE TO KEEP YOUR TRAINING EFFECTIVE IN PROGRESS."},
+    { image: 'assets/img_public/p_solve_home/h4.svg' , text:"UNQUALIFIED TRAINEES DETECTION, WHICH KEEPS TRAINING STATUS IN IMPROVEMENT AND PREVENT ANY DELAYS OR CONFUSIONS FOR CURRENT TRAINEES." }
   ];
 
   goToStep(index: number): void {

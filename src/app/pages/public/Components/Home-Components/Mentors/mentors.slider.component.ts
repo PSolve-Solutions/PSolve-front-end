@@ -13,9 +13,9 @@ export class MentorsComponent {
   currentStep:number = 0;
 
   slides:any = [
-    { image: 'assets/for_carousel.png' , text:"MANAGE YOUR TRAINEES’ TASKS AND KEEP YOU UPDATED FOR EVERY TASK."},
-    { image: 'assets/for_carousel.png' , text:"TRACKING YOUR TRAINEES SOLVE FOR TRAINING SHEETS AND CONTESTS." },
-    { image: 'assets/for_carousel.png' , text:"SET YOUR PRACTICES TIME TABLE AND ANNOUNCE TRAINEESWITH INCOMING EETING." },
+    { image: 'assets/img_public/p_solve_home/m1.svg' , text:"MANAGE YOUR TRAINEES’ TASKS AND KEEP YOU UPDATED FOR EVERY TASK."},
+    { image: 'assets/img_public/p_solve_home/m2.svg' , text:"TRACKING YOUR TRAINEES SOLVE FOR TRAINING SHEETS AND CONTESTS." },
+    { image: 'assets/img_public/p_solve_home/m3.svg' , text:"SET YOUR PRACTICES TIME TABLE AND ANNOUNCE TRAINEESWITH INCOMING EETING." },
   ];
 
 
