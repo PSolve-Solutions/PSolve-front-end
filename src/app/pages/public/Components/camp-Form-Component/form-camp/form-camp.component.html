@@ -29,89 +29,6 @@
       <div class="form-elment">
         <div class="flex flex-col">
           <label class="text-lg" for="BD">Birthdate <sup>*</sup></label>
-          <!-- <div class="relative">
-            <input
-              #startDateInput
-              type="text"
-              formControlName="BirthDate"
-              class="rblock w-full px-4 cursor-pointer py-2.5 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              readonly
-              (click)="toggleCalendar()"
-              [ngClass]="registerForm.get('BirthDate')?.touched && registerForm.get('BirthDate')?.getError('required') ? 'error' : ''"
-            />
-            <div
-              #calendar
-              class="absolute left-0 z-[1200] hidden p-4 mt-2 w-[370px] bg-white border border-gray-200 rounded-md shadow-lg"
-            >
-              <div class="flex items-center justify-between mb-2">
-                <button
-                  type="button"
-                  (click)="changeMonth(-1)"
-                  class="focus:outline-none"
-                >
-                  &lt;
-                </button>
-                <div class="flex items-center font-semibold text-gray-700">
-                  <label for="year"> {{ monthYear }} {{ selectedYear }} </label>
-                  <div>
-                    <select
-                      id="year"
-                      class="h-20 border-0 outline-none max-w-5 max-h-3"
-                      (change)="selectYear($event.target)"
-                    >
-                      <option *ngFor="let year of allYears" [value]="year">
-                        {{ year }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  (click)="changeMonth(1)"
-                  class="focus:outline-none"
-                >
-                  &gt;
-                </button>
-              </div>
-              <div class="grid grid-cols-7 text-sm text-center text-gray-500">
-                @for (day of daysOfWeek; track $index) {
-                <div>
-                  {{ day }}
-                </div>
-
-                }
-              </div>
-              <div class="grid grid-cols-7 mt-2 text-sm text-center">
-                @for (day of startDays; track $index) {
-                <ng-container>
-                  <div
-                    [ngClass]="{
-                      'bg-activeLink text-white hover:text-black':
-                        selectedDay == day
-                    }"
-                    class="p-3 border cursor-pointer hover:bg-gray-200"
-                    (click)="selectDate(day, 'start')"
-                  >
-                    {{ day }}
-                  </div>
-                </ng-container>
-                }
-              </div>
-            </div>
-            <svg
-              class="absolute transition-transform cursor-pointer top-4 size-8 right-8"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              (click)="toggleCalendar()"
-            >
-              <path
-                d="M31.6654 6.66683H28.332V5.00016C28.332 4.55814 28.1564 4.13421 27.8439 3.82165C27.5313 3.50909 27.1074 3.3335 26.6654 3.3335C26.2233 3.3335 25.7994 3.50909 25.4869 3.82165C25.1743 4.13421 24.9987 4.55814 24.9987 5.00016V6.66683H14.9987V5.00016C14.9987 4.55814 14.8231 4.13421 14.5105 3.82165C14.198 3.50909 13.7741 3.3335 13.332 3.3335C12.89 3.3335 12.4661 3.50909 12.1535 3.82165C11.841 4.13421 11.6654 4.55814 11.6654 5.00016V6.66683H8.33203C7.00595 6.66683 5.73418 7.19361 4.7965 8.1313C3.85882 9.06898 3.33203 10.3407 3.33203 11.6668V31.6668C3.33203 32.9929 3.85882 34.2647 4.7965 35.2024C5.73418 36.14 7.00595 36.6668 8.33203 36.6668H31.6654C32.9914 36.6668 34.2632 36.14 35.2009 35.2024C36.1386 34.2647 36.6654 32.9929 36.6654 31.6668V11.6668C36.6654 10.3407 36.1386 9.06898 35.2009 8.1313C34.2632 7.19361 32.9914 6.66683 31.6654 6.66683ZM33.332 31.6668C33.332 32.1089 33.1564 32.5328 32.8439 32.8453C32.5313 33.1579 32.1074 33.3335 31.6654 33.3335H8.33203C7.89 33.3335 7.46608 33.1579 7.15352 32.8453C6.84096 32.5328 6.66536 32.1089 6.66536 31.6668V20.0002H33.332V31.6668ZM33.332 16.6668H6.66536V11.6668C6.66536 11.2248 6.84096 10.8009 7.15352 10.4883C7.46608 10.1758 7.89 10.0002 8.33203 10.0002H11.6654V11.6668C11.6654 12.1089 11.841 12.5328 12.1535 12.8453C12.4661 13.1579 12.89 13.3335 13.332 13.3335C13.7741 13.3335 14.198 13.1579 14.5105 12.8453C14.8231 12.5328 14.9987 12.1089 14.9987 11.6668V10.0002H24.9987V11.6668C24.9987 12.1089 25.1743 12.5328 25.4869 12.8453C25.7994 13.1579 26.2233 13.3335 26.6654 13.3335C27.1074 13.3335 27.5313 13.1579 27.8439 12.8453C28.1564 12.5328 28.332 12.1089 28.332 11.6668V10.0002H31.6654C32.1074 10.0002 32.5313 10.1758 32.8439 10.4883C33.1564 10.8009 33.332 11.2248 33.332 11.6668V16.6668Z"
-                fill="#D9D9D9"
-              />
-            </svg>
-            <small class="text-red-500 ml-2 mt-1" *ngIf="registerForm.get('BirthDate')?.touched && registerForm.get('BirthDate')?.getError('required')">Birthdate is required</small>
-          </div> -->
           <input type="date" id="BD" formControlName="BirthDate" [ngClass]="registerForm.get('FirstName')?.touched && registerForm.get('FirstName')?.getError('required') ? 'error' : ''"/>
         </div>
       </div>
@@ -446,7 +363,7 @@
       <button
         type="submit"
         (click)="onSubmit()"
-        class="bg-[#3D91C7] py-[7px] px-[85px] rounded-lg text-white mx-auto mt-16"
+        class="bg-[#3D91C7] py-[7px] px-[85px] rounded-lg text-white mx-auto mt-16 mb-10"
       >
         Apply now
       </button>

@@ -109,7 +109,7 @@ export const routes: Routes = [
     path: '',
     title: 'ICPC',
     component: LayoutPublicComponent,
-    // canActivate: [rolesGuard],
+    canActivate: [rolesGuard],
     children: [
       {
         path: '',

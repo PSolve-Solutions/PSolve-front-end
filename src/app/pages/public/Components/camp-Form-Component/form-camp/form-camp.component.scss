@@ -62,3 +62,10 @@ section{
   // outline: #EF4A50 1px!important;
   border: #EF4A50 solid 1px!important;
 }
+@media screen and (max-width:640px) {
+  section .reg-form{
+    display: block;
+  }
+
+}
+
