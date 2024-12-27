@@ -15,8 +15,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionsHOCService } from '../../services/sessions-hoc.service';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actions-sessions',
@@ -27,7 +27,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class ActionsSessionsComponent implements OnInit {
   sessionsHOCService = inject(SessionsHOCService);
-  casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   router = inject(Router);
@@ -84,16 +84,25 @@ export class ActionsSessionsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+    const dataForm = {
+      ...this.sessionForm.value,
+      startDate: new Date(
+        this.sessionForm.get('startDate')?.value
+      ).toISOString(),
+      endDate: new Date(this.sessionForm.get('endDate')?.value).toISOString(),
+    };
+    console.log(dataForm);
     if (this.id === 0) {
-      this.sessionsHOCService.createSession(this.sessionForm.value).subscribe({
+      this.sessionsHOCService.actionsSession(dataForm).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/sessions']);
             this.isLoading = false;
             this.toastr.error(message);
-
+            this.isLoading = false;
+          } else if (statusCode === 400) {
+            this.toastr.error(message);
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);
@@ -111,16 +120,14 @@ export class ActionsSessionsComponent implements OnInit {
         },
       });
     } else {
-      this.sessionsHOCService.updateSession(this.sessionForm.value).subscribe({
+      this.sessionsHOCService.updateSession(dataForm).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/sessions']);
             this.isLoading = false;
           } else if (statusCode === 400) {
             this.toastr.error(message);
-
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);

@@ -1,18 +1,24 @@
-<div class="relative w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
-  <div class="flex flex-col px-12 py-8 bg-white rounded-xl">
-    <h2 class="pb-6 text-3xl font-bold border-b-2 ps-8">Staff Members</h2>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Staff members
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Staff members
+  </h1>
 
-    <form
-      [formGroup]="searchForm"
-      class="flex items-center justify-between px-2 my-6"
-    >
+  <div class="flex flex-col space-y-10">
+    <form class="flex items-center justify-between px-2">
       <div class="relative w-full">
         <input
-          class="w-[350px] px-3 py-2.5 pl-10 leading-tight text-gray-800 transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-gray-400 focus:outline-none focus:ring-mainblue focus:border-mainblue focus:shadow-outline"
-          id="searchInput"
-          formControlName="searchInput"
+          class="lg:w-[350px] md:w-60 w-52 px-3 py-2.5 pl-10 leading-tight text-mainColor1 font-semibold transition-colors ring-1 ring-gray-300 rounded-lg appearance-none hover:ring-mainColor1 focus:outline-none focus:ring-mainColor1 focus:mainColor1 focus:shadow-outline"
           type="text"
-          (keyup)="onSearchInput($event)"
+          #search
+          (keyup)="onSearchInput(search.value)"
           placeholder="Search for staff"
         />
 
@@ -38,12 +44,11 @@
           [closeOnSelect]="true"
           bindLabel="name"
           bindValue="id"
-          formControlName="sortNumber"
-          (change)="sortStaff($event)"
+          (change)="sortBy($event)"
           placeholder="Sort By"
           (open)="focusSelect()"
           (close)="blurSelect()"
-          class="relative block w-40 h-10 my-2 !text-white appearance-none rounded-xl !placeholder:text-white bg-mainblue cursor-none focus:outline-none"
+          class="relative block md:w-40 w-32 h-10 my-2 !text-white appearance-none rounded-xl !placeholder:text-white bg-mainColor1 cursor-none focus:outline-none"
         >
           <ng-option [value]="0">Faculty</ng-option>
           <ng-option [value]="1">Year</ng-option>
@@ -52,7 +57,7 @@
         <svg
           width="24"
           height="24"
-          class="absolute top-[14px] left-32 text-white transition-transform"
+          class="absolute top-[14px] md:left-32 left-24 text-white transition-transform"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -68,121 +73,208 @@
         </svg>
       </div>
     </form>
-  </div>
+    <div class="flex flex-col">
+      <div class="overflow-x-auto rounded-lg">
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead class="text-[13px] md:text-base font-semibold bg-[#DEDFE1]">
+            <tr>
+              <th class="p-4 text-left truncate">Name</th>
+              <th class="hidden p-4 lg:table-cell">E-mail</th>
+              <th class="hidden p-4 lg:table-cell">Faculty</th>
+              <th class="p-4">Codeforces</th>
+              <th class="hidden p-4 lg:table-cell">Year</th>
+              <th class="flex items-center justify-center p-4">
+                <svg
+                  class="size-5 pt-0.5"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.62109 3.95312L13.6678 7.99979L9.62109 12.0465"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.33203 8H13.552"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (!isLoading()) { @for (row of allStaffInfo.data; track i; let i
+            = $index; let first = $first) {
 
-  @if( isLoading()) {
-  <div class="fixed z-50 top-[60%] left-[50%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
-    </div>
-  </div>
-  } @else {
-  <table class="relative min-w-full text-center">
-    <thead>
-      <tr class="bg-transparent text-[#6B7088] text-lg">
-        <th class="px-4 py-2">Name</th>
-
-        <th class="px-4 py-2">E-mail</th>
-        <th class="px-4 py-2">Faculty</th>
-        <th class="px-4 py-2">Year</th>
-        <th class="px-4 py-2">Codeforces</th>
-        <th class="flex items-center justify-center px-4 py-2">
-          <svg
-            width="24"
-            height="17"
-            viewBox="0 0 24 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.4297 4.04297L20.4997 8.1816L14.4297 12.3202"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M3.5 8.18164H20.33"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      @for (item of allStaffInfo.data; track $index) {
-      <tr
-        class="my-6 text-base font-medium text-center text-black bg-white rounded-lg"
-      >
-        <td class="px-4 py-2 rounded-s-lg">
-          {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
-        </td>
-        <td class="px-4 py-2">{{ item.email }}</td>
-        <td class="px-4 py-2">{{ item.college }}</td>
-        <td class="px-4 py-2">{{ item.grade }}</td>
-        <td class="px-4 py-2">
-          <span>
-            <a
-              [href]="'https://codeforces.com/profile/' + item.codeForceHandle"
-              target="_blank"
-              class="hover:text-activeLink"
-              >{{ item.codeForceHandle }}</a
+            <tr
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+              [class.border-t-8]="first"
             >
-          </span>
-        </td>
-        <td
-          (click)="showSideBar(item.id)"
-          class="px-4 py-2 cursor-pointer rounded-e-lg"
+              <td class="px-4 py-2 text-left whitespace-nowrap">
+                {{ row.firstName }} {{ row.middleName }} {{ row.lastName }}
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ row.email }}
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">{{ row.college }}</td>
+              <td class="px-4 py-2">
+                <span>
+                  <a
+                    [href]="
+                      'https://codeforces.com/profile/' + row.codeForceHandle
+                    "
+                    target="_blank"
+                    class="hover:text-activeLink"
+                    >{{ row.codeForceHandle }}</a
+                  >
+                </span>
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ row.grade }}
+              </td>
+              <td
+                (click)="showSideBar(row.id)"
+                class="flex items-center justify-center p-4 cursor-pointer"
+              >
+                <svg
+                  class="transition-transform size-5 hover:scale-125"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.62109 3.95312L13.6678 7.99979L9.62109 12.0465"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.33203 8H13.552"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </td>
+            </tr>
+            } }@else { @for ( i of [1, 2, 3]; track i) {
+            <tr class="border-b-8 animate-pulse border-mainColor4">
+              <td class="hidden px-4 py-2 text-left lg:block">
+                <div class="w-40 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="px-4 py-2 text-center md:ps-16">
+                <div class="h-5 rounded w-28 md:w-40 bg-mainColor3"></div>
+              </td>
+              <td class="hidden px-4 py-2 text-center md:ps-16 lg:block">
+                <div class="h-5 rounded w-28 md:w-36 bg-mainColor3"></div>
+              </td>
+              <td class="px-4 py-2 text-center md:w-36 md:ps-10">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="hidden px-4 py-2 text-center lg:block md:w-36 md:ps-8">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center pe-4 ps-10">
+                <div class="w-8 h-8 rounded bg-mainColor3"></div>
+              </td>
+            </tr>
+            } }
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
+        [class.mt-4]="!isLoading() ? allStaffInfo.data.length === 0 : 0"
+      >
+        <button
+          class="px-6 py-[10px] rounded-tl rounded-bl shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
         >
           <svg
-            class="flex justify-center w-full hover:text-green-500 hover:scale-125 transition-all size-5 text-[#6B7088]"
-            viewBox="0 0 24 17"
+            width="8"
+            height="11"
+            class="rotate-180"
+            viewBox="0 0 8 11"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M14.4297 4.04297L20.4997 8.1816L14.4297 12.3202"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M3.5 8.18164H20.33"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+              fill="#002C3D"
             />
           </svg>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-  }
+        </button>
 
+        @for (page of pages; track $index) {
+        <button
+          class="px-6 py-1.5 shadow"
+          [ngClass]="
+            currentPage === page
+              ? 'bg-mainColor1 text-mainColor4 font-bold'
+              : 'bg-mainColor4 hover:bg-gray-100'
+          "
+          (click)="changePage(page)"
+        >
+          {{ page }}
+        </button>
+        } @if ( showEllipsis ) {
+        <span class="px-6 py-1.5">...</span>
+        } @if (showLastPage) {
+        <button
+          class="px-6 py-1.5 shadow bg-mainColor4 hover:bg-gray-100"
+          (click)="changePage(totalPages)"
+        >
+          {{ totalPages }}
+        </button>
+        }
+        <button
+          class="px-6 py-[10px] rounded-tr rounded-br shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="currentPage === totalPages"
+          (click)="changePage(currentPage + 1)"
+        >
+          <svg
+            width="8"
+            height="11"
+            viewBox="0 0 8 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+              fill="#002C3D"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
   <div
     (click)="handleOverlayClick($event)"
     [ngClass]="{
-      ' bg-black bg-opacity-50 visible': showSideInfo,
+      ' bg-mainColor1 bg-opacity-50 visible': showSideInfo,
       'invisible cursor-default': !showSideInfo && hideSideInfo
     }"
     class="flex z-[1200] items-center fixed justify-end inset-0 !m-0"
   >
     <div
-      [ngClass]="showSideInfo ? 'translate-x-0' : 'translate-x-full'"
-      class="relative flex flex-col overflow-y-auto custom-scrollbar-side bg-[#323232] items-center h-screen w-[450px] p-6 transition-transform duration-700 ease-in-out shadow-lg rounded-tl-lg rounded-bl-lg"
+      [ngClass]="showSideInfo ? 'translate-x-0 ' : 'translate-x-full'"
+      class="relative flex right-3 md:right-0 max-h-[85vh] rounded-lg md:rounded-tl-lg md:rounded-bl-lg mt-[4.5rem] md:mt-0 md:max-h-full flex-col overflow-y-auto font-semibold custom-scrollbar-side bg-mainColor1 items-center text-mainColor4 h-screen md:w-[450px] w-[350px] p-6 transition-transform duration-700 ease-in-out shadow-lg"
     >
       <span
         (click)="handleClose()"
@@ -533,42 +625,3 @@
     </div>
   </div>
 </div>
-@if (!isLoading()) {
-<div class="relative bottom-0 flex justify-center items-center py-1.5 bg-white">
-  <div class="flex items-center justify-center">
-    @if (allStaffInfo.totalPages !== 0) {
-    <button
-      type="button"
-      class="py-2 text-lg font-semibold pe-4 disabled:cursor-not-allowed text-activeLink"
-      (click)="previousPage()"
-      [disabled]="!allStaffInfo.hasPreviousPage"
-    >
-      Previous
-    </button>
-    }
-    <div class="flex items-center space-x-2">
-      @for (page of getPageRange(); track page; let i = $index) {
-      <button
-        class="px-3 py-1 font-bold rounded-tr-lg rounded-bl-lg rounded-br-lg text-activeLink"
-        (click)="gotoPage(page)"
-        [class.bg-[#3d91c7]]="page === allStaffInfo.currentPage"
-        [class.text-white]="page === allStaffInfo.currentPage"
-      >
-        {{ page }}
-      </button>
-      }
-    </div>
-    @if (allStaffInfo.totalPages !== 0) {
-
-    <button
-      type="button"
-      class="p-2 text-lg font-semibold text-activeLink"
-      (click)="nextPage()"
-      [disabled]="!allStaffInfo.hasNextPage"
-    >
-      Next
-    </button>
-    }
-  </div>
-</div>
-}

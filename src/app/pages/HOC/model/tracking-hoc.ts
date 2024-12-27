@@ -38,7 +38,7 @@ export interface TasksData {
   endTime: string;
 }
 
-export interface RootSheet {
+export interface Root {
   currentPage: number;
   totalPages: number;
   totalCount: number;
@@ -48,11 +48,11 @@ export interface RootSheet {
   statusCode: number;
   isSuccess: boolean;
   message: any;
-  data: DataSheet[];
+  data: Data[];
   errors: any;
 }
 
-export interface DataSheet {
+export interface Data {
   id: string;
   firstName: string;
   lastName: string;
@@ -62,6 +62,7 @@ export interface DataSheet {
 
 export interface Tracking {
   sheetId: number;
+  contestId: number;
   solvedCount: number;
 }
 export interface Names {

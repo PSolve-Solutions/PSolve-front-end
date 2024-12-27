@@ -1,0 +1,321 @@
+<!-- [ngClass]="isShow ? 'w-[250px] rounded-tr-3xl rounded-br-3xl' : 'w-[90px]'" -->
+<div
+  class="font-montserrat h-full fixed transition-width duration-500 overflow-x-hidden inset-y-0 start-0 z-[20] bg-mainColor1 text-mainColor4"
+  [ngClass]="
+    ocSidebarService.isOpen() === 'hide'
+      ? 'w-0'
+      : ocSidebarService.isOpen() === 'show'
+      ? 'w-[250px] rounded-tr-3xl rounded-br-3xl'
+      : 'w-[90px]'
+  "
+>
+  <div class="relative flex flex-col h-full max-h-full">
+    <div
+      class="relative invisible px-5 border-b md:visible py-14 border-subColor1"
+    >
+      <a routerLink="/" class="flex items-center justify-center w-full">
+        <img
+          [src]="
+            ocSidebarService.isOpen() === 'show'
+              ? 'assets/img/logo.png'
+              : 'assets/img/logosm.png'
+          "
+          alt="PSoveLogo"
+          loading="lazy"
+          [ngClass]="ocSidebarService.isOpen() === 'show' ? 'w-32 h-11' : ''"
+        />
+      </a>
+      <button
+        type="button"
+        (click)="show()"
+        class="px-1.5 py-[14px] border absolute top-0 right-0 rounded-tl-full rounded-bl-full flex justify-center items-center border-subColor1 bg-subColor1 hover:bg-subColor2 transition-colors"
+      >
+        <svg
+          class="transition-transform duration-500 w-[16px] h-[12px]"
+          [class.rotate-180]="ocSidebarService.isOpen() === 'show'"
+          viewBox="0 0 15 11"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13.81 4.88057H6.12002L8.05003 2.95058C8.44003 2.56058 8.44003 1.93055 8.05003 1.54055C7.66003 1.15055 7.03003 1.15055 6.64003 1.54055L4.00003 4.18056C2.87003 5.31056 2.81003 6.28054 4.00003 7.47054L6.64003 10.1106C7.03003 10.5006 7.66003 10.5006 8.05003 10.1106C8.44003 9.72055 8.44003 9.09058 8.05003 8.70058L6.11003 6.77059H13.8C14.32 6.77059 14.74 6.35059 14.74 5.83059C14.74 5.31059 14.32 4.89058 13.8 4.89058L13.81 4.88057Z"
+            fill="#F7F8F3"
+          />
+          <path
+            d="M1.19 0.919922C0.670002 0.919922 0.25 1.33992 0.25 1.85992V9.76996C0.25 10.29 0.670002 10.71 1.19 10.71C1.71 10.71 2.13 10.29 2.13 9.76996V1.85992C2.13 1.33992 1.71 0.919922 1.19 0.919922Z"
+            fill="#F7F8F3"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="h-full mt-12 overflow-x-hidden overflow-y-auto text-sm font-semibold ps-3 pe-4"
+    >
+      @if (roles.includes('Admin')) {
+      <nav class="flex flex-col w-full gap-y-8 ps-1">
+        <ul
+          class="flex flex-col"
+          [class.items-center]="ocSidebarService.isOpen() === 'semi'"
+        >
+          <li
+            class="mb-2 font-bold"
+            [ngClass]="
+              ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
+            "
+          >
+            {{
+              ocSidebarService.isOpen() === "show"
+                ? "ADMINISTRATORS"
+                : "ADMINIS"
+            }}
+          </li>
+          <li
+            (click)="hideSidebar()"
+            class="ps-1.5 flex items-center cursor-pointer group py-1.5 gap-x-1 px-2.5"
+          >
+            <div
+              routerLink="/psovle"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 border rounded-sm border-subColor1 peer transition-colors group-hover:bg-subColor2 bg-subColor1"
+            >
+              <svg
+                width="17"
+                height="19"
+                viewBox="0 0 17 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.1199 2.09968C10.2199 1.24968 9.01995 0.769664 7.77995 0.789664C6.44995 0.799664 5.20995 1.34967 4.30995 2.33967C3.56995 3.14967 3.12995 4.19966 3.06995 5.28966C2.99995 6.65966 3.49995 7.95967 4.45995 8.91967C5.35995 9.81967 6.54995 10.3097 7.80995 10.3197C9.03995 10.3197 10.23 9.84966 11.11 9.00966C12.06 8.09966 12.59 6.86967 12.59 5.55967C12.59 4.24967 12.06 3.01967 11.11 2.10967L11.1199 2.09968Z"
+                  fill="#F7F8F3"
+                />
+                <path
+                  d="M10.74 12.3804C10.86 12.0304 11.18 11.8504 11.5 11.7804C11.58 11.7604 11.59 11.6604 11.52 11.6204C11.27 11.4804 11.01 11.3504 10.74 11.2404C9.81004 10.8504 8.83004 10.6504 7.81004 10.6504C6.79004 10.6504 5.81004 10.8504 4.88004 11.2404C3.98004 11.6204 3.18004 12.1504 2.49004 12.8404C1.80004 13.5304 1.25004 14.3204 0.880039 15.2104C0.490039 16.1304 0.290039 17.1104 0.290039 18.1204C0.290039 18.2504 0.290039 18.3704 0.290039 18.5004C0.300039 18.7804 0.530038 19.0004 0.820038 19.0004H10.69C10.69 19.0004 10.75 18.9504 10.73 18.9204C10.62 18.7904 10.55 18.6504 10.55 18.4804C10.55 18.4804 10.55 18.4104 10.56 18.3704C10.58 18.3004 10.6 18.2404 10.61 18.1804C10.68 17.9404 10.69 17.9204 10.6 17.8304C10.54 17.7904 10.48 17.7704 10.38 17.7704C10.31 17.7704 10.23 17.7804 10.15 17.7904C10.07 17.8004 9.98004 17.8104 9.90004 17.8104C9.73004 17.8104 9.59004 17.7604 9.47004 17.6704C9.05004 17.3704 8.92004 16.7404 9.07004 16.3204C9.15004 16.0804 9.35004 15.9604 9.49004 15.8804C9.67004 15.7704 9.75004 15.7204 9.75004 15.5004C9.75004 15.4204 9.71004 15.3804 9.52004 15.2304C9.35004 15.1004 9.14004 14.9404 9.06004 14.6604C8.99004 14.4404 9.01004 14.1604 9.12004 13.9104C9.24004 13.6304 9.44004 13.4304 9.67004 13.3504C9.81004 13.3004 9.95004 13.2704 10.09 13.2704C10.2 13.2704 10.29 13.2804 10.37 13.2904C10.43 13.2904 10.48 13.3004 10.52 13.3004C10.6 13.3004 10.67 13.2404 10.69 13.1604C10.71 13.0704 10.72 12.9204 10.7 12.6604C10.7 12.6104 10.7 12.5604 10.7 12.5204C10.7 12.5204 10.7 12.4304 10.72 12.3804H10.74Z"
+                  fill="#F7F8F3"
+                />
+                <path
+                  d="M16.5797 14.4497C16.4897 14.0997 16.3997 13.8397 16.2297 13.7497C15.9597 13.6597 15.5297 14.0097 15.0897 13.7497C14.5697 13.3997 14.9097 12.8797 14.7397 12.5297C14.6597 12.3497 14.3097 12.1797 13.8697 12.1797C13.5197 12.6197 13.6097 12.8797 12.9097 12.8797C12.2097 12.7897 12.3797 12.1797 11.8597 12.1797C11.5997 12.1797 11.2497 12.2697 11.1597 12.5297C11.1597 12.7097 11.2497 13.3197 10.9897 13.5797C10.5497 13.9197 10.2897 13.5797 9.84973 13.7497C9.58973 13.8397 9.40973 14.2797 9.49973 14.5397C9.58973 14.8897 10.1997 14.9797 10.1997 15.4997C10.1997 16.1997 9.58973 16.1997 9.49973 16.4597C9.40973 16.7197 9.49973 17.1597 9.75973 17.3297C9.93973 17.4997 10.4597 17.1497 10.8997 17.4997C11.2497 17.8497 11.0797 18.1097 10.9897 18.4597C10.9897 18.7197 11.5997 18.9797 11.9497 18.9797C12.2997 18.9797 12.2997 18.2797 12.9997 18.2797C13.5297 18.2797 13.5297 18.6297 13.7897 18.8897C13.9597 19.0697 14.4897 18.7997 14.7497 18.6297C14.9197 18.4597 14.5797 18.1097 14.7497 17.6697C14.8397 17.4897 15.0197 17.4097 15.1897 17.3197C15.4497 17.2297 15.7997 17.3197 16.0597 17.3197C16.3197 17.2397 16.4097 16.6197 16.4097 16.4497C16.3197 16.1797 15.7997 16.2697 15.7097 15.6597C15.6197 14.8697 16.4097 14.9597 16.5797 14.4497ZM13.0197 17.0097C12.2397 17.0097 11.5997 16.3797 11.5997 15.5897C11.5997 14.7997 12.2297 14.1697 13.0197 14.1697C13.8097 14.1697 14.4397 14.7997 14.4397 15.5897C14.4397 16.3797 13.8097 17.0097 13.0197 17.0097Z"
+                  fill="#78BDC4"
+                />
+              </svg>
+            </div>
+
+            <h3
+              routerLink="/psovle"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 w-full border rounded-sm border-subColor1 bg-subColor1 peer group-hover:bg-subColor2 transition-colors"
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              Admins
+            </h3>
+          </li>
+        </ul>
+        <ul
+          class="flex flex-col"
+          [class.items-center]="ocSidebarService.isOpen() === 'semi'"
+        >
+          <li
+            class="mb-2 font-bold"
+            [ngClass]="
+              ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
+            "
+          >
+            {{ ocSidebarService.isOpen() === "show" ? "Clients" : "CLIENTS" }}
+          </li>
+          <li
+            class="ps-1.5 cursor-pointer flex group items-center py-1.5 gap-x-1 px-2.5"
+          >
+            <div
+              (click)="hideSidebar()"
+              routerLink="clients"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 border rounded-sm border-subColor1 peer group-hover:bg-subColor2 transition-colors bg-subColor1"
+            >
+              <svg
+                width="15"
+                height="19"
+                viewBox="0 0 15 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.49944 9.42017C6.24944 9.42017 5.06945 8.93017 4.17945 8.04017C3.22945 7.09017 2.72944 5.80017 2.79944 4.45017C2.85944 3.36017 3.28944 2.33016 4.02944 1.53016C4.91944 0.550158 6.14944 0.0101597 7.45944 0.000159675C8.68944 -0.00984032 9.87944 0.450147 10.7594 1.30015C11.6994 2.20015 12.2294 3.42016 12.2294 4.72016C12.2294 6.02016 11.7094 7.24017 10.7594 8.14017C9.87944 8.98017 8.69944 9.44016 7.48944 9.44016L7.49944 9.42017Z"
+                  fill="#F7F8F3"
+                />
+                <path
+                  d="M14.4298 18.01H0.569805C0.289805 18.01 0.0698047 17.79 0.0498047 17.52C0.0498047 17.39 0.0498047 17.27 0.0498047 17.14C0.0498047 16.14 0.249805 15.17 0.639805 14.26C1.0198 13.38 1.5498 12.59 2.2398 11.91C2.9198 11.23 3.71981 10.7 4.60981 10.33C5.52981 9.94999 6.5098 9.75 7.5098 9.75C8.5098 9.75 9.48981 9.94999 10.4098 10.33C11.2998 10.7 12.0998 11.23 12.7798 11.91C13.4698 12.59 13.9998 13.38 14.3798 14.26C14.7698 15.17 14.9698 16.14 14.9698 17.14C14.9698 17.27 14.9698 17.39 14.9698 17.52C14.9598 17.8 14.7298 18.01 14.4498 18.01H14.4298Z"
+                  fill="#F7F8F3"
+                />
+              </svg>
+            </div>
+
+            <h3
+              routerLink="clients"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 w-full border rounded-sm border-subColor1 bg-subColor1 group-hover:bg-subColor2 peer transition-colors"
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              Clients
+            </h3>
+          </li>
+        </ul>
+        <ul
+          class="flex flex-col"
+          [class.items-center]="ocSidebarService.isOpen() === 'semi'"
+        >
+          <li
+            class="mb-2 font-bold"
+            [ngClass]="
+              ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
+            "
+          >
+            {{
+              ocSidebarService.isOpen() === "show" ? "University" : "UNIVERSITY"
+            }}
+          </li>
+          <li
+            class="ps-1.5 cursor-pointer flex group items-center py-1.5 gap-x-1 px-2.5"
+          >
+            <div
+              routerLink="university"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 border rounded-sm border-subColor1 peer group-hover:bg-subColor2 transition-colors bg-subColor1"
+            >
+              <svg
+                width="18"
+                height="17"
+                viewBox="0 0 18 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 0L8.6715 0.160994L1.17225 3.76757L0.75 3.97414V5.23784H17.25V3.97414L16.8278 3.76757L9.32775 0.160994L9 0ZM9 1.65405L13.4062 3.76757H4.59375L9 1.65405ZM2.25 5.97297V13.3243H1.5V14.7946H16.5V13.3243H15.75V5.97297H14.25V13.3243H12.75V5.97297H11.25V13.3243H9.75V5.97297H8.25V13.3243H6.75V5.97297H5.25V13.3243H3.75V5.97297H2.25ZM0 15.5297V17H18V15.5297H0Z"
+                  fill="#F7F8F3"
+                />
+              </svg>
+            </div>
+
+            <h3
+              routerLink="university"
+              routerLinkActive="activeLink"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="p-1.5 w-full border rounded-sm border-subColor1 bg-subColor1 group-hover:bg-subColor2 peer transition-colors"
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              University
+            </h3>
+          </li>
+        </ul>
+      </nav>
+      }@else { @if (currentPath.includes('leader')) {
+      <nav class="flex flex-col flex-wrap w-full ps-3">
+        <ul class="flex flex-col">
+          @for (item of leaderLinks; track item.icon) {
+          <li
+            (click)="hideSidebar()"
+            class="flex items-center cursor-pointer py-1.5 gap-x-3.5 px-2.5 text-xl font-semibold text-mainColor4 hover:text-activeLink transition-colors"
+            [routerLink]="item.link"
+            routerLinkActive="activeLinkLeader"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ariaCurrentWhenActive="page"
+          >
+            <div [innerHTML]="item.icon"></div>
+            <h3
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              {{ item.name }}
+            </h3>
+          </li>
+          }
+        </ul>
+      </nav>
+      }@else {
+      <nav class="flex flex-col flex-wrap w-full ps-3">
+        <ul class="flex flex-col">
+          @for (item of hocLinks; track item.icon) {
+          <li
+            (click)="hideSidebar()"
+            class="flex items-center cursor-pointer py-1.5 gap-x-3.5 px-2.5 text-xl font-semibold text-mainColor4 hover:text-activeLink transition-colors"
+            [routerLink]="item.link"
+            routerLinkActive="activeLinkLeader"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ariaCurrentWhenActive="page"
+          >
+            <div [innerHTML]="item.icon"></div>
+            <h3
+              [ngClass]="
+                ocSidebarService.isOpen() === 'show' ? 'block' : 'hidden'
+              "
+            >
+              {{ item.name }}
+            </h3>
+          </li>
+          }
+        </ul>
+      </nav>
+      } }
+    </div>
+    <button
+      type="button"
+      (click)="authService.logout()"
+      class="flex items-center justify-center w-full mb-8 group gap-x-3"
+    >
+      <div
+        class="p-1.5 transition-colors border rounded-sm border-subColor1 bg-subColor1 group-hover:bg-subColor2 peer"
+      >
+        <svg
+          width="18"
+          height="19"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.5625 5.28594C5.75625 3.03594 6.9125 2.11719 9.44375 2.11719H9.525C12.3187 2.11719 13.4375 3.23594 13.4375 6.02969V10.1047C13.4375 12.8984 12.3187 14.0172 9.525 14.0172H9.44375C6.93125 14.0172 5.775 13.1109 5.56875 10.8984"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9.3752 8.06055H2.2627"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M3.65625 5.9668L1.5625 8.06055L3.65625 10.1543"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      @if (ocSidebarService.isOpen() === 'show') {
+      <h4 class="text-lg">Logout</h4>
+      }
+    </button>
+  </div>
+</div>

@@ -1,106 +1,86 @@
 <div
-  class="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-50"
+  class="flex flex-col justify-start w-full h-full mt-20 font-montserrat md:ps-6 md:pe-8"
 >
-  <!-- Logo Section -->
-  <img
-    src="./../../../../assets/img/IcpcLogo.svg"
-    alt="Logo"
-    loading="lazy"
-    class="block w-[300px]"
-  />
-  <div class="bg-[#337CAA] rounded-[12px] px-3 py-2 my-4">
-    <svg
-      width="80"
-      height="80"
-      viewBox="0 0 80 80"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M34.9672 7.4332L18.3339 13.6999C14.5005 15.1332 11.3672 19.6665 11.3672 23.7332V48.4999C11.3672 52.4332 13.9672 57.5999 17.1339 59.9665L31.4672 70.6665C36.1672 74.1999 43.9005 74.1999 48.6005 70.6665L62.9339 59.9665C66.1005 57.5999 68.7005 52.4332 68.7005 48.4999V23.7332C68.7005 19.6332 65.5672 15.0999 61.7339 13.6665L45.1005 7.4332C42.2672 6.39987 37.7339 6.39987 34.9672 7.4332Z"
-        stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+  <div class="flex flex-col mb-6 w-fit">
+    <h1 class="text-2xl font-extrabold md:text-3xl text-mainColor1">
+      Enter your code
+    </h1>
+    <p class="mt-2 text-lg font-semibold md:text-xl text-mainColor1">
+      OTP has been sent to {{ email }}
+    </p>
+  </div>
+  <!-- [formGroup]="emailForm"
+  (ngSubmit)="findEmail()" -->
+  <form class="flex flex-col items-center justify-center w-full gap-3">
+    <div class="bg-[#337CAA] self-center rounded-[12px] px-3 py-2 my-4">
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 80 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M34.9672 7.4332L18.3339 13.6999C14.5005 15.1332 11.3672 19.6665 11.3672 23.7332V48.4999C11.3672 52.4332 13.9672 57.5999 17.1339 59.9665L31.4672 70.6665C36.1672 74.1999 43.9005 74.1999 48.6005 70.6665L62.9339 59.9665C66.1005 57.5999 68.7005 52.4332 68.7005 48.4999V23.7332C68.7005 19.6332 65.5672 15.0999 61.7339 13.6665L45.1005 7.4332C42.2672 6.39987 37.7339 6.39987 34.9672 7.4332Z"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+    <div class="flex mb-4 space-x-2">
+      <input
+        [disabled]="isLoading()"
+        #input1
+        type="number"
+        (focus)="empty(input1)"
+        (keyup)="moveToNext($event, input2)"
+        #a
+        max="9"
+        min="0"
+        class="border focus:outline-0 border-[#e1e4e4] rounded-lg focus:ring-2 focus:ring-subColor1 text-center text-mainColor1 font-semibold bg-[#eef3f3] py-3 px-2 text-xl"
       />
-    </svg>
-  </div>
-
-  <!-- Title Section -->
-  <h2 class="text-xl font-semibold mb-2">Enter your code</h2>
-  <p class="text-gray-600 mb-6">
-    OTP has been sent to
-    <span class="font-semibold text-black">{{ this.email }}</span>
-  </p>
-
-  <!-- OTP Input Section -->
-  <div class="flex space-x-2 mb-4">
-    <input 
-    [disabled] = 'isLoading'
-      #input1
-      type="number"
-      (focus)="empty(input1)"
-      (keyup)="moveToNext($event, input2)"
-      #a
-      max="9"
-      min="0"
-      class="w-12 h-12 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 " style="-webkit-appearance: none;"
-    />
-    <input 
-    [disabled] = 'isLoading'
-      #input2
-      type="number"
-      (focus)="empty(input2)"
-      (keyup)="moveToNext($event, input3)"
-      #b
-      max="9"
-      min="0"
-      class="w-12 h-12 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-    <input 
-    [disabled] = 'isLoading'
-    [maxLength]="1"
-    (focus)="empty(input3)"
-      #input3
-      type="number"
-      (keyup)="moveToNext($event, input4)"
-      #c
-      max="9"
-      min="0"
-      class="w-12 h-12 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-    <input 
-    [disabled] = 'isLoading'
-      #input4
-      (focus)="empty(input4)"
-      type="number"
-      #d
-      (keyup)="get(email, a.value + b.value + c.value + d.value)"
-      max="9"
-      min="0"
-      class="w-12 h-12 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-  </div>
-  <div *ngIf="check" class="text-[#DC3545] text-center text-sm mt-3">
-    incorrect OTP
-  </div>
-  <div *ngIf="len" class="text-[#DC3545] text-center text-sm mt-3">
-    The OTP is at least 4 numbers
-  </div>
-  <!-- <button
-    (click)="get(email, a.value + b.value + c.value + d.value)"
-    class="flex justify-center items-center text-white px-6 py-2 text-center rounded-xl mt-5 mb-1 bg-gradient-to-r from-[#3D91C7] via-[#3591C9] to-[#63ABFD]"
-  >
-    @if (isLoading) {
-    <img
-      class="w-8 h-8 animate-spin text-purple-950"
-      src="https://www.svgrepo.com/show/474682/loading.svg"
-      alt="Loading icon"
-      loading="lazy"
-    />
-    } @else { Send OTP }
-  </button> -->
-  @if (isLoading) {
+      <input
+        [disabled]="isLoading()"
+        #input2
+        type="number"
+        (focus)="empty(input2)"
+        (keyup)="moveToNext($event, input3)"
+        #b
+        max="9"
+        min="0"
+        class="border focus:outline-0 border-[#e1e4e4] rounded-lg focus:ring-2 focus:ring-subColor1 text-center text-mainColor1 font-semibold bg-[#eef3f3] py-3 px-2 text-xl"
+      />
+      <input
+        [disabled]="isLoading()"
+        [maxLength]="1"
+        (focus)="empty(input3)"
+        #input3
+        type="number"
+        (keyup)="moveToNext($event, input4)"
+        #c
+        max="9"
+        min="0"
+        class="border focus:outline-0 border-[#e1e4e4] rounded-lg focus:ring-2 focus:ring-subColor1 text-center text-mainColor1 font-semibold bg-[#eef3f3] py-3 px-2 text-xl"
+      />
+      <input
+        [disabled]="isLoading()"
+        #input4
+        (focus)="empty(input4)"
+        type="number"
+        #d
+        (keyup)="checkResetOtp(email, a.value + b.value + c.value + d.value)"
+        max="9"
+        min="0"
+        class="border focus:outline-0 border-[#e1e4e4] rounded-lg focus:ring-2 focus:ring-subColor1 text-center text-mainColor1 font-semibold bg-[#eef3f3] py-3 px-2 text-xl"
+      />
+    </div>
+    @if (check) {
+    <div class="text-[#DC3545] text-center text-lg font-semibold">
+      Otp is incorrect.
+    </div>
+    } @if (isLoading()) {
     <img
       class="w-8 h-8 animate-spin text-purple-950"
       src="https://www.svgrepo.com/show/474682/loading.svg"
@@ -108,9 +88,19 @@
       loading="lazy"
     />
     }
-  <!-- Resend Section -->
-  <p class="text-gray-600">
-    Don’t receive the email?
-    <a class="font-bold underline cursor-pointer" (click)="resend()">Resend</a>
-  </p>
+
+    <p class="flex items-center font-medium text-gray-600 gap-x-3">
+      Don’t receive the email?
+      <button type="button" class="font-bold underline" (click)="resend()">
+        @if (isLoadingResend) {
+        <img
+          class="w-8 h-8 animate-spin text-purple-950"
+          src="https://www.svgrepo.com/show/474682/loading.svg"
+          alt="Loading icon"
+          loading="lazy"
+        />
+        }@else { Resend }
+      </button>
+    </p>
+  </form>
 </div>

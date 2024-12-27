@@ -60,7 +60,7 @@ export class BarchartReportsComponent
         datasets: [
           {
             data: this.sheetsRates.map((item) => item.rate),
-            backgroundColor: '#3D91C7',
+            backgroundColor: '#002C3D',
             borderWidth: 1,
             borderRadius: {
               topLeft: 10,

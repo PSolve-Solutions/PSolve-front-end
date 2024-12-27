@@ -33,7 +33,7 @@ export class ProfileDetailsComponent implements OnInit {
   toastr = inject(ToastrService);
   router = inject(Router);
   fb = inject(FormBuilder);
-  isEditMode = false;
+  isEditMode: boolean = false;
   profileForm!: FormGroup;
   isLoading: boolean = false;
   allCollege: { id: number; name: string }[] = [];

@@ -57,9 +57,9 @@ export class LineChartComponent implements OnChanges, AfterViewInit, OnDestroy {
         datasets: [
           {
             data: this.contestRates.map((item) => item.rate),
-            borderColor: '#3D91C7',
-            pointBackgroundColor: '#3D91C7',
-            pointBorderColor: '#3D91C7',
+            borderColor: '#002C3D',
+            pointBackgroundColor: '#002C3D',
+            pointBorderColor: '#002C3D',
             pointRadius: 5,
             borderWidth: 1.5,
           },

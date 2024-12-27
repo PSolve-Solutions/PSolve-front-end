@@ -55,7 +55,7 @@
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
-  background-color: #3c8fc5 !important;
+  background-color: #285c6a !important;
   color: #fff !important;
 }
 
@@ -133,9 +133,10 @@
 
 .ng-select span.ng-value-label,
 .campName {
-  background-color: #3c8fc5;
+  background-color: #002c3d;
   color: white;
   padding: 4px 8px;
+  font-weight: 600;
   border-radius: 8px;
 }
 
@@ -175,6 +176,39 @@
     .toast-message {
       font-size: 20px;
       padding-right: 24px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #toast-container {
+    margin: 20px 0;
+
+    .toast-error,
+    .toast-success,
+    .toast-info,
+    .toast-warning {
+      display: flex;
+      min-width: 250px;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      width: fit-content;
+      padding: 6px 20px 6px 60px;
+      border-left-width: 10px;
+      box-shadow: none;
+      .toast-message {
+        font-size: 16px;
+        padding-right: 18px;
+      }
+    }
+    .toast-success,
+    .toast-warning,
+    .toast-error {
+      background-size: 28px !important;
+    }
+    .toast-close-button {
+      font-size: 30px;
     }
   }
 }

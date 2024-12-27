@@ -1,38 +1,29 @@
-import { RouterOutlet } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-log',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgClass,
-    RouterLink,
-  ],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './log.component.html',
   styleUrl: './log.component.scss',
 })
 export class LogComponent {
   authService = inject(AuthService);
+  toastr = inject(ToastrService);
   router = inject(Router);
   formBuilder = inject(FormBuilder);
   loginForm!: FormGroup;
   submitted = false;
   error: string = '';
-  userData: boolean = false;
   isLoading: boolean = false;
   passwordFieldType: string = 'password';
   password: string = '';
@@ -55,7 +46,6 @@ export class LogComponent {
     if (this.loginForm.invalid) {
       return;
     }
-    debugger;
     this.isLoading = true;
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: ({ statusCode, data, message }) => {
@@ -75,10 +65,13 @@ export class LogComponent {
           }
           this.isLoading = false;
           this.authService.setIsAuth(true);
+        } else if (statusCode === 400) {
+          this.toastr.error(message);
+          this.isLoading = false;
+          this.error = message;
+          this.authService.setIsAuth(false);
         } else {
           this.isLoading = false;
-          this.userData = true;
-
           this.error = message;
           this.authService.setIsAuth(false);
         }

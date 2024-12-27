@@ -1,0 +1,17 @@
+<app-main-sidebar />
+<div class="md:hidden">
+  <app-main-mobile-nav />
+</div>
+<div class="hidden md:block">
+  <app-main-navbar />
+</div>
+
+<main
+  style="min-height: calc(100vh - 80px)"
+  class="w-full mt-20 transition-all !font-montserrat duration-500 md:mt-0 ps-0 bg-mainColor4"
+  [ngClass]="os.isOpen() === 'show' ? 'md:ps-[250px]' : 'md:ps-[90px]'"
+>
+  <div class="px-2 py-4 md:p-6 lg:px-10 lg:py-6">
+    <router-outlet />
+  </div>
+</main>

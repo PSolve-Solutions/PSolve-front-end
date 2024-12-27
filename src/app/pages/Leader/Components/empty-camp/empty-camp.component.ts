@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { CampLeaderService } from '../../services/camp-leader.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-empty-camp',
@@ -17,6 +18,7 @@ import { CampLeaderService } from '../../services/camp-leader.service';
 })
 export class EmptyCampComponent {
   campLeaderService = inject(CampLeaderService);
+  toastr = inject(ToastrService);
   @Input() itemId: number | null = null;
   @Output() closeEmptyModal = new EventEmitter<boolean>();
   isLoading = signal<boolean>(false);
@@ -33,10 +35,11 @@ export class EmptyCampComponent {
   emptyItem(id: number) {
     this.isLoading.set(true);
     this.campLeaderService.emptyCamp(id).subscribe({
-      next: ({ statusCode, data, message }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           this.isLoading.update((v) => (v = false));
           this.isEmpty = true;
+          this.toastr.success(message);
         } else {
           this.isEmpty = false;
           this.isLoading.update((v) => (v = false));

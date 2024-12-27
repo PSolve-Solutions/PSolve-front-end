@@ -17,7 +17,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Form, FormFilter } from '../../model/requests';
+import { Form, FormFilter, FormFilterV } from '../../model/requests';
+import { RegisterationService } from '../../../public/Services/registeration.service';
+import { RequestsLeaderService } from '../../services/requests-leader.service';
 
 @Component({
   selector: 'app-system-filter',
@@ -28,7 +30,11 @@ import { Form, FormFilter } from '../../model/requests';
   encapsulation: ViewEncapsulation.None,
 })
 export class SystemFilterComponent implements OnInit {
-  @Input() filterValues: any;
+  requestsLeaderService = inject(RequestsLeaderService);
+  allCommunities: { id: string; clientName: string }[] = [];
+
+  @Input() codeforcesFilters: any;
+  @Input() vjudgeFilters: any;
   @Output() saveFilter = new EventEmitter<Form>();
   @Output() clickOutside = new EventEmitter<void>();
   elementRef = inject(ElementRef);
@@ -36,108 +42,231 @@ export class SystemFilterComponent implements OnInit {
   filterForm!: Form;
 
   ngOnInit() {
+    this.getAllCommunities();
     this.filterForm = this.fb.group({
-      filters: this.fb.array<FormFilter>([this.generateFilter()]),
+      filtersC: this.fb.array<FormFilter>([this.generateFilter()]),
+      filtersV: this.fb.array<FormFilterV>([this.generateFilterV()]),
     }) as Form;
-    if (this.filterValues) {
-      this.filterValues.push({
+
+    if (this.codeforcesFilters) {
+      this.codeforcesFilters.push({
         sheetId: '',
-        community: null,
+        communityId: null,
         passingPrecent: null,
       });
-      this.setSavedFilters(this.filterValues);
+      this.setSavedFilters(this.codeforcesFilters);
+    }
+
+    if (this.vjudgeFilters) {
+      this.vjudgeFilters.push({
+        sheetId: '',
+        problemCount: null,
+        passingPrecent: null,
+      });
+      this.setSavedFiltersV(this.vjudgeFilters);
     }
     this.updateLastRowValidation();
+    this.updateLastRowValidationV();
   }
 
   generateFilter(): FormFilter {
     return this.fb.group({
       sheetId: [''],
-      community: [null],
+      communityId: [null],
       passingPrecent: [null],
     }) as FormFilter;
   }
 
-  get filters(): FormArray<FormFilter> {
-    return this.filterForm.get('filters') as FormArray<FormFilter>;
+  get filtersC(): FormArray<FormFilter> {
+    return this.filterForm.get('filtersC') as FormArray<FormFilter>;
   }
   addFilter() {
-    this.filters.push(this.generateFilter());
+    this.filtersC.push(this.generateFilter());
     this.updateLastRowValidation();
   }
 
   removeFilter(index: number) {
-    this.filters.removeAt(index);
+    this.filtersC.removeAt(index);
     this.updateLastRowValidation();
   }
 
-  saveCustomFilter(): void {
-    const formData = this.filterForm.value?.filters ?? [];
-
-    this.filters.controls.forEach((control) => {
-      control.patchValue({
-        community: Number(control.get('community')?.value),
-        passingPrecent: Number(control.get('passingPrecent')?.value),
-      });
-    });
+  isEableToSave(): boolean {
+    const formData = this.filterForm.value?.filtersC ?? [];
+    const formDataV = this.filterForm.value?.filtersV ?? [];
     const rowHasValues = (row: any) => {
-      return row.sheetId || row.community || row.passingPrecent;
+      return row.sheetId && row.communityId && row.passingPrecent;
+    };
+    const rowHasValuesV = (row: any) => {
+      return row.sheetId || row.problemCount || row.passingPrecent;
+    };
+    const firstRow = formData[0];
+    const firstRowV = formDataV[0];
+    if (
+      rowHasValues(firstRow) &&
+      formData.length > 1 &&
+      !rowHasValuesV(firstRowV) &&
+      formDataV.length === 1
+    ) {
+      return false;
+    } else if (
+      !rowHasValues(firstRow) &&
+      formData.length === 1 &&
+      rowHasValuesV(firstRowV) &&
+      formDataV.length > 1
+    ) {
+      return false;
+    } else if (
+      rowHasValues(firstRow) &&
+      formData.length > 1 &&
+      rowHasValuesV(firstRowV) &&
+      formDataV.length > 1
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  saveCustomFilter(): void {
+    const formData = this.filterForm.value?.filtersC ?? [];
+    const formDataV = this.filterForm.value?.filtersV ?? [];
+    const rowHasValues = (row: any) => {
+      return row.sheetId || row.communityId || row.passingPrecent;
+    };
+    const rowHasValuesV = (row: any) => {
+      return row.sheetId || row.problemCount || row.passingPrecent;
     };
     const lastRow = formData[formData.length - 1];
-    if (formData.length > 1) {
+    const lastRowV = formDataV[formDataV.length - 1];
+    if (formData.length > 1 || formDataV.length > 1) {
       if (!rowHasValues(lastRow)) {
-        this.filters.removeAt(this.filters.length - 1);
-        this.saveFilter.emit(this.filterForm);
+        this.filtersC.removeAt(this.filtersC.length - 1);
       }
+
+      if (!rowHasValuesV(lastRowV)) {
+        this.filtersV.removeAt(this.filtersV.length - 1);
+      }
+
+      this.saveFilter.emit(this.filterForm);
+      return;
     }
 
     const firstRow = formData[0];
-    const hasMultipleRows = this.filters.length > 1;
+    const hasMultipleRows = this.filtersC.length > 1;
+    const firstRowV = formDataV[0];
+    const hasMultipleRowsV = this.filtersV.length > 1;
 
     if (!rowHasValues(firstRow)) {
-      this.filters.removeAt(this.filters.length - 1);
+      this.filtersC.removeAt(this.filtersC.length - 1);
       this.saveFilter.emit(this.filterForm);
     } else if (
       rowHasValues(firstRow) &&
       rowHasValues(lastRow) &&
       hasMultipleRows
     ) {
-      this.filters.removeAt(this.filters.length - 1);
+      this.filtersC.removeAt(this.filtersC.length - 1);
       this.saveFilter.emit(this.filterForm);
     } else {
       console.log('Form not submitted - only the first row has values');
+      return;
+    }
+    if (!rowHasValuesV(firstRowV)) {
+      this.filtersV.removeAt(this.filtersV.length - 1);
+      this.saveFilter.emit(this.filterForm);
+    } else if (
+      rowHasValuesV(firstRowV) &&
+      rowHasValuesV(lastRowV) &&
+      hasMultipleRowsV
+    ) {
+      this.filtersV.removeAt(this.filtersV.length - 1);
+      this.saveFilter.emit(this.filterForm);
+    } else {
+      console.log('Form not submitted - only the first row has valuesV');
     }
   }
 
   setSavedFilters(savedData: any[]) {
-    this.filters.clear();
+    this.filtersC.clear();
     savedData.forEach((filterData) => {
       const newFilter = this.generateFilter();
       newFilter.patchValue({
         sheetId: filterData.sheetId,
-        community: filterData.community,
+        communityId: filterData.communityId,
         passingPrecent: filterData.passingPrecent,
       });
-      this.filters.push(newFilter);
+      this.filtersC.push(newFilter);
     });
     this.updateLastRowValidation();
   }
 
   updateLastRowValidation() {
-    const length = this.filters.length;
-
-    this.filters.controls.forEach((filterGroup, index) => {
+    const length = this.filtersC.length;
+    this.filtersC.controls.forEach((filterGroup, index) => {
       if (index === length - 1) {
         filterGroup.get('sheetId')?.clearValidators();
-        filterGroup.get('community')?.clearValidators();
+        filterGroup.get('communityId')?.clearValidators();
         filterGroup.get('passingPrecent')?.clearValidators();
       } else {
         filterGroup.get('sheetId')?.setValidators([Validators.required]);
-        filterGroup.get('community')?.setValidators([Validators.required]);
+        filterGroup.get('communityId')?.setValidators([Validators.required]);
         filterGroup.get('passingPrecent')?.setValidators([Validators.required]);
       }
       filterGroup.get('sheetId')?.updateValueAndValidity();
-      filterGroup.get('community')?.updateValueAndValidity();
+      filterGroup.get('communityId')?.updateValueAndValidity();
+      filterGroup.get('passingPrecent')?.updateValueAndValidity();
+    });
+  }
+
+  //V
+  generateFilterV(): FormFilterV {
+    return this.fb.group({
+      sheetId: [''],
+      passingPrecent: [null],
+      problemCount: [null],
+    }) as FormFilterV;
+  }
+
+  get filtersV(): FormArray<FormFilterV> {
+    return this.filterForm.get('filtersV') as FormArray<FormFilterV>;
+  }
+  addFilterV() {
+    this.filtersV.push(this.generateFilterV());
+    this.updateLastRowValidationV();
+  }
+
+  removeFilterV(index: number) {
+    this.filtersV.removeAt(index);
+    this.updateLastRowValidationV();
+  }
+
+  setSavedFiltersV(savedData: any[]) {
+    console.log(savedData);
+    this.filtersV.clear();
+    savedData.forEach((filterData) => {
+      const newFilter = this.generateFilterV();
+      newFilter.patchValue({
+        sheetId: filterData.sheetId,
+        problemCount: filterData.problemCount,
+        passingPrecent: filterData.passingPrecent,
+      });
+      this.filtersV.push(newFilter);
+    });
+    this.updateLastRowValidationV();
+  }
+
+  updateLastRowValidationV() {
+    const length = this.filtersV.length;
+    this.filtersV.controls.forEach((filterGroup, index) => {
+      if (index === length - 1) {
+        filterGroup.get('sheetId')?.clearValidators();
+        filterGroup.get('problemCount')?.clearValidators();
+        filterGroup.get('passingPrecent')?.clearValidators();
+      } else {
+        filterGroup.get('sheetId')?.setValidators([Validators.required]);
+        filterGroup.get('problemCount')?.setValidators([Validators.required]);
+        filterGroup.get('passingPrecent')?.setValidators([Validators.required]);
+      }
+      filterGroup.get('sheetId')?.updateValueAndValidity();
+      filterGroup.get('problemCount')?.updateValueAndValidity();
       filterGroup.get('passingPrecent')?.updateValueAndValidity();
     });
   }
@@ -148,5 +277,20 @@ export class SystemFilterComponent implements OnInit {
     if (!clickedInside) {
       this.clickOutside.emit();
     }
+  }
+
+  getAllCommunities(): void {
+    this.requestsLeaderService.getCommunities().subscribe({
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.allCommunities = data;
+        } else {
+          console.log('error');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

@@ -2,25 +2,26 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ContestsHocService } from '../../services/contests-hoc.service';
 import { Contests } from '../../model/contests';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-contests-hoc',
   standalone: true,
-  imports: [DatePipe, ConfirmDeleteHocComponent],
+  imports: [DatePipe, ConfirmDeleteHocComponent, NgClass],
   templateUrl: './contests-hoc.component.html',
   styleUrl: './contests-hoc.component.scss',
 })
 export class ContestsHOCComponent implements OnInit {
   contestsHocService = inject(ContestsHocService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   router = inject(Router);
   allContests!: Contests;
   currentPage: number = 1;
   pageSize: number = 10;
-  keyword: string = '';
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
@@ -30,30 +31,28 @@ export class ContestsHOCComponent implements OnInit {
     this.getAllContests(this.currentPage, this.pageSize);
   }
 
-  getAllContests(
-    currentPage: number,
-    pageSize: number,
-    keyword?: string
-  ): void {
-    this.isLoading.set(true);
-    this.contestsHocService
-      .getAllContests(currentPage, pageSize, keyword)
-      .subscribe({
-        next: (res) => {
-          if (res.statusCode === 200) {
-            this.allContests = res;
-            this.dataRequest.push(this.allContests);
+  convertToLocal(date: string): string {
+    const localDate = new Date(date);
+    return localDate.toLocaleString('en-US', { hour12: false });
+  }
 
-            this.isLoading.update((v) => (v = false));
-          } else {
-            this.isLoading.update((v) => (v = false));
-          }
-        },
-        error: (err) => {
-          console.log(err);
+  getAllContests(currentPage: number, pageSize: number): void {
+    this.isLoading.set(true);
+    this.contestsHocService.getAllContests(currentPage, pageSize).subscribe({
+      next: (res) => {
+        if (res.statusCode === 200) {
+          this.allContests = res;
+          this.dataRequest.push(this.allContests);
           this.isLoading.update((v) => (v = false));
-        },
-      });
+        } else {
+          this.isLoading.update((v) => (v = false));
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading.update((v) => (v = false));
+      },
+    });
   }
 
   showConfirmDelete(id: number) {

@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, authGuardLoggdIn } from './authentication/guard/auth.guard';
 import { rolesGuard } from './authentication/guard/roles.guard';
-import { LayoutLeaderComponent } from './layouts/layout_leader/layout-leader.component';
 import { DashboardComponent } from './pages/Leader/screens/dashboard/dashboard.component';
 import { LayoutTraineeComponent } from './layouts/layout_trainee/layout-trainee.component';
 import { HomeTraineeComponent } from './pages/Trainee/screens/home-trainee/home-trainee.component';
@@ -24,14 +23,12 @@ import { TraineesLeaderComponent } from './pages/Leader/screens/trainees-leader/
 import { ArchiveLeaderComponent } from './pages/Leader/screens/archive-leader/archive-leader.component';
 import { SheetsTraineeComponent } from './pages/Trainee/screens/sheets-trainee/sheets-trainee.component';
 import { ContestTraineeComponent } from './pages/Trainee/screens/contest-trainee/contest-trainee.component';
-import { LoginLayoutComponent } from './layouts/login/login-layout/login-layout.component';
 
 import { ReportsLeaderComponent } from './pages/Leader/screens/reports-leader/reports-leader.component';
 import { RequestsLeaderComponent } from './pages/Leader/screens/requests-leader/requests-leader.component';
 
 import { StandingTraineeComponent } from './pages/Trainee/screens/standing-trainee/standing-trainee.component';
 
-import { HocLayoutComponent } from './layouts/hoc-layout/hoc-layout.component';
 import { ContestsHOCComponent } from './pages/HOC/screens/contests-hoc/contests-hoc.component';
 import { SessionsHOCComponent } from './pages/HOC/screens/sessions-hoc/sessions-hoc.component';
 import { ActionsContestsComponent } from './pages/HOC/screens/actions-contests/actions-contests.component';
@@ -52,20 +49,23 @@ import { LayoutPublicComponent } from './layouts/layout_public/layout-public.com
 import { HomePublicComponent } from './pages/public/screens/home-public/home-public.component';
 import { BlankComponent } from './pages/mentor/blank/blank.component';
 import { CampsPublicComponent } from './pages/public/screens/camps-public/camps-public.component';
-import { FormsCampsPublicComponent } from './pages/public/screens/forms-camps-public/forms-camps-public.component';
 
 import { LayoutProfileComponent } from './layouts/layout_profile/layout-profile/layout-profile.component';
 import { ProfileDetailsComponent } from './pages/leader_profile/screens/profile-details/profile-details.component';
 import { LeaderSettingsComponent } from './pages/leader_profile/screens/leader-settings/leader-settings.component';
 import { ProfileTraineeComponent } from './pages/trainee-profile/screens/profile-trainee/profile-trainee.component';
-import { MentorProfileComponent } from './pages/mentor-profile/mentor-profile.component';
 import { MentorsTrackingComponent } from './pages/HOC/screens/mentors-tracking/mentors-tracking.component';
 import { TraineeTrackingComponent } from './pages/HOC/screens/trainee-tracking/trainee-tracking.component';
-import { LayoutAdminComponent } from './layouts/layout_admin/layout-admin/layout-admin.component';
 import { AdminHomeComponent } from './pages/Admin/screens/admin-home/admin-home.component';
 import { AdminClientsComponent } from './pages/Admin/screens/admin-clients/admin-clients.component';
-import { AddAdminComponent } from './pages/Admin/screens/add-admin/add-admin.component';
-import { UpsertClientComponent } from './pages/Admin/screens/upsert-client/upsert-client.component';
+import { UpsertAdminComponent } from './pages/Admin/screens/upsert-admin/upsert-admin.component';
+import { ClientDetailsComponent } from './pages/Admin/screens/client-details/client-details.component';
+import { AddClientComponent } from './pages/Admin/screens/add-client/add-client.component';
+import { RegistrationTraineeComponent } from './authentication/screens/registration-trainee/registration-trainee.component';
+import { CommunityLeaderComponent } from './pages/Leader/screens/community-leader/community-leader.component';
+import { UniversityAdminComponent } from './pages/Admin/screens/university-admin/university-admin.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 export const routes: Routes = [
   // Trainee Pages
@@ -121,18 +121,20 @@ export const routes: Routes = [
         component: CampsPublicComponent,
         title: 'Camps - ICPC',
       },
-      {
-        path: 'registration',
-        component: FormsCampsPublicComponent,
-        title: 'Camps - ICPC',
-      },
     ],
+  },
+
+  {
+    path: 'registration',
+    // component: FormsCampsPublicComponent,
+    component: RegistrationTraineeComponent,
+    title: 'Apply Now - PSolve',
   },
 
   // Admin Routes
   {
     path: 'psovle',
-    component: LayoutAdminComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'PSolve',
     children: [
@@ -142,21 +144,34 @@ export const routes: Routes = [
         title: 'Admins - PSolve',
       },
       {
-        path: 'add-admin',
-        component: AddAdminComponent,
+        path: 'upsert-admin/:id',
+        component: UpsertAdminComponent,
         title: 'Admins / Add Admin - PSolve',
       },
       {
         path: 'clients',
         component: AdminClientsComponent,
         title: 'Clients - PSolve',
+      },
+      {
+        path: 'clients',
         children: [
           {
-            path: 'upsert-client',
-            component: UpsertClientComponent,
-            title: 'Clients / Actions Client - PSolve',
+            path: 'add-client',
+            component: AddClientComponent,
+            title: 'Clients / Add Client - PSolve',
+          },
+          {
+            path: 'client-details/:id',
+            component: ClientDetailsComponent,
+            title: 'Clients / Client Details - PSolve',
           },
         ],
+      },
+      {
+        path: 'university',
+        component: UniversityAdminComponent,
+        title: 'University - PSolve',
       },
     ],
   },
@@ -164,7 +179,7 @@ export const routes: Routes = [
   // Leader Routes
   {
     path: 'leader',
-    component: LayoutLeaderComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'Leader - ICPC',
     children: [
@@ -229,13 +244,18 @@ export const routes: Routes = [
         component: ArchiveLeaderComponent,
         title: 'Leader / Archive - ICPC',
       },
+      {
+        path: 'community',
+        component: CommunityLeaderComponent,
+        title: 'Leader / community - ICPC',
+      },
     ],
   },
 
   // HOC Pages
   {
     path: 'head_of_camp',
-    component: HocLayoutComponent,
+    component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
     title: 'HOC - Dashboard',
     children: [
@@ -378,31 +398,29 @@ export const routes: Routes = [
     path: 'login',
     component: LoginLayoutComponent,
     canActivate: [authGuardLoggdIn],
-    title: 'Login',
+    title: 'PSovle - Login',
     children: [
       {
         path: '',
         component: LogComponent,
-        title: 'Login',
+        title: 'PSovle - Login',
       },
       {
         path: 'forget',
         component: ForgetComponent,
-        title: 'Forget Password',
+        title: 'PSovle - Forget Password',
       },
       {
         path: 'set/:token/:email',
         component: SetpassComponent,
-        title: 'Reset Password',
+        title: 'PSovle - Reset Password',
+      },
+      {
+        path: 'otp/:email',
+        component: OtpComponent,
+        title: 'PSovle - OTP',
       },
     ],
-  },
-  {
-    path: 'otp/:email',
-    component: OtpComponent,
-    // canActivate: [authGuardLoggdIn],
-    title: 'OTP',
-    children: [],
   },
 
   // Profile Pages

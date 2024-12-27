@@ -1,15 +1,18 @@
 <form [formGroup]="filterForm" (ngSubmit)="saveCustomFilter()">
-  <div formArrayName="filters">
-    <table class="min-w-full border-collapse">
+  <div formArrayName="filtersC">
+    <h3 class="font-bold md:text-lg text-mainColor1">Codeforces Filter</h3>
+    <table
+      class="min-w-full overflow-x-auto text-sm border-collapse md:text-base"
+    >
       <thead>
         <tr>
-          <th class="px-6 pt-3 font-medium tracking-wider text-gray-700">
+          <th class="pt-3 font-medium tracking-wider text-mainColor1">
             Sheet ID
           </th>
-          <th class="px-3 pt-3 font-medium tracking-wider text-gray-700">
+          <th class="px-3 pt-3 font-medium tracking-wider text-mainColor1">
             Community
           </th>
-          <th class="px-6 pt-3 font-medium tracking-wider text-gray-700">
+          <th class="pt-3 font-medium tracking-wider text-mainColor1">
             Percentage
           </th>
           <th class="px-4 pt-2"></th>
@@ -17,19 +20,19 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let filter of filters.controls; let i = index"
+          *ngFor="let filter of filtersC.controls; let i = index"
           [formGroupName]="i"
         >
-          <td class="relative px-6 py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="text"
               formControlName="sheetId"
-              class="block w-32 pl-10 my-2 text-black bg-white rounded-lg ring-1 ring-gray-400 focus:outline-none focus:ring-activeLink"
+              class="block w-24 pl-6 my-2 text-black bg-white rounded md:pl-10 md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
             />
             <svg
-              width="12"
-              height="12"
-              class="absolute top-[26px] left-10"
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -51,22 +54,23 @@
             </svg>
           </td>
 
-          <td class="relative px-6 py-3">
+          <td class="relative w-32 py-3 ps-3 md:w-44 md:px-6">
             <ng-select
+              [items]="allCommunities"
               id="college"
               [closeOnSelect]="true"
-              bindLabel="name"
+              bindLabel="clientName"
               bindValue="id"
-              formControlName="community"
-              class="block w-32 h-6 pl-6 my-2 text-black bg-white rounded-lg ring-1 ring-gray-400 focus:outline-none focus:ring-activeLink"
+              formControlName="communityId"
+              class="flex items-center justify-center w-full pl-4 my-2 text-black bg-white rounded ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
             >
               <ng-option [value]="1">Sohag</ng-option>
               <ng-option [value]="2">Assiut</ng-option>
             </ng-select>
             <svg
-              width="12"
-              height="12"
-              class="absolute top-[26px] left-10"
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] md:left-8 left-4"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -88,16 +92,16 @@
             </svg>
           </td>
 
-          <td class="relative px-6 py-3">
+          <td class="relative flex justify-center py-3">
             <input
               type="number"
               formControlName="passingPrecent"
-              class="block w-32 pl-10 my-2 text-black bg-white rounded-lg ring-1 ring-gray-400 focus:outline-none focus:ring-activeLink"
+              class="block w-24 pl-6 my-2 text-black bg-white rounded md:pl-10 md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
             />
             <svg
-              width="12"
-              height="12"
-              class="absolute top-[26px] left-10"
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -135,20 +139,257 @@
 
           <td class="px-4 py-2">
             <button
-              *ngIf="i === filters.length - 1"
+              *ngIf="i === filtersC.length - 1"
               type="button"
               (click)="addFilter()"
-              class="px-3 py-1.5 text-white bg-[#52b788] rounded-sm"
+              class="p-1 text-white rounded-sm bg-subColor2"
             >
-              +
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 18V6"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </button>
             <button
-              *ngIf="filters.length > 1 && i !== filters.length - 1"
+              *ngIf="filtersC.length > 1 && i !== filtersC.length - 1"
               type="button"
               (click)="removeFilter(i)"
-              class="px-3 py-1.5 text-white bg-[#F1585B] rounded-sm"
+              class="p-1 text-white rounded-sm bg-mainColor2"
             >
-              -
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div formArrayName="filtersV">
+    <h3 class="font-bold md:text-lg text-mainColor1">VJudge Filter</h3>
+    <table
+      class="min-w-full overflow-x-auto text-sm border-collapse md:text-base"
+    >
+      <thead>
+        <tr>
+          <th class="pt-3 font-medium tracking-wider text-mainColor1">
+            Sheet ID
+          </th>
+          <th class="px-3 pt-3 font-medium tracking-wider text-mainColor1">
+            Problems count
+          </th>
+          <th class="pt-3 font-medium tracking-wider text-mainColor1">
+            Percentage
+          </th>
+          <th class="px-4 pt-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let filter of filtersV.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td class="relative flex justify-center py-3">
+            <input
+              type="text"
+              formControlName="sheetId"
+              class="block w-24 pl-6 my-2 text-black bg-white rounded md:pl-10 md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
+            />
+            <svg
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 5V7.5C11 10 10 11 7.5 11H4.5C2 11 1 10 1 7.5V4.5C1 2 2 1 4.5 1H7"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M11 5H9C7.5 5 7 4.5 7 3V1L11 5Z"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </td>
+
+          <td class="relative px-3 py-3 w-36 md:w-44 md:px-6">
+            <input
+              type="number"
+              formControlName="problemCount"
+              class="flex justify-center w-full pl-6 my-2 text-black bg-white rounded md:pl-10 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
+            />
+            <svg
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] left-4 md:left-8"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 11H10.5"
+                stroke="#002C3D"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M2.79999 4.19043H2C1.725 4.19043 1.5 4.41543 1.5 4.69043V9.00043C1.5 9.27543 1.725 9.50043 2 9.50043H2.79999C3.07499 9.50043 3.29999 9.27543 3.29999 9.00043V4.69043C3.29999 4.41543 3.07499 4.19043 2.79999 4.19043Z"
+                stroke="#002C3D"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6.40155 2.59473H5.60156C5.32656 2.59473 5.10156 2.81973 5.10156 3.09473V8.99973C5.10156 9.27473 5.32656 9.49973 5.60156 9.49973H6.40155C6.67655 9.49973 6.90155 9.27473 6.90155 8.99973V3.09473C6.90155 2.81973 6.67655 2.59473 6.40155 2.59473Z"
+                stroke="#002C3D"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9.99921 1H9.19922C8.92422 1 8.69922 1.225 8.69922 1.5V9C8.69922 9.275 8.92422 9.5 9.19922 9.5H9.99921C10.2742 9.5 10.4992 9.275 10.4992 9V1.5C10.4992 1.225 10.2742 1 9.99921 1Z"
+                stroke="#002C3D"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </td>
+
+          <td class="relative flex justify-center py-3">
+            <input
+              type="number"
+              formControlName="passingPrecent"
+              class="block w-24 pl-6 my-2 text-black bg-white rounded md:pl-10 md:w-32 ring-1 ring-gray-400 focus:outline-none focus:ring-subColor1"
+            />
+            <svg
+              width="14"
+              height="14"
+              class="absolute md:top-[25px] top-[23px] left-2 md:left-8"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.28516 7.63498L7.55515 4.36499"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4.49001 5.18507C4.82966 5.18507 5.105 4.90974 5.105 4.57008C5.105 4.23043 4.82966 3.95508 4.49001 3.95508C4.15035 3.95508 3.875 4.23043 3.875 4.57008C3.875 4.90974 4.15035 5.18507 4.49001 5.18507Z"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.75952 8.04494C8.09918 8.04494 8.37453 7.76959 8.37453 7.42993C8.37453 7.09028 8.09918 6.81494 7.75952 6.81494C7.41987 6.81494 7.14453 7.09028 7.14453 7.42993C7.14453 7.76959 7.41987 8.04494 7.75952 8.04494Z"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 11C8.76142 11 11 8.76142 11 6C11 3.23858 8.76142 1 6 1C3.23858 1 1 3.23858 1 6C1 8.76142 3.23858 11 6 11Z"
+                stroke="#6B7088"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </td>
+
+          <td class="px-4 py-2">
+            <button
+              *ngIf="i === filtersV.length - 1"
+              type="button"
+              (click)="addFilterV()"
+              class="p-1 text-white rounded-sm bg-subColor2"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 18V6"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              *ngIf="filtersV.length > 1 && i !== filtersV.length - 1"
+              type="button"
+              (click)="removeFilterV(i)"
+              class="p-1 text-white rounded-sm bg-mainColor2"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18"
+                  stroke="white"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </button>
           </td>
         </tr>
@@ -158,7 +399,8 @@
 
   <button
     type="submit"
-    class="px-5 py-1 mt-4 text-white rounded-lg bg-mainblue ms-4"
+    [disabled]="isEableToSave()"
+    class="px-6 py-1.5 mt-2 disabled:bg-slate-500 disabled:cursor-not-allowed text-mainColor4 rounded-lg bg-mainColor1"
   >
     Done
   </button>

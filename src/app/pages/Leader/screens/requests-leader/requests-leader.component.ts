@@ -1,53 +1,38 @@
-import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ConfirmDeleteRequestComponent } from '../../Components/confirm-delete-request/confirm-delete-request.component';
 import { RequestsLeaderService } from '../../services/requests-leader.service';
 import { SystemFilterComponent } from '../../Components/system-filter/system-filter.component';
 import { NgClass } from '@angular/common';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { SuccessMessageComponent } from '../success-message/success-message.component';
-interface User {
-  id: number;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  grade: number;
-  college: number;
-  gender: number;
-  comment: string;
-  hasLaptop: boolean;
-  codeForceHandle: string;
-}
+import { AllTraineesInfo } from '../../model/requests';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
 
-interface AllTraineesInfo {
-  currentPage: number;
-  data: User[];
-  errors: any;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  isSuccess: boolean;
-  message: any;
-  pageSize: number;
-  statusCode: number;
-  totalCount: number;
-  totalPages: number;
-}
 @Component({
   selector: 'app-requests-leader',
   standalone: true,
   imports: [
     NgSelectModule,
-    ConfirmDeleteRequestComponent,
     SystemFilterComponent,
     SuccessMessageComponent,
+    DeleteConfirmModalComponent,
     NgClass,
   ],
   templateUrl: './requests-leader.component.html',
   styleUrl: './requests-leader.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class RequestsLeaderComponent implements OnInit {
   requestsLeaderService = inject(RequestsLeaderService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   allCamps: { id: number; name: string }[] = [];
   isLoading = signal<boolean>(false);
   isLoadingCamp = signal<boolean>(false);
@@ -57,15 +42,20 @@ export class RequestsLeaderComponent implements OnInit {
   showModalDelete: boolean = false;
   showFilterModel: boolean = false;
   showSubmitModel: boolean = false;
-  pageNumber: number = 1;
-  pageSize: number = 20;
   sortbyNum: number = 0 | 1 | 2 | 3;
   applySystemFilter: boolean = false;
-  filters: any;
+  codeforcesFilters: any;
+  vjudgeFilters: any;
   KeyWord: string = '';
   campId: number = 0;
-  dataRequest: any[] = [];
   settingsFilterRequest: any;
+
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 1;
+  showEllipsis: boolean = false;
+  showLastPage: boolean = false;
+  pages: number[] = [];
 
   ngOnInit() {
     this.fetchAllCamps();
@@ -79,7 +69,8 @@ export class RequestsLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
-            this.dataRequest.push(this.allTraineesInfo);
+            this.totalPages = this.allTraineesInfo.totalPages;
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -94,13 +85,10 @@ export class RequestsLeaderComponent implements OnInit {
 
   chooseCamp(item: any): void {
     this.campId = item.id;
-    this.dataRequest = [];
     this.settingsFilterRequest = {
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
+      // pageNumber: 1,
+      // pageSize: this.pageSize,
       campId: this.campId,
-      applySystemFilter: this.applySystemFilter,
-      filters: this.filters,
     };
     this.showFilterModel = false;
     this.casheService.clearCache();
@@ -109,15 +97,16 @@ export class RequestsLeaderComponent implements OnInit {
 
   sortTrainee(item: any): void {
     this.sortbyNum = item;
-    this.dataRequest = [];
     this.settingsFilterRequest = {
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
+      // pageNumber: this.currentPage,
+      // pageSize: this.pageSize,
       campId: this.campId,
       sortBy: this.sortbyNum,
       applySystemFilter: this.applySystemFilter,
-      filters: this.filters,
+      vjudgeFilters: this.vjudgeFilters,
+      codeforcesFilters: this.codeforcesFilters,
     };
+    this.casheService.clearCache();
     this.traineesRegisterations(this.settingsFilterRequest);
   }
 
@@ -131,8 +120,9 @@ export class RequestsLeaderComponent implements OnInit {
     }
   }
 
-  toggleItem(id: number, event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
+  toggleItem(id: number, event: any): void {
+    const isChecked = event.target.checked;
+    console.log(isChecked);
     if (isChecked) {
       if (!this.selectedIds.includes(id)) {
         this.selectedIds.push(id);
@@ -157,29 +147,32 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   handleSaveFilter(data: any) {
-    this.filters = data.value.filters;
-    this.dataRequest = [];
-    this.settingsFilterRequest = {
-      pageNumber: 1,
-      pageSize: this.pageSize,
-      campId: this.campId,
-      applySystemFilter: this.applySystemFilter,
-      filters: this.filters,
-    };
-    this.casheService.clearCache();
-    this.traineesRegisterations(this.settingsFilterRequest);
+    this.vjudgeFilters = data.value.filtersV;
+    this.codeforcesFilters = data.value.filtersC;
+    if (this.vjudgeFilters.length > 0 || this.codeforcesFilters.length > 0) {
+      this.settingsFilterRequest = {
+        // pageNumber: 1,
+        // pageSize: this.pageSize,
+        campId: this.campId,
+        sortBy: this.sortbyNum,
+        applySystemFilter: this.applySystemFilter,
+        vjudgeFilters: this.vjudgeFilters,
+        codeforcesFilters: this.codeforcesFilters,
+      };
+      this.casheService.clearCache();
+      this.traineesRegisterations(this.settingsFilterRequest);
+    }
     this.closeConfirmFilter();
   }
 
   systemFilter(event: any): void {
     this.applySystemFilter = event.target.checked;
-    this.dataRequest = [];
     this.settingsFilterRequest = {
-      pageNumber: 1,
-      pageSize: this.pageSize,
+      // pageNumber: 1,
+      // pageSize: this.pageSize,
+      sortBy: this.sortbyNum,
       campId: this.campId,
       applySystemFilter: this.applySystemFilter,
-      filters: this.filters,
     };
     this.casheService.clearCache();
     this.traineesRegisterations(this.settingsFilterRequest);
@@ -192,13 +185,14 @@ export class RequestsLeaderComponent implements OnInit {
 
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedIds.length !== 0) {
-      this.dataRequest = [];
       this.settingsFilterRequest = {
-        pageNumber: 1,
-        pageSize: this.pageSize,
+        // pageNumber: 1,
+        // pageSize: this.pageSize,
+        sortBy: this.sortbyNum,
         campId: this.campId,
         applySystemFilter: this.applySystemFilter,
-        filters: this.filters,
+        vjudgeFilters: this.vjudgeFilters,
+        codeforcesFilters: this.codeforcesFilters,
       };
       this.casheService.clearCache();
       this.traineesRegisterations(this.settingsFilterRequest);
@@ -208,13 +202,14 @@ export class RequestsLeaderComponent implements OnInit {
 
   closeRequestMessage() {
     this.showSubmitModel = false;
-    this.dataRequest = [];
     this.settingsFilterRequest = {
-      pageNumber: 1,
-      pageSize: this.pageSize,
+      // pageNumber: 1,
+      // pageSize: this.pageSize,
       campId: this.campId,
+      sortBy: this.sortbyNum,
       applySystemFilter: this.applySystemFilter,
-      filters: this.filters,
+      vjudgeFilters: this.vjudgeFilters,
+      codeforcesFilters: this.codeforcesFilters,
     };
     this.casheService.clearCache();
     this.traineesRegisterations(this.settingsFilterRequest);
@@ -242,27 +237,40 @@ export class RequestsLeaderComponent implements OnInit {
     this.closeConfirmFilter();
   }
 
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    if (
-      this.bottomReached() &&
-      !this.isLoading() &&
-      this.allTraineesInfo?.hasNextPage
-    ) {
-      this.settingsFilterRequest = {
-        pageNumber: ++this.pageNumber,
-        pageSize: this.pageSize,
-        campId: this.campId,
-        applySystemFilter: this.applySystemFilter,
-        filters: this.filters,
-      };
-      this.traineesRegisterations(this.settingsFilterRequest);
+  generatePages(): void {
+    this.pages = [];
+    if (this.allTraineesInfo?.totalPages <= 3) {
+      for (let i = 1; i <= this.allTraineesInfo?.totalPages; i++) {
+        this.pages.push(i);
+      }
+    } else {
+      const start = Math.max(this.currentPage - 2, 1);
+      const end = Math.min(
+        this.currentPage + 2,
+        this.allTraineesInfo?.totalPages
+      );
+      for (let i = start; i <= end; i++) {
+        this.pages.push(i);
+      }
+
+      this.showEllipsis = end < this.allTraineesInfo?.totalPages - 1;
+      this.showLastPage = this.showEllipsis;
     }
   }
-  private bottomReached(): boolean {
-    return (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 10
-    );
+
+  changePage(page: number): void {
+    // if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
+    //   this.currentPage = page;
+    //   this.settingsFilterRequest = {
+    //     pageNumber: this.currentPage,
+    //     pageSize: this.pageSize,
+    //     campId: this.campId,
+    //     applySystemFilter: this.applySystemFilter,
+    //     vjudgeFilters: this.vjudgeFilters,
+    //     codeforcesFilters: this.codeforcesFilters,
+    //   };
+    //   this.generatePages();
+    // }
   }
 
   submitRequests() {

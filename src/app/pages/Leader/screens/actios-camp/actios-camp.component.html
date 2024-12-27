@@ -1,27 +1,38 @@
-<div class="w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
-  <form
-    [formGroup]="campForm"
-    (ngSubmit)="craeteNewCamp()"
-    class="w-full py-8 bg-white px-14 rounded-xl"
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    <div class="flex flex-col gap-y-4">
-      <h2 class="w-full pb-6 text-3xl font-bold border-b-2">
-        @if (id === 0) { Add Camp }@else { Edit Camp }
-      </h2>
-
-      <div class="flex items-center justify-between w-full ps-4">
-        <div class="relative flex flex-col basis-1/2">
-          <label class="text-lg">Camp name</label>
+    {{ id === 0 ? "Add" : "Update" }} Camp
+  </h1>
+  <h1
+    class="self-start mb-2 text-lg font-bold transition-all duration-500 ps-4 md:hidden"
+  >
+    {{ id === 0 ? "Add" : "Update" }} Camp
+  </h1>
+  <form [formGroup]="campForm" (ngSubmit)="craeteNewCamp()">
+    <div class="flex flex-col w-full lg:w-10/12 gap-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="relative flex flex-col">
+          <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Camp name</label
+          >
           <div
             (click)="toggleDropdownC($event)"
-            class="relative text-left cursor-pointer text-lg px-4 flex justify-between items-center w-[450px] my-2 py-2.5 text-gray-400 bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+            class="relative text-left cursor-pointer text-lg px-4 flex justify-between items-center py-2 text-gray-400 bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
           >
-            <span [ngClass]="selectedCamp ? 'text-black' : ''">
-              {{ selectedCamp || "Name" }}
+            <span
+              [ngClass]="
+                selectedCamp
+                  ? 'text-mainColor1 font-semibold'
+                  : 'font-semibold text-[#002C3D4D]'
+              "
+            >
+              {{ selectedCamp || "Select camp" }}
             </span>
             <svg
               [ngClass]="isCampsActive ? 'rotate-180' : ''"
-              class="absolute transition-transform size-8 right-4"
+              class="absolute transition-transform top-[10px] size-6 right-4"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -105,235 +116,239 @@
           }
         </div>
 
-        <div class="flex flex-col pt-5 basis-1/2">
-          <label class="text-lg">Term</label>
-          <div class="relative w-[450px]">
-            <ng-select
-              #termSelect
-              [closeOnSelect]="true"
-              bindLabel="name"
-              bindValue="id"
-              formControlName="term"
-              placeholder="Select Term"
-              (click)="toggleDropdownT()"
-              class="relative block text-lg w-full my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
+        <div class="relative flex flex-col">
+          <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Term</label
+          >
+          <ng-select
+            #termSelect
+            [closeOnSelect]="true"
+            bindLabel="name"
+            bindValue="id"
+            formControlName="term"
+            placeholder="Select Term"
+            (click)="toggleDropdownT()"
+            class="relative block text-lg w-full text-black bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
+          >
+            <ng-option [value]="1"> First Term </ng-option>
+            <ng-option [value]="2"> Second Term </ng-option>
+            <ng-option [value]="3"> Summer </ng-option>
+            <ng-option [value]="4"> Mid Year </ng-option>
+          </ng-select>
+          <button (click)="toggleDropdownT()" type="button">
+            <svg
+              [ngClass]="foucsTerm ? 'rotate-180' : ''"
+              class="absolute transition-transform z-[1100] top-10 size-6 right-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <ng-option [value]="1"> First Term </ng-option>
-              <ng-option [value]="2"> Second Term </ng-option>
-              <ng-option [value]="3"> Summer </ng-option>
-              <ng-option [value]="4"> Mid Year </ng-option>
-            </ng-select>
-            <button (click)="toggleDropdownT()" type="button" class="">
-              <svg
-                [ngClass]="foucsTerm ? 'rotate-180' : ''"
-                class="absolute transition-transform top-4 z-[1100] size-8 right-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-                  stroke="#A8A8A8"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
+              <path
+                d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                stroke="#A8A8A8"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
       <!-- Dates -->
-      <div class="flex items-center justify-between w-full mt-2 ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label for="startDate" class="text-lg">Start Date</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="flex flex-col">
+          <label
+            for="startDate"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Start Date</label
+          >
           <input
             type="date"
             id="startDate"
             formControlName="startDate"
             placeholder="Select Start Date"
-            class="block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg focus:outline-none"
+            class="block p-2 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-xl focus:outline-none"
           />
         </div>
 
-        <div class="flex flex-col basis-1/2">
-          <label for="endDate" class="text-lg">End Date</label>
+        <div class="flex flex-col">
+          <label
+            for="endDate"
+            class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >End Date</label
+          >
           <input
             type="date"
             id="endDate"
             formControlName="endDate"
             placeholder="Select End Date"
-            class="block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg focus:outline-none"
+            class="block p-2 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-xl focus:outline-none"
           />
         </div>
       </div>
 
       <!-- HOC  -->
-      <div class="flex items-center justify-between w-full mt-2 ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Heads of camp</label>
-          <div class="relative w-[450px]">
-            <ng-select
-              #hocSelect
-              [items]="allHeadsOfCamp"
-              [closeOnSelect]="false"
-              [multiple]="true"
-              bindLabel="fullName"
-              bindValue="id"
-              formControlName="headsIds"
-              (click)="toggleDropdownH()"
-              placeholder="Head of camp"
-              class="relative block w-[450px] placeholder:text-gray-500 my-2 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-            >
-              <ng-template
-                ng-multi-label-tmp
-                let-items="items"
-                let-clear="clear"
-              >
-                @for (item of items | slice: 0 : 1; track item) {
-                <div class="ng-value">
-                  <span class="ng-value-label"> {{ items[0].fullName }}</span>
-                  <span
-                    class="ng-value-icon right"
-                    (click)="clear(item)"
-                    aria-hidden="true"
-                    >×</span
-                  >
-                </div>
-                } @if (items.length > 1) {
-                <div class="ng-value">
-                  <span class="ng-value-label"
-                    >{{ items.length - 1 }} more...</span
-                  >
-                </div>
-                }
-              </ng-template>
-              <ng-template ng-option-tmp let-item="item" let-index="index">
-                <ng-option
-                  (click)="onItemClickH()"
-                  class="flex items-center justify-between w-full h-full py-1"
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="relative flex flex-col">
+          <label class="text-lg text-[#002C3D4D] ps-2 font-semibold"
+            >Heads of camp</label
+          >
+          <ng-select
+            #hocSelect
+            [items]="allHeadsOfCamp"
+            [closeOnSelect]="false"
+            [multiple]="true"
+            bindLabel="fullName"
+            bindValue="id"
+            formControlName="headsIds"
+            (click)="toggleDropdownH()"
+            placeholder="Head of camp"
+            class="relative block placeholder:text-gray-500 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
+          >
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              @for (item of items | slice: 0 : 1; track item) {
+              <div class="ng-value">
+                <span class="ng-value-label"> {{ items[0].fullName }}</span>
+                <span
+                  class="ng-value-icon right"
+                  (click)="clear(item)"
+                  aria-hidden="true"
+                  >×</span
                 >
-                  <h4>{{ item.fullName }}</h4>
-                  @if (item.isInCamp) {
-                  <span>(In camp)</span>
-                  }
-                </ng-option>
-              </ng-template>
-            </ng-select>
-            <button
-              class="absolute z-[1100] transition-transform cursor-pointer top-4 size-8 right-4"
-              (click)="toggleDropdownH()"
-              type="button"
-            >
-              <svg
-                class="w-full h-full"
-                [ngClass]="dropdownOpenH ? 'rotate-180' : ''"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              </div>
+              } @if (items.length > 1) {
+              <div class="ng-value">
+                <span class="ng-value-label"
+                  >{{ items.length - 1 }} more...</span
+                >
+              </div>
+              }
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-index="index">
+              <ng-option
+                (click)="onItemClickH()"
+                class="flex items-center justify-between w-full h-full py-1"
               >
-                <path
-                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-                  stroke="#A8A8A8"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
+                <h4>{{ item.fullName }}</h4>
+                @if (item.isInCamp) {
+                <span>(In camp)</span>
+                }
+              </ng-option>
+            </ng-template>
+          </ng-select>
+          <button
+            class="absolute z-[1100] transition-transform cursor-pointer top-10 size-6 right-4"
+            (click)="toggleDropdownH()"
+            type="button"
+          >
+            <svg
+              class="w-full h-full"
+              [ngClass]="dropdownOpenH ? 'rotate-180' : ''"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                stroke="#A8A8A8"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
         </div>
 
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Mentors</label>
-          <div class="relative w-[450px]">
-            <ng-select
-              #mentorsSelect
-              [items]="allMentors"
-              [closeOnSelect]="false"
-              [multiple]="true"
-              bindLabel="fullName"
-              bindValue="id"
-              formControlName="mentorsIds"
-              placeholder="Mentor"
-              (click)="toggleDropdown()"
-              class="relative block w-full my-2 cursor-pointer text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-            >
-              <ng-template
-                ng-multi-label-tmp
-                let-items="items"
-                let-clear="clear"
-              >
-                @for (item of items | slice: 0 : 1; track item) {
-                <div class="ng-value">
-                  <span class="ng-value-label"> {{ items[0].fullName }}</span>
-                  <span
-                    class="ng-value-icon right"
-                    (click)="clear(item)"
-                    aria-hidden="true"
-                    >×</span
-                  >
-                </div>
-                } @if (items.length > 1) {
-                <div class="ng-value">
-                  <span class="ng-value-label"
-                    >{{ items.length - 1 }} more...</span
-                  >
-                </div>
-                }
-              </ng-template>
-              <ng-template ng-option-tmp let-item="item" let-index="index">
-                <ng-option
-                  (click)="onItemClick()"
-                  class="flex items-center justify-between w-full h-full py-1"
+        <div class="relative flex flex-col">
+          <label class="text-lg text-[#002C3D4D] ps-2 font-semibold"
+            >Mentors</label
+          >
+          <ng-select
+            #mentorsSelect
+            [items]="allMentors"
+            [closeOnSelect]="false"
+            [multiple]="true"
+            bindLabel="fullName"
+            bindValue="id"
+            formControlName="mentorsIds"
+            placeholder="Mentor"
+            (click)="toggleDropdown()"
+            class="relative block w-full cursor-pointer text-mainColor1 font-semibold bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
+          >
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              @for (item of items | slice: 0 : 1; track item) {
+              <div class="ng-value">
+                <span class="ng-value-label"> {{ items[0].fullName }}</span>
+                <span
+                  class="ng-value-icon right"
+                  (click)="clear(item)"
+                  aria-hidden="true"
+                  >×</span
                 >
-                  <h4>{{ item.fullName }}</h4>
-                </ng-option>
-              </ng-template>
-            </ng-select>
-            <button
-              class="absolute z-[1100] transition-transform cursor-pointer top-4 size-8 right-4"
-              (click)="toggleDropdown()"
-              type="button"
-            >
-              <svg
-                [ngClass]="dropdownOpen ? 'rotate-180' : ''"
-                class="w-full h-full"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              </div>
+              } @if (items.length > 1) {
+              <div class="ng-value">
+                <span class="ng-value-label"
+                  >{{ items.length - 1 }} more...</span
+                >
+              </div>
+              }
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-index="index">
+              <ng-option
+                (click)="onItemClick()"
+                class="flex items-center justify-between w-full h-full py-1"
               >
-                <path
-                  d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-                  stroke="#A8A8A8"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
+                <h4>{{ item.fullName }}</h4>
+              </ng-option>
+            </ng-template>
+          </ng-select>
+          <button
+            class="absolute z-[1100] transition-transform cursor-pointer top-10 size-6 right-4"
+            (click)="toggleDropdown()"
+            type="button"
+          >
+            <svg
+              [ngClass]="dropdownOpen ? 'rotate-180' : ''"
+              class="w-full h-full"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
+                stroke="#A8A8A8"
+                stroke-width="1.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
-      <div class="flex items-center justify-between w-full mt-2 ps-4">
-        <div class="flex flex-col basis-1/2">
-          <label class="text-lg">Duration in week</label>
-          <div class="relative">
-            <input
-              type="number"
-              formControlName="durationInWeeks"
-              class="relative block w-[450px] my-2 p-3 text-black bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
-              placeholder="Duration in week"
-            />
-          </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 place-content-center gap-x-16 gap-y-4"
+      >
+        <div class="flex flex-col">
+          <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
+            >Duration in week</label
+          >
+          <input
+            type="number"
+            formControlName="durationInWeeks"
+            class="relative block text-mainColor1 font-semibold py-2 px-6 bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
+            placeholder="Duration in week"
+          />
         </div>
 
-        <div class="flex items-center pt-6 gap-x-44 basis-1/2">
-          <label class="text-lg text-gray-700">Open For Register</label>
+        <div class="flex items-center justify-between px-2 pt-5">
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
+            >Open For Register</label
+          >
           <div>
             <input
               id="openForRegister"
@@ -343,13 +358,13 @@
             />
             <label
               for="openForRegister"
-              class="relative inline-flex items-center w-32 h-10 rounded-full cursor-pointer"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
             >
               <span
                 class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
                 [ngClass]="{
-                  'bg-[#52B788]': campForm.get('openForRegister')?.value,
-                  'bg-[#EF4A50]': !campForm.get('openForRegister')?.value
+                  'bg-mainColor1': campForm.get('openForRegister')?.value,
+                  'bg-mainColor2': !campForm.get('openForRegister')?.value
                 }"
               ></span>
 
@@ -357,13 +372,131 @@
               <span
                 class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
                 [ngClass]="{
-                  'translate-x-24 text-[#52B788]':
+                  'md:translate-x-[75px] translate-x-[60px] text-[#52B788]':
                     campForm.get('openForRegister')?.value,
                   'translate-x-2 text-[#EF4A50]':
                     !campForm.get('openForRegister')?.value
                 }"
               >
-                {{ campForm.get("openForRegister")?.value ? "ON" : "OFF" }}
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 px-2 md:grid-cols-2 gap-x-16 gap-y-4">
+        <div class="flex items-center justify-between pt-5">
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
+            >Required codeforces handle</label
+          >
+          <div>
+            <input
+              id="isRequiredCodeforce"
+              type="checkbox"
+              formControlName="isRequiredCodeforce"
+              class="hidden"
+            />
+            <label
+              for="isRequiredCodeforce"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
+            >
+              <span
+                class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
+                [ngClass]="{
+                  'bg-mainColor1': campForm.get('isRequiredCodeforce')?.value,
+                  'bg-mainColor2': !campForm.get('isRequiredCodeforce')?.value
+                }"
+              ></span>
+
+              <!-- Circle with ON/OFF text -->
+              <span
+                class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
+                [ngClass]="{
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
+                    campForm.get('isRequiredCodeforce')?.value,
+                  'translate-x-2 text-[#EF4A50]': !campForm.get(
+                    'isRequiredCodeforce'
+                  )?.value
+                }"
+              >
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-5">
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
+            >Required vjudge handle</label
+          >
+          <div>
+            <input
+              id="isRequiredVjudge"
+              type="checkbox"
+              formControlName="isRequiredVjudge"
+              class="hidden"
+            />
+            <label
+              for="isRequiredVjudge"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
+            >
+              <span
+                class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
+                [ngClass]="{
+                  'bg-mainColor1': campForm.get('isRequiredVjudge')?.value,
+                  'bg-mainColor2': !campForm.get('isRequiredVjudge')?.value
+                }"
+              ></span>
+
+              <!-- Circle with ON/OFF text -->
+              <span
+                class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
+                [ngClass]="{
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
+                    campForm.get('isRequiredVjudge')?.value,
+                  'translate-x-2 text-[#EF4A50]':
+                    !campForm.get('isRequiredVjudge')?.value
+                }"
+              >
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 px-2 md:grid-cols-2 place-content-center gap-x-16 gap-y-4"
+      >
+        <div class="flex items-center justify-between pt-5">
+          <label class="md:text-lg text-[#002C3D4D] font-semibold"
+            >OnSite camp</label
+          >
+          <div>
+            <input
+              id="isOnSite"
+              type="checkbox"
+              formControlName="isOnSite"
+              class="hidden"
+            />
+            <label
+              for="isOnSite"
+              class="relative inline-flex items-center w-24 h-10 rounded-full cursor-pointer md:w-28"
+            >
+              <span
+                class="absolute top-0 bottom-0 left-0 right-0 transition-colors duration-300 ease-in-out rounded-full"
+                [ngClass]="{
+                  'bg-mainColor1': campForm.get('isOnSite')?.value,
+                  'bg-mainColor2': !campForm.get('isOnSite')?.value
+                }"
+              ></span>
+
+              <!-- Circle with ON/OFF text -->
+              <span
+                class="flex items-center justify-center text-xs font-semibold transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow-md w-7 h-7"
+                [ngClass]="{
+                  'translate-x-[60px] md:translate-x-[75px] text-[#52B788]':
+                    campForm.get('isOnSite')?.value,
+                  'translate-x-2 text-[#EF4A50]':
+                    !campForm.get('isOnSite')?.value
+                }"
+              >
               </span>
             </label>
           </div>
@@ -371,27 +504,26 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-end w-11/12 mt-20 gap-x-8">
-      <button
-        [routerLink]="'/leader/camps'"
-        type="button"
-        class="px-6 py-1.5 text-xl text-[#6B7088] border rounded-lg w-fit bg-white"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="px-6 py-1.5 text-xl bg-white border rounded-lg text-activeLink w-fit"
-      >
-        @if (isLoading) {
+    <div
+      class="flex items-center justify-end w-full mt-20 mb-10 text-lg font-semibold gap-x-6 md:w-10/12 text-mainColor4"
+    >
+      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+        @if (!isLoading) {Save}@else {
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
             <div
-              class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+              class="w-8 h-8 border-4 border-dashed rounded-full border-subColor2 animate-spin"
             ></div>
           </div>
         </div>
-        }@else { Save }
+        }
+      </button>
+      <button
+        type="button"
+        routerLink="/leader/camps"
+        class="px-6 py-2 rounded-md bg-mainColor2"
+      >
+        Cancel
       </button>
     </div>
   </form>

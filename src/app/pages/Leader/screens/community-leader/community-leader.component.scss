@@ -1,0 +1,34 @@
+details {
+  summary {
+    cursor: pointer;
+    list-style: none; // Remove the default triangle
+    display: flex;
+    align-items: center;
+    gap: 8px; // Space between icon and text
+    font-size: 18px;
+    font-weight: 600;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 10px;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 16 9" fill="none"><path d="M14.5999 1.45898L9.16657 6.89232C8.5249 7.53399 7.4749 7.53399 6.83324 6.89232L1.3999 1.45898" stroke="%23002C3D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+        no-repeat;
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9" fill="none"><path d="M14.5999 1.45898L9.16657 6.89232C8.5249 7.53399 7.4749 7.53399 6.83324 6.89232L1.3999 1.45898" stroke="%23002C3D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+        no-repeat;
+      background-color: #002c3d; // Set the stroke color for the SVG
+      transition: transform 0.2s ease;
+      transform: rotate(-90deg);
+    }
+
+    &:hover::before {
+      background-color: #005572; // Change color on hover
+    }
+  }
+
+  &[open] {
+    summary::before {
+      transform: rotate(0deg); // Flip the icon when open
+    }
+  }
+}

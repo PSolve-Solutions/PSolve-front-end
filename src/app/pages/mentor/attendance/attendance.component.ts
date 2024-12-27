@@ -15,7 +15,7 @@ export class AttendanceComponent {
   isLoading:boolean = false;
 constructor(private serv :AttendanceService){
   if(localStorage.getItem("camp")){
-    this.att(localStorage.getItem("camp"));
+    this.att(Number(localStorage.getItem("camp")));
   }
 
 }

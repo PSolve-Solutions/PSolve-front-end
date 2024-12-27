@@ -1,142 +1,379 @@
-<div class="relative w-full p-4 space-y-4 sm:p-6 sm:ps-4 sm:space-y-6">
-  <div class="flex items-center justify-between px-12 py-8 bg-white rounded-xl">
-    <h2 class="text-2xl font-bold">Camps</h2>
-    <div class="flex items-center justify-between px-2">
-      <button
-        (click)="goToActionCamp(0)"
-        class="flex items-center px-8 py-1 text-lg text-white rounded-md w-fit bg-activeLink"
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Camps
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Camps
+  </h1>
+  <div class="flex flex-col space-y-10">
+    <button
+      (click)="goToActionCamp(0)"
+      class="flex items-center px-4 py-2 my-2 transition-colors gap-x-2 rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    >
+      <svg
+        width="20"
+        height="19"
+        viewBox="0 0 20 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        Add
-      </button>
-    </div>
-  </div>
+        <path
+          d="M10.0104 0C5.00044 0 0.94043 4.06 0.94043 9.07C0.94043 14.08 5.00044 18.14 10.0104 18.14C15.0204 18.14 19.0804 14.08 19.0804 9.07C19.0804 4.06 15.0204 0 10.0104 0ZM14.5404 10.21H11.1404V13.61H8.88043V10.19H5.48044V7.93H8.88043V4.53H11.1404V7.93H14.5404V10.21Z"
+          fill="#F7F8F3"
+        />
+      </svg>
+      <span>Add Camp</span>
+    </button>
+    <div class="flex flex-col">
+      <div class="overflow-x-auto rounded-lg">
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead class="text-[13px] md:text-base font-semibold bg-[#DEDFE1]">
+            <tr>
+              <th class="py-4 text-left lg:hidden ps-4">
+                <svg
+                  width="10"
+                  height="14"
+                  viewBox="0 0 7 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.966797 1.7193L5.31346 6.06596C5.8268 6.5793 5.8268 7.4193 5.31346 7.93263L0.966797 12.2793"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </th>
+              <th class="p-4 text-left truncate">Name</th>
+              <th class="hidden p-4 lg:table-cell">Start Date</th>
+              <th class="hidden p-4 lg:table-cell">End Date</th>
+              <th class="hidden p-4 lg:table-cell">Term</th>
+              <th class="hidden p-4 lg:table-cell">Duration in week</th>
+              <th class="p-2 md:p-4">Edit</th>
+              <th class="p-2 md:p-4">Empty</th>
+              <th class="p-2 md:p-4">Delete</th>
+              <th class="p-2 md:p-4">Standing</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (!isLoading()) { @for (row of allCampsInfo.data; track i; let i
+            = $index; let first = $first) {
+            <tr
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+              [class.border-t-8]="first"
+            >
+              <td
+                (click)="toggleDetails(row.id)"
+                class="py-2 text-left cursor-pointer lg:hidden ps-4"
+              >
+                <svg
+                  width="10"
+                  height="14"
+                  [class.rotate-90]="row.id === campId"
+                  viewBox="0 0 7 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.966797 1.7193L5.31346 6.06596C5.8268 6.5793 5.8268 7.4193 5.31346 7.93263L0.966797 12.2793"
+                    stroke="#002C3D"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </td>
+              <td class="px-4 py-2 text-left whitespace-nowrap">
+                {{ row.name }}
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ convertToLocal(row.startDate) | date : "dd-MM-YYYY" }}
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ convertToLocal(row.endDate) | date : "dd-MM-YYYY" }}
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                @switch (row.term) { @case (1) { First term } @case (2) { Second
+                term } @case (3) { Summer } @case (4) { Mid year } }
+              </td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ row.durationInWeeks }}
+              </td>
 
-  @if( isLoading()) {
-  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
-    <div class="flex items-center">
+              <td class="py-2 text-center lg:px-4">
+                <button
+                  (click)="goToActionCamp(row.id)"
+                  class="bg-[#f4f4f4] rounded-lg p-2"
+                >
+                  <svg
+                    class="md:size-5 size-3"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.08752 2.00474L1.86632 8.22594C1.62658 8.46568 1.39884 8.93317 1.35089 9.2688L1.01526 11.6422C0.895389 12.5053 1.49473 13.1046 2.35779 12.9847L4.73117 12.6491C5.0668 12.6012 5.53432 12.3734 5.77406 12.1337L11.9953 5.91247C13.0621 4.84563 13.5775 3.599 11.9953 2.01673C10.413 0.422468 9.16634 0.92592 8.08752 2.00474Z"
+                      stroke="#508D97"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7.19922 2.89258C7.72664 4.77452 9.20103 6.2609 11.095 6.78832"
+                      stroke="#508D97"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td class="py-2 text-center lg:px-4">
+                <button
+                  (click)="showConfirmEmpty(row.id)"
+                  class="text-red-500 bg-[#f4f4f4] rounded-lg p-2 hover:text-red-700"
+                >
+                  <svg
+                    class="md:size-5 size-3"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.5488 2.07261L11.3457 1.19781C11.4718 1.05608 11.5367 0.870509 11.5265 0.681322C11.5163 0.492135 11.4318 0.314584 11.2912 0.187162C11.1507 0.0597409 10.9654 -0.00728065 10.7757 0.000628237C10.5859 0.00853712 10.4069 0.090739 10.2775 0.229412L9.48121 1.10301C8.28256 0.259608 6.81627 -0.117756 5.35821 0.0419216C3.90015 0.201599 2.55085 0.887309 1.56415 1.97004C0.577463 3.05277 0.0214068 4.45788 0.000605389 5.921C-0.0201961 7.38413 0.495691 8.8044 1.45121 9.91461L0.654279 10.7894C0.589202 10.8591 0.538647 10.9411 0.505543 11.0305C0.47244 11.1198 0.457448 11.2149 0.461435 11.3101C0.465422 11.4053 0.488309 11.4987 0.52877 11.585C0.569231 11.6713 0.62646 11.7488 0.697142 11.8128C0.767824 11.8769 0.850552 11.9264 0.940531 11.9583C1.03051 11.9903 1.12595 12.0041 1.22132 11.999C1.31669 11.9938 1.4101 11.9699 1.49612 11.9285C1.58215 11.8871 1.65908 11.8291 1.72246 11.7578L2.51879 10.8842C3.71744 11.7276 5.18373 12.105 6.64179 11.9453C8.09985 11.7856 9.44915 11.0999 10.4358 10.0172C11.4225 8.93446 11.9786 7.52935 11.9994 6.06622C12.0202 4.6031 11.5043 3.18282 10.5488 2.07261ZM1.42895 5.99361C1.42826 5.17153 1.65052 4.36458 2.0722 3.65828C2.49387 2.95197 3.09924 2.37263 3.82414 1.98166C4.54905 1.59068 5.36649 1.40264 6.18982 1.43745C7.01315 1.47227 7.8117 1.72864 8.50084 2.17941L2.43158 8.83941C1.78172 8.03269 1.42794 7.02854 1.42895 5.99361ZM6 10.5536C5.11119 10.5545 4.24167 10.2951 3.49916 9.80781L9.56843 3.14781C10.1069 3.81809 10.4445 4.62657 10.5422 5.47998C10.64 6.3334 10.4939 7.197 10.1209 7.97117C9.74783 8.74535 9.16303 9.39856 8.43391 9.85548C7.70479 10.3124 6.86105 10.5544 6 10.5536Z"
+                      fill="#F8444F"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td class="py-2 text-center lg:px-4">
+                <button
+                  (click)="showConfirmDelete(row.id)"
+                  class="text-red-500 bg-[#f4f4f4] rounded-lg p-2 hover:text-red-700"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="md:size-[22px] size-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22m-7 0V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2m8 0H7"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td class="py-2 text-center lg:px-4">
+                <button
+                  (click)="goToStandingCamp(row.id)"
+                  class="text-red-500 bg-[#f4f4f4] rounded-lg p-2 hover:text-red-700"
+                >
+                  <svg
+                    class="md:size-6 size-4"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.6654 6.00065C12.6654 6.96732 12.3787 7.85399 11.8854 8.59399C11.1654 9.66066 10.0254 10.414 8.6987 10.6073C8.47203 10.6473 8.2387 10.6673 7.9987 10.6673C7.7587 10.6673 7.52536 10.6473 7.2987 10.6073C5.97203 10.414 4.83203 9.66066 4.11203 8.59399C3.6187 7.85399 3.33203 6.96732 3.33203 6.00065C3.33203 3.42065 5.4187 1.33398 7.9987 1.33398C10.5787 1.33398 12.6654 3.42065 12.6654 6.00065Z"
+                      stroke="#508D97"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M14.1674 12.3129L13.0674 12.5729C12.8207 12.6329 12.6274 12.8196 12.574 13.0663L12.3407 14.0463C12.214 14.5796 11.534 14.7396 11.1807 14.3196L8.0007 10.6663L4.8207 14.3263C4.46737 14.7463 3.78737 14.5863 3.6607 14.0529L3.42737 13.0729C3.36737 12.8263 3.17404 12.6329 2.93404 12.5796L1.83404 12.3196C1.32737 12.1996 1.14737 11.5663 1.51404 11.1996L4.11404 8.59961C4.83404 9.66628 5.97404 10.4196 7.3007 10.613C7.52737 10.653 7.7607 10.673 8.0007 10.673C8.2407 10.673 8.47404 10.653 8.7007 10.613C10.0274 10.4196 11.1674 9.66628 11.8874 8.59961L14.4874 11.1996C14.854 11.5596 14.674 12.1929 14.1674 12.3129Z"
+                      stroke="#508D97"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M8.38535 3.98602L8.77868 4.77268C8.83201 4.87934 8.97201 4.98601 9.09868 5.00601L9.81201 5.12601C10.2653 5.19934 10.372 5.53268 10.0453 5.85935L9.49201 6.41267C9.39868 6.506 9.34535 6.68602 9.37868 6.81935L9.53868 7.50601C9.66535 8.04601 9.37868 8.25934 8.89868 7.97267L8.23201 7.57934C8.11201 7.506 7.91201 7.506 7.79201 7.57934L7.12535 7.97267C6.64535 8.25267 6.35868 8.04601 6.48535 7.50601L6.64535 6.81935C6.67201 6.69268 6.62535 6.506 6.53201 6.41267L5.97868 5.85935C5.65201 5.53268 5.75868 5.20601 6.21201 5.12601L6.92535 5.00601C7.04535 4.98601 7.18535 4.87934 7.23868 4.77268L7.63201 3.98602C7.82535 3.55935 8.17201 3.55935 8.38535 3.98602Z"
+                      stroke="#508D97"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            @if (row.id === campId) {
+            <tr>
+              <td colspan="6" class="bg-white">
+                <div class="space-y-2">
+                  <div
+                    class="flex items-center justify-between text-sm px-4 py-3 bg-[#f0f0f2]"
+                  >
+                    <div
+                      class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                    >
+                      <span>Start date:</span>
+                      <span>{{ row.startDate }}</span>
+                    </div>
+                    <div
+                      class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                    >
+                      <span>End date:</span>
+                      <span>{{ row.endDate }}</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center justify-between text-sm px-4 py-3 bg-[#f0f0f2]"
+                  >
+                    <div
+                      class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                    >
+                      <span>Term:</span>
+                      <span>{{ row.term }}</span>
+                    </div>
+                    <div
+                      class="flex items-center justify-center font-semibold text-mainColor1 gap-x-2"
+                    >
+                      <span>Duration in weeks:</span>
+                      <span>{{ row.durationInWeeks }}</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center px-4 py-3 bg-[#f0f0f2]">
+                    <div
+                      class="flex items-center text-sm font-semibold text-mainColor1 gap-x-2"
+                    >
+                      <span>Number of requests:</span>
+                      <span>{{ row.joinRequestCount }}</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            } } } @else { @for ( i of [1, 2, 3]; track i) {
+            <tr class="border-b-8 animate-pulse border-mainColor4">
+              <td class="py-2 text-center lg:hidden ps-1">
+                <div class="w-5 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="hidden py-2 text-center lg:ps-4 lg:block">
+                <div class="h-5 rounded w-28 md:w-32 bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center md:w-32 lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="hidden py-2 text-center lg:table-cell md:w-32 lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="hidden py-2 text-center lg:table-cell md:w-32 lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="hidden px-4 py-2 text-center lg:block md:w-36 md:ps-8">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center ps-4">
+                <div class="w-8 h-8 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center ps-4 lg:ps-10">
+                <div class="w-8 h-8 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center pe-4 lg:ps-14">
+                <div class="w-8 h-8 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center lg:pe-4 lg:ps-10">
+                <div class="w-8 h-8 rounded ps-3 bg-mainColor3"></div>
+              </td>
+            </tr>
+            } }
+          </tbody>
+        </table>
+      </div>
+
       <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
+        class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
+        [class.mt-4]="!isLoading() ? allCampsInfo.data.length === 0 : ''"
+      >
+        <button
+          class="px-6 py-[10px] rounded-tl rounded-bl shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
+        >
+          <svg
+            width="8"
+            height="11"
+            class="rotate-180"
+            viewBox="0 0 8 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+              fill="#002C3D"
+            />
+          </svg>
+        </button>
+
+        @for (page of pages; track $index) {
+        <button
+          class="px-6 py-1.5 shadow"
+          [ngClass]="
+            currentPage === page
+              ? 'bg-mainColor1 text-mainColor4 font-bold'
+              : 'bg-mainColor4 hover:bg-gray-100'
+          "
+          (click)="changePage(page)"
+        >
+          {{ page }}
+        </button>
+        } @if ( showEllipsis ) {
+        <span class="px-6 py-1.5">...</span>
+        } @if (showLastPage) {
+        <button
+          class="px-6 py-1.5 shadow bg-mainColor4 hover:bg-gray-100"
+          (click)="changePage(totalPages)"
+        >
+          {{ totalPages }}
+        </button>
+        }
+        <button
+          class="px-6 py-[10px] rounded-tr rounded-br shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="currentPage === totalPages"
+          (click)="changePage(currentPage + 1)"
+        >
+          <svg
+            width="8"
+            height="11"
+            viewBox="0 0 8 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+              fill="#002C3D"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-  } @else {
-  <table class="min-w-full text-center">
-    <thead>
-      <tr class="bg-transparent text-[#6B7088] text-lg">
-        <th class="px-4 py-2 text-left">Name</th>
-        <th class="px-4 py-2">Start Date</th>
-        <th class="px-4 py-2">End Date</th>
-        <th class="px-4 py-2">Term</th>
-        <th class="px-4 py-2">Duration in week</th>
-        <th class="px-4 py-2">Edit</th>
-        <th class="px-4 py-2">Empty</th>
-        <th class="px-4 py-2">Delete</th>
-        <th class="px-4 py-2">Standing</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      @for (item of allCampsInfo.data; track $index) {
-      <tr
-        class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
-      >
-        <td class="px-4 py-2 text-left rounded-s-lg">{{ item.name }}</td>
-        <td class="px-4 py-2">{{ item.startDate }}</td>
-        <td class="px-4 py-2">{{ item.endDate }}</td>
-        <td class="px-4 py-2">
-          @switch (item.term) { @case (1) { First term } @case (2) { Second term
-          } @case (3) { Summer } @case (4) { Mid year } }
-        </td>
-        <td class="px-4 py-2">{{ item.durationInWeeks }}</td>
-        <td (click)="goToActionCamp(item.id)" class="px-4 py-2 cursor-pointer">
-          <svg
-            class="flex justify-center w-full hover:fill-green-500 size-5 fill-[#6B7088]"
-            viewBox="0 0 32 32 "
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-            />
-            <path
-              d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-            />
-            <path
-              d="M0 29.5385H32V32H0V29.5385ZM26.7429 8.61539C27.6571 7.63077 27.6571 6.15385 26.7429 5.16923L22.6286 0.738462C21.7143 -0.246154 20.3429 -0.246154 19.4286 0.738462L2.28571 19.2V27.0769H9.6L26.7429 8.61539ZM21.0286 2.46154L25.1429 6.89231L21.7143 10.5846L17.6 6.15385L21.0286 2.46154ZM4.57143 24.6154V20.1846L16 7.87692L20.1143 12.3077L8.68571 24.6154H4.57143Z"
-            />
-          </svg>
-        </td>
-        <td
-          (click)="showConfirmEmpty(item.id)"
-          class="px-4 py-2 cursor-pointer"
-        >
-          <svg
-            class="flex justify-center w-full hover:fill-yellow-500 size-4 fill-[#6B7088]"
-            viewBox="0 0 28 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M24.6139 4.8361L26.4734 2.79489C26.7674 2.4642 26.919 2.03119 26.8952 1.58975C26.8714 1.14831 26.6741 0.734029 26.3462 0.436712C26.0182 0.139396 25.586 -0.0169882 25.1433 0.00146589C24.7005 0.01992 24.2829 0.211724 23.9809 0.535295L22.1228 2.5737C19.326 0.605751 15.9046 -0.274763 12.5025 0.0978171C9.10036 0.470398 5.95197 2.07039 3.64969 4.59676C1.34741 7.12313 0.0499493 10.4017 0.00141257 13.8157C-0.0471241 17.2296 1.15661 20.5436 3.38615 23.1341L1.52665 25.1753C1.3748 25.338 1.25684 25.5292 1.1796 25.7377C1.10236 25.9463 1.06738 26.168 1.07668 26.3901C1.08598 26.6123 1.13939 26.8303 1.2338 27.0317C1.3282 27.2331 1.46174 27.4138 1.62666 27.5633C1.79159 27.7128 1.98462 27.8282 2.19457 27.9027C2.40452 27.9773 2.62722 28.0095 2.84975 27.9976C3.07229 27.9856 3.29023 27.9297 3.49095 27.8332C3.69167 27.7366 3.87118 27.6012 4.01908 27.4349L5.87717 25.3965C8.67402 27.3644 12.0954 28.245 15.4975 27.8724C18.8996 27.4998 22.048 25.8998 24.3503 23.3734C26.6526 20.8471 27.9501 17.5685 27.9986 14.1545C28.0471 10.7406 26.8434 7.42658 24.6139 4.8361ZM3.33422 13.9851C3.3326 12.0669 3.85122 10.184 4.83512 8.53598C5.81903 6.88794 7.23155 5.53614 8.923 4.62387C10.6145 3.71159 12.5218 3.27282 14.4429 3.35405C16.364 3.43529 18.2273 4.0335 19.8353 5.0853L5.67368 20.6253C4.15735 18.7429 3.33186 16.3999 3.33422 13.9851ZM14 24.6251C11.9261 24.6271 9.89723 24.022 8.1647 22.8849L22.3263 7.34489C23.5828 8.90889 24.3704 10.7953 24.5985 12.7866C24.8266 14.7779 24.4857 16.793 23.6153 18.5994C22.7449 20.4058 21.3804 21.93 19.6791 22.9961C17.9778 24.0623 16.0091 24.627 14 24.6251Z"
-            />
-          </svg>
-        </td>
-        <td
-          (click)="showConfirmDelete(item.id)"
-          class="px-4 py-2 cursor-pointer"
-        >
-          <svg
-            class="flex justify-center w-full hover:fill-red-500 size-5 fill-[#6B7088]"
-            viewBox="0 0 28 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11.0526 4.55V4.9H16.9474V4.55C16.9474 3.80739 16.6368 3.0952 16.0841 2.5701C15.5314 2.045 14.7817 1.75 14 1.75C13.2183 1.75 12.4686 2.045 11.9159 2.5701C11.3632 3.0952 11.0526 3.80739 11.0526 4.55ZM9.21053 4.9V4.55C9.21053 3.34326 9.71513 2.18595 10.6133 1.33266C11.5115 0.479373 12.7298 0 14 0C15.2702 0 16.4885 0.479373 17.3867 1.33266C18.2849 2.18595 18.7895 3.34326 18.7895 4.55V4.9H27.0789C27.3232 4.9 27.5575 4.99219 27.7302 5.15628C27.903 5.32038 28 5.54294 28 5.775C28 6.00706 27.903 6.22962 27.7302 6.39372C27.5575 6.55781 27.3232 6.65 27.0789 6.65H24.9296L23.4559 23.3492C23.3439 24.6173 22.7345 25.7992 21.7485 26.6606C20.7625 27.522 19.4718 28.0001 18.1322 28H9.86779C8.52835 27.9999 7.23783 27.5218 6.25196 26.6604C5.26608 25.799 4.6568 24.6172 4.54484 23.3492L3.07116 6.65H0.921053C0.676774 6.65 0.442501 6.55781 0.26977 6.39372C0.0970392 6.22962 0 6.00706 0 5.775C0 5.54294 0.0970392 5.32038 0.26977 5.15628C0.442501 4.99219 0.676774 4.9 0.921053 4.9H9.21053ZM6.38032 23.2029C6.45366 24.0337 6.85285 24.808 7.49877 25.3723C8.1447 25.9367 8.99022 26.2499 9.86779 26.25H18.1322C19.0099 26.2501 19.8556 25.9369 20.5017 25.3726C21.1478 24.8082 21.5471 24.0338 21.6204 23.2029L23.0808 6.65H4.91916L6.38032 23.2029ZM12.1579 11.375C12.1579 11.2601 12.1341 11.1463 12.0878 11.0402C12.0415 10.934 11.9737 10.8375 11.8881 10.7563C11.8026 10.675 11.7011 10.6106 11.5893 10.5666C11.4776 10.5226 11.3578 10.5 11.2368 10.5C11.1159 10.5 10.9961 10.5226 10.8844 10.5666C10.7726 10.6106 10.6711 10.675 10.5856 10.7563C10.5 10.8375 10.4322 10.934 10.3859 11.0402C10.3396 11.1463 10.3158 11.2601 10.3158 11.375V21.525C10.3158 21.6399 10.3396 21.7537 10.3859 21.8598C10.4322 21.966 10.5 22.0625 10.5856 22.1437C10.6711 22.225 10.7726 22.2894 10.8844 22.3334C10.9961 22.3774 11.1159 22.4 11.2368 22.4C11.3578 22.4 11.4776 22.3774 11.5893 22.3334C11.7011 22.2894 11.8026 22.225 11.8881 22.1437C11.9737 22.0625 12.0415 21.966 12.0878 21.8598C12.1341 21.7537 12.1579 21.6399 12.1579 21.525V11.375ZM16.7632 10.5C17.2716 10.5 17.6842 10.892 17.6842 11.375V21.525C17.6842 21.7571 17.5872 21.9796 17.4144 22.1437C17.2417 22.3078 17.0074 22.4 16.7632 22.4C16.5189 22.4 16.2846 22.3078 16.1119 22.1437C15.9391 21.9796 15.8421 21.7571 15.8421 21.525V11.375C15.8421 10.892 16.2547 10.5 16.7632 10.5Z"
-            />
-          </svg>
-        </td>
-        <td
-          (click)="goToStandingCamp(item.id)"
-          class="px-4 py-2 cursor-pointer rounded-e-lg"
-        >
-          <svg
-            class="flex justify-center w-full size-6"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.67969 14.6933V21.3199C5.67969 23.7466 5.67969 23.7466 7.97302 25.2933L14.2797 28.9333C15.2264 29.4799 16.773 29.4799 17.7197 28.9333L24.0264 25.2933C26.3197 23.7466 26.3197 23.7466 26.3197 21.3199V14.6933C26.3197 12.2666 26.3197 12.2666 24.0264 10.7199L17.7197 7.07992C16.773 6.53326 15.2264 6.53326 14.2797 7.07992L7.97302 10.7199C5.67969 12.2666 5.67969 12.2666 5.67969 14.6933Z"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M23.3346 10.1732V6.6665C23.3346 3.99984 22.0013 2.6665 19.3346 2.6665H12.668C10.0013 2.6665 8.66797 3.99984 8.66797 6.6665V10.0798"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M16.8384 14.6533L17.5984 15.8399C17.7184 16.0266 17.9851 16.2133 18.1851 16.2666L19.5451 16.6133C20.3851 16.8266 20.6117 17.5466 20.0651 18.2133L19.1717 19.2933C19.0384 19.4666 18.9317 19.7733 18.9451 19.9866L19.0251 21.3866C19.0784 22.2533 18.4651 22.6933 17.6651 22.3733L16.3584 21.8533C16.1584 21.7733 15.8251 21.7733 15.6251 21.8533L14.3184 22.3733C13.5184 22.6933 12.9051 22.2399 12.9584 21.3866L13.0384 19.9866C13.0517 19.7733 12.9451 19.4533 12.8117 19.2933L11.9184 18.2133C11.3717 17.5466 11.5984 16.8266 12.4384 16.6133L13.7984 16.2666C14.0117 16.2133 14.2784 16.0133 14.3851 15.8399L15.1451 14.6533C15.6251 13.9333 16.3717 13.9333 16.8384 14.6533Z"
-              stroke="#6B7088"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-  } @if (showModal) {
-  <app-confirm-camp
+  @if (showModalDelete) {
+  <app-delete-confirm-modal
     (closeModal)="handleClose($event)"
     [itemId]="selectedItemId"
+    [label]="'camps'"
   />
   } @if (showEmptyModal) {
   <app-empty-camp
@@ -145,36 +382,3 @@
   />
   }
 </div>
-@if (!isLoading()) {
-<div class="relative bottom-0 flex justify-center items-center py-1.5 bg-white">
-  <div class="flex items-center justify-center">
-    <button
-      class="py-2 text-lg font-semibold pe-4 disabled:cursor-not-allowed text-activeLink"
-      (click)="previousPage()"
-      [disabled]="!allCampsInfo.hasPreviousPage"
-    >
-      Previous
-    </button>
-    <div class="flex items-center space-x-2">
-      @for (page of getPageRange(); track page; let i = $index) {
-      <button
-        class="px-3 py-1 font-bold rounded-tr-lg rounded-bl-lg rounded-br-lg text-activeLink"
-        (click)="gotoPage(page)"
-        [class.bg-[#3d91c7]]="page === allCampsInfo.currentPage"
-        [class.text-white]="page === allCampsInfo.currentPage"
-      >
-        {{ page }}
-      </button>
-      }
-    </div>
-
-    <button
-      class="p-2 text-lg font-semibold text-activeLink"
-      (click)="nextPage()"
-      [disabled]="!allCampsInfo.hasNextPage"
-    >
-      Next
-    </button>
-  </div>
-</div>
-}

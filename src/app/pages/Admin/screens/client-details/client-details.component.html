@@ -1,0 +1,209 @@
+<div class="flex flex-col w-full">
+  <div
+    class="flex flex-col items-center w-full lg:items-stretch gap-x-8 gap-y-8 lg:justify-between lg:flex-row"
+  >
+    <div class="flex flex-col w-full gap-y-10">
+      <div class="flex flex-col gap-y-4">
+        <h2 class="text-xl font-semibold text-mainColor1">
+          Leaders Information
+        </h2>
+        <div
+          class="h-64 overflow-y-auto scroll-host-table"
+          [class.h-64]="!isLoading && client.leaders.length >= 3 ? true : false"
+        >
+          <table
+            class="min-w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+          >
+            <thead
+              class="border border-b-mainColor1 text-sm sticky -top-1 font-semibold bg-[#DEDFE1]"
+            >
+              <tr>
+                <th class="w-1/3 py-4">Full Name</th>
+                <th class="w-1/3 py-4">E-mail</th>
+                <th class="w-1/3 py-4">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (!isLoading) { @for (leader of client.leaders; track i; let i
+              = $index; let first = $first) {
+
+              <tr
+                class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+                [class.border-t-8]="first"
+              >
+                <td class="w-1/3 py-4 truncate">
+                  {{ leader.firstName }} {{ leader.middleName }}
+                  {{ leader.lastName }}
+                </td>
+                <td class="w-1/3 py-4 truncate">
+                  {{ leader.email }}
+                </td>
+                <td class="w-1/3 py-4">
+                  {{ leader.phoneNumber }}
+                </td>
+              </tr>
+              } }@else { @for ( i of [1, 2, 3, 4 ,5]; track i) {
+              <tr class="w-full animate-pulse">
+                <td class="w-1/3 px-10 py-4">
+                  <div class="w-full h-5 bg-mainColor3"></div>
+                </td>
+                <td class="w-1/3 px-10 py-4">
+                  <div class="w-full h-5 rounded bg-mainColor3"></div>
+                </td>
+                <td class="w-1/3 px-10 py-4">
+                  <div class="w-full h-5 rounded bg-mainColor3"></div>
+                </td>
+              </tr>
+              } }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col mt-8 gap-y-6">
+    <h2 class="text-xl font-semibold text-mainColor1">
+      Client Personal Information
+    </h2>
+    @if (!isLoading) {
+
+    <div class="flex flex-col w-full gap-y-2 lg:flex-row gap-x-4">
+      <div class="grid w-full grid-cols-2 gap-2 lg:w-8/12">
+        <div class="flex flex-col gap-y-1">
+          <label
+            for="ClientName"
+            class="font-bold text-[#002C3D4D] md:text-lg text-sm"
+            >Community Name
+            <span class="text-sm font-bold text-red-600 md:text-lg"
+              >*</span
+            ></label
+          >
+          <div
+            class="px-4 py-2 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+          >
+            {{ client.clientName || "Community name" }}
+          </div>
+        </div>
+        <div class="flex-col hidden md:flex gap-y-1">
+          <label
+            for="CommunityGmail"
+            class="font-bold text-[#002C3D4D] md:text-lg text-sm"
+            >Community E-mail
+            <span class="text-sm font-bold text-red-600 md:text-lg"
+              >*</span
+            ></label
+          >
+          <div
+            class="px-4 py-2 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+          >
+            {{ client.gmail || "Community email" }}
+          </div>
+        </div>
+        <div class="flex flex-col gap-y-1">
+          <label
+            for="CommunityFacebookLink"
+            class="font-bold text-xs text-[#002C3D4D] lg:text-lg"
+            >Community Facebook Link</label
+          >
+          <div
+            class="px-4 py-2 mt-1 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 lg:mt-0 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+          >
+            {{ client.facebookLink || "facebookLink" }}
+          </div>
+        </div>
+        <div class="flex flex-col col-span-2 md:hidden gap-y-1">
+          <label
+            for="CommunityGmail"
+            class="font-bold text-[#002C3D4D] md:text-lg text-sm"
+            >Community E-mail
+            <span class="text-sm font-bold text-red-600 md:text-lg"
+              >*</span
+            ></label
+          >
+          <div
+            class="px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+          >
+            {{ client.gmail || "Community email" }}
+          </div>
+        </div>
+      </div>
+      <div class="grid w-full gap-2 lg:w-4/12">
+        <div class="flex flex-col w-11/12">
+          <h4 class="font-semibold pb-1.5 text-[#002C3D4D] text-lg">
+            Subscribe Date
+            <span class="text-lg font-bold text-red-600">*</span>
+          </h4>
+          <div
+            class="flex flex-col p-4 bg-white border rounded-md border-mainColor1 text-mainColor1"
+          >
+            <!-- Start Date -->
+            <div class="flex items-center mb-4">
+              <label
+                class="px-4 py-2 text-center text-white bg-mainColor1 rounded-l-md"
+              >
+                Start
+              </label>
+              <input
+                type="date"
+                [(ngModel)]="startDate"
+                class="w-full px-3 py-2 font-semibold border border-gray-300 rounded-r-md text-mainColor1 focus:outline-mainColor1"
+              />
+            </div>
+            <!-- End Date -->
+            <div class="flex items-center">
+              <label
+                class="px-4 py-2 text-center text-white bg-mainColor1 rounded-l-md"
+              >
+                End
+              </label>
+              <input
+                type="date"
+                [(ngModel)]="endDate"
+                class="w-full px-3 py-2 font-semibold border border-gray-300 rounded-r-md text-mainColor1 focus:outline-mainColor1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center">
+        <div
+          class="flex items-center justify-center border-4 rounded-full w-52 h-52 md:w-52 md:h-52"
+        >
+          <img
+            [src]="logoImage || 'assets/img/user.jpeg'"
+            alt="Logo Picture"
+            class="object-cover w-full h-full rounded-full"
+          />
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div
+    class="flex items-center justify-center w-full mt-16 mb-6 text-lg font-semibold gap-x-6 text-mainColor4"
+  >
+    <button
+      (click)="updatesubScribtionClient(startDate, endDate)"
+      class="px-6 py-2 rounded-md bg-mainColor1"
+    >
+      @if (!isLoadingSubmit) {Save}@else {
+      <div class="flex items-center justify-center w-full bg-opacity-60">
+        <div class="flex items-center justify-center">
+          <div
+            class="w-8 h-8 border-4 border-dashed rounded-full border-subColor2 animate-spin"
+          ></div>
+        </div>
+      </div>
+      }
+    </button>
+    <button
+      type="button"
+      routerLink="/psovle/clients"
+      class="px-6 py-2 rounded-md bg-mainColor2"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

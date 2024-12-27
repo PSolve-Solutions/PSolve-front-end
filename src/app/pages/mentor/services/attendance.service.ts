@@ -12,6 +12,6 @@ export class AttendanceService {
   constructor(private http:HttpClient  ) { }
   getData(id:any): Observable<ResponseHeader>{
     
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/attendances?campId=${id}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/attendances?campId=${Number(id)}`)
   }
 }

@@ -14,25 +14,26 @@ export class ReportsService {
 
   reportsWithPagination(
     currentPage: number,
-    pageSize: number,
-    KeyWord?: string,
-    SortBy?: any
+    pageSize: number
   ): Observable<any> {
-    let params;
-
-    params = new HttpParams()
+    let params = new HttpParams()
       .set('PageNumber', currentPage)
-      .set('PageSize', pageSize)
-      .set('KeyWord', KeyWord ? KeyWord : '');
-
+      .set('PageSize', pageSize);
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Leader/camps/reports`,
       params
     );
   }
-  reportsInDetails(campId: number): Observable<ResponseHeader> {
+  reportsInDetails(
+    campId: number,
+    currentDate: string
+  ): Observable<ResponseHeader> {
+    const params = new HttpParams()
+      .set('CampId', campId)
+      .set('CurrentDate', currentDate);
     return this.casheService.get<ResponseHeader>(
-      `${environment.BASE_URL}/api/Leader/camps/reportsInDetails/${campId}`
+      `${environment.BASE_URL}/api/Leader/camps/reportsInDetails`,
+      params
     );
   }
 }

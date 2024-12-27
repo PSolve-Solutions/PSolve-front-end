@@ -1,7 +1,6 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  ElementRef,
   HostListener,
   inject,
   OnInit,
@@ -18,8 +17,8 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { ContestsHocService } from '../../services/contests-hoc.service';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actions-contests',
@@ -37,19 +36,20 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class ActionsContestsComponent implements OnInit {
   contestsHocService = inject(ContestsHocService);
-  casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   router = inject(Router);
   route = inject(ActivatedRoute);
-  @ViewChild('community') community!: NgSelectComponent;
   @ViewChild('judge') judge!: NgSelectComponent;
-  foucsTerm: boolean = false;
+  @ViewChild('communitySelect') communitySelect!: NgSelectComponent;
   foucsJ: boolean = false;
+  foucsC: boolean = false;
   id: number = 0;
   submitted: boolean = false;
   isLoading: boolean = false;
   contestForm!: FormGroup;
+  onlineJudgeIsCodeforces: boolean = false;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -62,11 +62,11 @@ export class ActionsContestsComponent implements OnInit {
       id: [''],
       name: [null, [Validators.required]],
       link: [null, [Validators.required]],
-      community: [null, [Validators.required]],
-      judgeType: [null, [Validators.required]],
       problemCount: [0, this.positiveNumberValidator],
       onlineId: [null, [Validators.required]],
+      judgeType: [null, [Validators.required]],
       chiefOfContest: [null, [Validators.required]],
+      cfCommunityId: [null],
       endTime: [null, [Validators.required]],
       startTime: [null, [Validators.required]],
     });
@@ -103,9 +103,8 @@ export class ActionsContestsComponent implements OnInit {
             id: data.id,
             name: data.name,
             link: data.link,
-            startTime: data.startTime,
-            endTime: data.endTime,
-            community: data.community,
+            startDate: data.startDate,
+            endDate: data.endDate,
             judgeType: data.judgeType,
             chiefOfContest: data.chiefOfContest,
             onlineId: data.onlineId,
@@ -125,44 +124,48 @@ export class ActionsContestsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+    const data = {
+      ...this.contestForm.value,
+      startTime: new Date(
+        this.contestForm.get('startTime')?.value
+      ).toISOString(),
+      endTime: new Date(this.contestForm.get('endTime')?.value).toISOString(),
+    };
+    console.log(data);
     if (this.id === 0) {
-      this.contestsHocService.createContest(this.contestForm.value).subscribe({
-        next: ({ statusCode, message, errors }) => {
-          if (statusCode === 200) {
-            this.toastr.success(message);
-            this.casheService.clearCache();
-            this.router.navigate(['/head_of_camp/contests']);
-            this.isLoading = false;
-          } else if (statusCode === 400) {
-            this.toastr.error(message);
-
-            this.isLoading = false;
-          } else if (statusCode === 500) {
-            this.toastr.warning(message);
-            this.isLoading = false;
-          } else {
-            errors.forEach((error: any) => {
-              this.toastr.error(error);
-            });
-            this.isLoading = false;
-          }
-        },
-        error: (err) => {
-          console.log(err);
-          this.isLoading = false;
-        },
-      });
+      // this.contestsHocService.createContest(data).subscribe({
+      //   next: ({ statusCode, message, errors }) => {
+      //     if (statusCode === 200) {
+      //       this.toastr.success(message);
+      //       this.router.navigate(['/head_of_camp/contests']);
+      //       this.isLoading = false;
+      //     } else if (statusCode === 400) {
+      //       this.toastr.error(message);
+      //       this.isLoading = false;
+      //     } else if (statusCode === 500) {
+      //       this.toastr.warning(message);
+      //       this.isLoading = false;
+      //     } else {
+      //       errors.forEach((error: any) => {
+      //         this.toastr.error(error);
+      //       });
+      //       this.isLoading = false;
+      //     }
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //     this.isLoading = false;
+      //   },
+      // });
     } else {
-      this.contestsHocService.updateContest(this.contestForm.value).subscribe({
+      this.contestsHocService.updateContest(data).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/contests']);
             this.isLoading = false;
           } else if (statusCode === 400) {
             this.toastr.error(message);
-
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);
@@ -179,6 +182,21 @@ export class ActionsContestsComponent implements OnInit {
           this.isLoading = false;
         },
       });
+    }
+  }
+
+  changeJudge(item: number) {
+    if (item === 0) {
+      this.onlineJudgeIsCodeforces = true;
+
+      // this.contestForm
+      // .get('cfCommunityId')
+      // ?.setValidators([Validators.required]);
+      // this.contestForm.get('cfCommunityId')?.updateValueAndValidity();
+    } else {
+      this.onlineJudgeIsCodeforces = false;
+      // this.contestForm.get('cfCommunityId')?.clearValidators();
+      // this.contestForm.get('cfCommunityId')?.updateValueAndValidity();
     }
   }
 
@@ -194,21 +212,9 @@ export class ActionsContestsComponent implements OnInit {
   }
   @HostListener('document:click', ['$event'])
   onClickOutside() {
-    if (this.community.dropdownPanel === undefined) {
-      this.foucsTerm = false;
-    }
     if (this.judge.dropdownPanel === undefined) {
       this.foucsJ = false;
     }
-  }
-
-  toggleDropdownC() {
-    if (this.foucsTerm) {
-      this.community.close();
-    } else {
-      this.community.open();
-    }
-    this.foucsTerm = !this.foucsTerm;
   }
   toggleDropdownJ() {
     if (this.foucsJ) {
@@ -217,5 +223,13 @@ export class ActionsContestsComponent implements OnInit {
       this.judge.open();
     }
     this.foucsJ = !this.foucsJ;
+  }
+  toggleDropdownC() {
+    if (this.foucsC) {
+      this.communitySelect.close();
+    } else {
+      this.communitySelect.open();
+    }
+    this.foucsC = !this.foucsC;
   }
 }
