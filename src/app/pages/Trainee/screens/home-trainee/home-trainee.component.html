@@ -15,51 +15,50 @@
         <app-home-tasks-todo/>
         <app-home-tasks-in-progress/>
         <app-home-tasks-done/>
-      <div class="feed-back fixed hidden flex-col w-11/12 sm:w-80 h-fit z-20 min-h-dvh sm:min-h-fit sm:left-[85%] sm:top-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"   (mouseenter)="enterMouseFeedBack()">
-        <div class="inner border-feed-back">
-          <div class="header font-bold text-[1.25rem] bg-white px-6 py-5 rounded-t-[7px]">
-            <h4>
-            Your opinion matters to us!
-            </h4>
-          </div>
-          <div
-        class="flex flex-col items-center justify-center gap-5 transition-all duration-500  bg-[#b7bdc8] px-4 py-3"
-      >
-      <p class="text-[#23286B] text-[.9rem] font-bold">Give feedback last session, mentor</p>
-        <!-- Star Rating -->
-        <div class="flex">
-
-          @for (star of stars; track stars ; let i = $index) {
-            <div class=" star cursor-pointer text-black text-opacity-25" [id]="i"  (click)="getRating(i+1)">
-              <svg
-            class="size-8"
-            viewBox="0 0 18 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z"
-              fill="currentColor"
-            />
-          </svg>
+        <div class="feed-back fixed hidden flex-col w-11/12 sm:w-80 h-fit z-20 min-h-dvh sm:min-h-fit sm:left-[85%] sm:top-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-montserrat" >
+          <div class="inner border-feed-back" (mouseleave)="onLeave()"  (mouseenter)="onEnterFeedBack(true)">
+            <div class="header font-bold text-[1.1rem] bg-white px-6 py-5 rounded-t-[7px]">
+              <h4 class="text-[#002C3D] text-center">
+              Your opinion matters to us!
+              </h4>
             </div>
-          }
-        </div>
-        <div class="flex flex-col items-center gap-2">
-          <form [formGroup]="feedBackForm">
-            <textarea type="text" placeholder="Add your feedback" formControlName="feedback"   class="w-full  p-3 rounded-[10px] focus:outline-none max-h-[50px]"></textarea>
-          <p class=" text-red-500 flex items-center gap-1" *ngIf="feedBackForm.get('feedback')?.touched && feedBackForm.get('feedback')?.getError('required')">
-            <i class="fa-solid fa-circle-info"></i> Please Write Your feedback
-          </p>
-          </form>
-        </div>
-      </div>
-          <div class="footer bg-white px-4 py-2 rounded-b-[7px]">
-            <button class="bg-[#0E3C6E] w-full p-2 rounded-[10px] text-white" (click)="addFeedBack()">
-              Submit
-            </button>
+            <div
+          class="flex flex-col items-center justify-center gap-5 transition-all duration-500  bg-[#b7bdc8] px-4 py-3"
+        >
+        <p class="text-[#2A8E9E] text-[.9rem] font-bold">Give feedback last session, mentor</p>
+          <div class="flex">
+
+            @for (star of stars; track stars ; let i = $index) {
+              <div class=" star cursor-pointer text-black text-opacity-25" [id]="i"  (click)="getRating(i+1)">
+                <svg
+              class="size-8"
+              viewBox="0 0 18 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z"
+                fill="currentColor"
+              />
+            </svg>
+              </div>
+            }
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <form [formGroup]="feedBackForm">
+              <textarea type="text" placeholder="Add your feedback" formControlName="feedback"   class="p-3 rounded-[10px] focus:outline-none max-h-[50px]"></textarea>
+            <p class=" text-red-500 flex items-center gap-1" *ngIf="feedBackForm.get('feedback')?.touched && feedBackForm.get('feedback')?.getError('required')">
+              <i class="fa-solid fa-circle-info"></i> Please Write Your feedback
+            </p>
+            </form>
           </div>
         </div>
-      </div>
+            <div class="footer bg-white px-4 py-2 rounded-b-[7px]">
+              <button class="bg-[#2A8E9E] w-full p-2 rounded-[10px] text-white" (click)="addFeedBack()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
     </div>
   }
