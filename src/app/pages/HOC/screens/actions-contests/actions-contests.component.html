@@ -12,7 +12,7 @@
   </h1>
 
   <form [formGroup]="contestForm" (ngSubmit)="actionsContext()">
-    <div class="flex flex-col w-full lg:w-11/12 gap-y-6 md:gap-y-8">
+    <div class="flex flex-col w-full ps-8 lg:w-11/12 gap-y-6 md:gap-y-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
         <div class="flex flex-col">
           <label for="name" class="text-lg ps-2 text-[#002C3D4D] font-semibold"
@@ -153,13 +153,17 @@
           <ng-select
             #communitySelect
             [closeOnSelect]="true"
-            bindLabel="name"
+            bindLabel="clientName"
             bindValue="id"
             formControlName="cfCommunityId"
-            placeholder="Select Community"
+            [placeholder]="is ? 'General' : 'Select Community'"
             (click)="toggleDropdownC()"
             class="relative block text-lg w-full text-black bg-[#fff] border-2 rounded-xl appearance-none focus:outline-none"
           >
+            <ng-option [value]="null"> General </ng-option>
+            @for (item of allCommunities; track $index) {
+            <ng-option [value]="item.id">{{ item.clientName }}</ng-option>
+            }
           </ng-select>
           <button (click)="toggleDropdownC()" type="button">
             <svg
@@ -268,7 +272,14 @@
     <div
       class="flex items-center justify-end w-full mt-20 text-lg font-semibold gap-x-6 md:w-11/12 text-mainColor4"
     >
-      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+      <button
+        type="button"
+        routerLink="/head_of_camp/contests"
+        class="px-6 py-2 rounded-md bg-mainColor2"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="px-9 py-2 rounded-md bg-mainColor1">
         @if (!isLoading) {Save}@else {
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
@@ -278,13 +289,6 @@
           </div>
         </div>
         }
-      </button>
-      <button
-        type="button"
-        routerLink="/head_of_camp/contests"
-        class="px-6 py-2 rounded-md bg-mainColor2"
-      >
-        Cancel
       </button>
     </div>
   </form>

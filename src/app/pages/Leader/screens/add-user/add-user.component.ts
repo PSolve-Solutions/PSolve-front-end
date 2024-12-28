@@ -3,7 +3,6 @@ import {
   HostListener,
   inject,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -12,19 +11,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { DashboardService } from '../../services/dashboard.service';
 import { NgClass } from '@angular/common';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [ReactiveFormsModule, NgSelectModule, NgClass, ToastrModule],
+  imports: [ReactiveFormsModule, NgClass, ToastrModule, RouterLink],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
-  encapsulation: ViewEncapsulation.None,
 })
 export class AddUserComponent implements OnInit {
   dashboardService = inject(DashboardService);
@@ -39,13 +38,11 @@ export class AddUserComponent implements OnInit {
   foucsCollege: boolean = false;
   foucsRole: boolean = false;
   foucsCamp: boolean = false;
-  submitted: boolean = false;
   isLoading: boolean = false;
   addUserForm!: FormGroup;
-
-  @ViewChild('collegeSelect') collegeSelect!: NgSelectComponent;
-  @ViewChild('roleSelect') roleSelect!: NgSelectComponent;
-  @ViewChild('campSelect') campSelect!: NgSelectComponent;
+  collegeName: string = '';
+  campName: string = '';
+  roleName: string = '';
 
   ngOnInit(): void {
     this.addUserForm = this.fb.group({
@@ -90,7 +87,6 @@ export class AddUserComponent implements OnInit {
   }
 
   craeteUser() {
-    this.submitted = true;
     if (this.addUserForm.invalid) {
       this.displayFormErrors();
       return;
@@ -108,7 +104,9 @@ export class AddUserComponent implements OnInit {
           this.toastr.success(message);
           this.addUserForm.reset();
           this.isLoading = false;
-          this.submitted = false;
+          this.roleName = '';
+          this.collegeName = '';
+          this.campName = '';
         } else if (statusCode === 400) {
           this.toastr.error(message);
           this.isLoading = false;
@@ -146,8 +144,8 @@ export class AddUserComponent implements OnInit {
     this.addUserForm.get('profileImage')?.setValue(imgFile);
   }
 
-  getRole(role: any): void {
-    if (role.name === 'Trainee' || role.name === 'Head_Of_Camp') {
+  getRole(roleName: string): void {
+    if (roleName === 'Trainee' || roleName === 'Head_Of_Camp') {
       this.isShow = true;
     } else {
       this.isShow = false;
@@ -184,41 +182,49 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  toggleDropdownC() {
-    if (this.foucsCollege) {
-      this.collegeSelect.close();
-    } else {
-      this.collegeSelect.open();
-    }
+  selectCollege(option: any): void {
+    this.collegeName = option.name;
+    this.foucsCollege = false;
+    this.addUserForm.get('college')?.setValue(option.id);
+  }
+  toggleDropdownCollege() {
     this.foucsCollege = !this.foucsCollege;
   }
-  toggleDropdownR() {
-    if (this.foucsRole) {
-      this.roleSelect.close();
-    } else {
-      this.roleSelect.open();
-    }
+
+  selectRole(role: any): void {
+    this.roleName = role.name;
+    this.getRole(this.roleName);
+    this.foucsRole = false;
+    this.addUserForm.get('role')?.setValue(role.name);
+  }
+  toggleDropdownRole() {
     this.foucsRole = !this.foucsRole;
   }
+
+  selectCamp(option: any): void {
+    this.campName = option.name;
+    this.foucsCamp = false;
+    this.addUserForm.get('campId')?.setValue(option.id);
+  }
   toggleDropdownCamp() {
-    if (this.foucsCamp) {
-      this.campSelect.close();
-    } else {
-      this.campSelect.open();
-    }
+    console.log(this.allCamps);
     this.foucsCamp = !this.foucsCamp;
   }
 
   @HostListener('document:click', ['$event'])
-  onClickOutside() {
-    if (this.collegeSelect.dropdownPanel === undefined) {
-      this.foucsCollege = false;
-    }
-    if (this.roleSelect.dropdownPanel === undefined) {
+  onDocumentClick(event: Event): void {
+    const targetElement = event.target as HTMLElement;
+    const isInsideDropdown = targetElement.closest('#role');
+    const isInsideDropdownCamp = targetElement.closest('#camp');
+    const isInsideDropdownCollege = targetElement.closest('#college');
+    if (!isInsideDropdown) {
       this.foucsRole = false;
     }
-    if (this.campSelect?.dropdownPanel === undefined) {
+    if (!isInsideDropdownCamp) {
       this.foucsCamp = false;
+    }
+    if (!isInsideDropdownCollege) {
+      this.foucsCollege = false;
     }
   }
 }

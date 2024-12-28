@@ -50,6 +50,8 @@ export class ActionsContestsComponent implements OnInit {
   isLoading: boolean = false;
   contestForm!: FormGroup;
   onlineJudgeIsCodeforces: boolean = false;
+  is: boolean = false;
+  allCommunities: { id: string; clientName: string }[] = [];
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -70,6 +72,8 @@ export class ActionsContestsComponent implements OnInit {
       endTime: [null, [Validators.required]],
       startTime: [null, [Validators.required]],
     });
+
+    this.fetchAllCommunitiesy();
   }
 
   positiveNumberValidator(control: AbstractControl) {
@@ -93,20 +97,37 @@ export class ActionsContestsComponent implements OnInit {
     }
   }
 
+  convertToLocal(utcDate: string): string {
+    const date = new Date(utcDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   getOneContest(id: number): void {
     this.isLoading = true;
     this.contestsHocService.getOneContest(id).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode == 200) {
           this.isLoading = false;
+          const localStartTime = this.convertToLocal(data.startTime);
+          const localEndTime = this.convertToLocal(data.endTime);
+          this.onlineJudgeIsCodeforces = true;
+          if (!data.cfCommunityId) {
+            this.is = true;
+          }
           this.contestForm.patchValue({
             id: data.id,
             name: data.name,
             link: data.link,
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startTime: localStartTime,
+            endTime: localEndTime,
             judgeType: data.judgeType,
             chiefOfContest: data.chiefOfContest,
+            cfCommunityId: data.cfCommunityId,
             onlineId: data.onlineId,
             problemCount: data.problemCount,
           });
@@ -126,6 +147,9 @@ export class ActionsContestsComponent implements OnInit {
     this.isLoading = true;
     const data = {
       ...this.contestForm.value,
+      cfCommunityId: this.contestForm.get('cfCommunityId')?.value
+        ? this.contestForm.get('cfCommunityId')?.value
+        : null,
       startTime: new Date(
         this.contestForm.get('startTime')?.value
       ).toISOString(),
@@ -133,30 +157,30 @@ export class ActionsContestsComponent implements OnInit {
     };
     console.log(data);
     if (this.id === 0) {
-      // this.contestsHocService.createContest(data).subscribe({
-      //   next: ({ statusCode, message, errors }) => {
-      //     if (statusCode === 200) {
-      //       this.toastr.success(message);
-      //       this.router.navigate(['/head_of_camp/contests']);
-      //       this.isLoading = false;
-      //     } else if (statusCode === 400) {
-      //       this.toastr.error(message);
-      //       this.isLoading = false;
-      //     } else if (statusCode === 500) {
-      //       this.toastr.warning(message);
-      //       this.isLoading = false;
-      //     } else {
-      //       errors.forEach((error: any) => {
-      //         this.toastr.error(error);
-      //       });
-      //       this.isLoading = false;
-      //     }
-      //   },
-      //   error: (err) => {
-      //     console.log(err);
-      //     this.isLoading = false;
-      //   },
-      // });
+      this.contestsHocService.createContest(data).subscribe({
+        next: ({ statusCode, message, errors }) => {
+          if (statusCode === 200) {
+            this.toastr.success(message);
+            this.router.navigate(['/head_of_camp/contests']);
+            this.isLoading = false;
+          } else if (statusCode === 400) {
+            this.toastr.error(message);
+            this.isLoading = false;
+          } else if (statusCode === 500) {
+            this.toastr.warning(message);
+            this.isLoading = false;
+          } else {
+            errors.forEach((error: any) => {
+              this.toastr.error(error);
+            });
+            this.isLoading = false;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.isLoading = false;
+        },
+      });
     } else {
       this.contestsHocService.updateContest(data).subscribe({
         next: ({ statusCode, message, errors }) => {
@@ -185,18 +209,26 @@ export class ActionsContestsComponent implements OnInit {
     }
   }
 
+  fetchAllCommunitiesy(): void {
+    this.contestsHocService.getPublicCommunities().subscribe({
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.allCommunities = data;
+        } else {
+          console.log('error');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   changeJudge(item: number) {
     if (item === 0) {
       this.onlineJudgeIsCodeforces = true;
-
-      // this.contestForm
-      // .get('cfCommunityId')
-      // ?.setValidators([Validators.required]);
-      // this.contestForm.get('cfCommunityId')?.updateValueAndValidity();
     } else {
       this.onlineJudgeIsCodeforces = false;
-      // this.contestForm.get('cfCommunityId')?.clearValidators();
-      // this.contestForm.get('cfCommunityId')?.updateValueAndValidity();
     }
   }
 

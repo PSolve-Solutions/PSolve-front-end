@@ -185,6 +185,13 @@
     class="flex items-center justify-center w-full mt-16 mb-6 text-lg font-semibold gap-x-6 text-mainColor4"
   >
     <button
+      type="button"
+      routerLink="/psovle/clients"
+      class="px-6 py-2 rounded-md bg-mainColor2"
+    >
+      Cancel
+    </button>
+    <button
       (click)="updatesubScribtionClient(startDate, endDate)"
       class="px-6 py-2 rounded-md bg-mainColor1"
     >
@@ -197,13 +204,6 @@
         </div>
       </div>
       }
-    </button>
-    <button
-      type="button"
-      routerLink="/psovle/clients"
-      class="px-6 py-2 rounded-md bg-mainColor2"
-    >
-      Cancel
     </button>
   </div>
 </div>

@@ -1,17 +1,16 @@
-.ng-select,
-.ng-select:focus {
-  height: 45.5px;
+.scroll-select::-webkit-scrollbar {
+  width: 6px !important;
+}
+.scroll-select::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-.ng-select.ng-select-multiple .ng-select-container,
-.ng-select .ng-select-container {
-  width: 98% !important;
-  border-radius: 12px;
+.scroll-select::-webkit-scrollbar-thumb {
+  background: #285c6a;
+  border-radius: 10px;
 }
 
-.ng-value-label[ng-reflect-escape="true"] {
-  background-color: #002c3d !important;
-  color: white !important;
-  padding: 4px 8px !important;
-  border-radius: 8px !important;
+.scroll-select::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

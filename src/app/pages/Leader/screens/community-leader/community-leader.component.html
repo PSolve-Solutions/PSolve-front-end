@@ -382,7 +382,14 @@
     <div
       class="flex items-center justify-end w-full mt-20 text-lg font-semibold lg:w-11/12 gap-x-6 text-mainColor4"
     >
-      <button type="submit" class="px-6 py-2 rounded-md bg-mainColor1">
+      <button
+        type="button"
+        (click)="getCommunityById()"
+        class="px-6 py-2 rounded-md bg-mainColor2"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="py-2 rounded-md px-9 bg-mainColor1">
         @if (!isLoading) {Save}@else {
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
@@ -392,13 +399,6 @@
           </div>
         </div>
         }
-      </button>
-      <button
-        type="button"
-        (click)="getCommunityById()"
-        class="px-6 py-2 rounded-md bg-mainColor2"
-      >
-        Cancel
       </button>
     </div>
   </form>

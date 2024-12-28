@@ -10,15 +10,10 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class SheetsHOCService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-  getAllSheets(
-    currentPage: number,
-    pageSize: number,
-    KeyWord?: string
-  ): Observable<any> {
+  getAllSheets(currentPage: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('PageNumber', currentPage)
-      .set('PageSize', pageSize)
-      .set('KeyWord', KeyWord ? KeyWord : '');
+      .set('PageSize', pageSize);
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Head/sheets`,
       params
@@ -26,37 +21,37 @@ export class SheetsHOCService {
   }
 
   updateSheetsOrder(info: any): Observable<ResponseHeader> {
-    return this.http.put<any>(
+    return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/updateSheetsOrder`,
       info
     );
   }
 
   deleteSheet(id: number): Observable<ResponseHeader> {
-    return this.http.delete<any>(
+    return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/sheets/${id}`
     );
   }
   getMaterailsBySheetId(id: number): Observable<ResponseHeader> {
-    return this.http.get<any>(
+    return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/getMaterailsBySheetId/${id}`
     );
   }
   updateOrdersMaterails(info: any): Observable<ResponseHeader> {
-    return this.http.put<any>(
+    return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/materials/updateOrders`,
       info
     );
   }
 
   deleteMaterial(id: number): Observable<ResponseHeader> {
-    return this.http.delete<any>(
+    return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/materials/${id}`
     );
   }
 
   addMaterialToSheet(materialInfo: any): Observable<ResponseHeader> {
-    return this.http.post<any>(
+    return this.http.post<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/materials`,
       materialInfo
     );
@@ -66,7 +61,7 @@ export class SheetsHOCService {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',
     });
-    return this.http.post<any>(
+    return this.http.post<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/sheets`,
       formData,
       { headers: myHeaders }
@@ -74,9 +69,20 @@ export class SheetsHOCService {
   }
 
   getOneSheet(id: number): Observable<ResponseHeader> {
-    return this.http.get<any>(`${environment.BASE_URL}/api/Head/sheets/${id}`);
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Head/sheets/${id}`
+    );
   }
   updateSheet(info: any): Observable<ResponseHeader> {
-    return this.http.put<any>(`${environment.BASE_URL}/api/Head/sheets`, info);
+    return this.http.put<ResponseHeader>(
+      `${environment.BASE_URL}/api/Head/sheets`,
+      info
+    );
+  }
+
+  getPublicCommunities(): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Head/getPublicCommunities`
+    );
   }
 }
