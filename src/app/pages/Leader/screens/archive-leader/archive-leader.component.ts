@@ -60,7 +60,7 @@ export class ArchiveLeaderComponent implements OnInit {
           if (res.statusCode === 200) {
             this.traineeArchiveInfo = res;
             this.totalPages = this.traineeArchiveInfo.totalPages;
-
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));

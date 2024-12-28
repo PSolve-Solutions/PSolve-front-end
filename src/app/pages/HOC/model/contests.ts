@@ -19,4 +19,5 @@ export interface Data {
   problemCount: number;
   startTime: string;
   endTime: string;
+  chiefOfContest: string;
 }

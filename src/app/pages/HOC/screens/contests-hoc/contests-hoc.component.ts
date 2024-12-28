@@ -21,12 +21,12 @@ export class ContestsHOCComponent implements OnInit {
   router = inject(Router);
   allContests!: Contests;
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 8;
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
-  dataRequest: any[] = [];
-
+  dataRequest: Contests[] = [];
+  contestId: number | null = null;
   ngOnInit() {
     this.getAllContests(this.currentPage, this.pageSize);
   }
@@ -55,6 +55,14 @@ export class ContestsHOCComponent implements OnInit {
     });
   }
 
+  toggleDetails(id: number) {
+    if (id === this.contestId) {
+      this.contestId = 0;
+    } else {
+      this.contestId = id;
+    }
+  }
+
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
     this.showModal = true;
@@ -77,7 +85,9 @@ export class ContestsHOCComponent implements OnInit {
     const element = event.target;
     const atBottom =
       element.scrollHeight - element.scrollTop <= element.clientHeight + 4;
+    console.log('atBottom', atBottom);
     if (atBottom && !this.isLoading() && this.allContests?.hasNextPage) {
+      console.log('firstPage');
       this.getAllContests(++this.currentPage, this.pageSize);
     }
   }

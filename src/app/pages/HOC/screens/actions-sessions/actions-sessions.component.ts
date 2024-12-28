@@ -55,18 +55,30 @@ export class ActionsSessionsComponent implements OnInit {
     });
   }
 
+  convertToLocal(utcDate: string): string {
+    const date = new Date(utcDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   getOneSession(id: number): void {
     this.isLoading = true;
     this.sessionsHOCService.getOneSession(id).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode == 200) {
           this.isLoading = false;
+          const localStartTime = this.convertToLocal(data.startDate);
+          const localEndTime = this.convertToLocal(data.endDate);
           this.sessionForm.patchValue({
             id: data.id,
             instructorName: data.instructorName,
             topic: data.topic,
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startDate: localStartTime,
+            endDate: localEndTime,
             locationLink: data.locationLink,
             locationName: data.locationName,
           });

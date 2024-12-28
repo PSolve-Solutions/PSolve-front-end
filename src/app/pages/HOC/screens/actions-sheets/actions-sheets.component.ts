@@ -19,6 +19,7 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { SheetsHOCService } from '../../services/sheets-hoc.service';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actions-sheets',
@@ -37,12 +38,13 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 export class ActionsSheetsComponent implements OnInit {
   sheetsHOCService = inject(SheetsHOCService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   fb = inject(FormBuilder);
   elementRef = inject(ElementRef);
   router = inject(Router);
   route = inject(ActivatedRoute);
   toastr = inject(ToastrService);
-  @ViewChild('community') community!: NgSelectComponent;
+  @ViewChild('communitySelect') community!: NgSelectComponent;
   @ViewChild('status') status!: NgSelectComponent;
   @ViewChild('judge') judge!: NgSelectComponent;
   dropdownOpen: boolean = false;
@@ -51,8 +53,10 @@ export class ActionsSheetsComponent implements OnInit {
   sheetForm!: FormGroup;
   submitted: boolean = false;
   isLoading: boolean = false;
-
+  allCommunities: { id: string; clientName: string }[] = [];
   id: number = 0;
+  onlineJudgeIsCodeforces: boolean = false;
+  is: boolean = false;
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = parseInt(params['id']);
@@ -64,7 +68,7 @@ export class ActionsSheetsComponent implements OnInit {
       id: [''],
       name: [null, [Validators.required]],
       sheetLink: [null, [Validators.required]],
-      community: [null, [Validators.required]],
+      cfCommunityId: [null, [Validators.required]],
       onlineId: [null, [Validators.required]],
       status: [null, [Validators.required]],
       judgeType: [null, [Validators.required]],
@@ -73,6 +77,7 @@ export class ActionsSheetsComponent implements OnInit {
       endDate: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
     });
+    this.fetchAllCommunitiesy();
   }
 
   getOneSheet(id: number): void {
@@ -81,13 +86,17 @@ export class ActionsSheetsComponent implements OnInit {
       next: ({ statusCode, data }) => {
         if (statusCode == 200) {
           this.isLoading = false;
+          this.onlineJudgeIsCodeforces = true;
+          if (!data.cfCommunityId) {
+            this.is = true;
+          }
           this.sheetForm.patchValue({
             id: data.id,
             name: data.name,
             startDate: data.startDate,
             endDate: data.endDate,
             sheetLink: data.sheetLink,
-            community: data.community,
+            cfCommunityId: data.cfCommunityId,
             judgeType: data.judgeType,
             onlineId: data.onlineId,
             status: data.status,
@@ -99,6 +108,14 @@ export class ActionsSheetsComponent implements OnInit {
         }
       },
     });
+  }
+
+  changeJudge(item: number) {
+    if (item === 0) {
+      this.onlineJudgeIsCodeforces = true;
+    } else {
+      this.onlineJudgeIsCodeforces = false;
+    }
   }
 
   actionsSheet(): void {
@@ -171,6 +188,21 @@ export class ActionsSheetsComponent implements OnInit {
           this.toastr.error(`${field} is required`);
         }
       }
+    });
+  }
+
+  fetchAllCommunitiesy(): void {
+    this.sheetsHOCService.getPublicCommunities().subscribe({
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.allCommunities = data;
+        } else {
+          console.log('error');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 
