@@ -3,7 +3,7 @@ import { MentorHeaderComponent } from '../../../layouts/mentor/mentor-header/men
 import { StandingsService } from '../services/standings.service';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
 import { CommonModule } from '@angular/common';
-
+import { AuthService } from '../../../authentication/services/auth.service';
 @Component({
   selector: 'app-standings',
   standalone: true,
@@ -31,7 +31,7 @@ export class StandingsComponent {
         alert('somthing went wrong')
     }
 }
-  constructor(private serv:StandingsService){
+  constructor(private serv:StandingsService , public auth:AuthService){
     if(localStorage.getItem("camp")){
       this.get(localStorage.getItem("camp"));
     }

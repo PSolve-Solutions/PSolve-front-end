@@ -363,6 +363,8 @@ export class TasksComponent {
     this.ed = data;
     this.ed.taskId = data.id;
     this.ed.title = data.title;
+    this.ed.startTime = data.startTime
+    this.ed.endTime = data.endTime
     // this.ed = {
     //   "taskId": data.taskId,
     //   "title":  data.title,

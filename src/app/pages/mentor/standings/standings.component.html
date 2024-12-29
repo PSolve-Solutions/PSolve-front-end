@@ -15,42 +15,45 @@
         <th class="px-6  py-3 text-center">Handle</th>
         <th class="px-6 sm:block hidden   py-3 text-center">Mentor</th>
         <th class="px-6   py-3 text-center">Solve</th>
-        <th class="px-6 sm:block hidden  rounded-r-lg py-3 text-center" colspan="1">Points</th>
+        <th class="px-6 sm:block hidden  rounded-r-lg py-3 text-center" >Points</th>
       </tr>
     </thead>
     
     <tbody class="sm:text-md text-sm font-light">
       <tr *ngFor="let item of stand?.achivers , let i = index" class=" text-white text-center rounded-lg my-2"[ngClass]="{
+        'border-black border-2':  item.mentorId == this.auth.currentUser().id ,
         'bg-[#41B253]': item.solvedProblems/stand.totalProblems <=1 ,
         'bg-[#CCA827]': item.solvedProblems/stand.totalProblems <=  0.8,
         'bg-[#E44449]': item.solvedProblems/stand.totalProblems <= 0.5
-      }">
+      }"
       
-        <td class="px-6 py-4 rounded-l-lg"> <div class="sm:none inline-block relative mr-2 px-2 py-1 bg-white rounded-md font-bold" 
+      >
+      
+        <td class="px-6 py-4 rounded-l-lg" [ngClass]="{'border-black  border-2 border-r-0':  item.mentorId == this.auth.currentUser().id}"> <div class="sm:none inline-block relative mr-2 px-2 py-1 bg-white rounded-md font-bold" 
           [ngClass]="{
-            'text-[#41B253]': item.solvedProblems/stand.totalProblems <=1 ,
-            'text-[#CCA827]': item.solvedProblems/stand.totalProblems <=  0.8,
-            'text-[#E44449]': item.solvedProblems/stand.totalProblems <= 0.5
+            'text-[#41B253] ': item.solvedProblems/stand.totalProblems <=1,
+            'text-[#CCA827] ': item.solvedProblems/stand.totalProblems <=  0.8 ,
+            'text-[#E44449] ': item.solvedProblems/stand.totalProblems <= 0.5 
           }"
           > <span *ngIf="i <=2" class="absolute top-[-8px] left-[-8px]"><svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.46353 1.43385C5.51856 1.33943 5.59737 1.26109 5.69213 1.20664C5.78688 1.15219 5.89425 1.12354 6.00353 1.12354C6.11281 1.12354 6.22019 1.15219 6.31494 1.20664C6.40969 1.26109 6.48851 1.33943 6.54353 1.43385L7.94103 3.83285L10.655 4.42085C10.7618 4.44405 10.8606 4.49483 10.9416 4.56812C11.0226 4.64141 11.083 4.73466 11.1168 4.83856C11.1505 4.94247 11.1564 5.05341 11.1339 5.16031C11.1114 5.26722 11.0613 5.36636 10.9885 5.44785L9.13853 7.51835L9.41853 10.2809C9.42958 10.3896 9.41189 10.4994 9.36725 10.5992C9.3226 10.699 9.25255 10.7854 9.1641 10.8496C9.07564 10.9139 8.97187 10.9538 8.86316 10.9655C8.75444 10.9771 8.64457 10.96 8.54453 10.9159L6.00353 9.79585L3.46253 10.9159C3.36249 10.96 3.25263 10.9771 3.14391 10.9655C3.03519 10.9538 2.93142 10.9139 2.84297 10.8496C2.75451 10.7854 2.68446 10.699 2.63982 10.5992C2.59517 10.4994 2.57749 10.3896 2.58853 10.2809L2.86853 7.51835L1.01853 5.44835C0.945646 5.36687 0.89541 5.26768 0.872839 5.16071C0.850269 5.05374 0.856153 4.94272 0.889904 4.83873C0.923656 4.73474 0.984094 4.64143 1.06519 4.5681C1.14628 4.49478 1.24518 4.444 1.35203 4.42085L4.06603 3.83285L5.46353 1.43385Z" fill="#FFB302"/>
             </svg>
             </span> {{i+1}}</div> {{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-        <td class="px-6 py-4 underline">
+        <td class="px-6 py-4 underline" [ngClass]="{'border-black  border-2 border-x-0':  item.mentorId == this.auth.currentUser().id}">
            {{item.codeForceHandle}}
         </td>
-        <td class="px-6 py-4 sm:block hidden ">{{item.mentorName}}</td>
-        <td class="px-6 py-4 text-center sm:rounded-r-none rounded-r-lg">{{item.solvedProblems}} / {{stand.totalProblems}}</td>
-        <td class="px-6 py-4 rounded-r-lg text-center sm:table-cell hidden ">
+        <td  class="px-6 py-6 sm:table-cell hidden " [ngClass]="{'border-black  border-2 border-x-0':  item.mentorId == this.auth.currentUser().id}"> <div>{{item.mentorName}}</div> </td>
+        <td class="px-6 py-4 text-center sm:rounded-r-none rounded-r-lg" [ngClass]="{'border-black  border-y-2  border-r-2 sm:border-x-0 ':  item.mentorId == this.auth.currentUser().id}">{{item.solvedProblems}} / {{stand.totalProblems}}</td>
+        <td class="px-6 py-4 rounded-r-lg text-center sm:table-cell hidden " [ngClass]="{'border-black  border-2 border-x-2 border-l-transparent':  item.mentorId == this.auth.currentUser().id}">
           <div class="flex justify-center items-center">
-            <button (click)="change(i,item.id , false , item.points)" class="px-2 rounded-md text-lg text-black mx-2 bg-white">-</button> 
+            <button  *ngIf="item.mentorId == this.auth.currentUser().id" (click)="change(i,item.id , false , item.points)" class="px-2 rounded-md text-lg text-black mx-2 bg-white">-</button> 
           
             
             
             <span id="{{i}}" class="inline-block w-14">{{item.points}}</span>
             
             
-              <button (click)="change(i,item.id , true ,item.points)" class="px-2 rounded-md text-lg text-black mx-2 bg-white">+</button>
+              <button *ngIf="item.mentorId == this.auth.currentUser().id" (click)="change(i,item.id , true ,item.points)" class="px-2 rounded-md text-lg text-black mx-2 bg-white">+</button>
           </div>
             </td>
       </tr>
