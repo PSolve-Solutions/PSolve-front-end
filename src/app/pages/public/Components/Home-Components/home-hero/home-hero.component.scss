@@ -76,6 +76,17 @@ h2 span:nth-of-type(14){
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+img.translat-hover{
+  transition: .3s linear;
+}
+button:hover  img.translat-hover{
+  transform: translateX(5px);
+}
+
+
+
+
+
 @media screen and (max-width:640px) {
 
   section{

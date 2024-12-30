@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { SwiperModule } from 'swiper/angular';
 import SwiperCore, { SwiperOptions } from 'swiper';
 import { HomeService } from '../../../Services/home.service';
@@ -14,8 +14,11 @@ import { FeedBack } from '../../../model/feedback';
 })
 export class TraineeComponent {
 
-  currentStep:number = 0;
+  @ViewChild('sliderTrainee') sliderTrainee: ElementRef<HTMLElement> | undefined;
 
+  intervalId: any;
+
+  currentStep:number = 0;
 
   slides:any = [
     { image: 'assets/img_public/p_solve_home/t1.svg' , text:"PROVIDE FOR TRAINEE ALL INFORMATION NEEDS TO KEEP HIM/HER UPDATED WITH NEW IN TRAINING."},
@@ -25,16 +28,36 @@ export class TraineeComponent {
   ];
 
 
-  goToStep(index: number): void {
+  ngOnInit(): void {
+    this.startAutoMove();
+  }
 
-    this.currentStep = index;
-    const slider = document.querySelector('#sliderTrainee') as HTMLElement;
-    if (slider) {
-      slider.style.transform = `translateX(-${index * 100}%)`;
-
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
   }
 
+
+
+  goToStep(index: number): void {
+    this.currentStep = index;
+    if (this.sliderTrainee) {
+      this.sliderTrainee.nativeElement.style.transform = `translateX(-${index * 100}%)`;
+    }
+  }
+
+  autoMove():void{
+    this.currentStep = (this.currentStep + 1) % this.slides.length;
+    if (this.sliderTrainee) {
+      this.sliderTrainee.nativeElement.style.transform = `translateX(-${this.currentStep * 100}%)`;
+    }
+  }
+  startAutoMove(): void {
+    this.intervalId = setInterval(() => {
+      this.autoMove();
+    }, 5000);
+  }
 
 
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -10,6 +10,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./mentors.slider.component.scss']
 })
 export class MentorsComponent {
+ @ViewChild('sliderMentor') sliderMentor: ElementRef<HTMLElement> | undefined;
+
+  intervalId: any;
+
   currentStep:number = 0;
 
   slides:any = [
@@ -19,13 +23,34 @@ export class MentorsComponent {
   ];
 
 
-  goToStep(index: number): void {
+  ngOnInit(): void {
+    this.startAutoMove();
+  }
 
-    this.currentStep = index;
-    const slider = document.querySelector('#sliderMentor') as HTMLElement;
-    if (slider) {
-      slider.style.transform = `translateX(-${index * 100}%)`;
-
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
+  }
+
+
+
+  goToStep(index: number): void {
+    this.currentStep = index;
+    if (this.sliderMentor) {
+      this.sliderMentor.nativeElement.style.transform = `translateX(-${index * 100}%)`;
+    }
+  }
+
+  autoMove():void{
+    this.currentStep = (this.currentStep + 1) % this.slides.length;
+    if (this.sliderMentor) {
+      this.sliderMentor.nativeElement.style.transform = `translateX(-${this.currentStep * 100}%)`;
+    }
+  }
+  startAutoMove(): void {
+    this.intervalId = setInterval(() => {
+      this.autoMove();
+    }, 5000);
   }
 }

@@ -16,6 +16,9 @@ export class HomeService {
   getFeedBacks():Observable<any>{
     return this.http.get(environment.BASE_URL + `/api/Home/feedbacks`)
   }
+  getClintes():Observable<any>{
+    return this.http.get(environment.BASE_URL + `/api/Home/subscribeClients`)
+  }
 
 
 
