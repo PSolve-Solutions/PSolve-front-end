@@ -221,9 +221,9 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
             data: this.dashboardData.contestsAnalysis.map(
               (item) => item.precentage
             ),
-            borderColor: '#3D91C7',
-            pointBackgroundColor: '#3D91C7',
-            pointBorderColor: '#3D91C7',
+            borderColor: '#002C3D',
+            pointBackgroundColor: '#002C3D',
+            pointBorderColor: '#002C3D',
             pointRadius: 5,
             borderWidth: 1.5,
           },
@@ -289,7 +289,7 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
             data: this.dashboardData.sheetsAnalysis.map((item) =>
               Math.round(item.precentage)
             ),
-            backgroundColor: '#3D91C7',
+            backgroundColor: '#002C3D',
             borderWidth: 1,
             borderRadius: {
               topLeft: 10,

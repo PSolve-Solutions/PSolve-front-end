@@ -1,6 +1,6 @@
 .scroll-host-table::-webkit-scrollbar {
-  width: 10px !important;
-  height: 8px !important;
+  width: 8px !important;
+  height: 10px;
 }
 
 .scroll-host-table::-webkit-scrollbar-track {
@@ -9,7 +9,7 @@
 }
 
 .scroll-host-table::-webkit-scrollbar-thumb {
-  background: #3d91c7;
+  background: #285c6a;
   border-radius: 10px;
 }
 

@@ -1,142 +1,160 @@
-<div
-  style="height: calc(100vh - 72px)"
-  class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4"
->
-  <div
-    class="flex items-center justify-between px-12 py-4 mb-4 bg-white rounded-xl"
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    <h2 class="text-xl font-bold">Attendance</h2>
-    <div class="flex items-center justify-between px-2">
-      <button
-        routerLink="/head_of_camp/attendance/edit-attendance"
-        class="flex items-center px-8 py-1 text-lg text-white rounded-md w-fit bg-activeLink"
-      >
-        Edit
-      </button>
-    </div>
-  </div>
+    Attendance
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Attendance
+  </h1>
 
-  @if( isLoading() && dataRequest.length === 0) {
-  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
+  <div class="flex flex-col space-y-4">
+    <button
+      routerLink="/head_of_camp/attendance/edit-attendance"
+      class="flex items-center px-4 py-2 my-2 transition-colors gap-x-2 rounded-xl hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
+    >
+      Edit
+    </button>
+
+    @if( isLoading() && dataRequest.length === 0) {
+    <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+      <div class="flex items-center">
+        <div
+          class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
     </div>
-  </div>
-  } @else {
-  <div
-    style="max-height: calc(100vh - 180px)"
-    class="pb-4 overflow-auto scroll-host-table"
-    (scroll)="loadMoreData($event)"
-  >
-    <table class="min-w-full text-center bg-white rounded-lg">
-      <thead class="sticky top-0 text-sm">
-        <tr class="border-b border-black text-[#6B7088]">
-          <th
-            class="sticky top-0 left-0 z-10 p-4 text-left bg-white border-b rounded-lg whitespace-nowrap"
-          >
-            Name
-          </th>
-          @for (s of allSesions; track s.id; let colIndex = $index) {
-          <th
-            [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
-            class="sticky top-0 p-4 font-extrabold whitespace-nowrap"
-          >
-            {{ s.topic }}
-          </th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @for (trainee of dataRequest; track $index) { @for (item of
-        trainee.data; track item.traineeId; let rowIndex = $index) {
-        <tr
-          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
+    } @else {
+    <div
+      style="max-height: calc(100vh - 218px)"
+      class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
+      (scroll)="loadMoreData($event)"
+    >
+      <table
+        class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+      >
+        <thead
+          class="text-[13px] top-0 z-40 sticky md:text-base font-semibold bg-[#DEDFE1]"
         >
-          <td
-            [ngClass]="{
-              '!bg-blue-200': hoveredRow === rowIndex
-            }"
-            (mouseover)="onHover(rowIndex, 0)"
-            (mouseleave)="onLeave()"
-            class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+          <tr>
+            <th class="sticky left-0 p-4 z-40 text-left bg-[#DEDFE1]">Name</th>
+
+            @for (s of allSesions; track s.id; let colIndex = $index) {
+            <th
+              [ngClass]="
+                hoveredCol === colIndex
+                  ? 'bg-subColor2 text-mainColor4'
+                  : 'bg-[#DEDFE1]'
+              "
+              class="p-4 font-extrabold whitespace-nowrap"
+            >
+              {{ s.topic }}
+            </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (trainee of dataRequest; track $index) { @for (item of
+          trainee.data; track item.traineeId; let rowIndex = $index; let first =
+          $first) {
+          <tr
+            class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+            [class.border-t-8]="first"
           >
-            {{ item.name }}
-          </td>
-          @for (s of item.status; track s.sessionId; let colIndex = $index) {
-          <td
-            class="p-4"
-            [ngClass]="{
-              'bg-gray-200 cursor-cell':
+            <td
+              [ngClass]="{
+                '!bg-subColor2 text-mainColor4': hoveredRow === rowIndex
+              }"
+              (mouseover)="onHover(rowIndex, 0)"
+              (mouseleave)="onLeave()"
+              class="sticky left-0 z-10 p-4 font-bold text-left bg-white whitespace-nowrap"
+            >
+              {{ item.name }}
+            </td>
+            @for (s of item.status; track s.sessionId; let colIndex = $index) {
+            <td
+              class="p-4"
+              [ngClass]="{
+              'bg-blue-200  cursor-cell':
                 (hoveredRow !== null && hoveredRow === rowIndex) ||
                 (hoveredCol !== null &&
                   hoveredCol === colIndex &&
                   rowIndex <= (hoveredRow ?? -1) &&
                   rowIndex !== hoveredRow),
             }"
-            (mouseover)="onHover(rowIndex, colIndex)"
-            (mouseleave)="onLeave()"
-          >
-            @if (!s.status) {
-            <svg
-              class="m-auto size-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              (mouseover)="onHover(rowIndex, colIndex)"
+              (mouseleave)="onLeave()"
             >
-              <g clip-path="url(#clip0_3634_13663)">
+              @if (!s.status) {
+              <svg
+                class="m-auto size-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_3634_13663)">
+                  <path
+                    d="M21.4294 2.66675L2.57227 21.3334"
+                    stroke="#FF0000"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M21.4294 21.3334L2.57227 2.66675"
+                    stroke="#FF0000"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_3634_13663">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              }@else {
+              <svg
+                class="m-auto size-6"
+                viewBox="0 0 30 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
-                  d="M21.4294 2.66675L2.57227 21.3334"
-                  stroke="#FF0000"
+                  d="M3 18L12.6 27L27 3"
+                  stroke="#66AE1F"
                   stroke-width="5"
                   stroke-linecap="round"
                 />
-                <path
-                  d="M21.4294 21.3334L2.57227 2.66675"
-                  stroke="#FF0000"
-                  stroke-width="5"
-                  stroke-linecap="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_3634_13663">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            }@else {
-            <svg
-              class="m-auto size-6"
-              viewBox="0 0 30 31"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 18L12.6 27L27 3"
-                stroke="#66AE1F"
-                stroke-width="5"
-                stroke-linecap="round"
-              />
-            </svg>
+              </svg>
 
+              }
+            </td>
             }
-          </td>
-          }
-        </tr>
-        } }
-      </tbody>
-    </table>
-    @if (isLoading()) { @if (dataRequest.length !== 0) {
-
-    <div class="flex items-center justify-center w-full bg-opacity-60">
-      <div class="flex items-center justify-center">
-        <div
-          class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
-        ></div>
+          </tr>
+          } }
+        </tbody>
+        <tfoot class="bg-[#DEDFE1] rounded-lg">
+          <tr>
+            <td
+              [colSpan]="allSesions.length + 1"
+              class="p-3 rounded-bl-lg rounded-br-lg"
+            ></td>
+          </tr>
+        </tfoot>
+      </table>
+      @if (isLoading()) { @if (dataRequest.length !== 0) {
+      <div class="flex items-center justify-center w-full bg-opacity-60">
+        <div class="flex items-center justify-center">
+          <div
+            class="w-8 h-8 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
       </div>
+      } }
     </div>
-    } }
+    }
   </div>
-  }
 </div>

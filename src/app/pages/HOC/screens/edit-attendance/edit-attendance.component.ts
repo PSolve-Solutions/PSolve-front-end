@@ -6,6 +6,7 @@ import {
   AttendanceTrainees,
   SessionAttendance,
 } from '../../model/attenances-hoc';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-edit-attendance',
@@ -16,6 +17,7 @@ import {
 })
 export class EditAttendanceComponent implements OnInit {
   attendanceHocService = inject(AttendanceHocService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   allSesions!: SessionAttendance[];
   allTraniees!: any;

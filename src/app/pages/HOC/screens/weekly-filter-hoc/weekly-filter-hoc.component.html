@@ -1,53 +1,67 @@
-<div
-  style="height: calc(100vh - 72px)"
-  class="relative w-full p-4 space-y-4 sm:ps-4 sm:space-y-6"
->
-  <div class="flex items-center px-12 py-4 bg-white rounded-xl">
-    <h2 class="text-xl font-bold">Weekly Filter</h2>
-  </div>
-
-  @if( isLoading()) {
-  <div class="fixed z-50 top-[50%] left-[50%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
-    </div>
-  </div>
-  } @else {
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Weekly Filter
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Weekly Filter
+  </h1>
 
   <div class="bg-white rounded-xl">
-    <div class="flex space-x-2 bg-[#F4F5F8]">
+    <div class="flex space-x-2 text-base font-semibold md:text-xl bg-[#F4F5F8]">
       <button
-        class="px-6 py-2 text-xl font-semibold rounded-t-xl focus:outline-none"
+        class="px-6 py-2 rounded-t-xl focus:outline-none"
         [ngClass]="{
-          'bg-white text-mainblue': activeTab === 'tab1',
-          'text-black hover:text-mainblue': activeTab !== 'tab1'
+          'bg-white text-mainColor1': activeTab === 'tab1',
+          'text-black hover:text-mainColor1': activeTab !== 'tab1'
         }"
         (click)="selectTab('tab1')"
       >
         To Filter
       </button>
       <button
-        class="px-6 py-2 text-xl font-semibold rounded-t-xl focus:outline-none"
+        class="px-6 py-2 rounded-t-xl focus:outline-none"
         [ngClass]="{
-          'bg-white text-mainblue': activeTab === 'tab2',
-          'text-black hover:text-mainblue': activeTab !== 'tab2'
+          'bg-white text-mainColor1': activeTab === 'tab2',
+          'text-black hover:text-mainColor1': activeTab !== 'tab2'
         }"
         (click)="selectTab('tab2')"
       >
         Other
       </button>
     </div>
-    <div class="pt-6">
+    @if( isLoading()) {
+    <div class="fixed z-50 top-[50%] left-[50%] bg-opacity-60">
+      <div class="flex items-center">
+        <div
+          class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+    </div>
+    } @else {
+    <div
+      class="px-2 pt-4 rounded-b-lg"
+      [ngClass]="{
+        'bg-white': activeTab === 'tab1' || activeTab === 'tab2',
+        'bg-gray-100': activeTab !== 'tab1' && activeTab !== 'tab2'
+      }"
+    >
       @if (activeTab === 'tab1') {
       <div
-        style="max-height: calc(100vh - 240px)"
-        class="overflow-y-auto scroll-host-table"
+        style="max-height: calc(100vh - 260px)"
+        class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
       >
-        <table class="relative pb-2 bg-[#F4F5F8] min-w-full text-center pe-2">
-          <thead class="relative -top-3">
-            <tr class="text-[#6B7088] bg-white">
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead
+            class="text-[13px] top-0 z-40 sticky md:text-base font-semibold bg-[#DEDFE1]"
+          >
+            <tr>
               <th class="p-4 text-left">Name</th>
               <th class="p-4">Email</th>
               <th class="p-4">Codeforce handle</th>
@@ -87,21 +101,21 @@
               </th>
             </tr>
           </thead>
-
           <tbody>
-            @for (item of filterData; track item.id) {
+            @for (item of filterData; track item.id ; let first = $first) {
             <tr
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-[#E6E7EA]"
+              [class.border-t-8]="first"
               [ngClass]="isSelected(item.id) ? '!bg-[#E6E7EA]' : ''"
-              class="my-6 text-base font-medium text-center text-black bg-white rounded-lg"
             >
-              <td class="p-2.5 rounded-s-lg text-left">
+              <td class="p-3 text-left rounded-s-lg">
                 {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
               </td>
-              <td class="p-2.5">{{ item.email }}</td>
-              <td class="p-2.5">{{ item.codeForceHandle }}</td>
-              <td class="p-2.5">{{ item.absenceCount }}</td>
-              <td class="p-2.5">{{ item.weeklySolvingPrecent }}%</td>
-              <td class="p-2.5 cursor-pointer rounded-e-lg">
+              <td class="p-3">{{ item.email }}</td>
+              <td class="p-3">{{ item.codeForceHandle }}</td>
+              <td class="p-3">{{ item.absenceCount }}</td>
+              <td class="p-3">{{ item.weeklySolvingPrecent }}%</td>
+              <td class="p-3 cursor-pointer rounded-e-lg">
                 <div class="relative flex items-center justify-center">
                   <input
                     type="checkbox"
@@ -139,33 +153,19 @@
             }
           </tbody>
         </table>
-        <div
-          class="flex items-center bg-[#F4F5F8] justify-end w-full pb-8 pe-16"
-        >
-          <button
-            (click)="removeSelectedUsers()"
-            class="px-8 py-1.5 text-lg text-white border rounded-md bg-activeLink"
-          >
-            @if (isLoadingConfirm()) {
-            <div class="flex items-center justify-center w-full bg-opacity-60">
-              <div class="flex items-center justify-center">
-                <div
-                  class="w-8 h-8 border-4 border-dashed rounded-full border-mainRed animate-spin"
-                ></div>
-              </div>
-            </div>
-            }@else { Confirm }
-          </button>
-        </div>
       </div>
       }@else {
       <div
-        style="max-height: calc(100vh - 180px)"
-        class="overflow-y-auto scroll-host-table"
+        style="max-height: calc(100vh - 205px)"
+        class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
       >
-        <table class="relative pb-2 bg-[#F4F5F8] min-w-full text-center">
-          <thead class="relative -top-3">
-            <tr class="text-[#6B7088] bg-white px-4">
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead
+            class="text-[13px] top-0 z-[1150] sticky md:text-base font-semibold bg-[#DEDFE1]"
+          >
+            <tr>
               <th class="p-4 text-left">Name</th>
               <th class="p-4">Email</th>
               <th class="p-4">Codeforce handle</th>
@@ -176,9 +176,10 @@
           </thead>
 
           <tbody>
-            @for (item of otherData; track $index) {
+            @for (item of otherData; track $index; let first = $first) {
             <tr
-              class="my-6 text-base font-medium text-center text-black bg-white rounded-lg"
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+              [class.border-t-8]="first"
             >
               <td class="p-2.5 rounded-s-lg">
                 {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
@@ -209,8 +210,26 @@
       </div>
       }
     </div>
+    @if (activeTab === 'tab1') {
+    <div class="flex items-center bg-[#F4F5F8] justify-end w-full">
+      <button
+        (click)="removeSelectedUsers()"
+        class="px-8 py-1.5 text-lg text-mainColor4 border rounded-md mt-4 bg-mainColor1 hover:bg-subColor1"
+      >
+        @if (isLoadingConfirm()) {
+        <div class="flex items-center justify-center w-full bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-8 h-8 border-4 border-dashed rounded-full border-mainRed animate-spin"
+            ></div>
+          </div>
+        </div>
+        }@else { Confirm }
+      </button>
+    </div>
+    } }
   </div>
-  } @if (showModal) {
+  @if (showModal) {
   <app-confirm-delete-hoc
     (closeModal)="handleClose($event)"
     [itemId]="selectedItemId"

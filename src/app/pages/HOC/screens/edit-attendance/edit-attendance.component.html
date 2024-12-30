@@ -1,9 +1,15 @@
-<div class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4">
-  <div
-    class="flex items-center justify-between px-12 py-4 mb-2 bg-white rounded-xl"
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    <h2 class="text-xl font-bold">Attendance</h2>
-  </div>
+    Attendance
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Attendance
+  </h1>
   <div
     class="sticky top-0 flex w-full py-4 overflow-x-auto border-b scroll-host-table"
   >
@@ -12,7 +18,7 @@
       (click)="onTabClick(session.id)"
       class="w-full px-4 py-2 font-semibold rounded-lg cursor-pointer whitespace-nowrap"
       [ngClass]="{
-        ' bg-[#3D91C7] text-white': activeTab === session.id,
+        ' bg-mainColor1 text-white': activeTab === session.id,
       }"
     >
       {{ session.topic }}
@@ -29,24 +35,28 @@
   </div>
   } @else {
   <div
-    style="max-height: calc(100vh - 280px)"
-    class="pb-2 overflow-auto pe-4 scroll-host-table"
+    style="max-height: calc(100vh - 205px)"
+    class="overflow-y-auto border-b-2 rounded-lg border-subColor2 pe-2 scroll-host-table"
   >
-    <table class="min-w-full text-center bg-transparent rounded-lg">
-      <thead class="text-lg">
-        <tr class="border-b border-black bg-white text-[#6B7088]">
-          <th class="p-4 text-left rounded-lg whitespace-nowrap">Name</th>
-          <th class="p-4 text-right rounded-lg whitespace-nowrap pe-12">
-            Attendance
-          </th>
+    <table
+      class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+    >
+      <thead
+        class="text-[13px] top-0 z-[1150] sticky md:text-base font-semibold bg-[#DEDFE1]"
+      >
+        <tr>
+          <th class="p-4 text-left whitespace-nowrap">Name</th>
+          <th class="p-4 text-right whitespace-nowrap pe-12">Attendance</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of allTraniees; track item.id; let rowIndex = $index) {
+        @for (item of allTraniees; track item.id; let rowIndex = $index; let
+        first = $first) {
         <tr
-          class="my-6 bg-white text-[#6B7088] text-center text-base font-medium rounded-lg"
+          class="font-semibold border-b-8 border-mainColor4"
+          [class.border-t-8]="first"
         >
-          <td class="p-4 text-left bg-white rounded-s-lg whitespace-nowrap">
+          <td class="p-4 text-left bg-white whitespace-nowrap">
             {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
           </td>
           <td class="py-4 text-right pe-12 rounded-e-lg">
@@ -120,6 +130,11 @@
         </tr>
         }
       </tbody>
+      <tfoot class="bg-[#DEDFE1] rounded-lg">
+        <tr>
+          <td colspan="2" class="p-3 rounded-bl-lg rounded-br-lg"></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
   }
