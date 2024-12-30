@@ -25,12 +25,9 @@ import { FooterComponent } from "../../../../layouts/layout_public/components/fo
     TraineeComponent,
     FoundersComponent,
     CommunitiesComponent,
-    // CoachesComponent,
-    // FeedbackComponent,
-    // RouterLink,
+
     CommonModule,
     AboutusComponent,
-    FooterComponent
 ],
   templateUrl: './home-public.component.html',
   styleUrls: ['./home-public.component.scss']
@@ -38,22 +35,28 @@ import { FooterComponent } from "../../../../layouts/layout_public/components/fo
 export class HomePublicComponent  {
   public homeService = inject(HomeService);
 
-  show:boolean=true
 
-  hidden():void{
-    this.show=!this.show
-  }
+  Clintes: any;
+
   ngOnInit(): void {
-    this.getBoolean()
+    this.getAllClintes()
   }
 
 
-  getBoolean():void{
-    this.homeService.anyOpenCamps().subscribe({
+  // getBoolean():void{
+  //   this.homeService.anyOpenCamps().subscribe({
+  //     next:({statusCode,data})=>{
+  //       if(statusCode===200){
+  //         this.show=data
+  //       }
+  //     }
+  //   })
+  // }
+  getAllClintes():void{
+    this.homeService.getClintes().subscribe({
       next:({statusCode,data})=>{
-        if(statusCode===200){
-          this.show=data
-        }
+        this.Clintes = data
+
       }
     })
   }

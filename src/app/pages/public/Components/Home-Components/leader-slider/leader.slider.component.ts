@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -10,7 +10,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./leader.slider.component.scss']
 })
 export class LeaderSlider {
+
+  @ViewChild('sliderLeader') sliderLeader: ElementRef<HTMLElement> | undefined;
+
+  intervalId: any;
+  
   currentStep:number = 0;
+
 
   slides:any = [
     { image: 'assets/img_public/p_solve_home/Group (1).svg' , text:"Create your community camps and keep tracking for them" },
@@ -21,12 +27,34 @@ export class LeaderSlider {
 
 
 
-  goToStep(index: number): void {
+  ngOnInit(): void {
+    this.startAutoMove();
+  }
 
-    this.currentStep = index;
-    const slider = document.querySelector('#sliderLeader') as HTMLElement;
-    if (slider) {
-      slider.style.transform = `translateX(-${index * 100}%)`;
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
+  }
+
+
+
+  goToStep(index: number): void {
+    this.currentStep = index;
+    if (this.sliderLeader) {
+      this.sliderLeader.nativeElement.style.transform = `translateX(-${index * 100}%)`;
+    }
+  }
+
+  autoMove():void{
+    this.currentStep = (this.currentStep + 1) % this.slides.length;
+    if (this.sliderLeader) {
+      this.sliderLeader.nativeElement.style.transform = `translateX(-${this.currentStep * 100}%)`;
+    }
+  }
+  startAutoMove(): void {
+    this.intervalId = setInterval(() => {
+      this.autoMove();
+    }, 5000);
   }
 }

@@ -19,19 +19,20 @@ h2 {
 
 .slider {
   display: flex;
-  gap: 40px; /* Space between slides */
-  padding: 30px 70px; /* Inner padding for better alignment */
-  animation: slide 10s linear infinite; /* Smooth sliding effect */
+  gap: 40px;
+  padding: 30px 70px;
+  animation: slide 5s linear infinite;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  -webkit-animation: slide 10s linear infinite;
 }
 
-.slide {
-  flex: 1 1 auto; /* Adjust slides to be flexible */
-}
+
 
 .slide img {
-  /* Add styles for images if necessary */
-  max-width: 100%; /* Ensure images don't overflow their containers */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 220px;
+
 }
 
 /* Keyframes for Sliding Effect */
@@ -39,9 +40,14 @@ h2 {
   0% {
     transform: translateX(0); /* Initial position */
   }
+
   100% {
-    transform: translateX(calc(-100%)); /* Shift slider by its full width */
-  }
+    transform: translateX(-90%);
+    -webkit-transform: translateX(-90%);
+    -moz-transform: translateX(-90%);
+    -ms-transform: translateX(-90%);
+    -o-transform: translateX(-90%);
+}
 }
 
 /* Responsive Styles */
