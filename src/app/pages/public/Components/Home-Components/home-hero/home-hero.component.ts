@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ResponsiveService } from '../../../Services/responsive.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-home-hero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './home-hero.component.html',
   styleUrls: ['./home-hero.component.scss']
 })
