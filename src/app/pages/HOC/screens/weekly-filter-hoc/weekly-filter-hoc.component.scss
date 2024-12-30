@@ -1,18 +1,6 @@
-table {
-  border-collapse: separate;
-  border-spacing: 0px 12px;
-}
-
-thead th {
-  border-spacing: 0; /* Ensure no spacing for the table header */
-}
-
-tbody tr {
-  border-collapse: separate; /* Ensure it affects only tbody rows */
-  border-spacing: 0px 12px; /* Apply spacing between rows in tbody */
-}
 .scroll-host-table::-webkit-scrollbar {
   width: 8px !important;
+  height: 10px;
 }
 
 .scroll-host-table::-webkit-scrollbar-track {
@@ -21,7 +9,7 @@ tbody tr {
 }
 
 .scroll-host-table::-webkit-scrollbar-thumb {
-  background: #3d91c7;
+  background: #285c6a;
   border-radius: 10px;
 }
 

@@ -448,50 +448,13 @@ export class MainSidebarComponent {
         name: 'Community',
         link: '/leader/community',
         icon: this.sanitizer.bypassSecurityTrustHtml(
-          `    <svg
-              class="size-7"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17 21H7C3 21 2 20 2 16V8C2 4 3 3 7 3H17C21 3 22 4 22 8V16C22 20 21 21 17 21Z"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M14 8H19"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M15 12H19"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M17 16H19"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M8.50141 11.2899C9.50104 11.2899 10.3114 10.4796 10.3114 9.47992C10.3114 8.48029 9.50104 7.66992 8.50141 7.66992C7.50177 7.66992 6.69141 8.48029 6.69141 9.47992C6.69141 10.4796 7.50177 11.2899 8.50141 11.2899Z"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 16.3298C11.86 14.8798 10.71 13.7398 9.26 13.6098C8.76 13.5598 8.25 13.5598 7.74 13.6098C6.29 13.7498 5.14 14.8798 5 16.3298"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>`
+          `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.3993 21.81H17.5993C19.0293 21.81 20.3993 20.6499 20.6393 19.2399L21.9693 11.2799C22.1293 10.2999 21.6293 8.98989 20.8593 8.36989L13.9293 2.82985C12.8593 1.96985 11.1293 1.96984 10.0693 2.81984L3.1393 8.36989C2.3593 8.98989 1.85929 10.2999 2.02929 11.2799L2.30929 12.9599" stroke="#DEE4E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2 19C3.76 19.04 4.96 20.24 5 22" stroke="#DEE4E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 22C7.99 21.24 7.86 20.53 7.63 19.88C7.04 18.21 5.78 16.96 4.12 16.37C3.47 16.14 2.76 16.01 2 16" stroke="#DEE4E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.9955 22H2.0045" stroke="#DEE4E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`
         ),
       },
     ];
