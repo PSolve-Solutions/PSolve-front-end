@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -66,6 +66,8 @@ export class RegistrationTraineeComponent implements OnInit {
     isRequiredCodeforce: false,
     isRequiredVjudge: false,
   };
+  isEmailUsed: boolean = false;
+  isReset: boolean = false;
 
   constructor() {
     this.registrationForm = this.fb.group({
@@ -135,6 +137,11 @@ export class RegistrationTraineeComponent implements OnInit {
           this.isLoading = false;
           this.superTab = 2;
         } else if (statusCode === 400) {
+          if (message === 'Email already used.') {
+            this.isEmailUsed = true;
+          } else {
+            this.isEmailUsed = false;
+          }
           this.toastr.error(message);
           this.isLoading = false;
         } else if (statusCode === 500) {
@@ -262,9 +269,15 @@ export class RegistrationTraineeComponent implements OnInit {
       communityId: this.communityId,
       campId: this.registrationForm.get('CampId')?.value,
       email: this.registrationForm.get('Email')?.value,
-      phoneNumber: this.registrationForm.get('PhoneNumber')?.value,
-      codeforces: this.registrationForm.get('CodeForceHandle')?.value,
-      vjudgeHandle: this.registrationForm.get('VjudgeHandle')?.value,
+      phoneNumber:
+        this.registrationForm.get('PhoneNumber')?.value &&
+        this.registrationForm.get('PhoneNumber')?.value,
+      codeforces:
+        this.registrationForm.get('CodeForceHandle')?.value &&
+        this.registrationForm.get('CodeForceHandle')?.value,
+      vjudgeHandle:
+        this.registrationForm.get('VjudgeHandle')?.value &&
+        this.registrationForm.get('VjudgeHandle')?.value,
       otp: this.registrationForm.get('otp')?.value,
     };
     this.registerationService.checkContactInfo(contactInfo).subscribe({
@@ -388,6 +401,55 @@ export class RegistrationTraineeComponent implements OnInit {
     } else {
       this.currentTab = --this.currentTab;
     }
+  }
+
+  toResetData() {
+    this.currentTab = 4;
+    this.isEmailUsed = false;
+  }
+
+  resetData(inputEmail: HTMLInputElement): void {
+    const otp = this.registrationForm.get('otp')?.value;
+    if (!otp) {
+      this.toastr.error('OTP is invalid');
+      return;
+    }
+    if (!inputEmail.value) {
+      this.toastr.error('Enter Email');
+      return;
+    }
+    const info = {
+      email: inputEmail.value,
+      otp: Number(otp),
+    };
+    this.isReset = true;
+    this.registerationService.resetRegister(info).subscribe(
+      ({ statusCode, message }) => {
+        if (statusCode === 200) {
+          this.toastr.success(message);
+          this.isReset = false;
+          this.isEmailUsed = false;
+          this.registrationForm.reset();
+          this.campName = '';
+          this.hasLab = '';
+          this.collegeName = '';
+          this.universityName = '';
+          this.grade = 0;
+          this.gender = '';
+          this.profileImageName = '';
+          this.selectedOrganization = null;
+          this.communityId = '';
+          this.currentTab = 1;
+        } else {
+          this.toastr.error(message);
+          this.isReset = false;
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.isReset = false;
+      }
+    );
   }
 
   @HostListener('document:click', ['$event'])

@@ -21,7 +21,7 @@ export class ContestsHOCComponent implements OnInit {
   router = inject(Router);
   allContests!: Contests;
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 15;
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;

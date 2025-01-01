@@ -41,7 +41,6 @@ export class SheetsHOCComponent implements OnInit {
   sheetId: number = 0;
   currentPage: number = 1;
   pageSize: number = 15;
-  keyword: string = '';
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;

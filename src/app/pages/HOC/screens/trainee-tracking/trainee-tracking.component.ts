@@ -20,7 +20,7 @@ export class TraineeTrackingComponent implements OnInit {
   dataRequest: Root[] = [];
   allSheets!: Names[];
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 15;
 
   allDataContests!: Root;
   dataRequestContests: Root[] = [];
