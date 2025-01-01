@@ -21,7 +21,7 @@ export class SessionsHOCComponent implements OnInit {
   router = inject(Router);
   allSessions!: Sessions;
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 15;
   keyword: string = '';
   isLoading = signal<boolean>(false);
   showModal: boolean = false;

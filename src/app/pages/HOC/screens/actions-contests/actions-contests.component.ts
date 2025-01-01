@@ -115,7 +115,9 @@ export class ActionsContestsComponent implements OnInit {
           this.isLoading = false;
           const localStartTime = this.convertToLocal(data.startTime);
           const localEndTime = this.convertToLocal(data.endTime);
-          this.onlineJudgeIsCodeforces = true;
+          if (data.judgeType === 0) {
+            this.onlineJudgeIsCodeforces = true;
+          }
           if (!data.cfCommunityId) {
             this.is = true;
           }

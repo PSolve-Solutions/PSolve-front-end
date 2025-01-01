@@ -18,7 +18,7 @@ export class MentorsTrackingComponent implements OnInit {
   allMentorsData!: RootMentors;
   dataRequest: any[] = [];
   currentPage: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 10;
   taskId: number = 0 | 1 | 2;
   mentorId: string | null = null;
   id: string | null = null;
