@@ -2,6 +2,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TrackingService } from '../../services/tracking.service';
 import { MentorsData, RootMentors, TasksData } from '../../model/tracking-hoc';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-mentors-tracking',
@@ -12,6 +13,7 @@ import { MentorsData, RootMentors, TasksData } from '../../model/tracking-hoc';
 })
 export class MentorsTrackingComponent implements OnInit {
   trackingService = inject(TrackingService);
+  ocSidebarService = inject(OcSidebarService);
   isLoading = signal<boolean>(false);
   allMentorsData!: RootMentors;
   dataRequest: any[] = [];

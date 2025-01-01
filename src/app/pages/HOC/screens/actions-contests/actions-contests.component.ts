@@ -1,7 +1,6 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  ElementRef,
   HostListener,
   inject,
   OnInit,
@@ -18,8 +17,8 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { ContestsHocService } from '../../services/contests-hoc.service';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actions-contests',
@@ -37,19 +36,22 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class ActionsContestsComponent implements OnInit {
   contestsHocService = inject(ContestsHocService);
-  casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   router = inject(Router);
   route = inject(ActivatedRoute);
-  @ViewChild('community') community!: NgSelectComponent;
   @ViewChild('judge') judge!: NgSelectComponent;
-  foucsTerm: boolean = false;
+  @ViewChild('communitySelect') communitySelect!: NgSelectComponent;
   foucsJ: boolean = false;
+  foucsC: boolean = false;
   id: number = 0;
   submitted: boolean = false;
   isLoading: boolean = false;
   contestForm!: FormGroup;
+  onlineJudgeIsCodeforces: boolean = false;
+  is: boolean = false;
+  allCommunities: { id: string; clientName: string }[] = [];
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -62,14 +64,16 @@ export class ActionsContestsComponent implements OnInit {
       id: [''],
       name: [null, [Validators.required]],
       link: [null, [Validators.required]],
-      community: [null, [Validators.required]],
-      judgeType: [null, [Validators.required]],
       problemCount: [0, this.positiveNumberValidator],
       onlineId: [null, [Validators.required]],
+      judgeType: [null, [Validators.required]],
       chiefOfContest: [null, [Validators.required]],
+      cfCommunityId: [null],
       endTime: [null, [Validators.required]],
       startTime: [null, [Validators.required]],
     });
+
+    this.fetchAllCommunitiesy();
   }
 
   positiveNumberValidator(control: AbstractControl) {
@@ -93,21 +97,39 @@ export class ActionsContestsComponent implements OnInit {
     }
   }
 
+  convertToLocal(utcDate: string): string {
+    const date = new Date(utcDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   getOneContest(id: number): void {
     this.isLoading = true;
     this.contestsHocService.getOneContest(id).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode == 200) {
           this.isLoading = false;
+          const localStartTime = this.convertToLocal(data.startTime);
+          const localEndTime = this.convertToLocal(data.endTime);
+          if (data.judgeType === 0) {
+            this.onlineJudgeIsCodeforces = true;
+          }
+          if (!data.cfCommunityId) {
+            this.is = true;
+          }
           this.contestForm.patchValue({
             id: data.id,
             name: data.name,
             link: data.link,
-            startTime: data.startTime,
-            endTime: data.endTime,
-            community: data.community,
+            startTime: localStartTime,
+            endTime: localEndTime,
             judgeType: data.judgeType,
             chiefOfContest: data.chiefOfContest,
+            cfCommunityId: data.cfCommunityId,
             onlineId: data.onlineId,
             problemCount: data.problemCount,
           });
@@ -125,17 +147,26 @@ export class ActionsContestsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+    const data = {
+      ...this.contestForm.value,
+      cfCommunityId: this.contestForm.get('cfCommunityId')?.value
+        ? this.contestForm.get('cfCommunityId')?.value
+        : null,
+      startTime: new Date(
+        this.contestForm.get('startTime')?.value
+      ).toISOString(),
+      endTime: new Date(this.contestForm.get('endTime')?.value).toISOString(),
+    };
+    console.log(data);
     if (this.id === 0) {
-      this.contestsHocService.createContest(this.contestForm.value).subscribe({
+      this.contestsHocService.createContest(data).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/contests']);
             this.isLoading = false;
           } else if (statusCode === 400) {
             this.toastr.error(message);
-
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);
@@ -153,16 +184,14 @@ export class ActionsContestsComponent implements OnInit {
         },
       });
     } else {
-      this.contestsHocService.updateContest(this.contestForm.value).subscribe({
+      this.contestsHocService.updateContest(data).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/contests']);
             this.isLoading = false;
           } else if (statusCode === 400) {
             this.toastr.error(message);
-
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);
@@ -179,6 +208,29 @@ export class ActionsContestsComponent implements OnInit {
           this.isLoading = false;
         },
       });
+    }
+  }
+
+  fetchAllCommunitiesy(): void {
+    this.contestsHocService.getPublicCommunities().subscribe({
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.allCommunities = data;
+        } else {
+          console.log('error');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  changeJudge(item: number) {
+    if (item === 0) {
+      this.onlineJudgeIsCodeforces = true;
+    } else {
+      this.onlineJudgeIsCodeforces = false;
     }
   }
 
@@ -194,21 +246,9 @@ export class ActionsContestsComponent implements OnInit {
   }
   @HostListener('document:click', ['$event'])
   onClickOutside() {
-    if (this.community.dropdownPanel === undefined) {
-      this.foucsTerm = false;
-    }
     if (this.judge.dropdownPanel === undefined) {
       this.foucsJ = false;
     }
-  }
-
-  toggleDropdownC() {
-    if (this.foucsTerm) {
-      this.community.close();
-    } else {
-      this.community.open();
-    }
-    this.foucsTerm = !this.foucsTerm;
   }
   toggleDropdownJ() {
     if (this.foucsJ) {
@@ -217,5 +257,13 @@ export class ActionsContestsComponent implements OnInit {
       this.judge.open();
     }
     this.foucsJ = !this.foucsJ;
+  }
+  toggleDropdownC() {
+    if (this.foucsC) {
+      this.communitySelect.close();
+    } else {
+      this.communitySelect.open();
+    }
+    this.foucsC = !this.foucsC;
   }
 }

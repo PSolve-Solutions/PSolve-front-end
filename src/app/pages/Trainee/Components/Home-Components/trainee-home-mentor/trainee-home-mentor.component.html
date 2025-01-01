@@ -25,7 +25,7 @@
           />
 
           <!-- Mentor Name -->
-          <h3 class="text-[1.25rem] sm:text-2xl font-semibold">
+          <h3 class="text-[1.25rem] text-[#002C3D] sm:text-2xl font-semibold">
             {{
               mentorData.firstName
                 ? mentorData.firstName + " " + mentorData.middleName
@@ -34,8 +34,8 @@
           </h3>
 
           <!-- Mentor Description -->
-          <div class="my-3 text-[14px] sm:text-xl font-bold">
-            <p class="long-text line-clamp-2 sm:line-clamp-none">
+          <div class="my-3 text-[14px]  sm:text-xl font-bold">
+            <p class="long-text line-clamp-2 sm:line-clamp-none text-[#002C3D]">
               {{ mentorData.about }}
             </p>
             <p
@@ -55,8 +55,8 @@
             <!-- College -->
             <p class="flex items-center w-full gap-1 font-semibold sm:gap-3">
               <img src="assets/img_trainee/collage.svg" alt="College icon" />
-              <span class="text-xl">College :</span>
-              <span class="font-bold text-xl text-[#E69C24]">
+              <span class="text-xl text-[#002C3D]">College :</span>
+              <span class="font-bold text-xl text-[#2A8E9E]">
                 {{ mentorData.college ? mentorData.college : "Not Available" }}
               </span>
             </p>
@@ -64,8 +64,8 @@
             <!-- Codeforces Handle -->
             <p class="flex items-center w-full gap-1 font-semibold sm:gap-3">
               <img src="assets/img_trainee/chart.svg" alt="Codeforces icon" />
-              <span class="text-xl">Codeforces Handle :</span>
-              <span class="font-bold text-xl text-[#E69C24]">
+              <span class="text-xl text-[#002C3D]">Codeforces Handle :</span>
+              <span class="font-bold text-xl text-[#2A8E9E]">
                 {{
                   mentorData.codeForceHandle
                     ? mentorData.codeForceHandle
@@ -78,9 +78,9 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-              <i class="fa-regular fa-envelope"></i>
-              <span class="text-xl">Email :</span>
-              <span class="font-bold text-xl text-[#E69C24]">
+             <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
+              <span class="text-xl text-[#002C3D]">Email :</span>
+              <span class="font-bold text-xl text-[#2A8E9E]">
                 {{ mentorData.email ? mentorData.email : "Not Available" }}
               </span>
             </p>
@@ -89,9 +89,9 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-              <i class="fa-solid fa-phone"></i>
-              <span class="text-xl">Phone Number :</span>
-              <span class="font-bold text-xl text-[#E69C24]">
+            <img src="assets/img_trainee/phone.svg" alt="phone-icon" />
+            <span class="text-xl text-[#002C3D]">Phone Number :</span>
+              <span class="font-bold text-xl text-[#2A8E9E]">
                 {{
                   mentorData.phoneNumber
                     ? mentorData.phoneNumber
@@ -104,9 +104,9 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-              <i class="fa-brands fa-facebook"></i>
-              <span class="text-xl">Facebook :</span>
-              <span class="font-bold text-xl text-[#E69C24]">
+            <img src="assets/img_trainee/facebook.svg" alt="facebook-icon" />
+            <span class="text-xl text-[#002C3D]">Facebook :</span>
+              <span class="font-bold text-xl text-[#2A8E9E]">
                 @if (mentorData.facebookLink) {
                 <a
                   [href]="mentorData.facebookLink"

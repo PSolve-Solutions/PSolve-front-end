@@ -1,17 +1,17 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { Router } from '@angular/router';
-import { ConfirmCampComponent } from '../../Components/confirm-camp/confirm-camp.component';
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { EmptyCampComponent } from '../../Components/empty-camp/empty-camp.component';
 import { CampInfo } from '../../model/camp';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
 
 @Component({
   selector: 'app-camps-leader',
   standalone: true,
-  imports: [ConfirmCampComponent, NgClass, EmptyCampComponent],
+  imports: [DeleteConfirmModalComponent, NgClass, DatePipe, EmptyCampComponent],
   templateUrl: './camps-leader.component.html',
   styleUrl: './camps-leader.component.scss',
 })
@@ -21,23 +21,23 @@ export class CampsLeaderComponent implements OnInit {
   casheService = inject(CasheService);
   router = inject(Router);
   allCampsInfo!: CampInfo;
-  showModal: boolean = false;
+  showModalDelete: boolean = false;
   showEmptyModal: boolean = false;
   selectedItemId: number | null = null;
   selectedEmptyId: number | null = null;
   isLoading = signal<boolean>(false);
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 8;
   totalPages: number = 1;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
 
   ngOnInit() {
-    this.fetchAllWithPagination(this.currentPage, this.pageSize);
+    this.getAllCamps(this.currentPage, this.pageSize);
   }
 
-  fetchAllWithPagination(currentPage: number, pageSize: number): void {
+  getAllCamps(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.campLeaderService
       .getAllWithPagination(currentPage, pageSize)
@@ -59,17 +59,22 @@ export class CampsLeaderComponent implements OnInit {
       });
   }
 
+  convertToLocal(date: string): Date {
+    const localDate = new Date(date);
+    return localDate;
+  }
+
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
-    this.showModal = true;
+    this.showModalDelete = true;
   }
 
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.casheService.clearCache();
-      this.fetchAllWithPagination(this.currentPage, this.pageSize);
+      this.getAllCamps(this.currentPage, this.pageSize);
     }
-    this.showModal = false;
+    this.showModalDelete = false;
   }
 
   //Empty
@@ -114,6 +119,7 @@ export class CampsLeaderComponent implements OnInit {
     if (page > 0 && page <= this.allCampsInfo?.totalPages) {
       this.currentPage = page;
       this.generatePages();
+      this.getAllCamps(this.currentPage, this.pageSize);
     }
   }
 

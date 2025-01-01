@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Chart, Plugin, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -9,37 +17,30 @@ Chart.register(...registerables);
   templateUrl: './chart-dashboard.component.html',
   styleUrl: './chart-dashboard.component.scss',
 })
-export class ChartDashboardComponent implements OnInit, AfterViewInit {
-  @Input() traineesCount: number = 50;
-  @Input() malesCount: number = 50;
-  @Input() femalesCount: number = 50;
-  percentageMales: number = 50;
-  percentagefemales: number = 50;
-  ngOnInit() {
-    this.percentageMales = Math.round(
-      (this.malesCount / this.traineesCount) * 100
-    );
-    this.percentagefemales = Math.round(
-      (this.femalesCount / this.traineesCount) * 100
-    );
-    const lables = ['Male'];
-    const lables2 = ['Female', 'No'];
+export class ChartDashboardComponent implements OnChanges, OnDestroy {
+  @Input() traineesCount: number = 0;
+  @Input() malesCount!: number;
+  @Input() femalesCount!: number;
+  percentageMales: number = 0;
+  percentagefemales: number = 0;
+  chart: Chart | null = null;
+  chart2: Chart | null = null;
+
+  ngOnChanges(): void {
+    if (this.traineesCount !== 0) {
+      this.percentageMales = Math.round(
+        (this.malesCount / this.traineesCount) * 100
+      );
+
+      this.percentagefemales = Math.round(
+        (this.femalesCount / this.traineesCount) * 100
+      );
+    }
     const data = [this.percentageMales, this.percentageMales - 100];
     const data2 = [this.percentagefemales, this.percentagefemales - 100];
-    this.renderChart(lables, data);
-    this.renderChart2(lables2, data2);
+    this.renderChart(['Male', 'No'], data);
+    this.renderChart2(['Female', 'No'], data2);
   }
-
-  ngAfterViewInit(): void {
-    const lables = ['Male'];
-    const lables2 = ['Female', 'No'];
-    const data = [this.percentageMales, this.percentageMales - 100];
-    const data2 = [this.percentagefemales, this.percentagefemales - 100];
-    this.renderChart(lables, data);
-    this.renderChart2(lables2, data2);
-  }
-
-  ctx = document.getElementById('chart') as HTMLCanvasElement;
 
   createCenterTextPlugin(
     text: string,
@@ -94,11 +95,13 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
   }
 
   renderChart(lables: any[], data: any[]): void {
-    const myChart = new Chart('chart', {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('chart', {
       type: 'doughnut',
       data: {
         labels: lables,
-
         datasets: [
           {
             data: data,
@@ -143,7 +146,10 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
     });
   }
   renderChart2(lables: any[], data: any[]): void {
-    const myChart = new Chart('chart2', {
+    if (this.chart2) {
+      this.chart2.destroy();
+    }
+    this.chart2 = new Chart('chart2', {
       type: 'doughnut',
       data: {
         labels: lables,
@@ -188,5 +194,16 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit {
         ),
       ],
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+    if (this.chart2) {
+      this.chart2.destroy();
+      this.chart = null;
+    }
   }
 }

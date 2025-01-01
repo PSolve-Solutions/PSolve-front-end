@@ -68,21 +68,21 @@
           </td>
         </tr>
         } }@else { @for ( i of [1, 2, 3, 4 ,5]; track i) {
-        <tr class="animate-pulse">
+        <tr class="border-b-8 animate-pulse border-mainColor4">
           <td class="flex items-center py-4 space-x-2 ps-6 pe-3">
             <div class="w-8 h-8 rounded-full bg-mainColor3"></div>
             <div class="w-32 h-4 rounded bg-mainColor3"></div>
           </td>
-          <td class="py-4 ps-6 pe-3">
+          <td class="hidden py-4 ps-6 md:table-cell pe-3">
             <div class="w-48 h-4 rounded bg-mainColor3"></div>
           </td>
-          <td class="py-4 ps-6 pe-3">
+          <td class="hidden py-4 ps-6 md:table-cell pe-3">
             <div class="h-4 rounded bg-mainColor3 w-36"></div>
           </td>
-          <td class="py-4 text-center ps-6 pe-3">
+          <td class="hidden py-4 text-center md:table-cell ps-16 pe-3">
             <div class="w-24 h-4 rounded bg-mainColor3"></div>
           </td>
-          <td class="py-4 text-center ps-6 pe-3">
+          <td class="py-4 text-center ps-20 pe-3">
             <div class="w-8 h-8 rounded bg-mainColor3"></div>
           </td>
         </tr>
@@ -99,16 +99,20 @@
           <th class="hidden py-4 md:ps-6 ps-3 pe-3 md:table-cell">
             Community E-mail
           </th>
-          <th class="relative hidden py-4 text-center ps-12 md:table-cell">
+          <th
+            class="relative items-center justify-center hidden py-4 md:table-cell"
+          >
             <div
-              class="absolute top-0 px-4 py-2.5 text-white rounded-bl-md rounded-br-md bg-mainColor1 w-fit"
+              class="relative flex items-center justify-center w-full h-full"
             >
-              Subscribe End
+              <div
+                class="absolute -top-[26px] px-4 py-2.5 text-white rounded-bl-md rounded-br-md bg-mainColor1 w-fit"
+              >
+                Subscribe End
+              </div>
             </div>
           </th>
-          <th class="hidden py-4 text-center md:ps-6 ps-3 pe-3 md:table-cell">
-            Block
-          </th>
+          <th class="py-4 text-center md:ps-6 ps-3 pe-3">Block</th>
           <th class="py-4 text-center md:ps-6 ps-3 pe-3">Delete</th>
         </tr>
       </thead>
@@ -122,7 +126,7 @@
         >
           <td
             [routerLink]="['client-details/', row.id]"
-            class="flex items-center py-4 space-x-2 cursor-pointer ps-6 pe-3"
+            class="flex items-center py-4 space-x-2 cursor-pointer md:ps-6 ps-3 pe-3"
           >
             <div class="w-8 h-8">
               <img
@@ -133,8 +137,8 @@
             </div>
             <span class="whitespace-nowrap">{{ row.clientName }}</span>
           </td>
-          <td class="hidden py-4 ps-6 pe-3 md:table-cell">{{ row.gmail }}</td>
-          <td class="hidden py-4 text-center ps-6 pe-3 md:table-cell">
+          <td class="hidden py-4 md:table-cell">{{ row.gmail }}</td>
+          <td class="hidden py-4 text-center md:table-cell">
             <span
               [ngClass]="
                 !checkEndDateForClinet(row.endDate)
@@ -144,7 +148,7 @@
               >{{ row.endDate }}</span
             >
           </td>
-          <td class="hidden py-4 text-center ps-6 pe-3 md:table-cell">
+          <td class="py-4 text-center ps-6 pe-3">
             <button
               (click)="changeLockStatus(row.id)"
               class="relative inline-flex items-center cursor-pointer"
@@ -189,21 +193,24 @@
           </td>
         </tr>
         } }@else { @for ( i of [1, 2, 3, 4 ,5]; track i) {
-        <tr class="animate-pulse">
-          <td class="flex items-center py-4 space-x-2 ps-6 pe-3">
+        <tr class="border-b-8 animate-pulse border-mainColor4">
+          <td class="flex items-center py-4 space-x-2 md:ps-6 ps-3 pe-3">
             <div class="w-8 h-8 rounded-full bg-mainColor3"></div>
-            <div class="w-32 h-4 rounded bg-mainColor3"></div>
+            <div class="h-4 rounded w-28 bg-mainColor3"></div>
           </td>
-          <td class="py-4 ps-6 pe-3">
-            <div class="w-48 h-4 rounded bg-mainColor3"></div>
+          <td class="hidden py-4 ps-6 md:table-cellpe-3">
+            <div class="w-56 h-4 rounded bg-mainColor3"></div>
           </td>
-          <td class="py-4 ps-6 pe-3">
+          <td class="hidden py-4 ps-6 md:table-cell pe-3">
             <div class="h-4 rounded bg-mainColor3 w-36"></div>
           </td>
-          <td class="py-4 text-center ps-6 pe-3">
-            <div class="w-24 h-4 rounded bg-mainColor3"></div>
+          <td class="hidden py-4 text-center md:table-cell ps-20 pe-3">
+            <div class="h-4 rounded w-36 bg-mainColor3"></div>
           </td>
-          <td class="py-4 text-center ps-6 pe-3">
+          <td class="py-4 text-center md:ps-16 pe-3">
+            <div class="w-16 h-4 rounded bg-mainColor3"></div>
+          </td>
+          <td class="py-4 text-center md:ps-20 ps-6 pe-3">
             <div class="w-8 h-8 rounded bg-mainColor3"></div>
           </td>
         </tr>

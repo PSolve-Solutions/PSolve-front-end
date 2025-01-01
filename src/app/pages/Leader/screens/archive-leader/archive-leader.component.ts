@@ -8,6 +8,7 @@ import {
 } from '../../model/archive-leader';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ArchiveLeaderService } from '../../services/archive-leader.service';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-archive-leader',
@@ -19,6 +20,7 @@ import { ArchiveLeaderService } from '../../services/archive-leader.service';
 export class ArchiveLeaderComponent implements OnInit {
   archiveLeaderService = inject(ArchiveLeaderService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   traineeArchiveInfo!: TraineeArchiveInfo;
   onetraineeArchiveInfo!: OnArchiveUserInfo;
   staffArchiveInfo!: any;
@@ -30,17 +32,18 @@ export class ArchiveLeaderComponent implements OnInit {
   isLoadingForSide: boolean = false;
   keywordSearch: string = '';
   sortbyNum: number = 0 | 1 | 2;
-  searchForm!: FormGroup;
+  sortbyNumStaff: number = 0 | 1 | 2;
   activeTab: string = 'tab1';
-  startPageIndex: number = 0;
-  maxVisiblePages: number = 4;
+
+  currentPage: number = 1;
+  pageSize: number = 8;
+  totalPages: number = 1;
+  showEllipsis: boolean = false;
+  showLastPage: boolean = false;
+  pages: number[] = [];
 
   ngOnInit() {
-    this.searchForm = new FormGroup({
-      searchInput: new FormControl(''),
-      sortNumber: new FormControl(null),
-    });
-    this.traineesWithPagination(1, 10, this.keywordSearch, this.sortbyNum);
+    this.traineesWithPagination(this.currentPage, this.pageSize);
   }
 
   traineesWithPagination(
@@ -56,6 +59,8 @@ export class ArchiveLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.traineeArchiveInfo = res;
+            this.totalPages = this.traineeArchiveInfo.totalPages;
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -81,6 +86,7 @@ export class ArchiveLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.staffArchiveInfo = res;
+            this.totalPages = this.staffArchiveInfo.totalPages;
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -145,140 +151,114 @@ export class ArchiveLeaderComponent implements OnInit {
     setTimeout(() => (this.hideSideInfo = true), 700);
   }
 
-  onSearchInput(event: Event) {
-    const searchTerm = (event.target as HTMLInputElement).value;
-    this.keywordSearch = searchTerm;
+  onSearchInput(keyWord: string) {
+    this.keywordSearch = keyWord;
     this.casheService.clearCache();
-
-    if (this.activeTab === 'tab1') {
-      this.traineesWithPagination(1, 10, searchTerm, this.sortbyNum);
-    } else {
-      this.staffArchiveWithPagination(1, 10, searchTerm, this.sortbyNum);
-    }
-  }
-
-  sortStaff(item: any): void {
-    this.sortbyNum = item;
-    if (this.activeTab === 'tab1') {
-      this.traineesWithPagination(1, 10, this.keywordSearch, this.sortbyNum);
-    } else {
-      this.staffArchiveWithPagination(
-        1,
-        10,
-        this.keywordSearch,
-        this.sortbyNum
-      );
-    }
-    this.casheService.clearCache();
-  }
-
-  nextPage() {
-    if (this.activeTab === 'tab1') {
-      if (this.traineeArchiveInfo.hasNextPage) {
-        this.traineesWithPagination(
-          this.traineeArchiveInfo.currentPage + 1,
-          10,
-          this.keywordSearch,
-          this.sortbyNum
-        );
-      }
-    } else {
-      if (this.staffArchiveInfo.hasNextPage) {
-        this.staffArchiveWithPagination(
-          this.staffArchiveInfo.currentPage + 1,
-          10,
-          this.keywordSearch,
-          this.sortbyNum
-        );
-      }
-    }
-  }
-
-  getPageRange(): number[] {
-    if (this.activeTab === 'tab1') {
-      const totalPages = this.traineeArchiveInfo.totalPages;
-      const currentPage = this.traineeArchiveInfo.currentPage;
-      const visiblePages = [];
-
-      if (currentPage > this.startPageIndex + this.maxVisiblePages) {
-        this.startPageIndex = currentPage - this.maxVisiblePages;
-      } else if (currentPage <= this.startPageIndex) {
-        this.startPageIndex = currentPage - 1;
-      }
-
-      const endPage = Math.min(
-        this.startPageIndex + this.maxVisiblePages,
-        totalPages
-      );
-
-      for (let i = this.startPageIndex + 1; i <= endPage; i++) {
-        visiblePages.push(i);
-      }
-
-      return visiblePages;
-    } else {
-      const totalPages = this.staffArchiveInfo.totalPages;
-      const currentPage = this.staffArchiveInfo.currentPage;
-      const visiblePages = [];
-
-      if (currentPage > this.startPageIndex + this.maxVisiblePages) {
-        this.startPageIndex = currentPage - this.maxVisiblePages;
-      } else if (currentPage <= this.startPageIndex) {
-        this.startPageIndex = currentPage - 1;
-      }
-
-      const endPage = Math.min(
-        this.startPageIndex + this.maxVisiblePages,
-        totalPages
-      );
-
-      for (let i = this.startPageIndex + 1; i <= endPage; i++) {
-        visiblePages.push(i);
-      }
-
-      return visiblePages;
-    }
-  }
-
-  gotoPage(pageNum: number): void {
     if (this.activeTab === 'tab1') {
       this.traineesWithPagination(
-        pageNum,
-        10,
+        this.currentPage,
+        this.pageSize,
         this.keywordSearch,
         this.sortbyNum
       );
     } else {
       this.staffArchiveWithPagination(
-        pageNum,
-        10,
+        this.currentPage,
+        this.pageSize,
         this.keywordSearch,
-        this.sortbyNum
+        this.sortbyNumStaff
       );
     }
   }
 
-  previousPage() {
+  sortBy(item: number): void {
+    this.casheService.clearCache();
+    this.sortbyNum = item;
+    this.traineesWithPagination(
+      this.currentPage,
+      this.pageSize,
+      this.keywordSearch,
+      this.sortbyNum
+    );
+  }
+  sortByStaff(item: number): void {
+    this.casheService.clearCache();
+    this.sortbyNumStaff = item;
+    this.staffArchiveWithPagination(
+      this.currentPage,
+      this.pageSize,
+      this.keywordSearch,
+      this.sortbyNumStaff
+    );
+  }
+
+  generatePages(): void {
+    this.pages = [];
     if (this.activeTab === 'tab1') {
-      if (this.traineeArchiveInfo.hasPreviousPage) {
-        this.traineesWithPagination(
-          this.traineeArchiveInfo.currentPage - 1,
-          10,
-          this.keywordSearch,
-          this.sortbyNum
+      if (this.traineeArchiveInfo?.totalPages <= 3) {
+        for (let i = 1; i <= this.traineeArchiveInfo?.totalPages; i++) {
+          this.pages.push(i);
+        }
+      } else {
+        const start = Math.max(this.currentPage - 2, 1);
+        const end = Math.min(
+          this.currentPage + 2,
+          this.traineeArchiveInfo?.totalPages
         );
+        for (let i = start; i <= end; i++) {
+          this.pages.push(i);
+        }
+
+        this.showEllipsis = end < this.traineeArchiveInfo?.totalPages - 1;
+        this.showLastPage = this.showEllipsis;
       }
     } else {
-      if (this.staffArchiveInfo.hasPreviousPage) {
-        this.staffArchiveWithPagination(
-          this.staffArchiveInfo.currentPage + 1,
-          10,
-          this.keywordSearch,
-          this.sortbyNum
+      if (this.staffArchiveInfo?.totalPages <= 3) {
+        for (let i = 1; i <= this.staffArchiveInfo?.totalPages; i++) {
+          this.pages.push(i);
+        }
+      } else {
+        const start = Math.max(this.currentPage - 2, 1);
+        const end = Math.min(
+          this.currentPage + 2,
+          this.staffArchiveInfo?.totalPages
         );
+        for (let i = start; i <= end; i++) {
+          this.pages.push(i);
+        }
+
+        this.showEllipsis = end < this.staffArchiveInfo?.totalPages - 1;
+        this.showLastPage = this.showEllipsis;
       }
     }
   }
+
+  changePage(page: number): void {
+    if (this.activeTab === 'tab1') {
+      if (page > 0 && page <= this.traineeArchiveInfo?.totalPages) {
+        this.currentPage = page;
+        this.traineesWithPagination(
+          this.currentPage,
+          this.pageSize,
+          this.keywordSearch,
+          this.sortbyNum
+        );
+        this.generatePages();
+      }
+    } else {
+      if (page > 0 && page <= this.staffArchiveInfo?.totalPages) {
+        this.currentPage = page;
+        this.staffArchiveWithPagination(
+          this.currentPage,
+          this.pageSize,
+          this.keywordSearch,
+          this.sortbyNumStaff
+        );
+        this.generatePages();
+      }
+    }
+  }
+
   closeSort() {}
   handleOverlayClick(event: MouseEvent) {
     if ((event.target as HTMLElement).classList.contains('fixed')) {
@@ -290,14 +270,11 @@ export class ArchiveLeaderComponent implements OnInit {
   selectTab(tab: string) {
     this.activeTab = tab;
     if (this.activeTab !== 'tab1') {
-      this.staffArchiveWithPagination(
-        1,
-        10,
-        this.keywordSearch,
-        this.sortbyNum
-      );
+      this.casheService.clearCache();
+      this.staffArchiveWithPagination(1, 8, this.keywordSearch);
     } else {
-      this.traineesWithPagination(1, 10, this.keywordSearch, this.sortbyNum);
+      this.casheService.clearCache();
+      this.traineesWithPagination(1, 8, this.keywordSearch);
     }
   }
 }

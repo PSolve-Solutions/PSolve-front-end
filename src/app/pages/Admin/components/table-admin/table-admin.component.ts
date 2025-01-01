@@ -29,6 +29,7 @@ export class TableAdminComponent implements OnChanges {
     currentPage: number;
     rowsPerPage: number;
   }>();
+  @Output() clientId = new EventEmitter<string>();
   @Input() allDataTable!: any;
   @Input() isLoading: boolean = false;
   @Input() whatPlace: string = '';
@@ -45,7 +46,6 @@ export class TableAdminComponent implements OnChanges {
   selectedUserId: string | null = null;
   isPastDate: boolean = false;
   isLocked: boolean = false;
-  clientId: string = '';
 
   ngOnChanges() {
     this.generatePages();
@@ -55,28 +55,7 @@ export class TableAdminComponent implements OnChanges {
   }
 
   changeLockStatus(clientId: string): void {
-    console.log(clientId);
-    this.clientsService.changeLockStatus(clientId).subscribe({
-      next: ({ statusCode, message }) => {
-        if (statusCode === 200) {
-          const i = this.allDataTable.data.find((t: any) => t.id == clientId);
-          this.isLocked = i.isLocked;
-          this.toastr.success(message);
-        } else if (statusCode === 400) {
-          this.toastr.error(message);
-          this.isLoading = false;
-        } else if (statusCode === 404) {
-          this.toastr.error(message);
-          this.isLoading = false;
-        } else {
-          this.isLoading = false;
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.isLoading = false;
-      },
-    });
+    this.clientId.emit(clientId);
   }
 
   checkEndDateForClinet(endDate: string): boolean {

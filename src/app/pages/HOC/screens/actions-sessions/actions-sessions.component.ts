@@ -15,8 +15,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionsHOCService } from '../../services/sessions-hoc.service';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-actions-sessions',
@@ -27,7 +27,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class ActionsSessionsComponent implements OnInit {
   sessionsHOCService = inject(SessionsHOCService);
-  casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   router = inject(Router);
@@ -55,18 +55,30 @@ export class ActionsSessionsComponent implements OnInit {
     });
   }
 
+  convertToLocal(utcDate: string): string {
+    const date = new Date(utcDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   getOneSession(id: number): void {
     this.isLoading = true;
     this.sessionsHOCService.getOneSession(id).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode == 200) {
           this.isLoading = false;
+          const localStartTime = this.convertToLocal(data.startDate);
+          const localEndTime = this.convertToLocal(data.endDate);
           this.sessionForm.patchValue({
             id: data.id,
             instructorName: data.instructorName,
             topic: data.topic,
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startDate: localStartTime,
+            endDate: localEndTime,
             locationLink: data.locationLink,
             locationName: data.locationName,
           });
@@ -84,16 +96,25 @@ export class ActionsSessionsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+    const dataForm = {
+      ...this.sessionForm.value,
+      startDate: new Date(
+        this.sessionForm.get('startDate')?.value
+      ).toISOString(),
+      endDate: new Date(this.sessionForm.get('endDate')?.value).toISOString(),
+    };
+    console.log(dataForm);
     if (this.id === 0) {
-      this.sessionsHOCService.createSession(this.sessionForm.value).subscribe({
+      this.sessionsHOCService.actionsSession(dataForm).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/sessions']);
             this.isLoading = false;
             this.toastr.error(message);
-
+            this.isLoading = false;
+          } else if (statusCode === 400) {
+            this.toastr.error(message);
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);
@@ -111,16 +132,14 @@ export class ActionsSessionsComponent implements OnInit {
         },
       });
     } else {
-      this.sessionsHOCService.updateSession(this.sessionForm.value).subscribe({
+      this.sessionsHOCService.updateSession(dataForm).subscribe({
         next: ({ statusCode, message, errors }) => {
           if (statusCode === 200) {
             this.toastr.success(message);
-            this.casheService.clearCache();
             this.router.navigate(['/head_of_camp/sessions']);
             this.isLoading = false;
           } else if (statusCode === 400) {
             this.toastr.error(message);
-
             this.isLoading = false;
           } else if (statusCode === 500) {
             this.toastr.warning(message);

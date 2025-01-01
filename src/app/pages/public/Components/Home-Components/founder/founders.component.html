@@ -1,0 +1,16 @@
+<section class="my-14 sm:my-56 w-11/12 mx-auto sm:w-full" id="founders">
+  <!-- Section Heading -->
+  <h2 class="uppercase pl-0 sm:pl-10 mb-7 sm:mb-14">
+    Founders
+  </h2>
+
+  <!-- Founders Container -->
+  <div class="allfounders flex flex-wrap gap-y-5 sm:gap-y-10 p-5 sm:p-10 bg-[#F5F9F9]">
+    <!-- Loop through allFounders -->
+    @for (founder of allFounders; track $index) {
+      <div class="founder sm:max-w-1/3 sm:min-w-1/3 sm:w-1/3 max-w-1/2 min-w-1/2 w-1/2">
+        <app-founder-child [founderData]="founder"></app-founder-child>
+      </div>
+    }
+  </div>
+</section>

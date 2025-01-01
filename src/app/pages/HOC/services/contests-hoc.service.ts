@@ -10,15 +10,10 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class ContestsHocService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-  getAllContests(
-    currentPage: number,
-    pageSize: number,
-    KeyWord?: string
-  ): Observable<any> {
+  getAllContests(currentPage: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('PageNumber', currentPage)
-      .set('PageSize', pageSize)
-      .set('KeyWord', KeyWord ? KeyWord : '');
+      .set('PageSize', pageSize);
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Head/contests`,
       params
@@ -26,13 +21,16 @@ export class ContestsHocService {
   }
 
   deleteContest(id: number): Observable<ResponseHeader> {
-    return this.http.delete<any>(`${environment.BASE_URL}/api/Head/contests`, {
-      body: id,
-    });
+    return this.http.delete<ResponseHeader>(
+      `${environment.BASE_URL}/api/Head/contests`,
+      {
+        body: id,
+      }
+    );
   }
 
   getOneContest(id: number): Observable<ResponseHeader> {
-    return this.http.get<any>(
+    return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests/${id}`
     );
   }
@@ -41,7 +39,7 @@ export class ContestsHocService {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',
     });
-    return this.http.post<any>(
+    return this.http.post<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests`,
       formData,
       { headers: myHeaders }
@@ -49,9 +47,15 @@ export class ContestsHocService {
   }
 
   updateContest(info: any): Observable<ResponseHeader> {
-    return this.http.put<any>(
+    return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests`,
       info
+    );
+  }
+
+  getPublicCommunities(): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Head/getPublicCommunities`
     );
   }
 }

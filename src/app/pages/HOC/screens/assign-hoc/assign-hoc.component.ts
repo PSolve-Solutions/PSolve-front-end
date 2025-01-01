@@ -3,6 +3,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AssignHocService } from '../../services/assign-hoc.service';
 import { Mentor, Trainee } from '../../model/assign-hoc';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-assign-hoc',
@@ -13,6 +15,8 @@ import { Mentor, Trainee } from '../../model/assign-hoc';
 })
 export class AssignHOCComponent implements OnInit {
   assignHocService = inject(AssignHocService);
+  ocSidebarService = inject(OcSidebarService);
+  toastr = inject(ToastrService);
   allTrainees: Trainee[] = [];
   allMentor: Mentor[] = [];
   selectedMentor: Mentor | null = null;
@@ -78,12 +82,13 @@ export class AssignHOCComponent implements OnInit {
     };
     if (this.selectedMentor) {
       this.assignHocService.assignTraniee(data).subscribe({
-        next: ({ statusCode }) => {
+        next: ({ statusCode, message }) => {
           if (statusCode === 200) {
             this.selectedMentor?.trainees.push(trainee);
             this.allTrainees = this.allTrainees.filter(
               (p) => p.id !== trainee.id
             );
+            this.toastr.success(message);
           } else {
             this.isLoading.update((v) => (v = false));
           }
@@ -98,10 +103,11 @@ export class AssignHOCComponent implements OnInit {
 
   removeFromMentor(trainee: Trainee, mentor: Mentor): void {
     this.assignHocService.unAssignTrainee(trainee.id).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           mentor.trainees = mentor.trainees.filter((t) => t.id !== trainee.id);
           this.allTrainees.push(trainee);
+          this.toastr.success(message);
         } else {
           this.isLoading.update((v) => (v = false));
         }

@@ -1,10 +1,15 @@
-<div
-  style="height: calc(100vh - 72px)"
-  class="relative w-full p-4 space-y-4 sm:ps-4 sm:space-y-6"
->
-  <div class="flex items-center justify-between px-12 py-4 bg-white rounded-xl">
-    <h2 class="text-xl font-bold">Mentors Tracking</h2>
-  </div>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Mentors Tracking
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Mentors Tracking
+  </h1>
 
   @if( isLoading()&& dataRequest.length === 0) {
   <div class="fixed z-50 top-[50%] left-[50%] bg-opacity-60">
@@ -16,13 +21,13 @@
   </div>
   } @else {
   <div
-    style="max-height: calc(100vh - 200px)"
-    class="pb-8 overflow-y-auto pe-2 scroll-host-table rounded-xl"
+    style="max-height: calc(100vh - 130px)"
+    class="pb-8 overflow-y-auto pe-2 scroll-host-tableM rounded-xl"
     (scroll)="loadMoreData($event)"
   >
     @for ( row of dataRequest; track $index) { @for (mentor of row.data; track
-    mentor.id) {
-    <div class="p-8 mt-6 bg-white rounded-xl">
+    mentor.id; let first = $first) {
+    <div class="p-8 bg-white rounded-xl" [class.mt-6]="!first">
       <div
         class="relative flex flex-col items-center justify-center w-full gap-y-2"
       >

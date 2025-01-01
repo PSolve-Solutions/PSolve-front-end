@@ -5,6 +5,7 @@ import { CasheService } from '../../../../shared/services/cashe.service';
 import { UsersOther, UsersWeekly } from '../../model/weekly';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-weekly-filter-hoc',
@@ -15,6 +16,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class WeeklyFilterHOCComponent implements OnInit {
   weeklyFilterService = inject(WeeklyFilterService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   toastr = inject(ToastrService);
   filterData!: UsersWeekly[];

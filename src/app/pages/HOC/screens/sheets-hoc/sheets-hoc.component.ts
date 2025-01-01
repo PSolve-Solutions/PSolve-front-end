@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-sheets-hoc',
@@ -32,6 +33,7 @@ import {
 export class SheetsHOCComponent implements OnInit {
   sheetsHOCService = inject(SheetsHOCService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   router = inject(Router);
   fb = inject(FormBuilder);
   formMaterial!: FormGroup;
@@ -39,7 +41,6 @@ export class SheetsHOCComponent implements OnInit {
   sheetId: number = 0;
   currentPage: number = 1;
   pageSize: number = 15;
-  keyword: string = '';
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
@@ -49,7 +50,6 @@ export class SheetsHOCComponent implements OnInit {
   isLoadingMaterial = signal<boolean>(false);
   isLoadingMaterialAdd = signal<boolean>(false);
   isDeleted: boolean = false;
-  submitted: boolean = false;
 
   ngOnInit() {
     this.getAllSheets(this.currentPage, this.pageSize);
@@ -60,29 +60,26 @@ export class SheetsHOCComponent implements OnInit {
     });
   }
 
-  getAllSheets(currentPage: number, pageSize: number, keyword?: string): void {
+  getAllSheets(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
-    this.sheetsHOCService
-      .getAllSheets(currentPage, pageSize, keyword)
-      .subscribe({
-        next: (res) => {
-          if (res.statusCode === 200) {
-            this.allSheets = res;
-            this.dataRequest.push(res);
-            this.isLoading.update((v) => (v = false));
-          } else {
-            this.isLoading.update((v) => (v = false));
-          }
-        },
-        error: (err) => {
-          console.log(err);
+    this.sheetsHOCService.getAllSheets(currentPage, pageSize).subscribe({
+      next: (res) => {
+        if (res.statusCode === 200) {
+          this.allSheets = res;
+          this.dataRequest.push(res);
           this.isLoading.update((v) => (v = false));
-        },
-      });
+        } else {
+          this.isLoading.update((v) => (v = false));
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading.update((v) => (v = false));
+      },
+    });
   }
 
   addMaterial(): void {
-    this.submitted = true;
     if (this.formMaterial.invalid) {
       return;
     }
@@ -106,6 +103,14 @@ export class SheetsHOCComponent implements OnInit {
         },
       });
   }
+
+  // toggleDetails(id: number) {
+  //   if (id === this.sheetId) {
+  //     this.sheetId = 0;
+  //   } else {
+  //     this.sheetId = id;
+  //   }
+  // }
 
   showConfirmDelete(id: number) {
     this.selectedItemId = id;

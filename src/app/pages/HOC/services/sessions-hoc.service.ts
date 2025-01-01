@@ -10,15 +10,10 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class SessionsHOCService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-  getAllSessions(
-    currentPage: number,
-    pageSize: number,
-    KeyWord?: string
-  ): Observable<any> {
+  getAllSessions(currentPage: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('PageNumber', currentPage)
-      .set('PageSize', pageSize)
-      .set('KeyWord', KeyWord ? KeyWord : '');
+      .set('PageSize', pageSize);
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Head/sessions`,
       params
@@ -37,7 +32,7 @@ export class SessionsHOCService {
     );
   }
 
-  createSession(formData: any): Observable<ResponseHeader> {
+  actionsSession(formData: any): Observable<ResponseHeader> {
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Head/sessions`,
       formData

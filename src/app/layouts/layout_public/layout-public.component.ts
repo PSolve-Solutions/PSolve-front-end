@@ -10,6 +10,8 @@ import { FooterComponent } from "./components/footer/footer.component";
   templateUrl: './layout-public.component.html',
   styleUrl: './layout-public.component.scss'
 })
-export class LayoutPublicComponent {
+export class LayoutPublicComponent{
+
+
 
 }

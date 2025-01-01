@@ -9,15 +9,10 @@
 }
 
 .scroll-host-table::-webkit-scrollbar-thumb {
-  background: #3d91c7;
+  background: #285c6a;
   border-radius: 10px;
 }
 
 .scroll-host-table::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-table {
-  border-collapse: separate;
-  border-spacing: 0px 12px;
 }

@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full">
   <h1
     class="absolute top-7 hidden md:block z-[50] text-xl transition-all duration-500 font-medium"
-    [ngClass]="ocSidebarService.isOpen() ? ' left-80' : ' left-36'"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
     All Clients : {{ !isLoading ? allClients.totalCount : 0 }}
   </h1>
@@ -27,6 +27,7 @@
     </button>
     <app-table-admin
       (pageParams)="getPageParams($event)"
+      (clientId)="getClientId($event)"
       [isLoading]="isLoading"
       [allDataTable]="allClients"
       [whatPlace]="'clinet'"

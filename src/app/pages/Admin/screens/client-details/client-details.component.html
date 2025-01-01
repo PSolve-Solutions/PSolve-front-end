@@ -8,7 +8,7 @@
           Leaders Information
         </h2>
         <div
-          class="h-64 overflow-y-auto scroll-host-table pe-3"
+          class="h-64 overflow-y-auto scroll-host-table"
           [class.h-64]="!isLoading && client.leaders.length >= 3 ? true : false"
         >
           <table
@@ -79,7 +79,7 @@
             ></label
           >
           <div
-            class="px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+            class="px-4 py-2 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
           >
             {{ client.clientName || "Community name" }}
           </div>
@@ -94,7 +94,7 @@
             ></label
           >
           <div
-            class="px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
+            class="px-4 py-2 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
           >
             {{ client.gmail || "Community email" }}
           </div>
@@ -106,7 +106,7 @@
             >Community Facebook Link</label
           >
           <div
-            class="px-4 py-2 text-lg font-semibold bg-white border rounded-md outline-none appearance-none text-mainColor1 border-mainColor1 focus:border-subColor1"
+            class="px-4 py-2 mt-1 text-sm font-semibold truncate border rounded-md outline-none appearance-none bg-mainColor4 lg:mt-0 md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
           >
             {{ client.facebookLink || "facebookLink" }}
           </div>
@@ -185,6 +185,13 @@
     class="flex items-center justify-center w-full mt-16 mb-6 text-lg font-semibold gap-x-6 text-mainColor4"
   >
     <button
+      type="button"
+      routerLink="/psovle/clients"
+      class="px-6 py-2 rounded-md bg-mainColor2"
+    >
+      Cancel
+    </button>
+    <button
       (click)="updatesubScribtionClient(startDate, endDate)"
       class="px-6 py-2 rounded-md bg-mainColor1"
     >
@@ -197,13 +204,6 @@
         </div>
       </div>
       }
-    </button>
-    <button
-      type="button"
-      routerLink="/psovle/clients"
-      class="px-6 py-2 rounded-md bg-mainColor2"
-    >
-      Cancel
     </button>
   </div>
 </div>

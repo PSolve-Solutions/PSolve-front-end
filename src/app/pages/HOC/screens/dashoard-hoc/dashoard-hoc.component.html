@@ -1,10 +1,10 @@
-<div class="relative w-full p-4 space-y-2 sm:p-6 sm:ps-4">
+<div class="flex flex-col w-full">
   <div class="flex items-center px-12 py-6 bg-white gap-x-6 rounded-xl">
     <div class="flex items-center justify-between px-2 font-bold">
       <button
         [ngClass]="{
-          'bg-mainblue text-white': activeTab === 'tab1',
-          'text-black hover:text-mainblue': activeTab !== 'tab1'
+          'bg-subColor1 text-white': activeTab === 'tab1',
+          'text-black hover:text-subColor1': activeTab !== 'tab1'
         }"
         (click)="selectTab('tab1')"
         class="flex items-center px-4 py-1.5 text-lg text-white rounded-xl w-fit"
@@ -14,8 +14,8 @@
       <div class="flex items-center justify-between px-2">
         <button
           [ngClass]="{
-            'bg-mainblue text-white': activeTab === 'tab2',
-            'text-black hover:text-mainblue': activeTab !== 'tab2'
+            'bg-subColor1 text-white': activeTab === 'tab2',
+            'text-black hover:text-subColor1': activeTab !== 'tab2'
           }"
           (click)="selectTab('tab2')"
           class="flex items-center px-4 py-1.5 text-lg text-white rounded-xl w-fit"

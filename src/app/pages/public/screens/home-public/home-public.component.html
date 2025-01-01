@@ -1,23 +1,10 @@
 <div class="relative overflow-hidden">
-  <div
-    class="absolute right-0 top-0 left-0 bg-[#0A0A0A73] z-50 py-3 apply flex justify-center items-center"
-    *ngIf="show"
-  >
-    <span class="bg-[#EF4A50] size-8 rounded-lg relative">
-      <img
-        src="assets/img_public/Speaker.svg"
-        width="15"
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      />
-    </span>
-    <p class="text-white mx-5">New camps are coming soon</p>
-    <button class="bg-[#EF4A50] py-2 px-5 text-white text-[12px] rounded-md" routerLink="/registration">Apply now</button>
-    <button class="bg-[#EF4A50] p-2  text-white text-[14px] rounded-md absolute right-4" (click)="hidden()"><img src="assets/img_public/X_icon.svg" width="10"></button>
-  </div>
-  <app-home-hero />
-  <app-about-us />
-  <app-achievements />
-  <app-founders />
-  <app-coaches />
-  <app-feedback />
+   <app-home-hero />
+   <app-leader-slider/>
+   <app-head-of-camp />
+   <app-mentors/>
+   <app-trainee/>
+   <app-founders/>
+   <app-communities [clientData]="Clintes" />
+   <app-aboutus/>
 </div>

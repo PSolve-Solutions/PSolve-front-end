@@ -8,6 +8,7 @@ import {
   Data,
   SessionAttendance,
 } from '../../model/attenances-hoc';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-attendance-hoc',
@@ -18,6 +19,7 @@ import {
 })
 export class AttendanceHOCComponent implements OnInit {
   attendanceHocService = inject(AttendanceHocService);
+  ocSidebarService = inject(OcSidebarService);
   casheService = inject(CasheService);
   allData!: Data;
   allSesions!: SessionAttendance[];
@@ -25,25 +27,19 @@ export class AttendanceHOCComponent implements OnInit {
 
   currentPage: number = 1;
   pageSize: number = 15;
-  keyword: string = '';
   isLoading = signal<boolean>(false);
   dataRequest: AttendanceTrainees[] = [];
   hoveredRow: number | null = null;
   hoveredCol: number | null = null;
 
   ngOnInit() {
-    this.getAllAttendances(this.currentPage, this.pageSize);
     this.getTopics();
   }
 
-  getAllAttendances(
-    currentPage: number,
-    pageSize: number,
-    keyword?: string
-  ): void {
+  getAllAttendances(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.attendanceHocService
-      .getAllAttendances(currentPage, pageSize, keyword)
+      .getAllAttendances(currentPage, pageSize)
       .subscribe({
         next: ({ statusCode, data }) => {
           if (statusCode === 200) {
@@ -68,6 +64,7 @@ export class AttendanceHOCComponent implements OnInit {
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.allSesions = data;
+          this.getAllAttendances(this.currentPage, this.pageSize);
           this.isLoading.update((v) => (v = false));
         } else {
           this.isLoading.update((v) => (v = false));

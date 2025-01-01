@@ -1,59 +1,78 @@
-<div
-  style="height: calc(100vh - 72px)"
-  class="relative bg-[#F4F5F8] w-full p-4 space-y-2 sm:p-6 sm:ps-4"
->
-  <div class="flex items-center px-12 py-4 mb-8 bg-white rounded-xl">
-    <h2 class="text-xl font-bold">Trainee Tracking</h2>
-  </div>
+<div class="flex flex-col w-full">
+  <h1
+    class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
+    [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
+  >
+    Trainee Tracking
+  </h1>
+  <h1
+    class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
+  >
+    Trainee Tracking
+  </h1>
 
-  @if( isLoading() && dataRequest.length === 0) {
-  <div class="fixed z-50 top-[45%] left-[55%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
-    </div>
-  </div>
-  } @else {
   <div class="bg-white rounded-xl">
-    <div class="flex space-x-2 bg-[#F4F5F8]">
+    <div class="flex space-x-2 text-base font-semibold md:text-xl bg-[#F4F5F8]">
       <button
-        class="px-6 py-2 text-xl font-semibold rounded-t-md focus:outline-none"
+        class="px-6 py-2 rounded-t-xl focus:outline-none"
         [ngClass]="{
-          'bg-white text-mainblue': activeTab === 'tab1',
-          'text-[#6B7088] hover:text-mainblue': activeTab !== 'tab1'
+          'bg-white text-mainColor1': activeTab === 'tab1',
+          'text-black hover:text-mainColor1': activeTab !== 'tab1'
         }"
         (click)="selectTab('tab1')"
       >
         Sheets
       </button>
       <button
-        class="px-6 py-2 text-xl font-semibold rounded-t-md focus:outline-none"
+        class="px-6 py-2 rounded-t-xl focus:outline-none"
         [ngClass]="{
-          'bg-white text-mainblue': activeTab === 'tab2',
-          'text-[#6B7088] hover:text-mainblue': activeTab !== 'tab2'
+          'bg-white text-mainColor1': activeTab === 'tab2',
+          'text-black hover:text-mainColor1': activeTab !== 'tab2'
         }"
         (click)="selectTab('tab2')"
       >
         Contests
       </button>
     </div>
-    <div class="pt-6">
-      @if (activeTab === 'tab1') {
+
+    <div
+      class="px-2 py-4 rounded-b-lg"
+      [ngClass]="{
+        'bg-white': activeTab === 'tab1' || activeTab === 'tab2',
+        'bg-gray-100': activeTab !== 'tab1' && activeTab !== 'tab2'
+      }"
+    >
+      @if( isLoading() && dataRequest.length === 0) {
+      <div class="fixed z-50 top-[45%] left-[55%] bg-opacity-60">
+        <div class="flex items-center">
+          <div
+            class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
+      </div>
+      } @else { @if (activeTab === 'tab1') {
       <div
-        style="max-height: calc(100vh - 260px)"
-        class="pb-4 overflow-auto scroll-host-table"
+        style="max-height: calc(100vh - 205px)"
+        class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
         (scroll)="loadMoreData($event)"
       >
-        <table class="min-w-full text-center bg-white rounded-lg">
-          <thead class="sticky top-0 z-50 text-sm">
-            <tr class="border-b shadow-md text-[#6B7088]">
-              <th class="sticky left-0 z-50 p-4 text-left bg-white rounded-lg">
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead
+            class="text-[13px] top-0 z-40 sticky md:text-base font-semibold bg-[#DEDFE1]"
+          >
+            <tr>
+              <th class="sticky left-0 p-4 z-40 text-left bg-[#DEDFE1]">
                 Name
               </th>
               @for (s of allSheets; track s.id; let colIndex = $index) {
               <th
-                [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
+                [ngClass]="
+                  hoveredCol === colIndex
+                    ? 'bg-subColor2 text-mainColor4'
+                    : 'bg-[#DEDFE1]'
+                "
                 class="p-4 font-extrabold whitespace-nowrap"
               >
                 {{ s.name }}
@@ -63,17 +82,19 @@
           </thead>
           <tbody>
             @for (allData of dataRequest; track $index) { @for (item of
-            allData.data; track item.id; let rowIndex = $index) {
+            allData.data; track item.id; let rowIndex = $index; let first =
+            $first) {
             <tr
-              class="my-6 bg-white border-b-2 text-[#6B7088] text-center text-base font-medium rounded-lg"
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+              [class.border-t-8]="first"
             >
               <td
                 [ngClass]="{
-                  '!bg-blue-200': hoveredRow === rowIndex
+                  '!bg-subColor2 text-mainColor4': hoveredRow === rowIndex
                 }"
                 (mouseover)="onHover(rowIndex, 0)"
                 (mouseleave)="onLeave()"
-                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white whitespace-nowrap"
               >
                 {{ item.firstName }} {{ item.middleName }}
               </td>
@@ -82,7 +103,7 @@
               <td
                 class="p-4"
                 [ngClass]="{
-              'bg-gray-200 cursor-cell':
+              'bg-subColor2 text-mainColor4 cursor-cell':
                 (hoveredRow !== null && hoveredRow === rowIndex) ||
                 (hoveredCol !== null &&
                   hoveredCol === colIndex &&
@@ -98,9 +119,16 @@
             </tr>
             } }
           </tbody>
+          <tfoot class="bg-[#DEDFE1] rounded-lg">
+            <tr>
+              <td
+                [colSpan]="lenSheet + 1"
+                class="p-3 rounded-bl-lg rounded-br-lg"
+              ></td>
+            </tr>
+          </tfoot>
         </table>
         @if (isLoading()) { @if (dataRequest.length !== 0) {
-
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
             <div
@@ -110,23 +138,37 @@
         </div>
         } }
       </div>
-      } @else {
+      } } @if( isLoading2() && dataRequestContests.length === 0) {
+      <div class="fixed z-50 top-[45%] left-[55%] bg-opacity-60">
+        <div class="flex items-center">
+          <div
+            class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
+      </div>
+      } @else { @if (activeTab !== 'tab1') {
       <div
-        style="max-height: calc(100vh - 260px)"
-        class="pb-4 overflow-auto scroll-host-table"
+        style="max-height: calc(100vh - 205px)"
+        class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
         (scroll)="loadMoreDataContest($event)"
       >
-        <table class="min-w-full text-center bg-white rounded-lg">
-          <thead class="sticky top-0 z-50 text-sm">
-            <tr class="border-b shadow-md text-[#6B7088]">
-              <th
-                class="sticky left-0 z-50 p-4 text-left bg-white rounded-lg whitespace-nowrap"
-              >
+        <table
+          class="w-full text-center bg-white rounded-lg table-auto text-mainColor1"
+        >
+          <thead
+            class="text-[13px] top-0 z-40 sticky md:text-base font-semibold bg-[#DEDFE1]"
+          >
+            <tr>
+              <th class="sticky left-0 p-4 z-40 text-left bg-[#DEDFE1]">
                 Name
               </th>
               @for (s of allContests; track s.id; let colIndex = $index) {
               <th
-                [ngClass]="hoveredCol === colIndex ? 'bg-blue-200' : 'bg-white'"
+                [ngClass]="
+                  hoveredCol === colIndex
+                    ? 'bg-subColor2 text-mainColor4'
+                    : 'bg-[#DEDFE1]'
+                "
                 class="p-4 font-extrabold whitespace-nowrap"
               >
                 {{ s.name }}
@@ -135,27 +177,29 @@
             </tr>
           </thead>
           <tbody>
-            @for (row of dataRequest; track $index) { @for (item of row.data;
-            track item.id; let rowIndex = $index) {
+            @for (row of dataRequestContests; track $index) { @for (item of
+            row.data; track item.id; let rowIndex = $index; let first = $first)
+            {
             <tr
-              class="my-6 bg-white border-b-2 text-[#6B7088] text-center text-base font-medium rounded-lg"
+              class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
+              [class.border-t-8]="first"
             >
               <td
                 [ngClass]="{
-                  '!bg-blue-200': hoveredRow === rowIndex
+                  '!bg-subColor2 text-mainColor4': hoveredRow === rowIndex
                 }"
                 (mouseover)="onHover(rowIndex, 0)"
                 (mouseleave)="onLeave()"
-                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white rounded-s-lg whitespace-nowrap"
+                class="sticky left-0 z-[5] p-4 font-bold text-left bg-white whitespace-nowrap"
               >
                 {{ item.firstName }} {{ item.middleName }}
               </td>
               @for (s of item.tracking; track s.sheetId; let colIndex = $index)
               {
               <td
-                class="p-4"
+                class="p-4 whitespace-nowrap"
                 [ngClass]="{
-              'bg-gray-200 cursor-cell':
+              'bg-subColor2 cursor-cell text-mainColor4':
                 (hoveredRow !== null && hoveredRow === rowIndex) ||
                 (hoveredCol !== null &&
                   hoveredCol === colIndex &&
@@ -172,9 +216,16 @@
             </tr>
             } }
           </tbody>
+          <tfoot class="bg-[#DEDFE1] rounded-lg">
+            <tr>
+              <td
+                [colSpan]="lenContest + 1"
+                class="p-3 rounded-bl-lg rounded-br-lg"
+              ></td>
+            </tr>
+          </tfoot>
         </table>
-        @if (isLoading()) { @if (dataRequest.length !== 0) {
-
+        @if (isLoading2()) { @if (dataRequest.length !== 0) {
         <div class="flex items-center justify-center w-full bg-opacity-60">
           <div class="flex items-center justify-center">
             <div
@@ -184,9 +235,8 @@
         </div>
         } }
       </div>
-      }
+
+      } }
     </div>
   </div>
-
-  }
 </div>

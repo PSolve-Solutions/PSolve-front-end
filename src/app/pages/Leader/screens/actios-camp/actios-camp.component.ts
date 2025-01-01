@@ -18,7 +18,6 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { CampLeaderService } from '../../services/camp-leader.service';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
@@ -41,7 +40,6 @@ import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service
 export class ActiosCampComponent implements OnInit {
   campLeaderService = inject(CampLeaderService);
   ocSidebarService = inject(OcSidebarService);
-  casheService = inject(CasheService);
   toastr = inject(ToastrService);
   fb = inject(FormBuilder);
   router = inject(Router);
@@ -145,11 +143,14 @@ export class ActiosCampComponent implements OnInit {
     }
     const name = this.nameForm.get('name')?.value;
     this.campLeaderService.addCamp(name).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
           this.selectedCamp = name;
           this.allCamps.unshift({ name });
           this.nameForm.reset();
+          this.toastr.success(message);
+        } else {
+          this.toastr.error(message);
         }
       },
       error: (err) => {
@@ -231,7 +232,6 @@ export class ActiosCampComponent implements OnInit {
             this.toastr.success(message);
             this.selectedCamp = '';
             this.isLoading = false;
-            this.casheService.clearCache();
             this.router.navigate(['/leader/camps']);
           } else if (statusCode === 400) {
             this.toastr.error(message);
@@ -259,7 +259,6 @@ export class ActiosCampComponent implements OnInit {
             if (statusCode === 200) {
               this.toastr.success(message);
               this.isLoading = false;
-              this.casheService.clearCache();
               this.router.navigate(['/leader/camps']);
             } else if (statusCode === 400) {
               this.toastr.error(message);

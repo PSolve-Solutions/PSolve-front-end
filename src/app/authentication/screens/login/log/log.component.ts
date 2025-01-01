@@ -65,7 +65,6 @@ export class LogComponent {
           }
           this.isLoading = false;
           this.authService.setIsAuth(true);
-          this.toastr.success(message);
         } else if (statusCode === 400) {
           this.toastr.error(message);
           this.isLoading = false;

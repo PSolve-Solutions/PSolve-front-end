@@ -2,11 +2,11 @@
   <!-- Custom navigation buttons for the swiper -->
   <div class="custom-buttons mb-14 w-full flex items-center justify-center gap-10">
     <button (click)="prevSlide()">
-      <img src="assets/img_trainee/left_arrow.svg" alt="Previous">
+      <img src="assets/img_trainee/arrow_left.svg" alt="Previous">
     </button>
-    <span class="text-5xl font-bold">Heads</span>
+    <span class="text-5xl font-bold text-[#002C3D]">Heads</span>
     <button (click)="nextSlide()">
-      <img src="assets/img_trainee/right_arrow.svg" alt="Next">
+      <img src="assets/img_trainee/arrow_left.svg" class="rotate-180" alt="Next">
     </button>
   </div>
 
@@ -14,13 +14,12 @@
   @if(mentors.length == 1){
     <swiper [config]="config1" (swiper)="onSwiper($event)">
       <!-- Loop through mentors array and create a slide for each mentor -->
-      @for (mentor of mentors ; track mentor.id ; let odd = $odd ) {
+      @for (mentor of mentors ; track mentor.id ; ) {
         <ng-template swiperSlide>
           <div class="card w-full h-fit relative overflow-hidden">
             <!-- Background image, shown conditionally based on the odd index -->
             <div class="bg-img absolute w-80 h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10">
-              <img *ngIf="!odd" src="assets/img_trainee/Blob (2).png" class="w-full" alt="">
-              <img *ngIf="odd" src="assets/img_trainee/Blob (1).png" class="w-full" alt="">
+              <img src="assets/img_trainee/Blob1.svg" class="w-full" alt="">
             </div>
 
             <!-- Mentor details card -->
@@ -28,25 +27,25 @@
               <!-- Mentor profile image and name -->
               <div class="img-profile flex flex-col items-center">
                 <img [src]="mentor.photoUrl ? mentor.photoUrl : 'assets/img/user.jpeg'"
-                     class="size-28 rounded-full mb-4 object-cover" alt="">
-                <p class="font-bold text-2xl">{{ mentor.firstName + ' ' + mentor.lastName }}</p>
+                     class="size-28 rounded-full mb-4 object-cover">
+                <p class="font-bold text-2xl text-[#002C3D]">{{ mentor.firstName + ' ' + mentor.middleName }}</p>
               </div>
               <!-- Mentor details -->
               <div class="flex flex-col items-center justify-center gap-1">
                 <p class="font-semibold flex items-center gap-3 w-full">
                   <img src="assets/img_trainee/collage.svg">
-                  <span>College</span>
-                  <span class="font-bold text-xl min-w-full text-[#5D326B]">{{ mentor.college }}</span>
+                  <span class="text-[#002C3D]">College</span>
+                  <span class="font-bold text-xl min-w-full text-[#2A8E9E]">{{ mentor.college }}</span>
                 </p>
                 <p class="font-semibold w-full flex items-center gap-3">
                   <img src="assets/img_trainee/chart.svg">
-                  <span>CodeforceHandle</span>
-                  <span class="font-bold text-xl min-w-full text-[#5D326B]">{{ mentor.codeForceHandle }}</span>
+                  <span class="text-[#002C3D]">CodeforceHandle</span>
+                  <span class="font-bold text-xl min-w-full text-[#2A8E9E]">{{ mentor.codeForceHandle }}</span>
                 </p>
                 <p class="font-semibold w-full text-nowrap flex items-center gap-3">
-                  <i class="fa-regular fa-envelope"></i>
-                  <span>Email</span>
-                  <span class="font-bold text-xl text-[#5D326B]">{{ mentor.email }}</span>
+                  <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
+                  <span class="text-[#002C3D]">Email</span>
+                  <span class="font-bold text-xl text-[#2A8E9E]">{{ mentor.email }}</span>
                 </p>
               </div>
             </div>
@@ -58,12 +57,14 @@
   @if(mentors.length > 1){
     <swiper [config]="this._responsive.isSmallScreen ? config1 : config2" (swiper)="onSwiper($event)">
       <!-- Loop through mentors array and create a slide for each mentor -->
-      @for (mentor of mentors ; track mentor.id ) {
+      @for (mentor of mentors  ; track  $index  ; let odd = $odd) {
         <ng-template swiperSlide>
           <div class="card w-full h-fit relative overflow-hidden">
             <!-- Background image, shown conditionally based on the odd index -->
             <div class="bg-img absolute w-80 h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10">
-              <img src="assets/img_trainee/Blob (2).png" class="w-full">
+              <img *ngIf="!odd" src="assets/img_trainee/Blob1.svg" class="w-full">
+              <img *ngIf="odd" src="assets/img_trainee/Blob2.svg" class="w-full">
+              <img *ngIf="($index+1) % 3 == 0" src="assets/img_trainee/Blob3.svg" class="w-full">
             </div>
 
             <!-- Mentor details card -->
@@ -71,25 +72,25 @@
               <!-- Mentor profile image and name -->
               <div class="img-profile flex flex-col items-center">
                 <img [src]="mentor.photoUrl ? mentor.photoUrl : 'assets/img/user.jpeg'"
-                     class="size-28 rounded-full mb-4 object-cover" alt="">
-                <p class="font-bold text-2xl">{{ mentor.firstName + ' ' + mentor.lastName }}</p>
+                     class="size-28 rounded-full mb-4 object-cover">
+                <p class="font-bold text-2xl text-[#002C3D]">{{ mentor.firstName + ' ' + mentor.middleName }}</p>
               </div>
               <!-- Mentor details -->
               <div class="flex flex-col items-center justify-center gap-1">
                 <p class="font-semibold flex items-center gap-3 w-full">
                   <img src="assets/img_trainee/collage.svg">
-                  <span>College</span>
-                  <span class="font-bold text-xl min-w-full text-[#5D326B]">{{ mentor.college }}</span>
+                  <span class="text-[#002C3D]">College</span>
+                  <span class="font-bold text-xl min-w-full text-[#2A8E9E]">{{ mentor.college }}</span>
                 </p>
                 <p class="font-semibold w-full flex items-center gap-3">
                   <img src="assets/img_trainee/chart.svg">
-                  <span>CodeforceHandle</span>
-                  <span class="font-bold text-xl min-w-full text-[#5D326B]">{{ mentor.codeForceHandle }}</span>
+                  <span class="text-[#002C3D]">CodeforceHandle</span>
+                  <span class="font-bold text-xl min-w-full text-[#2A8E9E]">{{ mentor.codeForceHandle }}</span>
                 </p>
                 <p class="font-semibold w-full text-nowrap flex items-center gap-3">
-                  <i class="fa-regular fa-envelope"></i>
-                  <span>Email</span>
-                  <span class="font-bold text-xl text-[#5D326B]">{{ mentor.email }}</span>
+                  <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
+                  <span class="text-[#002C3D]">Email</span>
+                  <span class="font-bold text-xl text-[#2A8E9E]">{{ mentor.email }}</span>
                 </p>
               </div>
             </div>

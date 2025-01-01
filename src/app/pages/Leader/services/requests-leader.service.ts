@@ -42,4 +42,10 @@ export class RequestsLeaderService {
       info
     );
   }
+
+  getCommunities(): Observable<ResponseHeader> {
+    return this.http.get<ResponseHeader>(
+      `${environment.BASE_URL}/api/Leader/getPublicCommunities`
+    );
+  }
 }

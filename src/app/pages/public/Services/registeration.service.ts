@@ -67,4 +67,11 @@ export class RegisterationService {
       { params }
     );
   }
+
+  resetRegister(info: any): Observable<ResponseHeader> {
+    return this.http.delete<ResponseHeader>(
+      `${environment.BASE_URL}/api/Home/traineeApplication/reset`,
+      { body: info }
+    );
+  }
 }

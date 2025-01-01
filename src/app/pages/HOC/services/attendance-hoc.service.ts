@@ -13,13 +13,11 @@ export class AttendanceHocService {
 
   getAllAttendances(
     currentPage: number,
-    pageSize: number,
-    KeyWord?: string
+    pageSize: number
   ): Observable<ResponseHeader> {
     const params = new HttpParams()
       .set('PageNumber', currentPage)
-      .set('PageSize', pageSize)
-      .set('KeyWord', KeyWord ? KeyWord : '');
+      .set('PageSize', pageSize);
     return this.casheService.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/attendance`,
       params

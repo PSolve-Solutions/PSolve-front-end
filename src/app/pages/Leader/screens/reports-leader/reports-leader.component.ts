@@ -15,6 +15,7 @@ import { AboveReportComponent } from '../../Components/above-report/above-report
 import { ReportsService } from '../../services/reports.service';
 import { TestimonialComponent } from '../../Components/testimonial/testimonial.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
+import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 
 @Component({
   selector: 'app-reports-leader',
@@ -32,6 +33,7 @@ import { CasheService } from '../../../../shared/services/cashe.service';
 export class ReportsLeaderComponent implements OnInit {
   reportsService = inject(ReportsService);
   casheService = inject(CasheService);
+  ocSidebarService = inject(OcSidebarService);
   baseDataReport: any;
   reportInfo: { [key: number]: any } = {};
   expandedItems: Set<number> = new Set();
@@ -73,11 +75,20 @@ export class ReportsLeaderComponent implements OnInit {
 
   reportsInDetails(campId: number): void {
     this.isLoadingReportInfo.set(true);
-    this.reportsService.reportsInDetails(campId).subscribe({
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}/${String(currentDate.getDate()).padStart(
+      2,
+      '0'
+    )}/${currentDate.getFullYear()}`;
+
+    console.log(formattedDate);
+    this.reportsService.reportsInDetails(campId, formattedDate).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.reportInfo[campId] = data;
-
           this.isLoadingReportInfo.update((v) => (v = false));
         } else {
           this.isLoadingReportInfo.update((v) => (v = false));

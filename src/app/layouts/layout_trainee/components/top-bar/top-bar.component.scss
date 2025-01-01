@@ -1,6 +1,7 @@
 // Custom styles for the navigation underline effect
 .nav-link {
   position: relative;
+  color: #fff;
 
   &::after {
       content: "";
@@ -9,11 +10,11 @@
       bottom: -2px;
       height: 2px;
       width: 0;
-      background-color: #E69C24;
+      background-color: #00DCFF;
       transition: width 0.3s ease-in-out;
   }
   &:hover{
-    color: #E69C24;
+    color: #00DCFF;
   }
   &:hover::after {
       width: 100%;
@@ -23,7 +24,7 @@ ul{
   list-style: none;
 }
 .linkActive {
-  color: #E69C24;
+  color: #00DCFF;
   font-weight: 600;
   &::after {
     content: "";
@@ -32,7 +33,7 @@ ul{
     bottom: -2px;
     height: 2px;
     width: 100% ;
-    background-color: #E69C24;
+    background-color: #00DCFF;
     transition: width 0.3s ease-in-out;
 }
 }
