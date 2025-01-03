@@ -11,14 +11,14 @@ export class TasksService {
 
   constructor(private http:HttpClient) { }
   getData(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/tasksOnStatus/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/tasksOnStatus/${(id)}`)
   }
   getAssign(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/getTraineeForAssign/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/getTraineeForAssign/${(id)}`)
   }
   trainees(id:any): Observable<ResponseHeader>{
     
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees?campId=${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/trainees?campId=${(id)}`)
   }
   addTask(data: any): Observable<any> {
     return this.http.post<any>(`${environment.BASE_URL}/api/Mentor/tasks`, data); 

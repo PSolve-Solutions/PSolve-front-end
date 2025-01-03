@@ -84,8 +84,8 @@
         <p class="text-sm">• {{item.title}}</p>
         <div class="flex justify-between mt-3">
           <div>
-            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
-            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | localTime}}</p>
+            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | localTime}}</p>
           </div>
           <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,8 +158,8 @@
           <p class="text-sm">• {{item.title}}</p>
           <div class="flex justify-between mt-3">
             <div>
-              <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
-              <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+              <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | localTime}}</p>
+              <p class="text-sm text-gray-500 ">End Time: {{item.endTime | localTime}}</p>
             </div>
             <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -231,8 +231,8 @@
         <p class="text-sm">• {{item.title}}</p>
         <div class="flex justify-between mt-3">
           <div>
-            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | utcToLocal}}</p>
-            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | utcToLocal}}</p>
+            <p class="text-sm text-gray-500 ">Start Time: {{item.startTime | localTime}}</p>
+            <p class="text-sm text-gray-500 ">End Time: {{item.endTime | localTime}}</p>
           </div>
           <div *ngIf="item.status == 0" class="bg-[#979797] xl:flex hidden text-[12px] rounded-lg text-white  items-center px-2 py-1 justify-between gap-2">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -367,7 +367,7 @@
             <img src="{{this.ed.photoUrl?? './../../../../../assets/img/user.jpeg'}}" alt="User Image" class="w-10 h-10 rounded-lg mr-3">
             <div>
                 <p class="text-lg font-semibold">{{this.ed.firstName}} {{this.ed.middleName}} {{this.ed.lastName}}</p>
-                <!-- <p class="text-gray-500 text-sm">Deadline: {{this.ed.deadLine | utcToLocal}}</p> -->
+                <!-- <p class="text-gray-500 text-sm">Deadline: {{this.ed.deadLine | localTime}}</p> -->
                 <label class="text-gray-500 text-sm" for="sdateEdit">Start Time: </label>  <input #stTime id="sdateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.startTime ">
                 <br>
                 <label class="text-gray-500 text-sm" for="edateEdit">End Time:&nbsp;&nbsp;</label>  <input #enTime id="edateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.endTime">

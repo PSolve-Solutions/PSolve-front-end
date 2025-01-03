@@ -11,13 +11,13 @@ export class PracticeService {
 
   constructor(private http:HttpClient) { }
   getData(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/practices/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/practices/${(id)}`)
   }
   addPractice(data: any): Observable<any> {
     return this.http.post<any>(`${environment.BASE_URL}/api/Mentor/practices`, data); 
   }
   upd(item: any): Observable<any> {
-    return this.http.put<any>(`${environment.BASE_URL}/api/Mentor/updatePracticeStatus`,  {
+    return this.http.put<any>(`${environment.BASE_URL}/api/Mentor/practices`,  {
       practiceId: item.practiceId,
       title: item.title,
       meetingLink: item.meetingLink,
