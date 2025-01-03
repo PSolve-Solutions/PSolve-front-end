@@ -11,10 +11,10 @@ export class TrackingService {
 
   constructor(private http:HttpClient) { }
   getContest(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/contestsTracking/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/contestsTracking/${(id)}`)
   }
   getSheet(id:any): Observable<ResponseHeader>{
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/sheetsTracking/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/sheetsTracking/${(id)}`)
   }
   
 }
