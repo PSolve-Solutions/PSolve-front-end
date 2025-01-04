@@ -3,7 +3,8 @@
     class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
     [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    Manage Requests
+    Manage Requests :
+    {{ campId !== 0 && !isLoading() ? allTraineesInfo.totalCount : 0 }}
   </h1>
 
   <div class="flex items-center justify-between pb-4 border-b-2 md:hidden">
@@ -165,17 +166,19 @@
       </div>
     </div>
 
-    <div style="height: calc(100vh - 270px)">
+    <div style="height: calc(100vh - 240px)">
       @if (campId !== 0) {
       <div
-        class="flex flex-col pb-4 overflow-x-auto rounded-lg custom-scrollbar-request"
+        style="max-height: calc(100vh - 250px)"
+        class="pb-2 overflow-y-auto border-black rounded-lg pe-2 custom-scrollbar-request"
+        (scroll)="loadMoreData($event)"
       >
         <table
           class="w-full text-[13px] md:text-sm text-center bg-white rounded-lg table-auto text-mainColor1"
         >
-          <thead class="sticky top-0 z-[5] shadow-sm font-bold bg-[#DEDFE1]">
+          <thead class="top-0 z-40 sticky shadow-sm font-bold bg-[#DEDFE1]">
             <tr>
-              <th class="sticky left-0 bg-[#DEDFE1] z-[5] p-4">
+              <th class="sticky left-0 z-40 bg-[#DEDFE1] p-4">
                 <label>
                   <input
                     type="checkbox"
@@ -196,7 +199,7 @@
                   </svg>
                 </label>
               </th>
-              <th class="sticky z-[5] px-4 py-3 text-left bg-[#DEDFE1] left-11">
+              <th class="sticky z-[5] px-4 py-3 text-left bg-[#DEDFE1] left-8">
                 Name
               </th>
               <th class="px-4 py-3">Codeforces</th>
@@ -216,8 +219,51 @@
             </tr>
           </thead>
           <tbody>
-            @if (!isLoading()) { @for (row of allTraineesInfo.data; track i; let
-            i = $index; let first = $first) {
+            @if (isLoading() && dataRequest.length === 0 ) { @for ( i of [1, 2,
+            3]; track i) {
+            <tr class="border-b-8 animate-pulse border-mainColor4">
+              <td class="py-2 text-center ps-2">
+                <div class="w-5 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="px-4 py-2 text-center">
+                <div class="h-5 rounded md:w-40 bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center md:w-32 lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 py-2 text-center lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 py-2 text-center lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 py-2 text-center lg:ps-2">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+              <td class="w-32 px-4 py-2 text-center">
+                <div class="w-24 h-5 rounded bg-mainColor3"></div>
+              </td>
+            </tr>
+            } } @else { @for (traniee of dataRequest; track $index) { @for (row
+            of traniee.data; track i; let i = $index; let first = $first) {
             <tr
               class="font-semibold border-b-8 border-mainColor4"
               [class.border-t-8]="first"
@@ -244,7 +290,7 @@
                 </label>
               </td>
               <td
-                class="sticky px-4 py-2 text-left z-[5] left-11 whitespace-nowrap"
+                class="sticky px-4 py-2 text-left z-[5] left-8 whitespace-nowrap"
                 [ngClass]="
                   this.selectedIds.includes(row.id)
                     ? 'bg-mainColor3'
@@ -299,50 +345,9 @@
                 {{ row.vjudge || "-" }}
               </td>
             </tr>
-            } } @else { @for ( i of [1, 2, 3]; track i) {
-            <tr class="border-b-8 animate-pulse border-mainColor4">
-              <td class="py-2 text-center ps-2">
-                <div class="w-5 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="px-4 py-2 text-center">
-                <div class="h-5 rounded md:w-40 bg-mainColor3"></div>
-              </td>
-              <td class="py-2 text-center md:w-32 lg:ps-2">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 py-2 text-center lg:ps-2">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 py-2 text-center lg:ps-2">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 py-2 text-center lg:ps-2">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-              <td class="w-32 px-4 py-2 text-center">
-                <div class="w-24 h-5 rounded bg-mainColor3"></div>
-              </td>
-            </tr>
-            } }
+            } } }
           </tbody>
+
           <tfoot class="bg-[#DEDFE1] rounded-lg">
             <tr>
               <td colspan="16" class="p-3 rounded-bl-lg rounded-br-lg"></td>
@@ -357,7 +362,6 @@
         [selectedIds]="selectedIds"
         [label]="'request'"
       />
-      <!-- showFilterModel -->
       } @if (showFilterModel) {
       <div
         class="fixed inset-0 z-[150] pt-32 md:pt-16 flex items-start justify-center bg-black bg-opacity-50"

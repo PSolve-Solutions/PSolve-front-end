@@ -83,10 +83,8 @@
             <tr>
               <th class="p-4 text-left truncate">Name</th>
               <th class="hidden p-4 lg:table-cell">E-mail</th>
-              <!-- <th class="hidden p-4 lg:table-cell">Gender</th> -->
               <th class="hidden p-4 lg:table-cell">Phone</th>
               <th class="p-4">Codeforces</th>
-              <!-- <th class="p-4">Year</th> -->
               <th class="flex items-center justify-center p-4">
                 <svg
                   class="size-5 pt-0.5"
@@ -129,7 +127,7 @@
                 {{ row.email }}
               </td>
               <td class="hidden px-4 py-2 lg:table-cell">
-                {{ row.phoneNumber }}
+                {{ row.phoneNumber || "-" }}
               </td>
               <td class="px-4 py-2">
                 <span>
@@ -139,13 +137,10 @@
                     "
                     target="_blank"
                     class="hover:text-activeLink"
-                    >{{ row.codeForceHandle }}</a
+                    >{{ row.codeForceHandle || "-" }}</a
                   >
                 </span>
               </td>
-              <!-- <td class="hidden px-4 py-2 lg:table-cell">
-                {{ row.grade }}
-              </td> -->
               <td
                 (click)="showSideBar(row.id)"
                 class="flex items-center justify-center p-4 cursor-pointer"

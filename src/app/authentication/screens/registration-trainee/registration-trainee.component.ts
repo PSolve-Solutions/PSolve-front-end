@@ -171,7 +171,13 @@ export class RegistrationTraineeComponent implements OnInit {
       const control = this.registrationForm.get(field);
       if (control?.invalid) {
         if (control.errors?.['required']) {
-          this.toastr.error(`${field} is required`);
+          if (field === 'CampId') {
+            this.toastr.error('Camp is required');
+          } else if (field === 'NationalId') {
+            this.toastr.error('National ID is required');
+          } else {
+            this.toastr.error(`${field} is required`);
+          }
         }
         // Add checks for other error types if needed
         if (control.errors?.['minlength']) {

@@ -46,16 +46,12 @@ export class RequestsLeaderComponent implements OnInit {
   applySystemFilter: boolean = false;
   codeforcesFilters: any;
   vjudgeFilters: any;
-  KeyWord: string = '';
   campId: number = 0;
   settingsFilterRequest: any;
-
   currentPage: number = 1;
-  pageSize: number = 5;
-  totalPages: number = 1;
-  showEllipsis: boolean = false;
-  showLastPage: boolean = false;
-  pages: number[] = [];
+  pageSize: number = 6;
+  totalCount: number = 0;
+  dataRequest: any[] = [];
 
   ngOnInit() {
     this.fetchAllCamps();
@@ -69,8 +65,8 @@ export class RequestsLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
-            this.totalPages = this.allTraineesInfo.totalPages;
-            this.generatePages();
+            this.dataRequest.push(res);
+            this.totalCount = this.allTraineesInfo.totalCount;
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -85,21 +81,36 @@ export class RequestsLeaderComponent implements OnInit {
 
   chooseCamp(item: any): void {
     this.campId = item.id;
+    this.dataRequest = [];
     this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
+      pageNumber: 1,
+      pageSize: this.pageSize,
       campId: this.campId,
     };
     this.showFilterModel = false;
-    this.casheService.clearCache();
     this.traineesRegisterations(this.settingsFilterRequest);
+    setTimeout(() => {
+      if (
+        this.allTraineesInfo.hasNextPage &&
+        this.allTraineesInfo.data.length <= 6
+      ) {
+        this.settingsFilterRequest = {
+          pageNumber: ++this.currentPage,
+          pageSize: this.pageSize,
+          campId: this.campId,
+        };
+        this.traineesRegisterations(this.settingsFilterRequest);
+      }
+    }, 1000);
+    this.casheService.clearCache();
   }
 
   sortTrainee(item: any): void {
     this.sortbyNum = item;
+    this.dataRequest = [];
     this.settingsFilterRequest = {
-      // pageNumber: this.currentPage,
-      // pageSize: this.pageSize,
+      pageNumber: this.currentPage,
+      pageSize: this.pageSize,
       campId: this.campId,
       sortBy: this.sortbyNum,
       applySystemFilter: this.applySystemFilter,
@@ -147,12 +158,13 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   handleSaveFilter(data: any) {
+    this.dataRequest = [];
     this.vjudgeFilters = data.value.filtersV;
     this.codeforcesFilters = data.value.filtersC;
     if (this.vjudgeFilters.length > 0 || this.codeforcesFilters.length > 0) {
       this.settingsFilterRequest = {
-        // pageNumber: 1,
-        // pageSize: this.pageSize,
+        pageNumber: 1,
+        pageSize: this.pageSize,
         campId: this.campId,
         sortBy: this.sortbyNum,
         applySystemFilter: this.applySystemFilter,
@@ -166,10 +178,11 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   systemFilter(event: any): void {
+    this.dataRequest = [];
     this.applySystemFilter = event.target.checked;
     this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
+      pageNumber: 1,
+      pageSize: this.pageSize,
       sortBy: this.sortbyNum,
       campId: this.campId,
       applySystemFilter: this.applySystemFilter,
@@ -185,9 +198,10 @@ export class RequestsLeaderComponent implements OnInit {
 
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedIds.length !== 0) {
+      this.dataRequest = [];
       this.settingsFilterRequest = {
-        // pageNumber: 1,
-        // pageSize: this.pageSize,
+        pageNumber: 1,
+        pageSize: this.pageSize,
         sortBy: this.sortbyNum,
         campId: this.campId,
         applySystemFilter: this.applySystemFilter,
@@ -201,10 +215,11 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   closeRequestMessage() {
+    this.dataRequest = [];
     this.showSubmitModel = false;
     this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
+      pageNumber: 1,
+      pageSize: this.pageSize,
       campId: this.campId,
       sortBy: this.sortbyNum,
       applySystemFilter: this.applySystemFilter,
@@ -213,6 +228,27 @@ export class RequestsLeaderComponent implements OnInit {
     };
     this.casheService.clearCache();
     this.traineesRegisterations(this.settingsFilterRequest);
+  }
+
+  loadMoreData(event: any): void {
+    const element = event.target;
+    const bottomThreshold = 5;
+    const atBottom =
+      element.scrollTop + element.clientHeight >=
+      element.scrollHeight - bottomThreshold;
+
+    if (atBottom && !this.isLoading() && this.allTraineesInfo?.hasNextPage) {
+      this.settingsFilterRequest = {
+        pageNumber: ++this.currentPage,
+        pageSize: this.pageSize,
+        campId: this.campId,
+        sortBy: this.sortbyNum,
+        applySystemFilter: this.applySystemFilter,
+        vjudgeFilters: this.vjudgeFilters,
+        codeforcesFilters: this.codeforcesFilters,
+      };
+      this.traineesRegisterations(this.settingsFilterRequest);
+    }
   }
 
   fetchAllCamps(): void {
@@ -235,42 +271,6 @@ export class RequestsLeaderComponent implements OnInit {
 
   closeModalOnOutsideClick(event: MouseEvent) {
     this.closeConfirmFilter();
-  }
-
-  generatePages(): void {
-    this.pages = [];
-    if (this.allTraineesInfo?.totalPages <= 3) {
-      for (let i = 1; i <= this.allTraineesInfo?.totalPages; i++) {
-        this.pages.push(i);
-      }
-    } else {
-      const start = Math.max(this.currentPage - 2, 1);
-      const end = Math.min(
-        this.currentPage + 2,
-        this.allTraineesInfo?.totalPages
-      );
-      for (let i = start; i <= end; i++) {
-        this.pages.push(i);
-      }
-
-      this.showEllipsis = end < this.allTraineesInfo?.totalPages - 1;
-      this.showLastPage = this.showEllipsis;
-    }
-  }
-
-  changePage(page: number): void {
-    // if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
-    //   this.currentPage = page;
-    //   this.settingsFilterRequest = {
-    //     pageNumber: this.currentPage,
-    //     pageSize: this.pageSize,
-    //     campId: this.campId,
-    //     applySystemFilter: this.applySystemFilter,
-    //     vjudgeFilters: this.vjudgeFilters,
-    //     codeforcesFilters: this.codeforcesFilters,
-    //   };
-    //   this.generatePages();
-    // }
   }
 
   submitRequests() {

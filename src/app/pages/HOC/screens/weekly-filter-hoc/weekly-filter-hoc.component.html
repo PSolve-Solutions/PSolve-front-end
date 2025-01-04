@@ -63,8 +63,8 @@
           >
             <tr>
               <th class="p-4 text-left">Name</th>
-              <th class="p-4">Email</th>
               <th class="p-4">Codeforce handle</th>
+              <th class="p-4">vjudge handle</th>
               <th class="p-4">Absence Count</th>
               <th class="p-4">Solving Percent</th>
               <th class="flex items-center justify-center p-4">
@@ -111,8 +111,8 @@
               <td class="p-3 text-left rounded-s-lg">
                 {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
               </td>
-              <td class="p-3">{{ item.email }}</td>
-              <td class="p-3">{{ item.codeForceHandle }}</td>
+              <td class="p-3">{{ item.codeForceHandle || "-" }}</td>
+              <td class="p-3">{{ item.vjudgeHandle || "-" }}</td>
               <td class="p-3">{{ item.absenceCount }}</td>
               <td class="p-3">{{ item.weeklySolvingPrecent }}%</td>
               <td class="p-3 cursor-pointer rounded-e-lg">
@@ -167,8 +167,8 @@
           >
             <tr>
               <th class="p-4 text-left">Name</th>
-              <th class="p-4">Email</th>
               <th class="p-4">Codeforce handle</th>
+              <th class="p-4">vjudge Handle</th>
               <th class="p-4">Absence Count</th>
               <th class="p-4">Solving Percent</th>
               <th class="flex items-center justify-center p-4">Delete</th>
@@ -184,8 +184,8 @@
               <td class="p-2.5 rounded-s-lg">
                 {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
               </td>
-              <td class="p-2.5">{{ item.email }}</td>
-              <td class="p-2.5">{{ item.codeForceHandle }}</td>
+              <td class="p-2.5">{{ item.codeForceHandle || "-" }}</td>
+              <td class="p-2.5">{{ item.vjudgeHandle || "-" }}</td>
               <td class="p-2.5">{{ item.absenceCount }}</td>
               <td class="p-2.5">{{ item.solvingPrecent }}%</td>
               <td
