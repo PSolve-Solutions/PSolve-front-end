@@ -71,7 +71,7 @@ export const routes: Routes = [
   // Trainee Pages
   {
     path: 'trainee',
-    title: 'ICPC',
+    title: 'PSovle',
     canActivate: [rolesGuard],
     component: LayoutTraineeComponent,
 
@@ -84,22 +84,22 @@ export const routes: Routes = [
       {
         path: 'home',
         component: HomeTraineeComponent,
-        title: 'Trainee / Home - ICPC',
+        title: 'Trainee / Home - PSovle',
       },
       {
         path: 'sheets',
         component: SheetsTraineeComponent,
-        title: 'Trainee / Sheets - ICPC',
+        title: 'Trainee / Sheets - PSovle',
       },
       {
         path: 'contests',
         component: ContestTraineeComponent,
-        title: 'Trainee / contests - ICPC',
+        title: 'Trainee / contests - PSovle',
       },
       {
         path: 'standing',
         component: StandingTraineeComponent,
-        title: 'Trainee / standing - ICPC',
+        title: 'Trainee / standing - PSovle',
       },
     ],
   },
@@ -107,19 +107,19 @@ export const routes: Routes = [
   // Main Home Page
   {
     path: '',
-    title: 'ICPC',
+    title: 'PSovle',
     component: LayoutPublicComponent,
     canActivate: [rolesGuard],
     children: [
       {
         path: '',
         component: HomePublicComponent,
-        title: 'Home - ICPC',
+        title: 'Home - PSovle',
       },
       {
         path: 'camps',
         component: CampsPublicComponent,
-        title: 'Camps - ICPC',
+        title: 'Camps - PSovle',
       },
     ],
   },
@@ -181,22 +181,22 @@ export const routes: Routes = [
     path: 'leader',
     component: MainLayoutComponent,
     canActivate: [authGuard, rolesGuard],
-    title: 'Leader - ICPC',
+    title: 'Leader - PSovle',
     children: [
       {
         path: '',
         component: DashboardComponent,
-        title: 'Leader / Dashboard - ICPC',
+        title: 'Leader / Dashboard - PSovle',
       },
       {
         path: 'add-user',
         component: AddUserComponent,
-        title: 'Leader / add new user - ICPC',
+        title: 'Leader / add new user - PSovle',
       },
       {
         path: 'camps',
         component: CampsLeaderComponent,
-        title: 'Leader / Camps - ICPC',
+        title: 'Leader / Camps - PSovle',
       },
       {
         path: 'camps',
@@ -204,7 +204,7 @@ export const routes: Routes = [
           {
             path: 'action-camp/:id',
             component: ActiosCampComponent,
-            title: 'Leader / Camps / action-camp - ICPC',
+            title: 'Leader / Camps / action-camp - PSovle',
           },
         ],
       },
@@ -214,40 +214,40 @@ export const routes: Routes = [
           {
             path: 'standing/:id',
             component: StandingCampComponent,
-            title: 'Leader / Camps / standing - ICPC',
+            title: 'Leader / Camps / standing - PSovle',
           },
         ],
       },
       {
         path: 'staff',
         component: StaffLeaderComponent,
-        title: 'Leader / staff - ICPC',
+        title: 'Leader / staff - PSovle',
       },
       {
         path: 'trainees',
         component: TraineesLeaderComponent,
-        title: 'Leader / Trainees - ICPC',
+        title: 'Leader / Trainees - PSovle',
       },
 
       {
         path: 'reports',
         component: ReportsLeaderComponent,
-        title: 'Leader / reports - ICPC',
+        title: 'Leader / reports - PSovle',
       },
       {
         path: 'requests',
         component: RequestsLeaderComponent,
-        title: 'Leader / requests - ICPC',
+        title: 'Leader / requests - PSovle',
       },
       {
         path: 'archive',
         component: ArchiveLeaderComponent,
-        title: 'Leader / Archive - ICPC',
+        title: 'Leader / Archive - PSovle',
       },
       {
         path: 'community',
         component: CommunityLeaderComponent,
-        title: 'Leader / community - ICPC',
+        title: 'Leader / community - PSovle',
       },
     ],
   },
@@ -280,7 +280,7 @@ export const routes: Routes = [
           {
             path: 'action-contest/:id',
             component: ActionsContestsComponent,
-            title: 'head of camp / Contests / action-contest- ICPC',
+            title: 'head of camp / Contests / action-contest- PSovle',
           },
         ],
       },
@@ -295,7 +295,7 @@ export const routes: Routes = [
           {
             path: 'action-session/:id',
             component: ActionsSessionsComponent,
-            title: 'head of camp / Sessions / action-contest- ICPC',
+            title: 'head of camp / Sessions / action-contest- PSovle',
           },
         ],
       },
@@ -310,7 +310,7 @@ export const routes: Routes = [
           {
             path: 'action-sheets/:id',
             component: ActionsSheetsComponent,
-            title: 'head of camp / Sheets / action-sheets- ICPC',
+            title: 'head of camp / Sheets / action-sheets- PSovle',
           },
         ],
       },
@@ -325,7 +325,7 @@ export const routes: Routes = [
           {
             path: 'edit-attendance',
             component: EditAttendanceComponent,
-            title: 'head of camp / Attendance / edit-attendance- ICPC',
+            title: 'head of camp / Attendance / edit-attendance- PSovle',
           },
         ],
       },
@@ -357,38 +357,38 @@ export const routes: Routes = [
       {
         path: '',
         component: TraineesComponent,
-        title: 'mentor / Trainees - ICPC',
+        title: 'mentor / Trainees - PSovle',
       },
       {
         path: 'attendance',
         component: AttendanceComponent,
-        title: 'mentor / Attendance - ICPC',
+        title: 'mentor / Attendance - PSovle',
       },
       {
         path: 'standings',
         component: StandingsComponent,
-        title: 'mentor / Standings - ICPC',
+        title: 'mentor / Standings - PSovle',
       },
       {
         path: 'tracking',
         component: TrackingComponent,
-        title: 'mentor / Tracking - ICPC',
+        title: 'mentor / Tracking - PSovle',
       },
       {
         path: 'tasks',
         component: TasksComponent,
-        title: 'mentor / Tasks - ICPC',
+        title: 'mentor / Tasks - PSovle',
       },
       {
         path: 'practice',
         component: PracticeComponent,
-        title: 'mentor / Practice - ICPC',
+        title: 'mentor / Practice - PSovle',
       },
 
       {
         path: 'blank',
         component: BlankComponent,
-        title: 'mentor / Practice - ICPC',
+        title: 'mentor / Practice - PSovle',
       },
     ],
   },
@@ -433,46 +433,46 @@ export const routes: Routes = [
       {
         path: 'leader',
         component: ProfileDetailsComponent,
-        title: 'ICPC - Leader / Profile',
+        title: 'PSovle - Leader / Profile',
       },
       {
         path: 'leader/settings',
         component: LeaderSettingsComponent,
-        title: 'ICPC - Leader / Account',
+        title: 'PSovle - Leader / Account',
       },
       //head_of_camp
       {
         path: 'head_of_camp',
         component: ProfileDetailsComponent,
-        title: 'ICPC - Head Of Camp / Profile',
+        title: 'PSovle - Head Of Camp / Profile',
       },
       {
         path: 'head_of_camp/settings',
         component: LeaderSettingsComponent,
 
-        title: 'ICPC - Head Of Camp / Account',
+        title: 'PSovle - Head Of Camp / Account',
       },
       //trainee
       {
         path: 'trainee',
         component: ProfileTraineeComponent,
-        title: 'ICPC - Trainee / Profile',
+        title: 'PSovle - Trainee / Profile',
       },
       {
         path: 'trainee/account',
         component: LeaderSettingsComponent,
-        title: 'ICPC - Trainee / Account',
+        title: 'PSovle - Trainee / Account',
       },
       //trainee
       {
         path: 'mentor',
         component: ProfileDetailsComponent,
-        title: 'ICPC - Mentor / Profile',
+        title: 'PSovle - Mentor / Profile',
       },
       {
         path: 'mentor/account',
         component: LeaderSettingsComponent,
-        title: 'ICPC - Mentor / Account',
+        title: 'PSovle - Mentor / Account',
       },
     ],
   },
