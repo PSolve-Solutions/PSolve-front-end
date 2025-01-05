@@ -47,22 +47,26 @@ export class SystemFilterComponent implements OnInit {
       filtersC: this.fb.array<FormFilter>([this.generateFilter()]),
       filtersV: this.fb.array<FormFilterV>([this.generateFilterV()]),
     }) as Form;
-
-    if (this.codeforcesFilters) {
+    console.log(this.codeforcesFilters, this.vjudgeFilters);
+    if (this.codeforcesFilters.length === 0) {
       this.codeforcesFilters.push({
         sheetId: '',
         communityId: null,
         passingPrecent: null,
       });
+    }
+    if (this.codeforcesFilters.length > 0) {
       this.setSavedFilters(this.codeforcesFilters);
     }
 
-    if (this.vjudgeFilters) {
+    if (this.vjudgeFilters.length === 0) {
       this.vjudgeFilters.push({
         sheetId: '',
         problemCount: null,
         passingPrecent: null,
       });
+    }
+    if (this.vjudgeFilters.length > 0) {
       this.setSavedFiltersV(this.vjudgeFilters);
     }
     this.updateLastRowValidation();
@@ -183,6 +187,11 @@ export class SystemFilterComponent implements OnInit {
       console.log('Form not submitted - only the first row has valuesV');
     }
   }
+  resetFilter(): void {
+    this.filtersV.clear();
+    this.filtersC.clear();
+    this.saveFilter.emit(this.filterForm);
+  }
 
   setSavedFilters(savedData: any[]) {
     this.filtersC.clear();
@@ -239,7 +248,6 @@ export class SystemFilterComponent implements OnInit {
   }
 
   setSavedFiltersV(savedData: any[]) {
-    console.log(savedData);
     this.filtersV.clear();
     savedData.forEach((filterData) => {
       const newFilter = this.generateFilterV();

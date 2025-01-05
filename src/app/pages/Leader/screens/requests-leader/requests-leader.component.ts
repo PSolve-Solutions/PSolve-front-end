@@ -9,7 +9,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { RequestsLeaderService } from '../../services/requests-leader.service';
 import { SystemFilterComponent } from '../../Components/system-filter/system-filter.component';
 import { NgClass } from '@angular/common';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { SuccessMessageComponent } from '../success-message/success-message.component';
 import { AllTraineesInfo } from '../../model/requests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
@@ -48,9 +47,10 @@ export class RequestsLeaderComponent implements OnInit {
   campId: number = 0;
   settingsFilterRequest: any;
   currentPage: number = 1;
-  pageSize: number = 20;
+  pageSize: number = 10;
   totalCount: number = 0;
   dataRequest: any[] = [];
+  isSuccessful: boolean = false;
 
   ngOnInit() {
     this.fetchAllCamps();
@@ -66,6 +66,7 @@ export class RequestsLeaderComponent implements OnInit {
             this.allTraineesInfo = res;
             this.dataRequest.push(res);
             this.totalCount = this.allTraineesInfo.totalCount;
+            this.isSuccessful = true;
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -91,7 +92,8 @@ export class RequestsLeaderComponent implements OnInit {
     setTimeout(() => {
       if (
         this.allTraineesInfo.hasNextPage &&
-        this.allTraineesInfo.data.length <= 6
+        this.allTraineesInfo.data.length <= 6 &&
+        this.isSuccessful
       ) {
         this.settingsFilterRequest = {
           pageNumber: ++this.currentPage,
@@ -119,50 +121,19 @@ export class RequestsLeaderComponent implements OnInit {
     setTimeout(() => {
       if (
         this.allTraineesInfo.hasNextPage &&
-        this.allTraineesInfo.data.length <= 6
+        this.allTraineesInfo.data.length <= 6 &&
+        this.isSuccessful
       ) {
         this.settingsFilterRequest = {
           pageNumber: ++this.currentPage,
-          pageSize: this.pageSize,
-          campId: this.campId,
-          sortBy: this.sortbyNum,
-          applySystemFilter: this.applySystemFilter,
-          vjudgeFilters: this.vjudgeFilters,
-          codeforcesFilters: this.codeforcesFilters,
+          ...this.settingsFilterRequest,
         };
         this.traineesRegisterations(this.settingsFilterRequest);
       }
     }, 1000);
   }
 
-  // Checkbox
-  toggleAll(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    if (isChecked) {
-      this.selectedIds = this.allTraineesInfo.data.map((user) => user.id);
-    } else {
-      this.selectedIds = [];
-    }
-  }
-
-  toggleItem(id: number, event: any): void {
-    const isChecked = event.target.checked;
-    if (isChecked) {
-      if (!this.selectedIds.includes(id)) {
-        this.selectedIds.push(id);
-      }
-    } else {
-      this.selectedIds = this.selectedIds.filter(
-        (selectedId) => selectedId !== id
-      );
-    }
-  }
-
-  areAllItemsSelected(): boolean {
-    return this.selectedIds.length === this.allTraineesInfo.data.length;
-  }
-
-  // Filter
+  // open & close Filter
   showConfirmFilter() {
     this.showFilterModel = true;
   }
@@ -174,35 +145,30 @@ export class RequestsLeaderComponent implements OnInit {
     this.dataRequest = [];
     this.vjudgeFilters = data.value.filtersV;
     this.codeforcesFilters = data.value.filtersC;
-    if (this.vjudgeFilters.length > 0 || this.codeforcesFilters.length > 0) {
-      this.settingsFilterRequest = {
-        pageNumber: 1,
-        pageSize: this.pageSize,
-        campId: this.campId,
-        sortBy: this.sortbyNum,
-        applySystemFilter: this.applySystemFilter,
-        vjudgeFilters: this.vjudgeFilters,
-        codeforcesFilters: this.codeforcesFilters,
-      };
-      this.traineesRegisterations(this.settingsFilterRequest);
-      setTimeout(() => {
-        if (
-          this.allTraineesInfo.hasNextPage &&
-          this.allTraineesInfo.data.length <= 6
-        ) {
-          this.settingsFilterRequest = {
-            pageNumber: ++this.currentPage,
-            pageSize: this.pageSize,
-            campId: this.campId,
-            sortBy: this.sortbyNum,
-            applySystemFilter: this.applySystemFilter,
-            vjudgeFilters: this.vjudgeFilters,
-            codeforcesFilters: this.codeforcesFilters,
-          };
-          this.traineesRegisterations(this.settingsFilterRequest);
-        }
-      }, 1000);
-    }
+    this.settingsFilterRequest = {
+      pageNumber: 1,
+      pageSize: this.pageSize,
+      campId: this.campId,
+      sortBy: this.sortbyNum,
+      applySystemFilter: this.applySystemFilter,
+      vjudgeFilters: this.vjudgeFilters,
+      codeforcesFilters: this.codeforcesFilters,
+    };
+    this.traineesRegisterations(this.settingsFilterRequest);
+    setTimeout(() => {
+      if (
+        this.allTraineesInfo.hasNextPage &&
+        this.allTraineesInfo.data.length <= 6 &&
+        this.isSuccessful
+      ) {
+        this.settingsFilterRequest = {
+          pageNumber: ++this.currentPage,
+          ...this.settingsFilterRequest,
+        };
+        this.traineesRegisterations(this.settingsFilterRequest);
+      }
+    }, 1000);
+
     this.closeConfirmFilter();
   }
 
@@ -220,14 +186,12 @@ export class RequestsLeaderComponent implements OnInit {
     setTimeout(() => {
       if (
         this.allTraineesInfo.hasNextPage &&
-        this.allTraineesInfo.data.length <= 6
+        this.allTraineesInfo.data.length <= 6 &&
+        this.isSuccessful
       ) {
         this.settingsFilterRequest = {
           pageNumber: ++this.currentPage,
-          pageSize: this.pageSize,
-          sortBy: this.sortbyNum,
-          campId: this.campId,
-          applySystemFilter: this.applySystemFilter,
+          ...this.settingsFilterRequest,
         };
         this.traineesRegisterations(this.settingsFilterRequest);
       }
@@ -255,16 +219,12 @@ export class RequestsLeaderComponent implements OnInit {
       setTimeout(() => {
         if (
           this.allTraineesInfo.hasNextPage &&
-          this.allTraineesInfo.data.length <= 6
+          this.allTraineesInfo.data.length <= 6 &&
+          this.isSuccessful
         ) {
           this.settingsFilterRequest = {
             pageNumber: ++this.currentPage,
-            pageSize: this.pageSize,
-            sortBy: this.sortbyNum,
-            campId: this.campId,
-            applySystemFilter: this.applySystemFilter,
-            vjudgeFilters: this.vjudgeFilters,
-            codeforcesFilters: this.codeforcesFilters,
+            ...this.settingsFilterRequest,
           };
           this.traineesRegisterations(this.settingsFilterRequest);
         }
@@ -289,16 +249,12 @@ export class RequestsLeaderComponent implements OnInit {
     setTimeout(() => {
       if (
         this.allTraineesInfo.hasNextPage &&
-        this.allTraineesInfo.data.length <= 6
+        this.allTraineesInfo.data.length <= 6 &&
+        this.isSuccessful
       ) {
         this.settingsFilterRequest = {
           pageNumber: ++this.currentPage,
-          pageSize: this.pageSize,
-          campId: this.campId,
-          sortBy: this.sortbyNum,
-          applySystemFilter: this.applySystemFilter,
-          vjudgeFilters: this.vjudgeFilters,
-          codeforcesFilters: this.codeforcesFilters,
+          ...this.settingsFilterRequest,
         };
         this.traineesRegisterations(this.settingsFilterRequest);
       }
@@ -369,5 +325,32 @@ export class RequestsLeaderComponent implements OnInit {
         this.isLoadingSubmit.update((v) => (v = false));
       },
     });
+  }
+
+  // Checkbox
+  toggleAll(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      this.selectedIds = this.allTraineesInfo.data.map((user) => user.id);
+    } else {
+      this.selectedIds = [];
+    }
+  }
+
+  toggleItem(id: number, event: any): void {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      if (!this.selectedIds.includes(id)) {
+        this.selectedIds.push(id);
+      }
+    } else {
+      this.selectedIds = this.selectedIds.filter(
+        (selectedId) => selectedId !== id
+      );
+    }
+  }
+
+  areAllItemsSelected(): boolean {
+    return this.selectedIds.length === this.allTraineesInfo.data.length;
   }
 }
