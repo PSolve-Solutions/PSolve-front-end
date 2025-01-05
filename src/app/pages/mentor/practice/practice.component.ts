@@ -64,6 +64,26 @@ export class PracticeComponent {
       }
     });
   }
+  updstat(ind: any, item: any) {
+    item.status = this.stand[ind].status;
+
+    let i = {
+      practiceId: item.id,
+      
+      status: item.state != 1 ? 1 : 2,
+    };
+
+    this.serv.updstat(i).subscribe((d: ResponseHeader) => {
+      console.log(d)
+      if (d.isSuccess) {
+        if (this.stand[ind].state == 1) {
+          this.stand[ind].state = 2;
+        } else {
+          this.stand[ind].state = 1;
+        }
+      }
+    });
+  }
   del(id: any) {
     this.serv.del(id).subscribe((d: ResponseHeader) => {
       if (d.isSuccess) {
