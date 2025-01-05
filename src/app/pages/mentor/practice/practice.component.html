@@ -26,7 +26,7 @@
       <div class="flex justify-between items-start">
         <h2 class="text-lg font-semibold">{{item.title}}</h2>
        <div class="flex gap-3">
-        <button (click)="upd(i , item)"
+        <button (click)="updstat(i , item)"
         [ngClass]="{
   'bg-[#7F77F1]': item.state != 2,
   'bg-[#33A069]':item.state == 2

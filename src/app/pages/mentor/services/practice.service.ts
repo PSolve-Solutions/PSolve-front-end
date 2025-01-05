@@ -27,6 +27,15 @@ export class PracticeService {
     }
     ); 
   }
+  updstat(item: any): Observable<any> {
+    console.log(item);
+    return this.http.put<any>(`${environment.BASE_URL}/api/Mentor/updatePracticeStatus`,  {
+      practiceId: item.practiceId,
+      status: item.status
+    }
+
+    ); 
+  }
   del(data: any): Observable<any> {
     return this.http.delete<any>(`${environment.BASE_URL}/api/Mentor/practices`,  {
       
