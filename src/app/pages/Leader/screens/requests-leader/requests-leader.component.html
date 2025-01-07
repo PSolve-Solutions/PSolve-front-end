@@ -3,14 +3,12 @@
     class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
     [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    Manage Requests :
-    {{ campId !== 0 && !isLoading() ? allTraineesInfo.totalCount : 0 }}
+    All Requests :
+    {{ campId !== 0 && !isLoading() ? totalCount : 0 }}
   </h1>
 
   <div class="flex items-center justify-between pb-4 border-b-2 md:hidden">
-    <h1 class="text-lg font-bold transition-all duration-500">
-      Manage Requests
-    </h1>
+    <h1 class="text-lg font-bold transition-all duration-500">All Requests</h1>
     <div class="flex items-center justify-between gap-x-2">
       <div class="relative flex items-center gap-x-2">
         <ng-select
@@ -166,12 +164,11 @@
       </div>
     </div>
 
-    <div style="height: calc(100vh - 240px)">
+    <div style="height: calc(100vh - 240px)" class="flex flex-col">
       @if (campId !== 0) {
       <div
         style="max-height: calc(100vh - 250px)"
         class="pb-2 overflow-y-auto border-black rounded-lg pe-2 custom-scrollbar-request"
-        (scroll)="loadMoreData($event)"
       >
         <table
           class="w-full text-[13px] md:text-sm text-center bg-white rounded-lg table-auto text-mainColor1"
@@ -219,8 +216,7 @@
             </tr>
           </thead>
           <tbody>
-            @if (isLoading() && dataRequest.length === 0 ) { @for ( i of [1, 2,
-            3]; track i) {
+            @if (isLoading() ) { @for ( i of [1, 2, 3]; track i) {
             <tr class="border-b-8 animate-pulse border-mainColor4">
               <td class="py-2 text-center ps-2">
                 <div class="w-5 h-5 rounded bg-mainColor3"></div>
@@ -262,8 +258,8 @@
                 <div class="w-24 h-5 rounded bg-mainColor3"></div>
               </td>
             </tr>
-            } } @else { @for (traniee of dataRequest; track $index) { @for (row
-            of traniee.data; track i; let i = $index; let first = $first) {
+            } } @else { @for (row of allTraineesInfo.data; track i; let i =
+            $index; let first = $first) {
             <tr
               class="font-semibold border-b-8 border-mainColor4"
               [class.border-t-8]="first"
@@ -345,15 +341,74 @@
                 {{ row.vjudge || "-" }}
               </td>
             </tr>
-            } } }
+            } }
           </tbody>
-
-          <tfoot class="bg-[#DEDFE1] rounded-lg">
-            <tr>
-              <td colspan="16" class="p-3 rounded-bl-lg rounded-br-lg"></td>
-            </tr>
-          </tfoot>
         </table>
+        <div
+          class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
+          [class.mt-4]="!isLoading() ? allTraineesInfo.data.length === 0 : ''"
+        >
+          <button
+            class="px-6 py-[10px] rounded-tl rounded-bl shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)"
+          >
+            <svg
+              width="8"
+              height="11"
+              class="rotate-180"
+              viewBox="0 0 8 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+                fill="#002C3D"
+              />
+            </svg>
+          </button>
+
+          @for (page of pages; track $index) {
+          <button
+            class="px-6 py-1.5 shadow"
+            [ngClass]="
+              currentPage === page
+                ? 'bg-mainColor1 text-mainColor4 font-bold'
+                : 'bg-mainColor4 hover:bg-gray-100'
+            "
+            (click)="changePage(page)"
+          >
+            {{ page }}
+          </button>
+          } @if ( showEllipsis ) {
+          <span class="px-6 py-1.5">...</span>
+          } @if (showLastPage) {
+          <button
+            class="px-6 py-1.5 shadow bg-mainColor4 hover:bg-gray-100"
+            (click)="changePage(totalPages)"
+          >
+            {{ totalPages }}
+          </button>
+          }
+          <button
+            class="px-6 py-[10px] rounded-tr rounded-br shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)"
+          >
+            <svg
+              width="8"
+              height="11"
+              viewBox="0 0 8 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
+                fill="#002C3D"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       @if (showModalDelete) {
