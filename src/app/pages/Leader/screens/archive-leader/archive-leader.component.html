@@ -184,15 +184,15 @@
                         "
                         target="_blank"
                         class="hover:text-activeLink"
-                        >{{ row.codeForceHandle }}</a
+                        >{{ row.codeForceHandle || "-" }}</a
                       >
                     </span>
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.college }}
+                    {{ row.college || "-" }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.campName }}
+                    {{ row.campName || "-" }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
                     {{ row.gender === 0 ? "Male" : "Female" }}
@@ -385,15 +385,15 @@
                         "
                         target="_blank"
                         class="hover:text-activeLink"
-                        >{{ row.codeForceHandle }}</a
+                        >{{ row.codeForceHandle || "-" }}</a
                       >
                     </span>
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.college }}
+                    {{ row.college || "-" }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
-                    {{ row.role }}
+                    {{ row.role || "-" }}
                   </td>
                   <td class="hidden px-4 py-2 lg:table-cell">
                     {{ row.gender === 0 ? "Male" : "Female" }}

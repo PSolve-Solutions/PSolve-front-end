@@ -12,7 +12,7 @@ export class StandingsService {
   constructor(private http:HttpClient) { }
   getData(id:any): Observable<ResponseHeader>{
     
-    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/standing/${Number(id)}`)
+    return this.http.get<ResponseHeader>(`${environment.BASE_URL}/api/Mentor/standing/${(id)}`)
   }
   updateData(data: any): Observable<any> {
     return this.http.put<any>(`${environment.BASE_URL}/api/Mentor/updateTraineePoints`, data); 

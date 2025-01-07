@@ -9,7 +9,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { RequestsLeaderService } from '../../services/requests-leader.service';
 import { SystemFilterComponent } from '../../Components/system-filter/system-filter.component';
 import { NgClass } from '@angular/common';
-import { CasheService } from '../../../../shared/services/cashe.service';
 import { SuccessMessageComponent } from '../success-message/success-message.component';
 import { AllTraineesInfo } from '../../model/requests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
@@ -31,7 +30,6 @@ import { DeleteConfirmModalComponent } from '../../../../shared/Components/delet
 })
 export class RequestsLeaderComponent implements OnInit {
   requestsLeaderService = inject(RequestsLeaderService);
-  casheService = inject(CasheService);
   ocSidebarService = inject(OcSidebarService);
   allCamps: { id: number; name: string }[] = [];
   isLoading = signal<boolean>(false);
@@ -46,12 +44,11 @@ export class RequestsLeaderComponent implements OnInit {
   applySystemFilter: boolean = false;
   codeforcesFilters: any;
   vjudgeFilters: any;
-  KeyWord: string = '';
   campId: number = 0;
   settingsFilterRequest: any;
-
+  totalCount: number = 0;
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 30;
   totalPages: number = 1;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
@@ -61,16 +58,38 @@ export class RequestsLeaderComponent implements OnInit {
     this.fetchAllCamps();
   }
 
-  traineesRegisterations(settingsRequest: any): void {
+  traineesRegisterations(
+    pageNumber: number,
+    pageSize: number,
+    campId: number,
+    sortBy?: number,
+    applySystemFilter?: boolean,
+    codeforcesFilters?: any,
+    vjudgeFilters?: any
+  ): void {
     this.isLoading.set(true);
     this.requestsLeaderService
-      .traineesRegisterations(settingsRequest)
+      .traineesRegisterations(
+        pageNumber,
+        pageSize,
+        campId,
+        sortBy,
+        applySystemFilter,
+        codeforcesFilters,
+        vjudgeFilters
+      )
       .subscribe({
         next: (res) => {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
-            this.totalPages = this.allTraineesInfo.totalPages;
-            this.generatePages();
+            if (this.allTraineesInfo.data.length === 0) {
+              this.totalCount = 0;
+              this.totalPages = 1;
+            } else {
+              this.totalPages = this.allTraineesInfo.totalPages;
+              this.totalCount = this.allTraineesInfo.totalCount;
+            }
+            this.generatePages(this.totalPages);
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -85,60 +104,24 @@ export class RequestsLeaderComponent implements OnInit {
 
   chooseCamp(item: any): void {
     this.campId = item.id;
-    this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
-      campId: this.campId,
-    };
     this.showFilterModel = false;
-    this.casheService.clearCache();
-    this.traineesRegisterations(this.settingsFilterRequest);
+    this.traineesRegisterations(this.currentPage, this.pageSize, this.campId);
   }
 
   sortTrainee(item: any): void {
     this.sortbyNum = item;
-    this.settingsFilterRequest = {
-      // pageNumber: this.currentPage,
-      // pageSize: this.pageSize,
-      campId: this.campId,
-      sortBy: this.sortbyNum,
-      applySystemFilter: this.applySystemFilter,
-      vjudgeFilters: this.vjudgeFilters,
-      codeforcesFilters: this.codeforcesFilters,
-    };
-    this.casheService.clearCache();
-    this.traineesRegisterations(this.settingsFilterRequest);
+    this.traineesRegisterations(
+      this.currentPage,
+      this.pageSize,
+      this.campId,
+      this.sortbyNum,
+      this.applySystemFilter,
+      this.codeforcesFilters,
+      this.vjudgeFilters
+    );
   }
 
-  // Checkbox
-  toggleAll(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    if (isChecked) {
-      this.selectedIds = this.allTraineesInfo.data.map((user) => user.id);
-    } else {
-      this.selectedIds = [];
-    }
-  }
-
-  toggleItem(id: number, event: any): void {
-    const isChecked = event.target.checked;
-    console.log(isChecked);
-    if (isChecked) {
-      if (!this.selectedIds.includes(id)) {
-        this.selectedIds.push(id);
-      }
-    } else {
-      this.selectedIds = this.selectedIds.filter(
-        (selectedId) => selectedId !== id
-      );
-    }
-  }
-
-  areAllItemsSelected(): boolean {
-    return this.selectedIds.length === this.allTraineesInfo.data.length;
-  }
-
-  // Filter
+  // open & close Filter
   showConfirmFilter() {
     this.showFilterModel = true;
   }
@@ -149,33 +132,31 @@ export class RequestsLeaderComponent implements OnInit {
   handleSaveFilter(data: any) {
     this.vjudgeFilters = data.value.filtersV;
     this.codeforcesFilters = data.value.filtersC;
-    if (this.vjudgeFilters.length > 0 || this.codeforcesFilters.length > 0) {
-      this.settingsFilterRequest = {
-        // pageNumber: 1,
-        // pageSize: this.pageSize,
-        campId: this.campId,
-        sortBy: this.sortbyNum,
-        applySystemFilter: this.applySystemFilter,
-        vjudgeFilters: this.vjudgeFilters,
-        codeforcesFilters: this.codeforcesFilters,
-      };
-      this.casheService.clearCache();
-      this.traineesRegisterations(this.settingsFilterRequest);
-    }
+    this.currentPage = 1;
+    this.traineesRegisterations(
+      this.currentPage,
+      this.pageSize,
+      this.campId,
+      this.sortbyNum,
+      this.applySystemFilter,
+      this.codeforcesFilters,
+      this.vjudgeFilters
+    );
     this.closeConfirmFilter();
   }
 
   systemFilter(event: any): void {
     this.applySystemFilter = event.target.checked;
-    this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
-      sortBy: this.sortbyNum,
-      campId: this.campId,
-      applySystemFilter: this.applySystemFilter,
-    };
-    this.casheService.clearCache();
-    this.traineesRegisterations(this.settingsFilterRequest);
+    this.currentPage = 1;
+    this.traineesRegisterations(
+      this.currentPage,
+      this.pageSize,
+      this.campId,
+      this.sortbyNum,
+      this.applySystemFilter,
+      this.codeforcesFilters,
+      this.vjudgeFilters
+    );
   }
 
   // Delete
@@ -185,34 +166,65 @@ export class RequestsLeaderComponent implements OnInit {
 
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedIds.length !== 0) {
-      this.settingsFilterRequest = {
-        // pageNumber: 1,
-        // pageSize: this.pageSize,
-        sortBy: this.sortbyNum,
-        campId: this.campId,
-        applySystemFilter: this.applySystemFilter,
-        vjudgeFilters: this.vjudgeFilters,
-        codeforcesFilters: this.codeforcesFilters,
-      };
-      this.casheService.clearCache();
-      this.traineesRegisterations(this.settingsFilterRequest);
+      this.currentPage = 1;
+      this.traineesRegisterations(
+        this.currentPage,
+        this.pageSize,
+        this.campId,
+        this.sortbyNum,
+        this.applySystemFilter,
+        this.codeforcesFilters,
+        this.vjudgeFilters
+      );
     }
     this.showModalDelete = false;
   }
 
   closeRequestMessage() {
     this.showSubmitModel = false;
-    this.settingsFilterRequest = {
-      // pageNumber: 1,
-      // pageSize: this.pageSize,
-      campId: this.campId,
-      sortBy: this.sortbyNum,
-      applySystemFilter: this.applySystemFilter,
-      vjudgeFilters: this.vjudgeFilters,
-      codeforcesFilters: this.codeforcesFilters,
-    };
-    this.casheService.clearCache();
-    this.traineesRegisterations(this.settingsFilterRequest);
+    this.currentPage = 1;
+    this.traineesRegisterations(
+      this.currentPage,
+      this.pageSize,
+      this.campId,
+      this.sortbyNum,
+      this.applySystemFilter,
+      this.codeforcesFilters,
+      this.vjudgeFilters
+    );
+  }
+
+  generatePages(totalPages: number): void {
+    this.pages = [];
+    if (totalPages <= 3) {
+      for (let i = 1; i <= totalPages; i++) {
+        this.pages.push(i);
+      }
+    } else {
+      const start = Math.max(this.currentPage - 2, 1);
+      const end = Math.min(this.currentPage + 2, totalPages);
+      for (let i = start; i <= end; i++) {
+        this.pages.push(i);
+      }
+
+      this.showEllipsis = end < totalPages - 1;
+      this.showLastPage = this.showEllipsis;
+    }
+  }
+
+  changePage(page: number): void {
+    if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
+      this.currentPage = page;
+      this.traineesRegisterations(
+        this.currentPage,
+        10,
+        this.campId,
+        this.sortbyNum,
+        this.applySystemFilter,
+        this.codeforcesFilters,
+        this.vjudgeFilters
+      );
+    }
   }
 
   fetchAllCamps(): void {
@@ -237,42 +249,6 @@ export class RequestsLeaderComponent implements OnInit {
     this.closeConfirmFilter();
   }
 
-  generatePages(): void {
-    this.pages = [];
-    if (this.allTraineesInfo?.totalPages <= 3) {
-      for (let i = 1; i <= this.allTraineesInfo?.totalPages; i++) {
-        this.pages.push(i);
-      }
-    } else {
-      const start = Math.max(this.currentPage - 2, 1);
-      const end = Math.min(
-        this.currentPage + 2,
-        this.allTraineesInfo?.totalPages
-      );
-      for (let i = start; i <= end; i++) {
-        this.pages.push(i);
-      }
-
-      this.showEllipsis = end < this.allTraineesInfo?.totalPages - 1;
-      this.showLastPage = this.showEllipsis;
-    }
-  }
-
-  changePage(page: number): void {
-    // if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
-    //   this.currentPage = page;
-    //   this.settingsFilterRequest = {
-    //     pageNumber: this.currentPage,
-    //     pageSize: this.pageSize,
-    //     campId: this.campId,
-    //     applySystemFilter: this.applySystemFilter,
-    //     vjudgeFilters: this.vjudgeFilters,
-    //     codeforcesFilters: this.codeforcesFilters,
-    //   };
-    //   this.generatePages();
-    // }
-  }
-
   submitRequests() {
     this.isLoadingSubmit.set(true);
     const info = {
@@ -294,5 +270,33 @@ export class RequestsLeaderComponent implements OnInit {
         this.isLoadingSubmit.update((v) => (v = false));
       },
     });
+  }
+
+  // Checkbox
+  toggleAll(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      this.selectedIds = this.allTraineesInfo.data.map((user) => user.id);
+      console.log(this.selectedIds, this.selectedIds.length);
+    } else {
+      this.selectedIds = [];
+    }
+  }
+
+  toggleItem(id: number, event: any): void {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      if (!this.selectedIds.includes(id)) {
+        this.selectedIds.push(id);
+      }
+    } else {
+      this.selectedIds = this.selectedIds.filter(
+        (selectedId) => selectedId !== id
+      );
+    }
+  }
+
+  areAllItemsSelected(): boolean {
+    return this.selectedIds.length === this.allTraineesInfo.data.length;
   }
 }

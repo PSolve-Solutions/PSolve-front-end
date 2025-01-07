@@ -126,16 +126,19 @@
               <td class="hidden px-4 py-2 lg:table-cell">
                 {{ row.email }}
               </td>
-              <td class="hidden px-4 py-2 lg:table-cell">{{ row.college }}</td>
+              <td class="hidden px-4 py-2 lg:table-cell">
+                {{ row.college || "-" }}
+              </td>
               <td class="px-4 py-2">
                 <span>
                   <a
                     [href]="
+                      row.codeForceHandle &&
                       'https://codeforces.com/profile/' + row.codeForceHandle
                     "
                     target="_blank"
                     class="hover:text-activeLink"
-                    >{{ row.codeForceHandle }}</a
+                    >{{ row.codeForceHandle || "-" }}</a
                   >
                 </span>
               </td>

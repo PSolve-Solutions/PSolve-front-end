@@ -1,6 +1,6 @@
 <!-- [ngClass]="isShow ? 'w-[250px] rounded-tr-3xl rounded-br-3xl' : 'w-[90px]'" -->
 <div
-  class="font-montserrat h-full fixed transition-width duration-500 overflow-x-hidden inset-y-0 start-0 z-[60] bg-mainColor1 text-mainColor4"
+  class="fixed inset-y-0 z-50 h-full overflow-x-hidden duration-500 md:z-[60] font-montserrat transition-width start-0 bg-mainColor1 text-mainColor4"
   [ngClass]="
     ocSidebarService.isOpen() === 'hide'
       ? 'w-0'
@@ -58,6 +58,7 @@
           [class.items-center]="ocSidebarService.isOpen() === 'semi'"
         >
           <li
+            (click)="hideSidebar()"
             class="mb-2 font-bold"
             [ngClass]="
               ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
@@ -74,6 +75,7 @@
             class="ps-1.5 flex items-center cursor-pointer group py-1.5 gap-x-1 px-2.5"
           >
             <div
+              (click)="hideSidebar()"
               routerLink="/psovle"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"
@@ -103,6 +105,7 @@
             </div>
 
             <h3
+              (click)="hideSidebar()"
               routerLink="/psovle"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"
@@ -121,6 +124,7 @@
           [class.items-center]="ocSidebarService.isOpen() === 'semi'"
         >
           <li
+            (click)="hideSidebar()"
             class="mb-2 font-bold"
             [ngClass]="
               ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
@@ -158,6 +162,7 @@
             </div>
 
             <h3
+              (click)="hideSidebar()"
               routerLink="clients"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"
@@ -176,6 +181,7 @@
           [class.items-center]="ocSidebarService.isOpen() === 'semi'"
         >
           <li
+            (click)="hideSidebar()"
             class="mb-2 font-bold"
             [ngClass]="
               ocSidebarService.isOpen() === 'show' ? 'text-sm' : 'text-xs'
@@ -189,6 +195,7 @@
             class="ps-1.5 cursor-pointer flex group items-center py-1.5 gap-x-1 px-2.5"
           >
             <div
+              (click)="hideSidebar()"
               routerLink="university"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"
@@ -210,6 +217,7 @@
             </div>
 
             <h3
+              (click)="hideSidebar()"
               routerLink="university"
               routerLinkActive="activeLink"
               ariaCurrentWhenActive="page"

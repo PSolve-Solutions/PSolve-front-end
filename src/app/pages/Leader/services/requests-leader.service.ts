@@ -12,7 +12,25 @@ export class RequestsLeaderService {
   casheService = inject(CasheService);
 
   // get date
-  traineesRegisterations(settingsRequest: any): Observable<any> {
+  traineesRegisterations(
+    pageNumber: number,
+    pageSize: number,
+    campId: number,
+    sortBy?: number,
+    applySystemFilter?: boolean,
+    codeforcesFilters?: any,
+    vjudgeFilters?: any
+  ): Observable<any> {
+    const settingsRequest = {
+      pageNumber,
+      pageSize,
+      campId,
+      sortBy,
+      applySystemFilter,
+      vjudgeFilters,
+      codeforcesFilters,
+    };
+
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Leader/traineesRegisterations`,
       settingsRequest

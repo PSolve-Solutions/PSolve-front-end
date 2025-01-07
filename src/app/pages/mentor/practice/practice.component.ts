@@ -64,6 +64,26 @@ export class PracticeComponent {
       }
     });
   }
+  updstat(ind: any, item: any) {
+    item.status = this.stand[ind].status;
+
+    let i = {
+      practiceId: item.id,
+      
+      status: item.state != 1 ? 1 : 2,
+    };
+
+    this.serv.updstat(i).subscribe((d: ResponseHeader) => {
+      console.log(d)
+      if (d.isSuccess) {
+        if (this.stand[ind].state == 1) {
+          this.stand[ind].state = 2;
+        } else {
+          this.stand[ind].state = 1;
+        }
+      }
+    });
+  }
   del(id: any) {
     this.serv.del(id).subscribe((d: ResponseHeader) => {
       if (d.isSuccess) {
@@ -81,12 +101,18 @@ export class PracticeComponent {
     this.show('edit');
   }
   edi(id: any) {
+    const localDate = new Date();
+    const timezoneOffset = localDate.getTimezoneOffset();
+    let convertedTime = new Date(this.dateEd);
+    console.log(timezoneOffset)
+    convertedTime=  new Date(convertedTime.getTime() + timezoneOffset*60000 )
+    console.log(convertedTime);
     let i = {
       practiceId: id,
       title: this.titleEd,
       meetingLink: this.linkEd,
       note: this.notesEd,
-      time: this.dateEd,
+      time:convertedTime,
       state: this.statusEd,
     };
 
@@ -174,11 +200,17 @@ export class PracticeComponent {
   err: any[] = [];
   success: boolean = false;
   create(date: any, state: any, link: any, notes: any, title: any) {
+    const localDat = new Date();
+    const timezoneOff = localDat.getTimezoneOffset();
+    let convertedTime = new Date(this.date);
+    console.log(timezoneOff)
+    convertedTime=  new Date(convertedTime.getTime() + timezoneOff*60000 )
+    console.log(convertedTime);
     const data = {
       title: this.title,
       meetingLink: this.link,
       note: this.notes,
-      time: this.date,
+      time: convertedTime,
       campId: Number(localStorage.getItem('camp')),
     };
 
@@ -197,7 +229,9 @@ export class PracticeComponent {
       this.error = true;
     }
     let time: Date = new Date();
-    let meet = new Date(this.date);
+    const localDate = new Date();
+    const timezoneOffset = localDate.getTimezoneOffset();
+    let meet = new Date(this.date + timezoneOffset*60000);
     if (meet < time) {
       this.err.push('Date Must Be in Future');
     } else if (this.link && this.title && this.date) {

@@ -400,8 +400,15 @@
   <button
     type="submit"
     [disabled]="isEableToSave()"
-    class="px-6 py-1.5 mt-2 disabled:bg-slate-500 disabled:cursor-not-allowed text-mainColor4 rounded-lg bg-mainColor1"
+    class="px-6 py-1.5 mt-2 me-4 disabled:bg-slate-500 disabled:cursor-not-allowed text-mainColor4 rounded-lg bg-mainColor1"
   >
     Done
+  </button>
+  <button
+    type="button"
+    (click)="resetFilter()"
+    class="px-6 py-1.5 mt-2 disabled:bg-slate-500 disabled:cursor-not-allowed text-mainColor4 rounded-lg bg-mainColor2"
+  >
+    Reset
   </button>
 </form>

@@ -3,7 +3,7 @@ export interface UsersWeekly {
   firstName: string;
   middleName: string;
   lastName: string;
-  email: string;
+  vjudgeHandle: string;
   codeForceHandle: string;
   absenceCount: number;
   weeklySolvingPrecent: number;
@@ -14,7 +14,7 @@ export interface UsersOther {
   firstName: string;
   middleName: string;
   lastName: string;
-  email: string;
+  vjudgeHandle: string;
   codeForceHandle: string;
   absenceCount: number;
   solvingPrecent: number;
