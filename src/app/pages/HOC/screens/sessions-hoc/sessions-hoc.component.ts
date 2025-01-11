@@ -22,7 +22,7 @@ export class SessionsHOCComponent implements OnInit {
   allSessions!: Sessions;
   currentPage: number = 1;
   pageSize: number = 15;
-  keyword: string = '';
+  totalCount: number = 0;
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
@@ -44,6 +44,7 @@ export class SessionsHOCComponent implements OnInit {
       next: (res) => {
         if (res.statusCode === 200) {
           this.allSessions = res;
+          this.totalCount = this.allSessions.totalCount;
           this.dataRequest.push(this.allSessions);
           this.isLoading.update((v) => (v = false));
         } else {

@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Route, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const toastr = inject(ToastrService);
   const router = inject(Router);
@@ -17,7 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 };
 
 // to don't back to /login or /register when logged in
-export const authGuardLoggdIn: CanActivateFn = (route, state) => {
+export const authGuardLoggdIn: CanActivateFn = () => {
   const userInfo = JSON.parse(localStorage.getItem('CURRENT_USER') || '{}');
   const roles = userInfo.roles;
   const authService = inject(AuthService);

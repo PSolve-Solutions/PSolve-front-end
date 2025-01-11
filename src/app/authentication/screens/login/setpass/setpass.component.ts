@@ -9,7 +9,6 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResponseHeader } from '../../../../shared/model/responseHeader';
 import { ForgetService } from '../services/forget.service';
 import { ToastrService } from 'ngx-toastr';
 

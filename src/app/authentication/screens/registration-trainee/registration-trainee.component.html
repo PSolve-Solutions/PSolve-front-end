@@ -14,7 +14,7 @@
     />
   </div>
   <div
-    class="flex w-full max-w-5xl p-3 mx-2 my-4 bg-white shadow-2xl rounded-3xl"
+    class="flex w-full max-w-6xl p-3 mx-2 my-4 bg-white shadow-2xl rounded-3xl"
   >
     @if (superTab === 1) {
     <div
@@ -123,7 +123,7 @@
             </button>
             @if (isDropdownOrganization) {
             <div
-              class="absolute right-0 top-[80px] border max-h-64 overflow-y-auto border-mainColor1 z-10 w-full mt-5 bg-[#eef3f3] rounded-lg shadow-lg focus:outline-none"
+              class="absolute right-0 top-[70px] border max-h-64 overflow-y-auto border-mainColor1 z-10 w-full mt-5 bg-[#eef3f3] rounded-lg shadow-lg focus:outline-none"
             >
               <ul>
                 @for (option of allCommunities; track option.id; let last =
@@ -188,7 +188,7 @@
               </button>
               @if (isDropdownCamp) {
               <div
-                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of allCamps; track option.id) {
@@ -234,7 +234,7 @@
               </button>
               @if (isDropdownHas) {
               <div
-                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of [{id: 0, name: 'Yes'}, {id: 1, name: 'No'}];
@@ -330,7 +330,6 @@
                   universityName
                 }}</span>
                 }@else {
-
                 <span class="text-[#002C3D4D] truncate text-left w-11/12"
                   >university</span
                 >
@@ -350,7 +349,7 @@
               </button>
               @if (isDropdownUniversity) {
               <div
-                class="absolute right-0 top-[80px] max-h-72 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 top-[70px] max-h-72 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of allUniversity; track option.name) {
@@ -414,7 +413,7 @@
               </button>
               @if (isDropdownCollege) {
               <div
-                class="absolute right-0 top-[80px] max-h-52 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 top-[70px] max-h-52 overflow-y-auto z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of allUCollege; track option.id) {
@@ -538,7 +537,7 @@
               </button>
               @if (isDropdownGender) {
               <div
-                class="absolute right-0 top-[80px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of [{id: 0, name:'Male'}, {id: 1, name:
@@ -585,7 +584,7 @@
               </button>
               @if (isDropdownGrade) {
               <div
-                class="absolute right-0 max-h-32 overflow-y-auto top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
+                class="absolute right-0 max-h-36 overflow-y-auto top-[70px] z-10 w-full mt-5 bg-[#eef3f3] rounded-md shadow-lg focus:outline-none"
               >
                 <ul>
                   @for (option of [1, 2, 3, 4, 5]; track option) {

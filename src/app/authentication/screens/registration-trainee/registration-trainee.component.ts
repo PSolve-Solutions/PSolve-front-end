@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -496,6 +496,8 @@ export class RegistrationTraineeComponent implements OnInit {
     clientName: string;
     logoUrl: string;
   }) {
+    this.campName = '';
+    this.registrationForm.get('CampId')?.setValue('');
     this.selectedOrganization = option;
     this.getAllCamps(option.id);
     this.communityId = option.id;
