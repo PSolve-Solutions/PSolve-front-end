@@ -3,7 +3,6 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
-  HostListener,
   inject,
   Input,
   Output,
@@ -15,9 +14,8 @@ import {
   ImageCroppedEvent,
   ImageCropperComponent,
   ImageTransform,
-  LoadedImage,
 } from 'ngx-image-cropper';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../../../authentication/services/auth.service';
 
 @Component({

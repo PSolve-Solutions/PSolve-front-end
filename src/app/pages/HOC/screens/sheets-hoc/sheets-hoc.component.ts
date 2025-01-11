@@ -41,6 +41,7 @@ export class SheetsHOCComponent implements OnInit {
   sheetId: number = 0;
   currentPage: number = 1;
   pageSize: number = 15;
+  totalCount: number = 0;
   isLoading = signal<boolean>(false);
   showModal: boolean = false;
   selectedItemId: number | null = null;
@@ -66,6 +67,7 @@ export class SheetsHOCComponent implements OnInit {
       next: (res) => {
         if (res.statusCode === 200) {
           this.allSheets = res;
+          this.totalCount = this.allSheets.totalCount;
           this.dataRequest.push(res);
           this.isLoading.update((v) => (v = false));
         } else {

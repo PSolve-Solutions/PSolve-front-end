@@ -27,6 +27,7 @@ export class ContestsHOCComponent implements OnInit {
   selectedItemId: number | null = null;
   dataRequest: Contests[] = [];
   contestId: number | null = null;
+  totalCount: number = 0;
   ngOnInit() {
     this.getAllContests(this.currentPage, this.pageSize);
   }
@@ -42,6 +43,7 @@ export class ContestsHOCComponent implements OnInit {
       next: (res) => {
         if (res.statusCode === 200) {
           this.allContests = res;
+          this.totalCount = this.allContests.totalCount;
           this.dataRequest.push(this.allContests);
           this.isLoading.update((v) => (v = false));
         } else {

@@ -1,6 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResponseHeader } from '../../../../shared/model/responseHeader';
 import { CommonModule } from '@angular/common';
 import { ForgetService } from '../services/forget.service';
 import { ToastrService } from 'ngx-toastr';

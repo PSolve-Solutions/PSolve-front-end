@@ -1,4 +1,4 @@
-export interface TraineeArchiveInfo {
+export interface ArchiveInfo {
   currentPage: number;
   totalPages: number;
   totalCount: number;
@@ -8,18 +8,19 @@ export interface TraineeArchiveInfo {
   statusCode: number;
   isSuccess: boolean;
   message: any;
-  data: TraineeArchive[];
+  data: UserArchive[];
   errors: any;
 }
 
-export interface TraineeArchive {
+export interface UserArchive {
   id: number;
   firstName: string;
   middleName: string;
   lastName: string;
   codeForceHandle: string;
   gender: number;
-  campName: string;
+  campName?: string;
+  role?: string;
   college: string;
 }
 
