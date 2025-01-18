@@ -29,6 +29,7 @@ export class CampsLeaderComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 1;
+  totalCount: number = 0;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
@@ -46,6 +47,7 @@ export class CampsLeaderComponent implements OnInit {
           if (res.statusCode === 200) {
             this.allCampsInfo = res;
             this.totalPages = this.allCampsInfo.totalPages;
+            this.totalCount = this.allCampsInfo.totalCount;
             this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
@@ -118,7 +120,6 @@ export class CampsLeaderComponent implements OnInit {
   changePage(page: number): void {
     if (page > 0 && page <= this.allCampsInfo?.totalPages) {
       this.currentPage = page;
-      this.generatePages();
       this.getAllCamps(this.currentPage, this.pageSize);
     }
   }

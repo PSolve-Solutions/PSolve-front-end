@@ -7,11 +7,12 @@ import {
   SessionAttendance,
 } from '../../model/attenances-hoc';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-edit-attendance',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './edit-attendance.component.html',
   styleUrl: './edit-attendance.component.scss',
 })

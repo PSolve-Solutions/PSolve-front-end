@@ -3,7 +3,7 @@
     class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
     [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    Trainees
+    All Trainees : {{ !isLoading() ? totalCount : 0 }}
   </h1>
   <h1
     class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
@@ -39,38 +39,47 @@
           </svg>
         </div>
       </div>
-      <div class="relative">
-        <ng-select
-          [closeOnSelect]="true"
-          bindLabel="name"
-          bindValue="id"
-          (change)="sortBy($event)"
-          placeholder="Sort By"
-          (open)="focusSelect()"
-          (close)="blurSelect()"
-          class="relative block md:w-40 w-32 h-10 my-2 !text-white appearance-none rounded-xl !placeholder:text-white bg-mainColor1 cursor-none focus:outline-none"
+      <div id="sortBy" class="relative flex">
+        <button
+          type="button"
+          (click)="toggleDropdown()"
+          class="flex items-center justify-between py-2.5 px-6 font-semibold rounded-lg outline-none md:w-40 w-32 bg-mainColor1 text-mainColor4 border-mainColor1 focus:border-subColor1"
         >
-          <ng-option [value]="0">Faculty</ng-option>
-          <ng-option [value]="1">Year</ng-option>
-          <ng-option [value]="2">Gender</ng-option>
-        </ng-select>
-        <svg
-          width="24"
-          height="24"
-          class="absolute top-[14px] md:left-32 left-24 text-white transition-transform"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+          @if (sortName) { {{ sortName }} }@else {
+          <span class="text-mainColor4">Sort by</span>
+          }
+          <svg
+            class="ml-2 transition-transform rotate-0 size-4"
+            [class.rotate-180]="isDropdown == true"
+            viewBox="0 0 11 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.58027 5.31922L10.6603 2.23923C11.1103 1.78923 11.1103 1.04922 10.6603 0.599219C10.2103 0.149219 9.47027 0.149219 9.02027 0.599219L6.10029 3.52921C5.86029 3.73921 5.48028 3.76921 5.25028 3.52921L2.32029 0.599219C1.87029 0.149219 1.13027 0.149219 0.680273 0.599219C0.230273 1.04922 0.230273 1.78923 0.680273 2.23923L3.76029 5.31922C5.08029 6.63922 6.21028 6.69922 7.59028 5.31922H7.58027Z"
+              fill="#fff"
+            />
+          </svg>
+        </button>
+        @if (isDropdown) {
+        <div
+          class="absolute right-0 top-[35px] z-10 w-full mt-5 bg-mainColor4 border border-mainColor1 rounded-md shadow-lg focus:outline-none"
         >
-          <path
-            d="M19.9201 8.9502L13.4001 15.4702C12.6301 16.2402 11.3701 16.2402 10.6001 15.4702L4.08008 8.9502"
-            stroke="#fff"
-            stroke-width="1.5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+          <ul>
+            @for (option of [{id: 0, name:'Faculty' }, {id: 2, name:'Year'
+            },{id: 3, name:'Gender' },]; track option.id) {
+            <li
+              (click)="sortBy(option)"
+              [class.text-[#2A8E9E]]="option.name === sortName"
+              [class.bg-white]="option.name === sortName"
+              class="flex items-center p-3 text-sm font-semibold text-black border-b cursor-pointer hover:text-white border-subColor1 hover:bg-subColor2 gap-x-4"
+            >
+              {{ option.name }}
+            </li>
+            }
+          </ul>
+        </div>
+        }
       </div>
     </form>
 

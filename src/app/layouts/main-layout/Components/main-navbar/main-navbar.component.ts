@@ -6,7 +6,6 @@ import {
   HostListener,
   inject,
   OnInit,
-  signal,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -38,6 +37,7 @@ export class MainNavbarComponent implements OnInit {
   currentPath: string = '';
   isOpenNotification: boolean = false;
   isAnewNotification: boolean = false;
+  s: string = '';
 
   @ViewChild(NotificationComponent) childComponent!: NotificationComponent;
 

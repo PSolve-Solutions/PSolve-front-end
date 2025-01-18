@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgClass } from '@angular/common';
@@ -36,14 +36,16 @@ export class TraineesLeaderComponent implements OnInit {
   keywordSearch: string = '';
   sortbyNum: number = 0 | 1 | 2;
   deletedRoles: any[] = [];
-  focusOrder: boolean = false;
 
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 1;
+  totalCount: number = 0;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
+  isDropdown: boolean = false;
+  sortName: string = '';
 
   ngOnInit() {
     this.traineesWithPagination(this.currentPage, this.pageSize);
@@ -63,6 +65,7 @@ export class TraineesLeaderComponent implements OnInit {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
             this.totalPages = this.allTraineesInfo.totalPages;
+            this.totalCount = this.allTraineesInfo.totalCount;
             this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
@@ -87,16 +90,28 @@ export class TraineesLeaderComponent implements OnInit {
     );
   }
 
-  sortBy(item: number): void {
+  toggleDropdown() {
+    this.isDropdown = !this.isDropdown;
+  }
+  sortBy(item: { id: number; name: string }): void {
     this.casheService.clearCache();
-    this.sortbyNum = item;
-    console.log(item, this.sortbyNum);
+    this.sortbyNum = item.id;
+    this.sortName = item.name;
+    this.isDropdown = false;
     this.traineesWithPagination(
       this.currentPage,
       this.pageSize,
       this.keywordSearch,
       this.sortbyNum
     );
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const targetElement = event.target as HTMLElement;
+    const isInsideDropdown = targetElement.closest('#sortBy');
+    if (!isInsideDropdown) {
+      this.isDropdown = false;
+    }
   }
 
   showSideBar(id: string) {
@@ -213,7 +228,6 @@ export class TraineesLeaderComponent implements OnInit {
         this.keywordSearch,
         this.sortbyNum
       );
-      this.generatePages();
     }
   }
 
@@ -221,12 +235,5 @@ export class TraineesLeaderComponent implements OnInit {
     if ((event.target as HTMLElement).classList.contains('fixed')) {
       this.handleClose();
     }
-  }
-
-  focusSelect(): void {
-    this.focusOrder = true;
-  }
-  blurSelect(): void {
-    this.focusOrder = true;
   }
 }

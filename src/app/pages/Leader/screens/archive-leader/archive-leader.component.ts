@@ -2,10 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {
-  OnArchiveUserInfo,
-  TraineeArchiveInfo,
-} from '../../model/archive-leader';
+import { OnArchiveUserInfo, ArchiveInfo } from '../../model/archive-leader';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ArchiveLeaderService } from '../../services/archive-leader.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
@@ -21,9 +18,9 @@ export class ArchiveLeaderComponent implements OnInit {
   archiveLeaderService = inject(ArchiveLeaderService);
   casheService = inject(CasheService);
   ocSidebarService = inject(OcSidebarService);
-  traineeArchiveInfo!: TraineeArchiveInfo;
+  traineeArchiveInfo!: ArchiveInfo;
   onetraineeArchiveInfo!: OnArchiveUserInfo;
-  staffArchiveInfo!: any;
+  staffArchiveInfo!: ArchiveInfo;
   onestaffArchiveInfo!: OnArchiveUserInfo;
   showSideInfo: boolean = false;
   hideSideInfo: boolean = true;
@@ -38,6 +35,7 @@ export class ArchiveLeaderComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 1;
+  totalCount: number = 0;
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
@@ -60,6 +58,7 @@ export class ArchiveLeaderComponent implements OnInit {
           if (res.statusCode === 200) {
             this.traineeArchiveInfo = res;
             this.totalPages = this.traineeArchiveInfo.totalPages;
+            this.totalCount = this.traineeArchiveInfo.totalCount;
             this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
@@ -87,6 +86,8 @@ export class ArchiveLeaderComponent implements OnInit {
           if (res.statusCode === 200) {
             this.staffArchiveInfo = res;
             this.totalPages = this.staffArchiveInfo.totalPages;
+            this.totalCount = this.staffArchiveInfo.totalCount;
+            this.generatePages();
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -243,7 +244,6 @@ export class ArchiveLeaderComponent implements OnInit {
           this.keywordSearch,
           this.sortbyNum
         );
-        this.generatePages();
       }
     } else {
       if (page > 0 && page <= this.staffArchiveInfo?.totalPages) {
@@ -254,7 +254,6 @@ export class ArchiveLeaderComponent implements OnInit {
           this.keywordSearch,
           this.sortbyNumStaff
         );
-        this.generatePages();
       }
     }
   }

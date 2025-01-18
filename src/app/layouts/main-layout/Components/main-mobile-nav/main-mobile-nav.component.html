@@ -41,37 +41,34 @@
     </div>
     <ul class="flex items-center space-x-4">
       <li>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <button
+          type="button"
+          (click)="openNotification()"
+          class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-white"
         >
-          <path
-            d="M8.01437 1.93945C5.8077 1.93945 4.01437 3.73279 4.01437 5.93945V7.86612C4.01437 8.27279 3.84103 8.89279 3.63437 9.23945L2.8677 10.5128C2.39437 11.2995 2.72104 12.1728 3.5877 12.4661C6.46103 13.4261 9.56103 13.4261 12.4344 12.4661C13.241 12.1995 13.5944 11.2461 13.1544 10.5128L12.3877 9.23945C12.1877 8.89279 12.0144 8.27279 12.0144 7.86612V5.93945C12.0144 3.73945 10.2144 1.93945 8.01437 1.93945Z"
-            stroke="white"
-            stroke-width="1.6"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-          />
-          <path
-            d="M9.24792 2.13297C9.04125 2.07297 8.82792 2.0263 8.60792 1.99964C7.96792 1.91964 7.35458 1.9663 6.78125 2.13297C6.97458 1.63964 7.45458 1.29297 8.01458 1.29297C8.57458 1.29297 9.05458 1.63964 9.24792 2.13297Z"
-            stroke="white"
-            stroke-width="1.5"
-            stroke-miterlimit="10"
+          <svg
+            class="shrink-0 size-4"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-          />
-          <path
-            d="M10.0117 12.707C10.0117 13.807 9.11172 14.707 8.01172 14.707C7.46505 14.707 6.95838 14.4804 6.59838 14.1204C6.23838 13.7604 6.01172 13.2537 6.01172 12.707"
-            stroke="white"
-            stroke-width="1.6"
-            stroke-miterlimit="10"
-          />
-        </svg>
+          >
+            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+          </svg>
+          @if (isAnewNotification) {
+          <span
+            class="absolute w-2 h-2 bg-red-600 rounded-full top-1.5 right-2.5"
+          ></span>
+          }
+        </button>
       </li>
-      <li>
+      <li class="flex items-center">
         <div
           [routerLink]="
             currentPath.includes('leader')
@@ -84,13 +81,61 @@
         >
           <img
             class="object-cover w-10 h-10 border rounded-full border-mainColor1"
-            [src]="profilePhoto || './../../../../../assets/img/user.jpeg'"
+            [src]="profilePhoto || 'assets/img/user.jpeg'"
             alt="Avatar"
             loading="lazy"
           />
           <div class="absolute inset-0 rounded-full shadow-inner"></div>
         </div>
+        <div class="relative inline-block text-left w-fit">
+          <button
+            (click)="showRoles()"
+            class="inline-flex items-center w-full py-1 font-medium text-white"
+          >
+            @if (!currentPath.includes('psovle')) {
+            <svg
+              [ngClass]="isShow ? 'rotate-180' : ''"
+              class="ml-2 transition-transform size-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+            }
+          </button>
+          @if (!currentPath.includes('psovle')) {
+          <div
+            [ngClass]="isShowR ? 'scale-100' : 'scale-0'"
+            class="absolute z-[150] mt-6 transition-all origin-top duration-500 bg-white border border-gray-200 rounded-md shadow-lg top-6 right-2 w-fit"
+          >
+            <div class="py-1 text-sm text-gray-700 w-fit">
+              @for (item of roles; track $index; let last = $last) {
+
+              <button
+                (click)="goSpecificRole(item)"
+                [ngClass]="last ? '' : 'border-b border-activeLink'"
+                class="block w-full px-4 py-2 font-semibold transition-colors hover:text-activeLink text-start"
+              >
+                {{ item }}
+              </button>
+              }
+            </div>
+          </div>
+          }
+        </div>
       </li>
     </ul>
   </div>
 </nav>
+
+<app-notification
+  [isOpen]="isOpenNotification"
+  [newNotificationCheck]="newNotificationCheck"
+/>
