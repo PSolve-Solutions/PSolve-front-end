@@ -13,6 +13,9 @@ import { AuthService } from '../../../authentication/services/auth.service';
 })
 export class StandingsComponent {
   isLoading:boolean = false;
+  isNan(value: number): boolean {
+    return isNaN(value);
+  }
   change(index: number, i: string, inc: boolean, points: number) {
     // Ensure stand[index] and stand[index].achivers are defined before proceeding
     if (this.stand && this.stand.achivers[index]) {

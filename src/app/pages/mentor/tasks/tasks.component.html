@@ -368,9 +368,9 @@
             <div>
                 <p class="text-lg font-semibold">{{this.ed.firstName}} {{this.ed.middleName}} {{this.ed.lastName}}</p>
                 <!-- <p class="text-gray-500 text-sm">Deadline: {{this.ed.deadLine | localTime}}</p> -->
-                <label class="text-gray-500 text-sm" for="sdateEdit">Start Time: </label>  <input #stTime id="sdateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.startTime ">
+                <label class="text-gray-500 text-sm" for="sdateEdit">Start Time: </label>  <input #stTime id="sdateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="edSt ">
                 <br>
-                <label class="text-gray-500 text-sm" for="edateEdit">End Time:&nbsp;&nbsp;</label>  <input #enTime id="edateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="ed.endTime">
+                <label class="text-gray-500 text-sm" for="edateEdit">End Time:&nbsp;&nbsp;</label>  <input #enTime id="edateEdit" class="mt-2 w-[190px] px-2 py-1  border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]" type="datetime-local" [value]="edEn">
             </div>
         </div>
 

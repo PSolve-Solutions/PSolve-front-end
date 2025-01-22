@@ -15,7 +15,7 @@ export class LocalTimePipe implements PipeTransform {
  const timezoneOffset = localDate.getTimezoneOffset(); // This is in minutes
 
  // Adjust the local date to get UTC date
- const utcDate = new Date(localDate.getTime()- (timezoneOffset * 60000)); // 
+ const utcDate = new Date(localDate.getTime()+ (timezoneOffset * 60000)); // 
     // Convert the UTC date to the local time zone
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
