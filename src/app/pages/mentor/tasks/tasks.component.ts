@@ -70,7 +70,7 @@ export class TasksComponent {
       const timezoneOff = localDat.getTimezoneOffset();
       let convertedTime = new Date(s);
       // console.log(timezoneOff)
-      convertedTime=  new Date(convertedTime.getTime() + timezoneOff*60000 )
+      convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
       // console.log(convertedTime);
       task.startTime = convertedTime;
     }
@@ -82,7 +82,7 @@ export class TasksComponent {
       const timezoneOff = localDat.getTimezoneOffset();
       let convertedTime = new Date(e);
       // console.log(timezoneOff)
-      convertedTime=  new Date(convertedTime.getTime() + timezoneOff*60000 )
+      convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
       // console.log(convertedTime);
       task.endTime = convertedTime;
       
@@ -159,13 +159,13 @@ export class TasksComponent {
     const timezoneOff = localDat.getTimezoneOffset();
     let sconvertedTime = new Date(startTime.value);
     // console.log(timezoneOff)
-    sconvertedTime=  new Date(sconvertedTime.getTime() + timezoneOff*60000 )
+    sconvertedTime=  new Date(sconvertedTime.getTime() - timezoneOff*60000 )
     // console.log(convertedTime);
     st = sconvertedTime;
 
     let econvertedTime = new Date(endTime.value);
     // console.log(timezoneOff)
-    econvertedTime=  new Date(econvertedTime.getTime() + timezoneOff*60000 )
+    econvertedTime=  new Date(econvertedTime.getTime() - timezoneOff*60000 )
     // console.log(convertedTime);
     en = econvertedTime;
     // Prepare the base data for the task creation
@@ -384,12 +384,17 @@ export class TasksComponent {
     startTime: new Date(),
     endTime: new Date(),
   };
+  edSt = '';
+  edEn = '';
   edit(data: any) {
     this.ed = data;
     this.ed.taskId = data.id;
     this.ed.title = data.title;
     this.ed.startTime = data.startTime
     this.ed.endTime = data.endTime
+    this.edSt = data.startTime.slice(0,16)
+    this.edEn =  data.endTime.slice(0,16)
+    console.log(this.edEn)
     // this.ed = {
     //   "taskId": data.taskId,
     //   "title":  data.title,

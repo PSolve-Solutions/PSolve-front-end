@@ -36,6 +36,7 @@ export class RequestsLeaderComponent implements OnInit {
   isLoadingCamp = signal<boolean>(false);
   isLoadingSubmit = signal<boolean>(false);
   allTraineesInfo!: AllTraineesInfo;
+  allTraineesInfoData: AllTraineesInfo[] = [];
   selectedIds: number[] = [];
   showModalDelete: boolean = false;
   showFilterModel: boolean = false;
@@ -48,11 +49,8 @@ export class RequestsLeaderComponent implements OnInit {
   settingsFilterRequest: any;
   totalCount: number = 0;
   currentPage: number = 1;
-  pageSize: number = 30;
+  pageSize: number = 5;
   totalPages: number = 1;
-  showEllipsis: boolean = false;
-  showLastPage: boolean = false;
-  pages: number[] = [];
 
   ngOnInit() {
     this.fetchAllCamps();
@@ -82,14 +80,13 @@ export class RequestsLeaderComponent implements OnInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.allTraineesInfo = res;
+            this.allTraineesInfoData.push(this.allTraineesInfo);
             if (this.allTraineesInfo.data.length === 0) {
               this.totalCount = 0;
-              this.totalPages = 1;
             } else {
-              this.totalPages = this.allTraineesInfo.totalPages;
               this.totalCount = this.allTraineesInfo.totalCount;
+              this.currentPage = this.allTraineesInfo.currentPage;
             }
-            this.generatePages(this.totalPages);
             this.isLoading.update((v) => (v = false));
           } else {
             this.isLoading.update((v) => (v = false));
@@ -103,13 +100,17 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   chooseCamp(item: any): void {
+    this.allTraineesInfoData = [];
     this.campId = item.id;
     this.showFilterModel = false;
+    this.currentPage = 1;
     this.traineesRegisterations(this.currentPage, this.pageSize, this.campId);
   }
 
   sortTrainee(item: any): void {
+    this.allTraineesInfoData = [];
     this.sortbyNum = item;
+    this.currentPage = 1;
     this.traineesRegisterations(
       this.currentPage,
       this.pageSize,
@@ -130,6 +131,7 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   handleSaveFilter(data: any) {
+    this.allTraineesInfoData = [];
     this.vjudgeFilters = data.value.filtersV;
     this.codeforcesFilters = data.value.filtersC;
     this.currentPage = 1;
@@ -146,6 +148,7 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   systemFilter(event: any): void {
+    this.allTraineesInfoData = [];
     this.applySystemFilter = event.target.checked;
     this.currentPage = 1;
     this.traineesRegisterations(
@@ -166,6 +169,7 @@ export class RequestsLeaderComponent implements OnInit {
 
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedIds.length !== 0) {
+      this.allTraineesInfoData = [];
       this.currentPage = 1;
       this.traineesRegisterations(
         this.currentPage,
@@ -181,6 +185,7 @@ export class RequestsLeaderComponent implements OnInit {
   }
 
   closeRequestMessage() {
+    this.allTraineesInfoData = [];
     this.showSubmitModel = false;
     this.currentPage = 1;
     this.traineesRegisterations(
@@ -194,30 +199,12 @@ export class RequestsLeaderComponent implements OnInit {
     );
   }
 
-  generatePages(totalPages: number): void {
-    this.pages = [];
-    if (totalPages <= 3) {
-      for (let i = 1; i <= totalPages; i++) {
-        this.pages.push(i);
-      }
-    } else {
-      const start = Math.max(this.currentPage - 2, 1);
-      const end = Math.min(this.currentPage + 2, totalPages);
-      for (let i = start; i <= end; i++) {
-        this.pages.push(i);
-      }
-
-      this.showEllipsis = end < totalPages - 1;
-      this.showLastPage = this.showEllipsis;
-    }
-  }
-
-  changePage(page: number): void {
-    if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
-      this.currentPage = page;
+  changePage(): void {
+    if (this.allTraineesInfo?.hasNextPage) {
+      this.currentPage = this.currentPage + 1;
       this.traineesRegisterations(
         this.currentPage,
-        10,
+        5,
         this.campId,
         this.sortbyNum,
         this.applySystemFilter,

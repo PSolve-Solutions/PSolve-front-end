@@ -3,9 +3,9 @@
     class="absolute top-7 font-bold hidden md:block z-[50] text-2xl transition-all duration-500"
     [ngClass]="ocSidebarService.isOpen() === 'show' ? ' left-80' : ' left-36'"
   >
-    @if (activeTab === 'tab1') { Trainee Archive: :
+    @if (activeTab === 'tab1') { Trainee Archive:
     {{ !isLoading() ? totalCount : 0 }}
-    }@else { Staff Archive: : {{ !isLoading() ? totalCount : 0 }}
+    }@else { Staff Archive: {{ !isLoading() ? totalCount : 0 }}
     }
   </h1>
   <h1

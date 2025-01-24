@@ -216,7 +216,8 @@
             </tr>
           </thead>
           <tbody>
-            @if (isLoading() ) { @for ( i of [1, 2, 3]; track i) {
+            @if (isLoading() && allTraineesInfoData.length === 0 ) { @for ( i of
+            [1, 2, 3]; track i) {
             <tr class="border-b-8 animate-pulse border-mainColor4">
               <td class="py-2 text-center ps-2">
                 <div class="w-5 h-5 rounded bg-mainColor3"></div>
@@ -258,8 +259,9 @@
                 <div class="w-24 h-5 rounded bg-mainColor3"></div>
               </td>
             </tr>
-            } } @else { @for (row of allTraineesInfo.data; track i; let i =
-            $index; let first = $first) {
+            } } @else { @for (trainee of allTraineesInfoData; track $index) {
+            @for (row of trainee.data; track i; let i = $index; let first =
+            $first) {
             <tr
               class="font-semibold border-b-8 border-mainColor4"
               [class.border-t-8]="first"
@@ -341,74 +343,22 @@
                 {{ row.vjudge || "-" }}
               </td>
             </tr>
-            } }
+            } } }
           </tbody>
         </table>
+        @if ( !isLoading() && allTraineesInfo.hasNextPage ) {
         <div
-          class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
+          class="flex items-center justify-center w-full p-2 space-x-2 text-sm font-semibold rounded-lg"
           [class.mt-4]="!isLoading() ? allTraineesInfo.data.length === 0 : ''"
         >
           <button
-            class="px-6 py-[10px] rounded-tl rounded-bl shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
-            [disabled]="currentPage === 1"
-            (click)="changePage(currentPage - 1)"
+            class="px-6 text-lg transition-colors cursor-pointer text-mainColor1 hover:text-subColor1"
+            (click)="changePage()"
           >
-            <svg
-              width="8"
-              height="11"
-              class="rotate-180"
-              viewBox="0 0 8 11"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
-                fill="#002C3D"
-              />
-            </svg>
-          </button>
-
-          @for (page of pages; track $index) {
-          <button
-            class="px-6 py-1.5 shadow"
-            [ngClass]="
-              currentPage === page
-                ? 'bg-mainColor1 text-mainColor4 font-bold'
-                : 'bg-mainColor4 hover:bg-gray-100'
-            "
-            (click)="changePage(page)"
-          >
-            {{ page }}
-          </button>
-          } @if ( showEllipsis ) {
-          <span class="px-6 py-1.5">...</span>
-          } @if (showLastPage) {
-          <button
-            class="px-6 py-1.5 shadow bg-mainColor4 hover:bg-gray-100"
-            (click)="changePage(totalPages)"
-          >
-            {{ totalPages }}
-          </button>
-          }
-          <button
-            class="px-6 py-[10px] rounded-tr rounded-br shadow bg-mainColor4 hover:bg-gray-100 disabled:opacity-50"
-            [disabled]="currentPage === totalPages"
-            (click)="changePage(currentPage + 1)"
-          >
-            <svg
-              width="8"
-              height="11"
-              viewBox="0 0 8 11"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.55975 3.71667L3.11968 0.85C2.60968 0.425 1.78973 0.425 1.28973 0.85C0.779727 1.275 0.779727 1.95833 1.28973 2.375L4.55975 5.09166C4.78975 5.31666 4.82975 5.66667 4.55975 5.88334L1.28973 8.60833C0.779727 9.03333 0.779727 9.71667 1.28973 10.1333C1.79973 10.5583 2.61968 10.5583 3.11968 10.1333L6.55975 7.26666C8.02975 6.04166 8.09975 4.99167 6.55975 3.7V3.71667Z"
-                fill="#002C3D"
-              />
-            </svg>
+            see more ...
           </button>
         </div>
+        }
       </div>
 
       @if (showModalDelete) {

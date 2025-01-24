@@ -42,23 +42,12 @@ export class DashboardComponent implements OnInit {
     dueDate: string;
     progress: number;
   }[] = [];
-  percentageCountCollege: number = 0;
-  todayName: string = '';
-  todayDate!: Date;
-  currentPage: number = 0;
   dashboardFeedbacks: dashboardFeedbacks[] = [];
 
   ngOnInit() {
-    this.setDates();
     this.fetchTraineesAnalysis();
     this.fetchDashboardCamps();
     this.fetchDashboardFeedbacks();
-  }
-
-  setDates(): void {
-    const today = new Date();
-    this.todayDate = new Date(new Date().setHours(0, 0, 0, 0));
-    this.todayName = today.toLocaleDateString('en-US', { weekday: 'long' });
   }
 
   fetchTraineesAnalysis(): void {
@@ -71,7 +60,6 @@ export class DashboardComponent implements OnInit {
           this.malesCount = traineesAnalysisInfo.malesCount;
           this.femalesCount = traineesAnalysisInfo.femalesCount;
           this.collegesAnalisis = traineesAnalysisInfo.collegesAnalisis;
-
           this.isLoading.update((v) => (v = false));
         } else {
           this.isLoading.update((v) => (v = false));
