@@ -92,7 +92,7 @@ export class PracticeComponent {
     });
   }
   edit(data: any) {
-    this.dateEd = data.time;
+    this.dateEd = data.time.slice(0,16);
     this.titleEd = data.title;
     this.linkEd = data.meetingLink;
     this.notesEd = data.note;
@@ -105,7 +105,7 @@ export class PracticeComponent {
     const timezoneOffset = localDate.getTimezoneOffset();
     let convertedTime = new Date(this.dateEd);
     console.log(timezoneOffset)
-    convertedTime=  new Date(convertedTime.getTime() + timezoneOffset*60000 )
+    convertedTime=  new Date(convertedTime.getTime() - timezoneOffset*60000 )
     console.log(convertedTime);
     let i = {
       practiceId: id,
@@ -204,7 +204,7 @@ export class PracticeComponent {
     const timezoneOff = localDat.getTimezoneOffset();
     let convertedTime = new Date(this.date);
     console.log(timezoneOff)
-    convertedTime=  new Date(convertedTime.getTime() + timezoneOff*60000 )
+    convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
     console.log(convertedTime);
     const data = {
       title: this.title,
@@ -231,7 +231,7 @@ export class PracticeComponent {
     let time: Date = new Date();
     const localDate = new Date();
     const timezoneOffset = localDate.getTimezoneOffset();
-    let meet = new Date(this.date + timezoneOffset*60000);
+    let meet = new Date(this.date - timezoneOffset*60000);
     if (meet < time) {
       this.err.push('Date Must Be in Future');
     } else if (this.link && this.title && this.date) {
