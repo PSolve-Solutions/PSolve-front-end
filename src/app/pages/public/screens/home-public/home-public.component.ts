@@ -1,17 +1,13 @@
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HomeHeroComponent } from '../../Components/Home-Components/home-hero/home-hero.component';
-import {  LeaderSlider } from "../../Components/Home-Components/leader-slider/leader.slider.component";
-import { HeadOfCampSlider } from "../../Components/Home-Components/Head-of-camp-slider/Head-of-camp-slider.component";
-import { CommonModule } from '@angular/common';
-import {  MentorsComponent } from "../../Components/Home-Components/Mentors/mentors.slider.component";
-import { FoundersComponent } from "../../Components/Home-Components/founder/founders.component";
-import { TraineeComponent } from "../../Components/Home-Components/trainee/trainee.slider.component";
-import { RouterLink } from '@angular/router';
+import { LeaderSlider } from '../../Components/Home-Components/leader-slider/leader.slider.component';
+import { HeadOfCampSlider } from '../../Components/Home-Components/Head-of-camp-slider/Head-of-camp-slider.component';
+import { MentorsComponent } from '../../Components/Home-Components/Mentors/mentors.slider.component';
+import { FoundersComponent } from '../../Components/Home-Components/founder/founders.component';
+import { TraineeComponent } from '../../Components/Home-Components/trainee/trainee.slider.component';
 import { HomeService } from '../../Services/home.service';
 import { CommunitiesComponent } from '../../Components/Home-Components/Communities/Communities.component';
-import { AboutusComponent } from "../../Components/Home-Components/aboust-us/aboutus.component";
-import { FooterComponent } from "../../../../layouts/layout_public/components/footer/footer.component";
-
+import { AboutusComponent } from '../../Components/Home-Components/aboust-us/aboutus.component';
 
 @Component({
   selector: 'app-home-public',
@@ -20,47 +16,34 @@ import { FooterComponent } from "../../../../layouts/layout_public/components/fo
     HomeHeroComponent,
     LeaderSlider,
     HeadOfCampSlider,
-    CommonModule,
     MentorsComponent,
     TraineeComponent,
     FoundersComponent,
     CommunitiesComponent,
-
-    CommonModule,
     AboutusComponent,
-],
+  ],
   templateUrl: './home-public.component.html',
-  styleUrls: ['./home-public.component.scss']
+  styleUrls: ['./home-public.component.scss'],
 })
-export class HomePublicComponent  {
-  public homeService = inject(HomeService);
-
-
-  Clintes: any;
+export class HomePublicComponent implements OnInit {
+  homeService = inject(HomeService);
+  Clintes: { id: string; name: string; logoUrl: string }[] = [];
 
   ngOnInit(): void {
-    this.getAllClintes()
+    this.getAllClintes();
   }
-
-
-  // getBoolean():void{
-  //   this.homeService.anyOpenCamps().subscribe({
-  //     next:({statusCode,data})=>{
-  //       if(statusCode===200){
-  //         this.show=data
-  //       }
-  //     }
-  //   })
-  // }
-  getAllClintes():void{
+  getAllClintes(): void {
     this.homeService.getClintes().subscribe({
-      next:({statusCode,data})=>{
-        this.Clintes = data
-
-      }
-    })
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.Clintes = data;
+        } else {
+          console.log('Error');
+        }
+      },
+      error(err) {
+        console.log(err);
+      },
+    });
   }
-
-
 }
-
