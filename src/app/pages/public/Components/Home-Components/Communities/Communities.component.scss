@@ -9,7 +9,7 @@
   display: flex;
   gap: 40px;
   padding: 30px 70px;
-  animation: slide 10s linear infinite;
+  animation: slide 5s linear infinite;
   justify-content: flex-start;
   align-items: center;
 }
@@ -45,5 +45,6 @@
   .slider {
     gap: 7px;
     padding: 20px;
+    animation: slide 3s linear infinite;
   }
 }
