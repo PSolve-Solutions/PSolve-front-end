@@ -23,17 +23,16 @@
   0% {
     transform: translateX(0);
   }
-  25% {
-    transform: translateX(-25%);
-  }
-  50% {
-    transform: translateX(-50%);
-  }
-  75% {
-    transform: translateX(-75%);
-  }
   100% {
     transform: translateX(-100%);
+  }
+}
+@keyframes slide1 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-700%);
   }
 }
 
@@ -45,6 +44,6 @@
   .slider {
     gap: 7px;
     padding: 20px;
-    animation: slide 1.5s linear infinite;
+    animation: slide1 12s linear infinite;
   }
 }
