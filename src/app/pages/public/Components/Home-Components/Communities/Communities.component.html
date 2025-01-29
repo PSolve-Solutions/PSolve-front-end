@@ -8,11 +8,11 @@
 
   <div class="slider-container bg-[#F5F9F9]">
     <div class="slider" #slider>
-      @for (clinet of clientData1; track $index) {
+      @for (clinet of clientData; track $index) {
       <div class="slide">
         <img [src]="clinet.logoUrl" alt="Slider Image" class="" />
       </div>
-      } @for (clinet of clientData1; track $index) {
+      } @for (clinet of clientData; track $index) {
       <div class="slide">
         <img [src]="clinet.logoUrl" alt="Slider Image" class="" />
       </div>
