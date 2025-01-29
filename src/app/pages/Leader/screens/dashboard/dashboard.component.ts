@@ -46,8 +46,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTraineesAnalysis();
-    // this.fetchDashboardCamps();
-    // this.fetchDashboardFeedbacks();
+    this.fetchDashboardCamps();
+    this.fetchDashboardFeedbacks();
   }
 
   fetchTraineesAnalysis(): void {
@@ -60,7 +60,6 @@ export class DashboardComponent implements OnInit {
           this.malesCount = traineesAnalysisInfo.malesCount;
           this.femalesCount = traineesAnalysisInfo.femalesCount;
           this.collegesAnalisis = traineesAnalysisInfo.collegesAnalisis;
-          this.fetchDashboardCamps();
           this.isLoading.update((v) => (v = false));
         } else {
           this.isLoading.update((v) => (v = false));
@@ -79,7 +78,6 @@ export class DashboardComponent implements OnInit {
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.dashboardCamps = data;
-          this.fetchDashboardFeedbacks();
           this.isLoading.update((v) => (v = false));
         } else {
           this.isLoading.update((v) => (v = false));
