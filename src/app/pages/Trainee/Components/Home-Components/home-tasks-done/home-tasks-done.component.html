@@ -5,7 +5,7 @@
     <button (click)="toggleTables()" type="button" class="relative flex rounded-full  w-full sm:w-fit text-sm">
       <div class="flex justify-between items-center gap-4 w-11/12 mx-auto sm:w-fit">
         <!-- Arrow icon with rotation class -->
-        <img src="assets/img_trainee/arrow_down.svg" class="rotate done-arrow">
+        <img src="assets/img_trainee/arrow_down.svg" class="done-arrow" [@rotateArrow]="arrowState">
 
         <!-- Done button label -->
         <a class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold " role="menuitem" tabindex="-1">
@@ -19,8 +19,8 @@
     </button>
 
     <!-- Done Table -->
-    <div class="content sm:ml-9 mt-4 min-w-full done-table hidden">
-      <table class="w-full text-sm text-left">
+    <div class="content sm:ml-9 mt-4 min-w-full done-table">
+      <table class="w-full text-sm text-left" [@slideToggle]="tableVisible ? 'visible' : 'hidden'">
         <!-- Table header -->
         <thead class="text-xs">
           <tr class="w-full flex items-center justify-between border-b border-[#D9D9D9]">
@@ -39,7 +39,10 @@
                     <img src="assets/img_trainee/done_green.svg">
                   </div>
                   <!-- Dropdown list for task status -->
-                  <div [id]="done.id" class="list flex flex-col w-fit absolute top-full left-0 z-10 min-h-fit">
+                  <div
+                  [@slideToggle]="listVisibility[done.id] ? 'visible' : 'hidden'"
+                  [@fadeToggle]="listVisibility[done.id] ? 'open' : 'closed'"
+                   class="list flex flex-col w-fit absolute top-full left-0 z-10 min-h-fit">
                     <a (click)="changeTaskStatus(done, 0)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 font-bold w-full rounded-t-[10px]">To Do</a>
                     <a (click)="changeTaskStatus(done, 1)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] text-white p-2 font-bold w-full">In Progress</a>
                     <a (click)="changeTaskStatus(done, 2)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] text-white p-2 font-bold w-full rounded-b-[10px]">Done</a>

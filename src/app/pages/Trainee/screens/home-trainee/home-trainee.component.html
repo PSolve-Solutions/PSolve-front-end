@@ -17,10 +17,11 @@
         <app-home-tasks-done/>
         <div class="feed-back fixed hidden flex-col w-11/12 sm:w-80 h-fit z-20 min-h-dvh sm:min-h-fit sm:left-[85%] sm:top-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-montserrat" >
           <div class="inner border-feed-back" (mouseleave)="onLeave()"  (mouseenter)="onEnterFeedBack(true)">
-            <div class="header font-bold text-[1.1rem] bg-white px-6 py-5 rounded-t-[7px]">
+            <div class="header font-bold text-[1.1rem] bg-white p-4 rounded-t-[7px] flex justify-between items-center">
               <h4 class="text-[#002C3D] text-center">
-              Your opinion matters to us!
+                 Your opinion matters to us!
               </h4>
+              <img src="assets/img_trainee/x-Mark.svg" class="cursor-pointer" width="30" height="20" alt="x-mark" (click)="hideFeedBack()">
             </div>
             <div
           class="flex flex-col items-center justify-center gap-5 transition-all duration-500  bg-[#b7bdc8] px-4 py-3"

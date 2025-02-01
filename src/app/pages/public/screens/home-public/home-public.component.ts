@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, HostListener } from '@angular/core';
 import { HomeHeroComponent } from '../../Components/Home-Components/home-hero/home-hero.component';
 import {  LeaderSlider } from "../../Components/Home-Components/leader-slider/leader.slider.component";
 import { HeadOfCampSlider } from "../../Components/Home-Components/Head-of-camp-slider/Head-of-camp-slider.component";
@@ -37,6 +37,7 @@ export class HomePublicComponent  {
 
 
   Clintes: any;
+  isVisible:boolean | undefined
 
   ngOnInit(): void {
     this.getAllClintes()
@@ -55,11 +56,27 @@ export class HomePublicComponent  {
   getAllClintes():void{
     this.homeService.getClintes().subscribe({
       next:({statusCode,data})=>{
-        this.Clintes = data
-
+        this.Clintes = data;
       }
     })
   }
+
+
+
+
+    // Listen to the window scroll event
+    @HostListener('window:scroll', [])
+    onWindowScroll(): void {
+      this.isVisible = window.scrollY > 500;
+    }
+
+    // Scroll to top logic
+    scrollToTop(): void {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+
 
 
 }

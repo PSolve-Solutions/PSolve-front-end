@@ -8,3 +8,16 @@
 
   }
 }
+#backToTop:hover .arrow {
+
+  animation: 1s infinite upDown;
+}
+@keyframes upDown {
+0%{
+  transform: translateY(3px);
+}
+
+100%{
+  transform: translateY(-1px);
+}
+}

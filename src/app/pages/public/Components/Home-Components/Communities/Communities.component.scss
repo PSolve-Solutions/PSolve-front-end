@@ -32,7 +32,6 @@ h2 {
 
 .slide img {
   max-width: 220px;
-
 }
 
 /* Keyframes for Sliding Effect */
@@ -43,10 +42,6 @@ h2 {
 
   100% {
     transform: translateX(-90%);
-    -webkit-transform: translateX(-90%);
-    -moz-transform: translateX(-90%);
-    -ms-transform: translateX(-90%);
-    -o-transform: translateX(-90%);
 }
 }
 

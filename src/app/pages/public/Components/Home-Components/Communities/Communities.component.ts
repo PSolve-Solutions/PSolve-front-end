@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 
 @Component({
@@ -13,6 +13,11 @@ export class CommunitiesComponent {
   @Input() clientData!: any; // Input property
 
 
+  openLink(url:string){
+
+    window.open(url)
+
+  }
 
 
   // images = [
