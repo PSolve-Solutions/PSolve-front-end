@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, HostListener } from '@angular/core';
 import { HomeHeroComponent } from '../../Components/Home-Components/home-hero/home-hero.component';
 import { LeaderSlider } from '../../Components/Home-Components/leader-slider/leader.slider.component';
 import { HeadOfCampSlider } from '../../Components/Home-Components/Head-of-camp-slider/Head-of-camp-slider.component';
@@ -25,25 +25,48 @@ import { AboutusComponent } from '../../Components/Home-Components/aboust-us/abo
   templateUrl: './home-public.component.html',
   styleUrls: ['./home-public.component.scss'],
 })
-export class HomePublicComponent implements OnInit {
-  homeService = inject(HomeService);
-  Clintes: { id: string; name: string; logoUrl: string }[] = [];
+export class HomePublicComponent  {
+  public homeService = inject(HomeService);
+  Clintes: any;
+  isVisible:boolean | undefined
+
 
   ngOnInit(): void {
     this.getAllClintes();
   }
   getAllClintes(): void {
     this.homeService.getClintes().subscribe({
-      next: ({ statusCode, data }) => {
-        if (statusCode === 200) {
-          this.Clintes = data;
-        } else {
-          console.log('Error');
-        }
-      },
-      error(err) {
-        console.log(err);
-      },
-    });
+      next:({statusCode,data})=>{
+        this.Clintes = data;
+      }
+    })
   }
+
+    // Listen to the window scroll event
+    @HostListener('window:scroll', [])
+    onWindowScroll(): void {
+      this.isVisible = window.scrollY > 500;
+    }
+
+    // Scroll to top logic
+    scrollToTop(): void {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+
+
+
+//       next: ({ statusCode, data }) => {
+//         if (statusCode === 200) {
+//           this.Clintes = data;
+//         } else {
+//           console.log('Error');
+//         }
+//       },
+//       error(err) {
+//         console.log(err);
+//       },
+//     });
+//   }
 }

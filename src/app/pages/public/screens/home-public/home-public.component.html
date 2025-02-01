@@ -7,4 +7,14 @@
    <app-founders/>
    <app-communities [clientData]="Clintes" />
    <app-aboutus/>
+   @if (isVisible) {
+    <div class="fixed bottom-3 right-3 bg-[#002c3d42] p-1 rounded-xl cursor-pointer"
+    id="backToTop"
+    (click)="scrollToTop()">
+      <span>
+        <img src="assets/img_public/p_solve_home/up-arrow.svg" class="arrow" width="30" alt="">
+      </span>
+    </div>
+   }
 </div>
+

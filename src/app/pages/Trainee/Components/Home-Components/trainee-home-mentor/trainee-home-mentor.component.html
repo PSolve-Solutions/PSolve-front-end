@@ -29,7 +29,7 @@
             {{
               mentorData.firstName
                 ? mentorData.firstName + " " + mentorData.middleName
-                : "Mentor Name"
+                : "Not Assign"
             }}
           </h3>
 
@@ -57,7 +57,7 @@
               <img src="assets/img_trainee/collage.svg" alt="College icon" />
               <span class="text-xl text-[#002C3D]">College :</span>
               <span class="font-bold text-xl text-[#2A8E9E]">
-                {{ mentorData.college ? mentorData.college : "Not Available" }}
+                {{ mentorData.college ? mentorData.college : "Not Assign" }}
               </span>
             </p>
 
@@ -69,7 +69,7 @@
                 {{
                   mentorData.codeForceHandle
                     ? mentorData.codeForceHandle
-                    : "Not Available"
+                    : "Not Assign"
                 }}
               </span>
             </p>
@@ -81,7 +81,7 @@
              <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
               <span class="text-xl text-[#002C3D]">Email :</span>
               <span class="font-bold text-xl text-[#2A8E9E]">
-                {{ mentorData.email ? mentorData.email : "Not Available" }}
+                {{ mentorData.email ? mentorData.email : "Not Assign" }}
               </span>
             </p>
 
@@ -95,7 +95,7 @@
                 {{
                   mentorData.phoneNumber
                     ? mentorData.phoneNumber
-                    : "Not Available"
+                    : "Not Assign"
                 }}
               </span>
             </p>
@@ -114,7 +114,7 @@
                   class="transition-colors hover:text-activeLink"
                   >Profile</a
                 >
-                }@else { Not Available }
+                }@else { Not Assign }
               </span>
             </p>
           </div>
