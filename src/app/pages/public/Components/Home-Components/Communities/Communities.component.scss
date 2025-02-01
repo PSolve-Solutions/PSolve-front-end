@@ -1,19 +1,7 @@
-/* General Styles */
-.communities {
-  border-bottom: 1px solid #002C3D;
-  border-top: 1px solid #002C3D;
-}
-
-h2 {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #002C3D;
-}
-
 /* Slider Container */
 .slider-container {
   width: 100%;
-  overflow: hidden; /* Hides overflow for seamless sliding effect */
+  overflow: hidden;
   position: relative;
 }
 
@@ -21,37 +9,40 @@ h2 {
   display: flex;
   gap: 40px;
   padding: 30px 70px;
-  animation: slide 5s linear infinite;
-  width: fit-content;
-  justify-content: center;
+  animation: slide 8s linear infinite;
+  justify-content: flex-start;
   align-items: center;
-  -webkit-animation: slide 10s linear infinite;
 }
-
-
 
 .slide img {
   max-width: 220px;
 }
 
-/* Keyframes for Sliding Effect */
 @keyframes slide {
   0% {
-    transform: translateX(0); /* Initial position */
+    transform: translateX(0);
   }
-
   100% {
-    transform: translateX(-90%);
+
+    transform: translateX(-100%);
+  }
 }
+@keyframes slide1 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-700%);
+  }
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 640px) {
   h2 {
-    font-size: 30px; /* Smaller font size for headings */
+    font-size: 30px;
   }
   .slider {
-    gap: 7px; /* Reduce gap between slides */
-    padding: 20px; /* Adjust padding for smaller screens */
+    gap: 7px;
+    padding: 20px;
+    animation: slide1 12s linear infinite;
   }
 }

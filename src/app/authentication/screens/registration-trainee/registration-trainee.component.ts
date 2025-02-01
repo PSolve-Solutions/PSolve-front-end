@@ -144,8 +144,8 @@ export class RegistrationTraineeComponent implements OnInit {
           }
           this.toastr.error(message);
           this.isLoading = false;
-        } else if (statusCode === 500) {
-          this.toastr.warning(message);
+        } else if (statusCode >= 500) {
+          this.toastr.error(message);
           this.isLoading = false;
         } else {
           errors.forEach((error: any) => {
@@ -204,6 +204,10 @@ export class RegistrationTraineeComponent implements OnInit {
   }
 
   sendOTP(): void {
+    if (this.registrationForm.get('Email')?.invalid) {
+      this.toastr.error('Email is required');
+      return;
+    }
     if (this.registrationForm.get('Email')?.valid) {
       this.showLoader = true;
       this.registerationService
