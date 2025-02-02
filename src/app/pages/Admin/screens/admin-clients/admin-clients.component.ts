@@ -7,7 +7,6 @@ import { NgClass } from '@angular/common';
 import { Clinets } from '../../model/clients';
 import { ToastrService } from 'ngx-toastr';
 import { CasheService } from '../../../../shared/services/cashe.service';
-
 @Component({
   selector: 'app-admin-clients',
   standalone: true,
@@ -27,7 +26,6 @@ export class AdminClientsComponent implements OnInit {
   ngOnInit() {
     this.getAllClientsPagination(1, 5);
   }
-
   getPageParams(pageParams: {
     currentPage: number;
     rowsPerPage: number;
@@ -39,7 +37,6 @@ export class AdminClientsComponent implements OnInit {
       pageParams.rowsPerPage
     );
   }
-
   getClientId(clientId: string): void {
     this.clientsService.changeLockStatus(clientId).subscribe({
       next: ({ statusCode, message }) => {
@@ -63,7 +60,6 @@ export class AdminClientsComponent implements OnInit {
       },
     });
   }
-
   getAllClientsPagination(currentPage: number, pageSize: number): void {
     this.isLoading = true;
     this.clientsService

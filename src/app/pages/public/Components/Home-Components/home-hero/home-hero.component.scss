@@ -1,108 +1,240 @@
-section{
+section {
   height: calc(100vh - 70px);
 }
-h2{
+h1 {
   font-size: 45px;
   letter-spacing: 15px;
   text-transform: capitalize;
 }
-h2 span:nth-of-type(1){
-  background: linear-gradient(36.28deg, #2A8E9E 63.15%, #1F7585 202.13%, #145A6B 402.86%, #0B4556 619.04%, #043748 866.1%, #012E3F 1144.05%, #002C3D 1607.29%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(1) {
+  background: linear-gradient(
+    36.28deg,
+    #2a8e9e 63.15%,
+    #1f7585 202.13%,
+    #145a6b 402.86%,
+    #0b4556 619.04%,
+    #043748 866.1%,
+    #012e3f 1144.05%,
+    #002c3d 1607.29%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(2){
-  background: linear-gradient(28.94deg, #2A8E9E -28.48%, #1F7585 180.45%, #145A6B 482.23%, #0B4556 807.23%, #043748 1178.66%, #012E3F 1596.51%, #002C3D 2292.94%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(2) {
+  background: linear-gradient(
+    28.94deg,
+    #2a8e9e -28.48%,
+    #1f7585 180.45%,
+    #145a6b 482.23%,
+    #0b4556 807.23%,
+    #043748 1178.66%,
+    #012e3f 1596.51%,
+    #002c3d 2292.94%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(3){
-  background: linear-gradient(41.52deg, #2A8E9E -94.13%, #1F7585 74.4%, #145A6B 317.82%, #0B4556 579.98%, #043748 879.58%, #012E3F 1216.63%, #002C3D 1778.38%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(3) {
+  background: linear-gradient(
+    41.52deg,
+    #2a8e9e -94.13%,
+    #1f7585 74.4%,
+    #145a6b 317.82%,
+    #0b4556 579.98%,
+    #043748 879.58%,
+    #012e3f 1216.63%,
+    #002c3d 1778.38%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(4){
-  background: linear-gradient(31.28deg, #2A8E9E -161.78%, #1F7585 -18.93%, #145A6B 187.42%, #0B4556 409.64%, #043748 663.6%, #012E3F 949.31%, #002C3D 1425.49%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(4) {
+  background: linear-gradient(
+    31.28deg,
+    #2a8e9e -161.78%,
+    #1f7585 -18.93%,
+    #145a6b 187.42%,
+    #0b4556 409.64%,
+    #043748 663.6%,
+    #012e3f 949.31%,
+    #002c3d 1425.49%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(5){
-  background: linear-gradient(7.84deg, #2A8E9E -348.6%, #1F7585 -143.93%, #145A6B 151.71%, #0B4556 470.09%, #043748 833.96%, #012E3F 1243.3%, #002C3D 1925.55%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(5) {
+  background: linear-gradient(
+    7.84deg,
+    #2a8e9e -348.6%,
+    #1f7585 -143.93%,
+    #145a6b 151.71%,
+    #0b4556 470.09%,
+    #043748 833.96%,
+    #012e3f 1243.3%,
+    #002c3d 1925.55%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(6){
-  background: linear-gradient(40.25deg, #2A8E9E -353.19%, #1F7585 -181.05%, #145A6B 67.6%, #0B4556 335.37%, #043748 641.39%, #012E3F 985.67%, #002C3D 1559.47%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(6) {
+  background: linear-gradient(
+    40.25deg,
+    #2a8e9e -353.19%,
+    #1f7585 -181.05%,
+    #145a6b 67.6%,
+    #0b4556 335.37%,
+    #043748 641.39%,
+    #012e3f 985.67%,
+    #002c3d 1559.47%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(7){
-  background: linear-gradient(55.46deg, #2A8E9E -346.09%, #1F7585 -213.87%, #145A6B -22.87%, #0B4556 182.82%, #043748 417.89%, #012E3F 682.35%, #002C3D 1123.11%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(7) {
+  background: linear-gradient(
+    55.46deg,
+    #2a8e9e -346.09%,
+    #1f7585 -213.87%,
+    #145a6b -22.87%,
+    #0b4556 182.82%,
+    #043748 417.89%,
+    #012e3f 682.35%,
+    #002c3d 1123.11%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // padding-right: 15px;
+}
+h1 span:nth-of-type(8) {
+  background: linear-gradient(
+    33.94deg,
+    #2a8e9e -518.55%,
+    #1f7585 -378.92%,
+    #145a6b -177.23%,
+    #0b4556 39.97%,
+    #043748 288.2%,
+    #012e3f 567.45%,
+    #002c3d 1032.88%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(8){
-  background: linear-gradient(33.94deg, #2A8E9E -518.55%, #1F7585 -378.92%, #145A6B -177.23%, #0B4556 39.97%, #043748 288.2%, #012E3F 567.45%, #002C3D 1032.88%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(9) {
+  background: linear-gradient(
+    41.52deg,
+    #2a8e9e -721.59%,
+    #1f7585 -553.07%,
+    #145a6b -309.64%,
+    #0b4556 -47.49%,
+    #043748 252.11%,
+    #012e3f 589.17%,
+    #002c3d 1150.92%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(9){
-  background: linear-gradient(41.52deg, #2A8E9E -721.59%, #1F7585 -553.07%, #145A6B -309.64%, #0B4556 -47.49%, #043748 252.11%, #012E3F 589.17%, #002C3D 1150.92%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(10) {
+  background: linear-gradient(
+    7.84deg,
+    #2a8e9e -995.85%,
+    #1f7585 -791.18%,
+    #145a6b -495.54%,
+    #0b4556 -177.16%,
+    #043748 186.7%,
+    #012e3f 596.05%,
+    #002c3d 1278.29%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(10){
-  background: linear-gradient(7.84deg, #2A8E9E -995.85%, #1F7585 -791.18%, #145A6B -495.54%, #0B4556 -177.16%, #043748 186.7%, #012E3F 596.05%, #002C3D 1278.29%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(11) {
+  background: linear-gradient(
+    43.05deg,
+    #2a8e9e -893.04%,
+    #1f7585 -721.6%,
+    #145a6b -473.96%,
+    #0b4556 -207.27%,
+    #043748 97.52%,
+    #012e3f 440.4%,
+    #002c3d 1011.88%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(11){
-  background: linear-gradient(43.05deg, #2A8E9E -893.04%, #1F7585 -721.6%, #145A6B -473.96%, #0B4556 -207.27%, #043748 97.52%, #012E3F 440.4%, #002C3D 1011.88%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(12) {
+  background: linear-gradient(
+    7.98deg,
+    #2a8e9e -1200.32%,
+    #1f7585 -992.31%,
+    #145a6b -691.85%,
+    #0b4556 -368.28%,
+    #043748 1.52%,
+    #012e3f 417.54%,
+    #002c3d 1110.91%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(12){
-  background: linear-gradient(7.98deg, #2A8E9E -1200.32%, #1F7585 -992.31%, #145A6B -691.85%, #0B4556 -368.28%, #043748 1.52%, #012E3F 417.54%, #002C3D 1110.91%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(13) {
+  background: linear-gradient(
+    40.16deg,
+    #2a8e9e -1080.3%,
+    #1f7585 -904.33%,
+    #145a6b -650.16%,
+    #0b4556 -376.44%,
+    #043748 -63.62%,
+    #012e3f 288.31%,
+    #002c3d 874.86%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(13){
-  background: linear-gradient(40.16deg, #2A8E9E -1080.3%, #1F7585 -904.33%, #145A6B -650.16%, #0B4556 -376.44%, #043748 -63.62%, #012E3F 288.31%, #002C3D 874.86%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(14) {
+  background: linear-gradient(
+    32.86deg,
+    #2a8e9e -888.16%,
+    #1f7585 -752.59%,
+    #145a6b -556.76%,
+    #0b4556 -345.86%,
+    #043748 -104.85%,
+    #012e3f 166.3%,
+    #002c3d 618.21%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 span:nth-of-type(14){
-  background: linear-gradient(32.86deg, #2A8E9E -888.16%, #1F7585 -752.59%, #145A6B -556.76%, #0B4556 -345.86%, #043748 -104.85%, #012E3F 166.3%, #002C3D 618.21%);
-  -webkit-background-clip: text;
+h1 span:nth-of-type(15) {
+  background: linear-gradient(
+    32.86deg,
+    #2a8e9e -888.16%,
+    #1f7585 -752.59%,
+    #145a6b -556.76%,
+    #0b4556 -345.86%,
+    #043748 -104.85%,
+    #012e3f 166.3%,
+    #002c3d 618.21%
+  );
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-img.translat-hover{
-  transition: .3s linear;
+img.translat-hover {
+  transition: 0.3s linear;
 }
-button:hover  img.translat-hover{
+button:hover img.translat-hover {
   transform: translateX(5px);
 }
-
-
-
-
-
-@media screen and (max-width:640px) {
-
-  section{
+@media screen and (max-width: 640px) {
+  section {
     height: 70vh;
     // padding-bottom: 60px;
   }
-
-
-h2{
-  font-size: 20px;
-  letter-spacing: 4px;
+  h2 {
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
 }
-}
-@media screen and (max-width:500px) {
-
-  section{
+@media screen and (max-width: 500px) {
+  section {
     height: 60vh;
   }
 }

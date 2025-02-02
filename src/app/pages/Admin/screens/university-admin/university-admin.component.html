@@ -56,7 +56,6 @@
           <tbody>
             @if (!isLoading) { @for (row of allUniversities; track i; let i =
             $index; let first = $first) {
-
             <tr
               class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
               [class.border-t-8]="first"
@@ -89,7 +88,6 @@
               <td class="py-4 ps-8">
                 <div class="h-6 rounded md:w-64 w-44 bg-mainColor3"></div>
               </td>
-
               <td class="flex justify-center p-4">
                 <div class="w-8 h-8 rounded bg-mainColor3"></div>
               </td>
@@ -145,7 +143,6 @@
             fill="#F8444F"
           />
         </svg>
-
         <h3 class="text-xl font-semibold text-mainColor1">
           Deleted successfully!!
         </h3>
@@ -171,6 +168,5 @@
       }
     </div>
   </div>
-
   }
 </div>

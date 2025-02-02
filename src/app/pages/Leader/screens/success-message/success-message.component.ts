@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
 @Component({
   selector: 'app-success-message',
   standalone: true,
@@ -9,7 +8,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class SuccessMessageComponent {
   @Output() closeModal = new EventEmitter<boolean>();
-
   cancel() {
     this.closeModal.emit(true);
   }

@@ -4,7 +4,6 @@ import {
   RouterModule,
   withViewTransitions,
 } from '@angular/router';
-
 import { routes } from './app.routes';
 import {
   provideHttpClient,
@@ -17,8 +16,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withViewTransitions()),
-    provideHttpClient(withFetch()),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     importProvidersFrom(
       RouterModule.forRoot(routes, {
         scrollPositionRestoration: 'enabled',

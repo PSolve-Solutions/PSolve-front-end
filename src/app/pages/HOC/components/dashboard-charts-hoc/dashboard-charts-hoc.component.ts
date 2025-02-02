@@ -29,11 +29,9 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
   @ViewChild('lineChartCanvas') canvasContest!: ElementRef<HTMLCanvasElement>;
   chart: Chart | undefined;
   chartContest: Chart | undefined;
-
   traineesChart: any;
   mentorsChart: any;
   campProgressChart: any;
-
   ngOnInit() {
     this.renderTraineesChart();
     this.renderMentorsChart();
@@ -43,7 +41,6 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
     this.renderChart();
     this.renderChartContest();
   }
-
   renderTraineesChart(): void {
     const traineesCtx = this.traineesCanvas.nativeElement.getContext('2d');
     if (traineesCtx) {
@@ -81,7 +78,6 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
   renderMentorsChart(): void {
     const mentorsCtx = this.mentorsCanvas.nativeElement.getContext('2d');
     if (mentorsCtx) {
@@ -129,11 +125,9 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
         const height = bottom - top;
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         const meta = chart.getDatasetMeta(0).data[0] as any;
         const cutout = (chart.config.options as any).cutout || '65%';
         const cutoutRadius = (meta.outerRadius * parseFloat(cutout)) / 100;
-
         ctx.save();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -149,7 +143,6 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
       console.error('Canvas element is not available.');
       return;
     }
-
     const ctx = this.campProgressCanvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
@@ -166,7 +159,6 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
               100 - this.dashboardData?.progressPrecentage,
             ],
             backgroundColor: ['#3D91C7', '#e5e5e5'],
-
             borderWidth: 0,
           },
         ],
@@ -189,7 +181,6 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
           },
         },
       } as any,
-
       plugins: [
         this.createCenterTextPlugin(
           String(this.dashboardData?.progressPrecentage),
@@ -199,19 +190,16 @@ export class DashboardChartsHocComponent implements OnInit, AfterViewInit {
       ],
     });
   }
-
   renderChartContest(): void {
     if (!this.canvasContest) {
       console.error('Canvas element is not available.');
       return;
     }
-
     const ctx = this.canvasContest.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
       return;
     }
-
     this.chartContest = new Chart(ctx, {
       type: 'line',
       data: {

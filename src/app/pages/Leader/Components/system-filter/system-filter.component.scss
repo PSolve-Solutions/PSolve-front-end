@@ -4,22 +4,18 @@
   padding: 4px;
   border-radius: 8px;
 }
-
 .ng-select .ng-select-container {
   min-height: 24px !important;
 }
-
 .ng-select {
   width: 100% !important;
 }
-
 .ng-select span.ng-value-label {
   background-color: transparent;
   color: black;
   padding: 4px;
   border-radius: 8px;
 }
-
 @media screen and (max-width: 768px) {
   .ng-select .ng-select-container {
     min-height: 20px !important;
@@ -30,7 +26,6 @@
   .ng-select .ng-select-container .ng-value-container {
     padding-left: 6px;
   }
-
   .ng-select {
     width: 90% !important;
   }

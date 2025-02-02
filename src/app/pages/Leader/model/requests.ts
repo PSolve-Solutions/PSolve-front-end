@@ -1,5 +1,4 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-
 export type Form = FormGroup<{
   filtersC: FormArray<FormFilter>;
   filtersV: FormArray<FormFilterV>;
@@ -14,7 +13,6 @@ export type FormFilterV = FormGroup<{
   passingPrecent: FormControl;
   problemCount: FormControl;
 }>;
-
 export interface User {
   id: number;
   firstName: string;
@@ -35,7 +33,6 @@ export interface User {
   acceptAttendType: boolean;
   university: string;
 }
-
 export interface AllTraineesInfo {
   currentPage: number;
   data: User[];

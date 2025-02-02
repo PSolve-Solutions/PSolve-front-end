@@ -5,7 +5,6 @@ import { AssignHocService } from '../../services/assign-hoc.service';
 import { Mentor, Trainee } from '../../model/assign-hoc';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-assign-hoc',
   standalone: true,
@@ -29,16 +28,13 @@ export class AssignHOCComponent implements OnInit {
   isSelectedMentor: boolean = false;
   isHover: boolean = false;
   tranieeId: string = '';
-
   ngOnInit() {
     this.getAllAssignMentors();
     this.getAllAssignTrainees(this.sortbyNum, this.keywordSearch);
   }
-
   handleSelectMentor(mentor: any): void {
     this.selectedMentor = mentor;
   }
-
   getAllAssignTrainees(SortBy?: number, KeyWord?: string): void {
     this.isLoading.set(true);
     this.assignHocService.getAllAssignTrainees(SortBy, KeyWord).subscribe({
@@ -56,7 +52,6 @@ export class AssignHOCComponent implements OnInit {
       },
     });
   }
-
   getAllAssignMentors(): void {
     this.isLoading2.set(true);
     this.assignHocService.getAllAssignMentors().subscribe({
@@ -74,7 +69,6 @@ export class AssignHOCComponent implements OnInit {
       },
     });
   }
-
   addToMentor(trainee: Trainee) {
     const data = {
       traineeId: trainee.id,
@@ -100,7 +94,6 @@ export class AssignHOCComponent implements OnInit {
       });
     }
   }
-
   removeFromMentor(trainee: Trainee, mentor: Mentor): void {
     this.assignHocService.unAssignTrainee(trainee.id).subscribe({
       next: ({ statusCode, message }) => {
@@ -122,12 +115,10 @@ export class AssignHOCComponent implements OnInit {
     this.sortbyNum = item;
     this.getAllAssignTrainees(this.sortbyNum, this.keywordSearch);
   }
-
   onSearchInput(event: any): void {
     this.keywordSearch = event.target.value;
     this.getAllAssignTrainees(this.sortbyNum, this.keywordSearch);
   }
-
   handleHoverShow(tranieeId: string): void {
     this.isHover = true;
     this.tranieeId = tranieeId;

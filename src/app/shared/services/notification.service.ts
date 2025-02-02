@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 })
 export class NotificationService {
   http = inject(HttpClient);
-
   getAllNotifications(
     currentPage: number,
     pageSize: number,
@@ -23,7 +22,6 @@ export class NotificationService {
       { params }
     );
   }
-
   markasRead(notificationId: number): Observable<ResponseHeader> {
     return this.http.put<any>(
       `${environment.BASE_URL}/api/User/notifications/MarkasRead/${notificationId}`,

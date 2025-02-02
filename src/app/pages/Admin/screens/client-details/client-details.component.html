@@ -26,7 +26,6 @@
             <tbody>
               @if (!isLoading) { @for (leader of client.leaders; track i; let i
               = $index; let first = $first) {
-
               <tr
                 class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
                 [class.border-t-8]="first"
@@ -66,7 +65,6 @@
       Client Personal Information
     </h2>
     @if (!isLoading) {
-
     <div class="flex flex-col w-full gap-y-2 lg:flex-row gap-x-4">
       <div class="grid w-full grid-cols-2 gap-2 lg:w-8/12">
         <div class="flex flex-col gap-y-1">
@@ -165,7 +163,6 @@
           </div>
         </div>
       </div>
-
       <div class="flex items-center justify-center">
         <div
           class="flex items-center justify-center border-4 rounded-full w-52 h-52 md:w-52 md:h-52"
@@ -180,7 +177,6 @@
     </div>
     }
   </div>
-
   <div
     class="flex items-center justify-center w-full mt-16 mb-6 text-lg font-semibold gap-x-6 text-mainColor4"
   >

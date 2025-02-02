@@ -15,7 +15,6 @@ import { StaffLeaderService } from '../../services/staff-leader.service';
 import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-dropdown-roles',
   standalone: true,
@@ -40,12 +39,10 @@ export class DropdownRolesComponent implements OnInit {
   dropdownOpen = signal<boolean>(false);
   dropdownCampForT: boolean = false;
   dropdownCampForH: boolean = false;
-
   ngOnInit() {
     this.fetchAllRoles();
     this.fetchAllCamps();
   }
-
   fetchAllRoles(): void {
     this.dashboardService.roles().subscribe({
       next: ({ statusCode, data }) => {
@@ -60,7 +57,6 @@ export class DropdownRolesComponent implements OnInit {
       },
     });
   }
-
   fetchAllCamps(): void {
     this.dashboardService.getAllCamps().subscribe({
       next: ({ statusCode, data }) => {
@@ -75,13 +71,11 @@ export class DropdownRolesComponent implements OnInit {
       },
     });
   }
-
   onSearch(value: string) {
     this.filteredRoles = this.roles.filter((role) =>
       role.name.toLowerCase().includes(value.toLowerCase())
     );
   }
-
   selectRole(role: any) {
     this.selectedRole = role;
     if (this.selectedRole.name === 'Trainee') {
@@ -103,7 +97,6 @@ export class DropdownRolesComponent implements OnInit {
       this.saveNewRoles(roleInfo);
     }
   }
-
   selectCamp(camp: any): void {
     const roleInfo = {
       userId: this.selectedStaffId,
@@ -113,7 +106,6 @@ export class DropdownRolesComponent implements OnInit {
     this.saveNewRoles(roleInfo);
     this.dropdownOpen.set(false);
   }
-
   saveNewRoles(roleInfo: any): void {
     this.rolesService.assignToRole(roleInfo).subscribe({
       next: ({ statusCode, message }) => {
@@ -134,11 +126,9 @@ export class DropdownRolesComponent implements OnInit {
       },
     });
   }
-
   onDropdownFocus() {
     this.dropdownOpen.set(true);
   }
-
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
     const clickedInside = this.elementRef.nativeElement.contains(targetElement);

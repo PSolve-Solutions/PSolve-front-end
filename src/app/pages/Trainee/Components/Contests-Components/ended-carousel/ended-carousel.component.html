@@ -1,65 +1,85 @@
 <!-- Main container with flexible layout and spacing -->
 <div class="flex flex-col gap-14 my-24 w-11/12 mx-auto">
-
   <!-- Section title -->
   <h1 class="head">Ended</h1>
-
   @if (oldContests.length > 0) {
-    <!-- Container for the swiper and navigation buttons -->
-    <div class="relative">
-
-      <!-- Navigation buttons for the swiper -->
-      <div class="custom-buttons mb-14 relative">
-        <button (click)="prevSlide()" class="absolute left-0  transform translate-y-[22%] z-10 prev flex items-center justify-center bg-white bg-opacity-55 h-[17.7rem] -top-2 p-5 rounded-tr-[10px] rounded-br-[10px]">
-          <img ngSrc="assets/img_trainee/left_arrow.svg" width="1000"
-          height="1000" alt="Previous" class="arrow-img">
-        </button>
-
-        <button (click)="nextSlide()" class="absolute right-0  transform translate-y-[22%] z-10 h-[17.7rem] -top-2 next flex items-center justify-center bg-white bg-opacity-55 p-5 rounded-tl-[10px] rounded-bl-[10px]">
-          <img ngSrc="assets/img_trainee/right_arrow.svg" width="500"
-          height="500" alt="Next" class="arrow-img">
-        </button>
-      </div>
-
-      <swiper [config]="config1" (swiper)="onSwiper($event)">
-        @for (contest of oldContests; track $index) {
-          <ng-template swiperSlide>
-            <div class="card w-[350px] h-fit min-h-[16rem] cursor-pointer relative" (click)="openLink(contest.link)">
-
-              <!-- Use ngOptimizedImage for background image -->
-              <img ngSrc="assets/img_trainee/marvel-bg.jpg"
-                   alt="Contest Background"
-                   width="350"
-                   height="300"
-                   class="bg-img rounded-[20px] w-[350px] min-h-[16rem]">
-
-              <!-- Overlay for text and information -->
-              <div class="absolute text-white inset-0 rounded-[20px] w-full h-full flex items-center justify-center bg-black bg-opacity-55">
-                <div class="flex flex-col items-baseline justify-between p-5 text-white py-7 min-h-[16rem]">
-                  <div class="flex flex-col items-baseline">
-                    <h1 class="text-[2rem] font-bold">{{contest.name}}</h1>
-                  </div>
-                  <div class="flex items-center justify-between min-w-full">
-                    <span class="flex items-center gap-3 text-[1.5rem]">
-                      <i class="fa-regular fa-clock"></i>
-                      <small>Ended In {{contest.endTime | formatDate}}</small>
-                    </span>
-                    <div class="bg-white rounded-full size-14 flex justify-center items-center">
-                      <span class="text-[#E69C24]">
-                        {{contest ? contest.solvedCount : '0'}}/{{contest ? contest.problemCount : '0'}}
-                      </span>
-                    </div>
-                  </div>
+  <!-- Container for the swiper and navigation buttons -->
+  <div class="relative">
+    <!-- Navigation buttons for the swiper -->
+    <div class="custom-buttons mb-14 relative">
+      <button
+        (click)="prevSlide()"
+        class="absolute left-0 transform translate-y-[22%] z-10 prev flex items-center justify-center bg-white bg-opacity-55 h-[17.7rem] -top-2 p-5 rounded-tr-[10px] rounded-br-[10px]"
+      >
+        <img
+          ngSrc="assets/img_trainee/left_arrow.svg"
+          width="1000"
+          height="1000"
+          alt="Previous"
+          class="arrow-img"
+        />
+      </button>
+      <button
+        (click)="nextSlide()"
+        class="absolute right-0 transform translate-y-[22%] z-10 h-[17.7rem] -top-2 next flex items-center justify-center bg-white bg-opacity-55 p-5 rounded-tl-[10px] rounded-bl-[10px]"
+      >
+        <img
+          ngSrc="assets/img_trainee/right_arrow.svg"
+          width="500"
+          height="500"
+          alt="Next"
+          class="arrow-img"
+        />
+      </button>
+    </div>
+    <swiper [config]="config1" (swiper)="onSwiper($event)">
+      @for (contest of oldContests; track $index) {
+      <ng-template swiperSlide>
+        <div
+          class="card w-[350px] h-fit min-h-[16rem] cursor-pointer relative"
+          (click)="openLink(contest.link)"
+        >
+          <!-- Use ngOptimizedImage for background image -->
+          <img
+            ngSrc="assets/img_trainee/marvel-bg.jpg"
+            alt="Contest Background"
+            width="350"
+            height="300"
+            class="bg-img rounded-[20px] w-[350px] min-h-[16rem]"
+          />
+          <!-- Overlay for text and information -->
+          <div
+            class="absolute text-white inset-0 rounded-[20px] w-full h-full flex items-center justify-center bg-black bg-opacity-55"
+          >
+            <div
+              class="flex flex-col items-baseline justify-between p-5 text-white py-7 min-h-[16rem]"
+            >
+              <div class="flex flex-col items-baseline">
+                <h1 class="text-[2rem] font-bold">{{ contest.name }}</h1>
+              </div>
+              <div class="flex items-center justify-between min-w-full">
+                <span class="flex items-center gap-3 text-[1.5rem]">
+                  <i class="fa-regular fa-clock"></i>
+                  <small>Ended In {{ contest.endTime | formatDate }}</small>
+                </span>
+                <div
+                  class="bg-white rounded-full size-14 flex justify-center items-center"
+                >
+                  <span class="text-[#E69C24]">
+                    {{ contest ? contest.solvedCount : "0" }}/{{
+                      contest ? contest.problemCount : "0"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
-          </ng-template>
-        }
-      </swiper>
-    </div>
+          </div>
+        </div>
+      </ng-template>
+      }
+    </swiper>
+  </div>
   } @else {
-    <p class="no-contest">
-      No Ended Contest
-    </p>
+  <p class="no-contest">No Ended Contest</p>
   }
 </div>

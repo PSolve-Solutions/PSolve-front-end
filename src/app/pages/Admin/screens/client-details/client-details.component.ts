@@ -4,7 +4,6 @@ import { ClientsService } from '../../services/clients.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
-
 @Component({
   selector: 'app-client-details',
   standalone: true,
@@ -24,14 +23,12 @@ export class ClientDetailsComponent {
   startDate: string = '';
   endDate: string = '';
   logoImage: string = '';
-
   constructor() {
     this.route.params.subscribe((param) => {
       this.clientId = param['id'];
       this.getClientById(this.clientId);
     });
   }
-
   getClientById(id: string): void {
     this.isLoading = true;
     this.clientsService.getClientById(id).subscribe({

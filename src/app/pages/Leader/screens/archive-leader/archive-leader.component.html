@@ -25,7 +25,6 @@
             activeTab === 'tab1' ? 'Search for trainees' : 'Search for staff'
           "
         />
-
         <div class="absolute inset-y-0 left-0 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +70,6 @@
           <ng-option [value]="2">Year</ng-option>
         </ng-select>
         }
-
         <svg
           width="24"
           height="24"
@@ -91,7 +89,6 @@
         </svg>
       </div>
     </form>
-
     <div class="bg-white rounded-xl">
       <div
         class="flex space-x-2 text-base font-semibold md:text-xl bg-[#F4F5F8]"
@@ -117,7 +114,6 @@
           Staff Archive
         </button>
       </div>
-
       <div
         class="px-2 py-4 rounded-b-lg"
         [ngClass]="{
@@ -170,7 +166,6 @@
               <tbody>
                 @if (!isLoading()) { @for (row of traineeArchiveInfo.data; track
                 i; let i = $index; let first = $first) {
-
                 <tr
                   class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
                   [class.border-t-8]="first"
@@ -256,7 +251,6 @@
               </tbody>
             </table>
           </div>
-
           <div
             class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
             [class.mt-4]="
@@ -282,7 +276,6 @@
                 />
               </svg>
             </button>
-
             @for (page of pages; track $index) {
             <button
               class="px-6 py-1.5 shadow"
@@ -326,7 +319,6 @@
           </div>
         </div>
         }@else {
-
         <div class="flex flex-col">
           <div class="overflow-x-auto rounded-lg">
             <table
@@ -371,7 +363,6 @@
               <tbody>
                 @if (!isLoading()) { @for (row of staffArchiveInfo.data; track
                 i; let i = $index; let first = $first) {
-
                 <tr
                   class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
                   [class.border-t-8]="first"
@@ -457,7 +448,6 @@
               </tbody>
             </table>
           </div>
-
           <div
             class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
             [class.mt-4]="
@@ -483,7 +473,6 @@
                 />
               </svg>
             </button>
-
             @for (page of pages; track $index) {
             <button
               class="px-6 py-1.5 shadow"
@@ -530,7 +519,6 @@
       </div>
     </div>
   </div>
-
   @if (activeTab === 'tab1') {
   <div
     (click)="handleOverlayClick($event)"
@@ -596,7 +584,6 @@
               d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Email:</span>
           <span>{{ onetraineeArchiveInfo.email }}</span>
         </div>
@@ -631,7 +618,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Codeforces:</span>
           <a
             [href]="
@@ -655,7 +641,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Vjudge:</span>
           <span>{{ onetraineeArchiveInfo.vjudgeHandle || "" }}</span>
         </div>
@@ -672,7 +657,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Collage:</span>
           <span>{{ onetraineeArchiveInfo.college }}</span>
         </div>
@@ -691,7 +675,6 @@
               d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Year:</span>
           <span>{{ onetraineeArchiveInfo.grade }}</span>
         </div>
@@ -732,7 +715,6 @@
               stroke-linejoin="round"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Camp completed:</span>
           <span>
             @if (onetraineeArchiveInfo.isComplete) { yes }@else { no }
@@ -762,7 +744,6 @@
               stroke-linejoin="round"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Facebook Link:</span>
           @if (onestaffArchiveInfo.facebookHandle) {
           <a
@@ -773,9 +754,7 @@
           >
           }
         </div>
-
         }
-
         <div class="flex items-center mb-2 gap-x-2">
           <svg
             class="size-5"
@@ -795,11 +774,9 @@
               </clipPath>
             </defs>
           </svg>
-
           <span class="text-[#EEEEEE]">National ID:</span>
           <span>{{ onetraineeArchiveInfo.nationalId }}</span>
         </div>
-
         <div class="flex items-center mb-2 gap-x-2">
           <svg
             class="size-5"
@@ -857,13 +834,11 @@
               stroke-linejoin="round"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Birthdate:</span>
           <span>
             {{ onetraineeArchiveInfo.birthDate }}
           </span>
         </div>
-
         <div class="flex items-center mb-4 gap-x-2">
           <svg
             class="size-5"
@@ -876,7 +851,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Gender:</span>
           <span>
             {{ onetraineeArchiveInfo.gender === 0 ? "Male" : "Female" }}
@@ -951,7 +925,6 @@
               d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Email:</span>
           <span>{{ onestaffArchiveInfo.email }}</span>
         </div>
@@ -986,7 +959,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Codeforces:</span>
           <a
             [href]="
@@ -1010,7 +982,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Vjudge:</span>
           <span>{{ onestaffArchiveInfo.vjudgeHandle || "" }}</span>
         </div>
@@ -1027,7 +998,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Collage:</span>
           <span>{{ onestaffArchiveInfo.college }}</span>
         </div>
@@ -1046,7 +1016,6 @@
               d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Year:</span>
           <span>{{ onestaffArchiveInfo.grade }}</span>
         </div>
@@ -1062,13 +1031,10 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Role:</span>
           <span>{{ onestaffArchiveInfo.role }}</span>
         </div>
-
         <div class="w-1/2 mx-auto mb-4 border-b-2 border-gray-300"></div>
-
         <div class="flex items-center mb-2 gap-x-2">
           <svg
             class="size-5"
@@ -1091,7 +1057,6 @@
               stroke-linejoin="round"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Facebook Link:</span>
           <span>
             @if (onestaffArchiveInfo.facebookHandle) {
@@ -1104,7 +1069,6 @@
             }
           </span>
         </div>
-
         <div class="flex items-center mb-2 gap-x-2">
           <svg
             class="size-5"
@@ -1124,11 +1088,9 @@
               </clipPath>
             </defs>
           </svg>
-
           <span class="text-[#EEEEEE]">National ID:</span>
           <span>{{ onestaffArchiveInfo.nationalId }}</span>
         </div>
-
         <div class="flex items-center mb-2 gap-x-2">
           <svg
             class="size-5"
@@ -1186,13 +1148,11 @@
               stroke-linejoin="round"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Birthdate:</span>
           <span>
             {{ onestaffArchiveInfo.birthDate }}
           </span>
         </div>
-
         <div class="flex items-center mb-4 gap-x-2">
           <svg
             class="size-5"
@@ -1205,7 +1165,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Gender:</span>
           <span>
             {{ onestaffArchiveInfo.gender === 0 ? "Male" : "Female" }}

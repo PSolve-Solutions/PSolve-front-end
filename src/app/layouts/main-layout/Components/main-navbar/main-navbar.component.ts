@@ -38,9 +38,7 @@ export class MainNavbarComponent implements OnInit {
   isOpenNotification: boolean = false;
   isAnewNotification: boolean = false;
   s: string = '';
-
   @ViewChild(NotificationComponent) childComponent!: NotificationComponent;
-
   ngOnInit() {
     this.currentUser = this.authService.currentUser();
     this.profilePhoto = this.authService.currentUser().photoUrl;
@@ -49,7 +47,6 @@ export class MainNavbarComponent implements OnInit {
     this.detectLocalStorageChange();
     this.newNotificationCheck();
   }
-
   openNotification(): void {
     this.childComponent.allNotification = [];
     this.childComponent.currentPage = 1;
@@ -63,7 +60,6 @@ export class MainNavbarComponent implements OnInit {
       );
     }
   }
-
   newNotificationCheck() {
     this.notificationService.newNotificationCheck().subscribe({
       next: ({ statusCode, data }) => {
@@ -76,7 +72,6 @@ export class MainNavbarComponent implements OnInit {
       },
     });
   }
-
   loadRoles(): void {
     const storedData = JSON.parse(localStorage.getItem('CURRENT_USER') || '{}');
     const customOrder = ['Leader', 'Head_Of_Camp', 'Mentor', 'Trainee'];
@@ -87,7 +82,6 @@ export class MainNavbarComponent implements OnInit {
     this.profilePhoto = storedData.photoUrl;
     this.cdr.detectChanges();
   }
-
   detectLocalStorageChange(): void {
     const originalSetItem = localStorage.setItem;
     localStorage.setItem = (key: string, value: string): void => {
@@ -97,12 +91,10 @@ export class MainNavbarComponent implements OnInit {
       }
     };
   }
-
   showRoles() {
     this.isShow = !this.isShow;
     this.isOpenNotification = false;
   }
-
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
     const clickedInside = this.elementRef.nativeElement.contains(targetElement);
@@ -111,11 +103,9 @@ export class MainNavbarComponent implements OnInit {
       this.isOpenNotification = false;
     }
   }
-
   goSpecificRole(role: string): void {
     this.router.navigate(['/', role.toLowerCase()]);
   }
-
   isIncludes(route: string): boolean {
     if (this.currentPath.includes(route)) {
       return true;

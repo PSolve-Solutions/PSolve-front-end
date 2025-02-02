@@ -8,13 +8,11 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 })
 export class ProfileTraineeService {
   http = inject(HttpClient);
-
   traineeProfile(): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/User/traineeProfile`
     );
   }
-
   updateTraineeProfile(info: any): Observable<ResponseHeader> {
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/User/updateTraineeProfile`,

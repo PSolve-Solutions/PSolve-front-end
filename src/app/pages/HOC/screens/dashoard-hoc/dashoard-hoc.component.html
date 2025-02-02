@@ -37,7 +37,6 @@
   <div class="pt-4">
     @if (activeTab === 'tab1') {
     <app-dashboard-charts-hoc [dashboardData]="dashboardData" />
-
     }@else {
     <div class="flex items-center justify-center gap-x-4">
       <h2
@@ -58,7 +57,6 @@
           </div>
         </div>
         }@else {
-
         <img src="assets/img/excel.png" class="w-full" alt="" />
         }
       </div>
@@ -73,7 +71,6 @@
           <th class="p-2">Points</th>
         </tr>
       </thead>
-
       <tbody>
         @for (item of standingData.achivers; track item.id) {
         <tr
@@ -104,7 +101,6 @@
     <div class="flex items-center justify-center py-4">
       <h2 class="text-2xl font-medium text-mainRed">No Standing</h2>
     </div>
-
     } }
   </div>
   }

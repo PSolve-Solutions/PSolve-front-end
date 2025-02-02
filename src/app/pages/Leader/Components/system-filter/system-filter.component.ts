@@ -18,9 +18,7 @@ import {
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Form, FormFilter, FormFilterV } from '../../model/requests';
-import { RegisterationService } from '../../../public/Services/registeration.service';
 import { RequestsLeaderService } from '../../services/requests-leader.service';
-
 @Component({
   selector: 'app-system-filter',
   standalone: true,
@@ -32,7 +30,6 @@ import { RequestsLeaderService } from '../../services/requests-leader.service';
 export class SystemFilterComponent implements OnInit {
   requestsLeaderService = inject(RequestsLeaderService);
   allCommunities: { id: string; clientName: string }[] = [];
-
   @Input() codeforcesFilters: any;
   @Input() vjudgeFilters: any;
   @Output() saveFilter = new EventEmitter<Form>();
@@ -40,7 +37,6 @@ export class SystemFilterComponent implements OnInit {
   elementRef = inject(ElementRef);
   fb = inject(NonNullableFormBuilder);
   filterForm!: Form;
-
   ngOnInit() {
     this.getAllCommunities();
     this.filterForm = this.fb.group({
@@ -58,7 +54,6 @@ export class SystemFilterComponent implements OnInit {
     if (this.codeforcesFilters.length > 0) {
       this.setSavedFilters(this.codeforcesFilters);
     }
-
     if (this.vjudgeFilters.length === 0) {
       this.vjudgeFilters.push({
         sheetId: '',
@@ -72,7 +67,6 @@ export class SystemFilterComponent implements OnInit {
     this.updateLastRowValidation();
     this.updateLastRowValidationV();
   }
-
   generateFilter(): FormFilter {
     return this.fb.group({
       sheetId: [''],
@@ -80,7 +74,6 @@ export class SystemFilterComponent implements OnInit {
       passingPrecent: [null],
     }) as FormFilter;
   }
-
   get filtersC(): FormArray<FormFilter> {
     return this.filterForm.get('filtersC') as FormArray<FormFilter>;
   }
@@ -88,12 +81,10 @@ export class SystemFilterComponent implements OnInit {
     this.filtersC.push(this.generateFilter());
     this.updateLastRowValidation();
   }
-
   removeFilter(index: number) {
     this.filtersC.removeAt(index);
     this.updateLastRowValidation();
   }
-
   isEableToSave(): boolean {
     const formData = this.filterForm.value?.filtersC ?? [];
     const formDataV = this.filterForm.value?.filtersV ?? [];
@@ -129,7 +120,6 @@ export class SystemFilterComponent implements OnInit {
     }
     return true;
   }
-
   saveCustomFilter(): void {
     const formData = this.filterForm.value?.filtersC ?? [];
     const formDataV = this.filterForm.value?.filtersV ?? [];
@@ -145,20 +135,16 @@ export class SystemFilterComponent implements OnInit {
       if (!rowHasValues(lastRow)) {
         this.filtersC.removeAt(this.filtersC.length - 1);
       }
-
       if (!rowHasValuesV(lastRowV)) {
         this.filtersV.removeAt(this.filtersV.length - 1);
       }
-
       this.saveFilter.emit(this.filterForm);
       return;
     }
-
     const firstRow = formData[0];
     const hasMultipleRows = this.filtersC.length > 1;
     const firstRowV = formDataV[0];
     const hasMultipleRowsV = this.filtersV.length > 1;
-
     if (!rowHasValues(firstRow)) {
       this.filtersC.removeAt(this.filtersC.length - 1);
       this.saveFilter.emit(this.filterForm);
@@ -192,7 +178,6 @@ export class SystemFilterComponent implements OnInit {
     this.filtersC.clear();
     this.saveFilter.emit(this.filterForm);
   }
-
   setSavedFilters(savedData: any[]) {
     this.filtersC.clear();
     savedData.forEach((filterData) => {
@@ -206,7 +191,6 @@ export class SystemFilterComponent implements OnInit {
     });
     this.updateLastRowValidation();
   }
-
   updateLastRowValidation() {
     const length = this.filtersC.length;
     this.filtersC.controls.forEach((filterGroup, index) => {
@@ -224,7 +208,6 @@ export class SystemFilterComponent implements OnInit {
       filterGroup.get('passingPrecent')?.updateValueAndValidity();
     });
   }
-
   //V
   generateFilterV(): FormFilterV {
     return this.fb.group({
@@ -233,7 +216,6 @@ export class SystemFilterComponent implements OnInit {
       problemCount: [null],
     }) as FormFilterV;
   }
-
   get filtersV(): FormArray<FormFilterV> {
     return this.filterForm.get('filtersV') as FormArray<FormFilterV>;
   }
@@ -241,12 +223,10 @@ export class SystemFilterComponent implements OnInit {
     this.filtersV.push(this.generateFilterV());
     this.updateLastRowValidationV();
   }
-
   removeFilterV(index: number) {
     this.filtersV.removeAt(index);
     this.updateLastRowValidationV();
   }
-
   setSavedFiltersV(savedData: any[]) {
     this.filtersV.clear();
     savedData.forEach((filterData) => {
@@ -260,7 +240,6 @@ export class SystemFilterComponent implements OnInit {
     });
     this.updateLastRowValidationV();
   }
-
   updateLastRowValidationV() {
     const length = this.filtersV.length;
     this.filtersV.controls.forEach((filterGroup, index) => {
@@ -278,7 +257,6 @@ export class SystemFilterComponent implements OnInit {
       filterGroup.get('passingPrecent')?.updateValueAndValidity();
     });
   }
-
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
     const clickedInside = this.elementRef.nativeElement.contains(targetElement);
@@ -286,7 +264,6 @@ export class SystemFilterComponent implements OnInit {
       this.clickOutside.emit();
     }
   }
-
   getAllCommunities(): void {
     this.requestsLeaderService.getCommunities().subscribe({
       next: ({ statusCode, data }) => {

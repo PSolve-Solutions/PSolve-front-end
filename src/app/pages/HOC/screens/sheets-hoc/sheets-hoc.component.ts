@@ -17,7 +17,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-sheets-hoc',
   standalone: true,
@@ -51,7 +50,6 @@ export class SheetsHOCComponent implements OnInit {
   isLoadingMaterial = signal<boolean>(false);
   isLoadingMaterialAdd = signal<boolean>(false);
   isDeleted: boolean = false;
-
   ngOnInit() {
     this.getAllSheets(this.currentPage, this.pageSize);
     this.formMaterial = this.fb.group({
@@ -60,7 +58,6 @@ export class SheetsHOCComponent implements OnInit {
       sheetId: [''],
     });
   }
-
   getAllSheets(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.sheetsHOCService.getAllSheets(currentPage, pageSize).subscribe({
@@ -80,7 +77,6 @@ export class SheetsHOCComponent implements OnInit {
       },
     });
   }
-
   addMaterial(): void {
     if (this.formMaterial.invalid) {
       return;
@@ -105,7 +101,6 @@ export class SheetsHOCComponent implements OnInit {
         },
       });
   }
-
   // toggleDetails(id: number) {
   //   if (id === this.sheetId) {
   //     this.sheetId = 0;
@@ -113,12 +108,10 @@ export class SheetsHOCComponent implements OnInit {
   //     this.sheetId = id;
   //   }
   // }
-
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
     this.showModal = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.dataRequest = [];
@@ -127,11 +120,9 @@ export class SheetsHOCComponent implements OnInit {
     }
     this.showModal = false;
   }
-
   goToActionSheet(id: number): void {
     this.router.navigate(['head_of_camp/sheets/action-sheets/', id]);
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;
@@ -142,7 +133,6 @@ export class SheetsHOCComponent implements OnInit {
       this.getAllSheets(++this.currentPage, this.pageSize);
     }
   }
-
   toggleExpand(id: number) {
     if (this.expandedRow === id) {
       this.expandedRow = null;
@@ -151,7 +141,6 @@ export class SheetsHOCComponent implements OnInit {
       this.getMaterailsBySheetId(id);
     }
   }
-
   getMaterailsBySheetId(id: number): void {
     this.sheetId = id;
     this.isLoadingMaterial.set(true);
@@ -170,7 +159,6 @@ export class SheetsHOCComponent implements OnInit {
       },
     });
   }
-
   drop(event: CdkDragDrop<any[]>, sheetId: number) {
     moveItemInArray(
       this.materailsSheet,
@@ -192,7 +180,6 @@ export class SheetsHOCComponent implements OnInit {
     };
     this.updateOrdersMaterails(info);
   }
-
   updateOrdersMaterails(info: any): void {
     this.sheetsHOCService.updateOrdersMaterails(info).subscribe({
       next: ({ statusCode, data }) => {
@@ -207,7 +194,6 @@ export class SheetsHOCComponent implements OnInit {
       },
     });
   }
-
   deleteMaterial(id: number): void {
     this.isDeleted = true;
     this.sheetsHOCService.deleteMaterial(id).subscribe({
@@ -226,10 +212,8 @@ export class SheetsHOCComponent implements OnInit {
       },
     });
   }
-
   dropSheet(event: CdkDragDrop<any[]>) {
     let sheetOrderCounter = 1;
-
     this.dataRequest.forEach((item) => {
       // Loop through each sheet in the data array of the current item
       item.data.forEach((sheet: any) => {
@@ -237,9 +221,7 @@ export class SheetsHOCComponent implements OnInit {
       });
     });
     const flattenedData = this.dataRequest.flatMap((item) => item.data);
-
     moveItemInArray(flattenedData, event.previousIndex, event.currentIndex);
-
     flattenedData.forEach((sheet: any, index: number) => {
       sheet.sheetOrder = index + 1;
     });
@@ -247,14 +229,12 @@ export class SheetsHOCComponent implements OnInit {
       id: sheet.id,
       orderId: sheet.sheetOrder,
     }));
-
     const info = {
       id: event.item.data.sheetId,
       sheets: extractedData,
     };
     this.updateSheetsOrder(info);
   }
-
   updateSheetsOrder(info: any): void {
     this.sheetsHOCService.updateSheetsOrder(info).subscribe({
       next: ({ statusCode }) => {

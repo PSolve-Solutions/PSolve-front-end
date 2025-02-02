@@ -3,44 +3,37 @@
   h5 {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #002C3D;
+    color: #002c3d;
     text-transform: capitalize;
   }
 }
-
 .linkedin {
   width: 90px; /* LinkedIn icon width */
 }
-
 .skills {
   font-size: 14px; /* Skills text size */
   line-height: 1.25rem; /* Skills line height */
 }
-
 .founder-img {
   max-width: 140px; /* Founder image size */
   min-width: 140px;
   max-height: 140px;
   min-height: 140px;
 }
-
 /* Mobile styles for screens less than 640px */
 @media screen and (max-width: 640px) {
   .found-data {
     h5 {
-      font-size: .625rem; /* Smaller font size for name */
+      font-size: 0.625rem; /* Smaller font size for name */
     }
   }
-
   .linkedin {
     width: 30px; /* Smaller LinkedIn icon for mobile */
   }
-
   .skills {
     font-size: 8px; /* Smaller font size for skills */
-    line-height: .7rem; /* Reduced line height for skills */
+    line-height: 0.7rem; /* Reduced line height for skills */
   }
-
   .founder-img {
     max-width: 60px; /* Smaller founder image */
     min-width: 60px;

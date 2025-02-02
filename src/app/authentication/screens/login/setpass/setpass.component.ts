@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ForgetService } from '../services/forget.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-setpass',
   standalone: true,
@@ -29,12 +28,10 @@ export class SetpassComponent {
   isLoading: boolean = false;
   passwordFieldType: string = 'password';
   passwordFieldType2: string = 'password';
-
   ngOnInit() {
     this.email = this.route.snapshot.paramMap.get('email');
     this.token = this.route.snapshot.paramMap.get('token');
   }
-
   togglePasswordVisibility(num: number): void {
     if (num === 0) {
       this.passwordFieldType =
@@ -44,7 +41,6 @@ export class SetpassComponent {
         this.passwordFieldType2 === 'password' ? 'text' : 'password';
     }
   }
-
   passwordForm = new FormGroup(
     {
       password: new FormControl('', [
@@ -55,15 +51,12 @@ export class SetpassComponent {
     },
     { validators: this.passwordsMatchValidator() } // Call the validator function here
   );
-
   get password() {
     return this.passwordForm.get('password');
   }
-
   get confirmPassword() {
     return this.passwordForm.get('confirmPassword');
   }
-
   passwordsMatchValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       const formGroup = control as FormGroup;
@@ -72,7 +65,6 @@ export class SetpassComponent {
       return password === confirmPassword ? null : { passwordMismatch: true };
     };
   }
-
   onSubmit() {
     this.isLoading = true;
     if (this.passwordForm.invalid) {

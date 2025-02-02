@@ -20,7 +20,6 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-actios-camp',
   standalone: true,
@@ -62,7 +61,6 @@ export class ActiosCampComponent implements OnInit {
   isLoading: boolean = false;
   isDeleted: boolean = false;
   id: number = 0;
-
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = parseInt(params['id']);
@@ -90,14 +88,11 @@ export class ActiosCampComponent implements OnInit {
       endDate: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
     });
-
     this.nameForm = this.fb.group({
       name: ['', [Validators.required]],
     });
-
     this.fetchAllCamp();
   }
-
   positiveNumberValidator(control: AbstractControl) {
     const value = control.value;
     if (value !== null && value < 0) {
@@ -105,12 +100,10 @@ export class ActiosCampComponent implements OnInit {
     }
     return null;
   }
-
   selectCamp(item: any): void {
     this.selectedCamp = item.name;
     this.isCampsActive = false;
   }
-
   deleteCamp(campName: string): void {
     this.isDeleted = true;
     this.campName = campName;
@@ -134,7 +127,6 @@ export class ActiosCampComponent implements OnInit {
       },
     });
   }
-
   onAddCamp(event: Event): void {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
@@ -158,12 +150,10 @@ export class ActiosCampComponent implements OnInit {
       },
     });
   }
-
   toggleDropdownC(event: MouseEvent) {
     event.stopPropagation();
     this.isCampsActive = !this.isCampsActive;
   }
-
   @HostListener('window:click', ['$event'])
   closeDropdown(event: Event) {
     const targetElement = event.target as HTMLElement;
@@ -182,7 +172,6 @@ export class ActiosCampComponent implements OnInit {
       this.isCampsActive = false;
     }
   }
-
   getOneCamp(id: number): void {
     this.isLoading = true;
     this.campLeaderService.getOneCamp(id).subscribe({
@@ -216,7 +205,6 @@ export class ActiosCampComponent implements OnInit {
       },
     });
   }
-
   craeteNewCamp(): void {
     this.campForm.get('name')?.setValue(this.selectedCamp);
     this.submitted = true;
@@ -280,7 +268,6 @@ export class ActiosCampComponent implements OnInit {
         });
     }
   }
-
   displayFormErrors() {
     Object.keys(this.campForm.controls).forEach((field) => {
       const control = this.campForm.get(field);
@@ -291,7 +278,6 @@ export class ActiosCampComponent implements OnInit {
       }
     });
   }
-
   fetchAllMentors(): void {
     this.campLeaderService.getAllMentors().subscribe({
       next: ({ statusCode, data }) => {
@@ -346,7 +332,6 @@ export class ActiosCampComponent implements OnInit {
       this.dropdownOpenH = false;
     }
   }
-
   toggleDropdown() {
     if (this.dropdownOpen) {
       this.mentorsSelect.close();
@@ -360,7 +345,6 @@ export class ActiosCampComponent implements OnInit {
       this.mentorsSelect.open();
     });
   }
-
   toggleDropdownH() {
     if (this.dropdownOpenH) {
       this.hocSelect.close();

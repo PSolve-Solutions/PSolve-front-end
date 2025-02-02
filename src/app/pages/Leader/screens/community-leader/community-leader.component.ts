@@ -10,7 +10,6 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommunityInfo } from '../../model/community';
-
 @Component({
   selector: 'app-community-leader',
   standalone: true,
@@ -31,11 +30,9 @@ export class CommunityLeaderComponent implements OnInit {
   endDate: string = '';
   isCodeforcesSettings: boolean = false;
   membersCount: number = 0;
-
   constructor() {
     this.getCommunityById();
   }
-
   ngOnInit(): void {
     console.log(this.isCodeforcesSettings);
     this.communityForm = this.fb.group({
@@ -52,7 +49,6 @@ export class CommunityLeaderComponent implements OnInit {
       IsRequiredTraineePhoneNumber: [''],
     });
   }
-
   filterNullValues(form: FormGroup): { [key: string]: any } {
     const filteredData: { [key: string]: any } = {};
     Object.keys(form.value).forEach((key) => {
@@ -63,7 +59,6 @@ export class CommunityLeaderComponent implements OnInit {
     });
     return filteredData;
   }
-
   updateCommuinty() {
     if (this.communityForm.invalid) {
       this.displayFormErrors();
@@ -100,12 +95,10 @@ export class CommunityLeaderComponent implements OnInit {
       },
     });
   }
-
   convertToLocal(date: string): Date {
     const localDate = new Date(date);
     return localDate;
   }
-
   displayFormErrors() {
     Object.keys(this.communityForm.controls).forEach((field) => {
       const control = this.communityForm.get(field);
@@ -116,7 +109,6 @@ export class CommunityLeaderComponent implements OnInit {
       }
     });
   }
-
   getCommunityById(): void {
     this.isLoading = true;
     this.communityService.getCommuinty().subscribe({
@@ -150,7 +142,6 @@ export class CommunityLeaderComponent implements OnInit {
       },
     });
   }
-
   toggleCheckbox() {
     this.isCodeforcesSettings = !this.isCodeforcesSettings;
     if (this.isCodeforcesSettings === true) {
@@ -168,18 +159,15 @@ export class CommunityLeaderComponent implements OnInit {
       .get('CodeForcesSetting')
       ?.setValue(this.isCodeforcesSettings);
   }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
       this.communityForm.get('Logo')?.setValue(file);
       const reader = new FileReader();
-
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.logoImage = e.target?.result as string;
       };
-
       reader.readAsDataURL(file);
     }
   }

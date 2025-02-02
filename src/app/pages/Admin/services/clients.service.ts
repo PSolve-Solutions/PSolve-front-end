@@ -4,14 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CasheService } from '../../../shared/services/cashe.service';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ClientsService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   getAllClientsPagination(
     currentPage: number,
     pageSize: number
@@ -24,20 +22,17 @@ export class ClientsService {
       params
     );
   }
-
   deleteClient(id: string): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/clients/${id}`
     );
   }
-
   createClient(formData: any): Observable<ResponseHeader> {
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Admin/clients`,
       formData
     );
   }
-
   getClientById(id: string): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/clients/${id}`

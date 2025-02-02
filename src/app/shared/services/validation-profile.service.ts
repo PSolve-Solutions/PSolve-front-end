@@ -18,7 +18,6 @@ export class ValidationProfileService {
       `${environment.BASE_URL}/api/Validations/validateNationalId/${nationalId}`
     );
   }
-
   // Account
   accountInfo(): Observable<ResponseHeader> {
     return this.http.get<any>(`${environment.BASE_URL}/api/User/accountInfo`);
@@ -37,11 +36,9 @@ export class ValidationProfileService {
       `${environment.BASE_URL}/api/Validations/validateEmail/${email}`
     );
   }
-
   // username
   updateUsername(username: string): Observable<ResponseHeader> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/User/updateUsername`,
       JSON.stringify(username),
@@ -56,7 +53,6 @@ export class ValidationProfileService {
   // codeforces
   updateCodeforceHandle(codeForcesHandle: string): Observable<ResponseHeader> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/User/updateCodeforceHandle`,
       JSON.stringify(codeForcesHandle),
@@ -70,11 +66,9 @@ export class ValidationProfileService {
       `${environment.BASE_URL}/api/Validations/validateCodeForcesHandle/${codeForcesHandle}`
     );
   }
-
   // codeforces
   updateVjudgeHandle(vjudgeHandle: string): Observable<ResponseHeader> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/User/updateVjudgeHandle`,
       JSON.stringify(vjudgeHandle),
@@ -86,7 +80,6 @@ export class ValidationProfileService {
       `${environment.BASE_URL}/api/Validations/validateVjudgeHandle/${vjudgeHandle}`
     );
   }
-
   updatePassword(passInfo: any): Observable<ResponseHeader> {
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/User/updatePassword`,

@@ -17,7 +17,6 @@ import { NgClass } from '@angular/common';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { RouterLink } from '@angular/router';
-
 @Component({
   selector: 'app-add-user',
   standalone: true,
@@ -43,7 +42,6 @@ export class AddUserComponent implements OnInit {
   collegeName: string = '';
   campName: string = '';
   roleName: string = '';
-
   ngOnInit(): void {
     this.addUserForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -74,7 +72,6 @@ export class AddUserComponent implements OnInit {
       { id: 6, name: 'Others' },
     ];
   }
-
   filterNullValues(form: FormGroup): { [key: string]: any } {
     const filteredData: { [key: string]: any } = {};
     Object.keys(form.value).forEach((key) => {
@@ -85,7 +82,6 @@ export class AddUserComponent implements OnInit {
     });
     return filteredData;
   }
-
   craeteUser() {
     if (this.addUserForm.invalid) {
       this.displayFormErrors();
@@ -126,7 +122,6 @@ export class AddUserComponent implements OnInit {
       },
     });
   }
-
   displayFormErrors() {
     Object.keys(this.addUserForm.controls).forEach((field) => {
       const control = this.addUserForm.get(field);
@@ -137,13 +132,11 @@ export class AddUserComponent implements OnInit {
       }
     });
   }
-
   onFileSelected(event: any): void {
     const imgFile = event.target.files[0];
     this.uploadedFileName = imgFile.name;
     this.addUserForm.get('profileImage')?.setValue(imgFile);
   }
-
   getRole(roleName: string): void {
     if (roleName === 'Trainee' || roleName === 'Head_Of_Camp') {
       this.isShow = true;
@@ -152,7 +145,6 @@ export class AddUserComponent implements OnInit {
       this.addUserForm.get('campId')?.setValue(null);
     }
   }
-
   fetchAllRoles(): void {
     this.dashboardService.roles().subscribe({
       next: ({ statusCode, data }) => {
@@ -181,7 +173,6 @@ export class AddUserComponent implements OnInit {
       },
     });
   }
-
   selectCollege(option: any): void {
     this.collegeName = option.name;
     this.foucsCollege = false;
@@ -190,7 +181,6 @@ export class AddUserComponent implements OnInit {
   toggleDropdownCollege() {
     this.foucsCollege = !this.foucsCollege;
   }
-
   selectRole(role: any): void {
     this.roleName = role.name;
     this.getRole(this.roleName);
@@ -200,7 +190,6 @@ export class AddUserComponent implements OnInit {
   toggleDropdownRole() {
     this.foucsRole = !this.foucsRole;
   }
-
   selectCamp(option: any): void {
     this.campName = option.name;
     this.foucsCamp = false;
@@ -210,7 +199,6 @@ export class AddUserComponent implements OnInit {
     console.log(this.allCamps);
     this.foucsCamp = !this.foucsCamp;
   }
-
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const targetElement = event.target as HTMLElement;

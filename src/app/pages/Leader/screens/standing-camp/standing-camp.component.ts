@@ -6,7 +6,6 @@ import { NgClass } from '@angular/common';
 import { ExportExcelService } from '../../../../shared/services/export-excel.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-
 @Component({
   selector: 'app-standing-camp',
   standalone: true,
@@ -23,14 +22,12 @@ export class StandingCampComponent implements OnInit {
   isLoading = signal<boolean>(false);
   isExporting = signal<boolean>(false);
   campId: number = 0;
-
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.campId = parseInt(params['id']);
       this.fetchAllWithPagination(this.campId);
     });
   }
-
   fetchAllWithPagination(campId: number): void {
     this.isLoading.set(true);
     this.campLeaderService.standingCamp(campId).subscribe({
@@ -48,7 +45,6 @@ export class StandingCampComponent implements OnInit {
       },
     });
   }
-
   downloadExcel() {
     this.isExporting.set(true);
     this.exportExcelService.downloadExcelLeader(this.campId).subscribe({

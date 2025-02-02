@@ -1,13 +1,16 @@
 <div class="bg-[#F4F5F8] overflow-x-hidden min-h-[calc(100vh-72px)]">
-    <div class="fixed z-50 top-0 w-full"> 
-        <app-mentornav ></app-mentornav>
+  <div class="fixed z-50 top-0 w-full">
+    <app-mentornav></app-mentornav>
+  </div>
+  <div
+    class="w-[100vw] z-0 custom-scrollbar overflow-x-hidden min-h-[calc(100vh-72px)] mt-[72px] py-3 overflow-y-auto bg-[#F4F5F8]"
+  >
+    <router-outlet />
+    <div
+      *ngIf="!camp"
+      class="text-red-600 mt-6 text-[40px] flex justify-center items-center h-full"
+    >
+      Please Choose Camp
     </div>
-    <div class="w-[100vw] z-0 custom-scrollbar overflow-x-hidden min-h-[calc(100vh-72px)]  mt-[72px] py-3  overflow-y-auto bg-[#F4F5F8]">
-        
-        <router-outlet />
-        <div *ngIf="!camp" class="text-red-600 mt-6 text-[40px] flex justify-center items-center h-full">
-            Please Choose Camp
-        </div>
-    </div>
-    
+  </div>
 </div>

@@ -6,7 +6,6 @@ import { DatePipe, NgClass } from '@angular/common';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-contests-hoc',
   standalone: true,
@@ -31,12 +30,10 @@ export class ContestsHOCComponent implements OnInit {
   ngOnInit() {
     this.getAllContests(this.currentPage, this.pageSize);
   }
-
   convertToLocal(date: string): string {
     const localDate = new Date(date);
     return localDate.toLocaleString('en-US', { hour12: false });
   }
-
   getAllContests(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.contestsHocService.getAllContests(currentPage, pageSize).subscribe({
@@ -56,7 +53,6 @@ export class ContestsHOCComponent implements OnInit {
       },
     });
   }
-
   toggleDetails(id: number) {
     if (id === this.contestId) {
       this.contestId = 0;
@@ -64,12 +60,10 @@ export class ContestsHOCComponent implements OnInit {
       this.contestId = id;
     }
   }
-
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
     this.showModal = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.dataRequest = [];
@@ -78,11 +72,9 @@ export class ContestsHOCComponent implements OnInit {
     }
     this.showModal = false;
   }
-
   goToActionContest(id: number): void {
     this.router.navigate(['head_of_camp/contests/action-contest/', id]);
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const atBottom =

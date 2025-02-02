@@ -5,7 +5,6 @@ import { Admins, Data } from '../../model/admins';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-admin-home',
   standalone: true,
@@ -21,14 +20,12 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit() {
     this.getAllAdminsPagination(1, 5);
   }
-
   getPageParams(pageParams: {
     currentPage: number;
     rowsPerPage: number;
   }): void {
     this.getAllAdminsPagination(pageParams.currentPage, pageParams.rowsPerPage);
   }
-
   getAllAdminsPagination(currentPage: number, pageSize: number): void {
     this.isLoading = true;
     this.adminsService.getAllAdminsPagination(currentPage, pageSize).subscribe({

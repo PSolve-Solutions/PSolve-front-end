@@ -2,7 +2,7 @@
   class="flex flex-col justify-start w-full h-full mt-16 md:mt-20 font-montserrat md:ps-6 md:pe-8"
 >
   <div class="flex items-center justify-between mb-6 w-fit">
-    <h1 class="text-4xl font-extrabold text-mainColor1">Login</h1>
+    <h1 class="text-3xl font-extrabold md:text-4xl text-mainColor1">Login</h1>
   </div>
   <form
     [formGroup]="loginForm"
@@ -16,7 +16,6 @@
       class="border focus:outline-0 border-[#e1e4e4] rounded-xl text-mainColor1 font-semibold bg-[#eef3f3] py-4 px-6 text-lg"
       placeholder="Username"
     />
-
     <div
       class="border relative focus:outline-0 border-[#e1e4e4] rounded-xl text-mainColor1 font-semibold bg-[#eef3f3] py-4 px-6 text-lg"
     >
@@ -34,6 +33,7 @@
         class="absolute p-1.5 rounded-full top-3 right-3"
         (click)="togglePasswordVisibility()"
       >
+        <span class="sr-only">show</span>
         @if (passwordFieldType === 'password' ) {
         <svg
           width="18"
@@ -47,7 +47,6 @@
             fill="black"
           />
         </svg>
-
         }@else {
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +98,6 @@
       } @else { Login }
     </button>
   </form>
-
   @if (submitted && (loginForm.controls['userName'].errors
   ||loginForm.controls['password'].errors) ) {
   <div>

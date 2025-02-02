@@ -16,7 +16,6 @@ import { ReportsService } from '../../services/reports.service';
 import { TestimonialComponent } from '../../Components/testimonial/testimonial.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-reports-leader',
   standalone: true,
@@ -43,13 +42,10 @@ export class ReportsLeaderComponent implements OnInit {
   endOfData: boolean = false;
   page: number = 1;
   dataReport: any[] = [];
-
   @ViewChildren('topSection') topSections!: QueryList<ElementRef>;
-
   ngOnInit() {
     this.reportsWithPagination(this.page, 2);
   }
-
   reportsWithPagination(
     currentPage: number,
     pageSize: number,
@@ -72,7 +68,6 @@ export class ReportsLeaderComponent implements OnInit {
       },
     });
   }
-
   reportsInDetails(campId: number): void {
     this.isLoadingReportInfo.set(true);
     const currentDate = new Date();
@@ -83,7 +78,6 @@ export class ReportsLeaderComponent implements OnInit {
       2,
       '0'
     )}/${currentDate.getFullYear()}`;
-
     console.log(formattedDate);
     this.reportsService.reportsInDetails(campId, formattedDate).subscribe({
       next: ({ statusCode, data }) => {
@@ -100,7 +94,6 @@ export class ReportsLeaderComponent implements OnInit {
       },
     });
   }
-
   toggleExpand(itemId: number, index: number): void {
     if (this.expandedItems.has(itemId)) {
       this.expandedItems.delete(itemId);
@@ -110,28 +103,23 @@ export class ReportsLeaderComponent implements OnInit {
       this.scrollToTopSectionById(itemId);
     }
   }
-
   isExpanded(itemId: number): boolean {
     return this.expandedItems.has(itemId);
   }
-
   scrollToTopSectionById(itemId: number): void {
     const section = this.topSections.find(
       (element) => element.nativeElement.id === `section-${itemId}`
     );
-
     if (section) {
       section.nativeElement.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
-
       setTimeout(() => {
         window.scrollBy({ top: -20, behavior: 'smooth' });
       }, 300);
     }
   }
-
   @HostListener('window:scroll', [])
   onScroll(): void {
     if (

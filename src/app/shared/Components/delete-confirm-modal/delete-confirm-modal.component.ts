@@ -9,7 +9,6 @@ import {
 import { RequestsLeaderService } from '../../../pages/Leader/services/requests-leader.service';
 import { ToastrService } from 'ngx-toastr';
 import { CampLeaderService } from '../../../pages/Leader/services/camp-leader.service';
-
 @Component({
   selector: 'app-delete-confirm-modal',
   standalone: true,
@@ -35,7 +34,6 @@ export class DeleteConfirmModalComponent {
       this.closeModal.emit(true);
     }
   }
-
   confirm() {
     if (this.selectedIds !== null && this.label === 'request') {
       this.deleteRequests(this.selectedIds);
@@ -46,7 +44,6 @@ export class DeleteConfirmModalComponent {
       }
     }
   }
-
   deleteRequests(id: any) {
     this.isLoading.set(true);
     this.request.deleteRequests(id).subscribe({
@@ -63,7 +60,6 @@ export class DeleteConfirmModalComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted.set(false);
-
         this.isLoading.update((v) => (v = false));
       },
     });
@@ -84,7 +80,6 @@ export class DeleteConfirmModalComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted.set(false);
-
         this.isLoading.update((v) => (v = false));
       },
     });

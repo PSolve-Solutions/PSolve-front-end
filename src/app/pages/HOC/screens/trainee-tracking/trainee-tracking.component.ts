@@ -4,7 +4,6 @@ import { NgClass } from '@angular/common';
 import { Names, Root } from '../../model/tracking-hoc';
 import { Data } from '../../model/contests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-trainee-tracking',
   standalone: true,
@@ -15,17 +14,14 @@ import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service
 export class TraineeTrackingComponent implements OnInit {
   trackingService = inject(TrackingService);
   ocSidebarService = inject(OcSidebarService);
-
   allData!: Root;
   dataRequest: Root[] = [];
   allSheets!: Names[];
   currentPage: number = 1;
   pageSize: number = 15;
-
   allDataContests!: Root;
   dataRequestContests: Root[] = [];
   allContests!: Names[];
-
   isLoading = signal<boolean>(false);
   isLoading2 = signal<boolean>(false);
   hoveredRow: number | null = null;
@@ -64,7 +60,6 @@ export class TraineeTrackingComponent implements OnInit {
         },
       });
   }
-
   trackingTraineesContests(currentPage: number, pageSize: number): void {
     this.isLoading2.set(true);
     this.trackingService
@@ -94,7 +89,6 @@ export class TraineeTrackingComponent implements OnInit {
         },
       });
   }
-
   getSheetNames(): void {
     this.isLoading.set(true);
     this.trackingService.sheetNames().subscribe({
@@ -133,7 +127,6 @@ export class TraineeTrackingComponent implements OnInit {
       },
     });
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;
@@ -154,17 +147,14 @@ export class TraineeTrackingComponent implements OnInit {
       this.trackingTraineesContests(++this.currentPage, this.pageSize);
     }
   }
-
   onHover(rowIndex: number, colIndex: number) {
     this.hoveredRow = rowIndex;
     this.hoveredCol = colIndex;
   }
-
   onLeave() {
     this.hoveredRow = null;
     this.hoveredCol = null;
   }
-
   selectTab(tab: string) {
     this.dataRequest = [];
     this.dataRequestContests = [];

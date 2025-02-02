@@ -8,7 +8,6 @@
     <div
       class="flex items-center gap-2 transition-all duration-500 mb-9 text-amber-500"
     >
-      <!-- Star Rating -->
       @for (star of getStarsArray(item.rate); track $index) {
       <div>
         <svg
@@ -96,7 +95,6 @@
   </div>
   }
 </div>
-
 }@else {
 <div class="flex w-full px-2 pb-4 mt-6">
   @for (item of dashboardFeedbacks;track item; let i = $index) {
@@ -194,5 +192,4 @@
   </div>
   }
 </div>
-
 }

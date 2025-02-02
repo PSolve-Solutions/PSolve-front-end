@@ -10,7 +10,6 @@ import { NgClass } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { EditImagePopComponent } from '../edit-image-pop/edit-image-pop.component';
-
 @Component({
   selector: 'app-sidebar-profile',
   standalone: true,
@@ -28,15 +27,12 @@ export class SidebarProfileComponent implements OnInit {
   currentPath: string = '';
   showPopup: boolean = false;
   image: string | null = null;
-
   openPopup(): void {
     this.showPopup = true;
   }
-
   closePopup(): void {
     this.showPopup = false;
   }
-
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
@@ -45,14 +41,12 @@ export class SidebarProfileComponent implements OnInit {
       this.closePopup();
     }
   }
-
   ngOnInit(): void {
     this.currentPath = this.router.url;
     this.currentUser = this.authService.currentUser();
     this.profilePhoto = this.authService.currentUser().photoUrl;
     this.detectLocalStorageChange();
   }
-
   detectLocalStorageChange(): void {
     const storedData = JSON.parse(localStorage.getItem('CURRENT_USER') || '{}');
     const originalSetItem = localStorage.setItem;

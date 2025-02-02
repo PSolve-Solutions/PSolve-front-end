@@ -6,7 +6,6 @@
     All Requests :
     {{ campId !== 0 && !isLoading() ? totalCount : 0 }}
   </h1>
-
   <div class="flex items-center justify-between pb-4 border-b-2 md:hidden">
     <h1 class="text-lg font-bold transition-all duration-500">All Requests</h1>
     <div class="flex items-center justify-between gap-x-2">
@@ -73,7 +72,6 @@
       </div>
     </div>
   </div>
-
   <div class="flex flex-col mt-4 space-y-4 md:mt-0">
     <div class="flex items-center justify-end md:justify-between">
       <div class="items-center justify-between hidden md:flex gap-x-6">
@@ -163,7 +161,6 @@
         </button>
       </div>
     </div>
-
     <div style="height: calc(100vh - 240px)" class="flex flex-col">
       @if (campId !== 0) {
       <div
@@ -360,7 +357,6 @@
         </div>
         }
       </div>
-
       @if (showModalDelete) {
       <app-delete-confirm-modal
         (closeModal)="handleClose($event)"
@@ -395,7 +391,6 @@
       }
     </div>
   </div>
-
   <div class="flex items-center justify-end">
     <div class="flex items-center text-mainColor4 gap-x-6">
       @if (isLoadingSubmit()) {

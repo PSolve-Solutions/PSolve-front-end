@@ -7,7 +7,6 @@ import { CampInfo } from '../../model/camp';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { DatePipe, NgClass } from '@angular/common';
 import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
-
 @Component({
   selector: 'app-camps-leader',
   standalone: true,
@@ -33,11 +32,9 @@ export class CampsLeaderComponent implements OnInit {
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
-
   ngOnInit() {
     this.getAllCamps(this.currentPage, this.pageSize);
   }
-
   getAllCamps(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.campLeaderService
@@ -60,17 +57,14 @@ export class CampsLeaderComponent implements OnInit {
         },
       });
   }
-
   convertToLocal(date: string): Date {
     const localDate = new Date(date);
     return localDate;
   }
-
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
     this.showModalDelete = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.casheService.clearCache();
@@ -78,19 +72,15 @@ export class CampsLeaderComponent implements OnInit {
     }
     this.showModalDelete = false;
   }
-
   //Empty
   showConfirmEmpty(id: number) {
     this.selectedEmptyId = id;
     this.showEmptyModal = true;
   }
-
   handleCloseEmpty(confirmed: boolean) {
     this.showEmptyModal = false;
   }
-
   campId: number = 0;
-
   toggleDetails(id: number) {
     if (id === this.campId) {
       this.campId = 0;
@@ -98,7 +88,6 @@ export class CampsLeaderComponent implements OnInit {
       this.campId = id;
     }
   }
-
   generatePages(): void {
     this.pages = [];
     if (this.allCampsInfo?.totalPages <= 3) {
@@ -111,23 +100,19 @@ export class CampsLeaderComponent implements OnInit {
       for (let i = start; i <= end; i++) {
         this.pages.push(i);
       }
-
       this.showEllipsis = end < this.allCampsInfo?.totalPages - 1;
       this.showLastPage = this.showEllipsis;
     }
   }
-
   changePage(page: number): void {
     if (page > 0 && page <= this.allCampsInfo?.totalPages) {
       this.currentPage = page;
       this.getAllCamps(this.currentPage, this.pageSize);
     }
   }
-
   goToActionCamp(id: number): void {
     this.router.navigate(['leader/camps/action-camp/', id]);
   }
-
   goToStandingCamp(id: number): void {
     this.router.navigate(['leader/camps/standing/', id]);
   }

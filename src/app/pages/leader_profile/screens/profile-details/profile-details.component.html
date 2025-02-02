@@ -27,11 +27,9 @@
               ></div>
             </div>
           </div>
-
           }@else { Save }
         </button>
         }@else {
-
         <button
           (click)="toggleEditMode()"
           type="button"
@@ -45,12 +43,10 @@
               ></div>
             </div>
           </div>
-
           }@else { Edit }
         </button>
         }
       </div>
-
       <h2 class="mb-4 text-3xl font-semibold px-14">Personal Information</h2>
       <div class="border-l-2 px-14">
         @if (currentPath.includes('head_of_camp') ||
@@ -157,7 +153,6 @@
               [ngClass]="isMessageSuccess ? 'text-[#52B788]' : 'text-[#EF4A50]'"
             >
               @if (isMessageSuccess ) {
-
               <div
                 class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
               >
@@ -198,7 +193,6 @@
               "
             >
               @if (isMessageSuccessId ) {
-
               <div
                 class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
               >
@@ -234,7 +228,6 @@
           <div class="flex flex-col basis-1/2"></div>
         </div>
       </div>
-
       <h2 class="mb-2 text-3xl font-semibold px-14">Academic Information</h2>
       <div class="flex items-center justify-between w-full px-14">
         <div class="flex flex-col basis-1/2">

@@ -22,13 +22,11 @@ export class AdminsService {
       params
     );
   }
-
   deleteAdmin(id: string): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/admins/${id}`
     );
   }
-
   actionsAdmin(formData: any): Observable<ResponseHeader> {
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Admin/admins`,
@@ -40,9 +38,7 @@ export class AdminsService {
       `${environment.BASE_URL}/api/Admin/admins/${id}`
     );
   }
-
   // Universities
-
   deleteUniversity(name: string): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Admin/universities/${name}`
@@ -54,7 +50,6 @@ export class AdminsService {
       name
     );
   }
-
   getUniversities(): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Home/universities`

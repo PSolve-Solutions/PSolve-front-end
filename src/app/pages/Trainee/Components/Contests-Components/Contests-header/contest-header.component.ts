@@ -1,6 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component} from '@angular/core';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-contest-header',
   standalone: true,
@@ -8,6 +7,4 @@ import { Component} from '@angular/core';
   templateUrl: './contest-header.component.html',
   styleUrls: ['./contest-header.component.scss'],
 })
-export class ContestHeaderComponent {
-
-}
+export class ContestHeaderComponent {}

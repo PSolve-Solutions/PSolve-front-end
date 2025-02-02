@@ -8,7 +8,6 @@ import {
 } from '../../model/attenances-hoc';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { RouterLink } from '@angular/router';
-
 @Component({
   selector: 'app-edit-attendance',
   standalone: true,
@@ -28,7 +27,6 @@ export class EditAttendanceComponent implements OnInit {
   ngOnInit() {
     this.getTopics();
   }
-
   getAttendanceBySessionId(sessionId: number): void {
     this.isLoading.set(true);
     this.attendanceHocService.getAttendanceBySessionId(sessionId).subscribe({
@@ -66,13 +64,11 @@ export class EditAttendanceComponent implements OnInit {
       },
     });
   }
-
   onTabClick(sessionId: number): void {
     this.activeTab = sessionId;
     this.sessionId = sessionId;
     this.getAttendanceBySessionId(sessionId);
   }
-
   toggleStatus(traineeId: string, event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const newStatus = inputElement.checked;
@@ -89,7 +85,6 @@ export class EditAttendanceComponent implements OnInit {
     this.updateAatendance(info);
     this.casheService.clearCache;
   }
-
   updateAatendance(info: any): void {
     this.attendanceHocService.updateAatendance(info).subscribe({
       next: ({ statusCode, data }) => {

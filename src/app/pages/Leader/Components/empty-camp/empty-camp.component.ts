@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { CampLeaderService } from '../../services/camp-leader.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-empty-camp',
   standalone: true,
@@ -23,7 +22,6 @@ export class EmptyCampComponent {
   @Output() closeEmptyModal = new EventEmitter<boolean>();
   isLoading = signal<boolean>(false);
   isEmpty: boolean = false;
-
   cancel() {
     this.closeEmptyModal.emit(false);
   }

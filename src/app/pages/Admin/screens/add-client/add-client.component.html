@@ -84,7 +84,6 @@
                   class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (gender) { {{ gender }} }@else {
-
                   <span class="text-[#002C3D4D]">Gender</span>
                   }
                   <svg
@@ -107,7 +106,6 @@
                   <ul>
                     @for (option of [{id: 0, name:'Male'}, {id: 1, name:
                     'Female'}]; track option.id) {
-
                     <li
                       (click)="selectGender(option)"
                       [class.text-subColor1]="option.name === gender"
@@ -133,7 +131,6 @@
                     >*</span
                   ></label
                 >
-
                 <input
                   type="date"
                   id="birthDate"
@@ -172,7 +169,6 @@
                   class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (grade) { {{ grade }} }@else {
-
                   <span class="text-[#002C3D4D]">Year</span>
                   }
                   <svg
@@ -194,7 +190,6 @@
                 >
                   <ul>
                     @for (option of [1,2,3,4,5]; track option) {
-
                     <li
                       (click)="selectGrade(option)"
                       [class.text-subColor1]="option === grade"
@@ -250,7 +245,6 @@
                   class="px-4 py-2 text-sm font-semibold border rounded-md outline-none appearance-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 />
               </div>
-
               <div id="college" class="relative flex flex-col gap-y-1">
                 <label
                   for="College"
@@ -266,7 +260,6 @@
                   class="flex items-center justify-between px-4 py-2 text-sm font-semibold bg-white border rounded-md outline-none md:text-lg text-mainColor1 border-mainColor1 focus:border-subColor1"
                 >
                   @if (collegeName) { {{ collegeName }} }@else {
-
                   <span class="text-[#002C3D4D]">College</span>
                   }
                   <svg
@@ -288,7 +281,6 @@
                 >
                   <ul>
                     @for (option of allCollege; track option) {
-
                     <li
                       (click)="selectCollege(option)"
                       [class.text-subColor1]="option.name === collegeName"
@@ -333,7 +325,6 @@
           </div>
         </div>
       </div>
-
       <div
         class="items-center justify-center hidden w-2/3 py-6 rounded-lg lg:flex lg:mt-20 lg:w-1/4 bg-mainColor3"
       >
@@ -349,7 +340,6 @@
               class="object-cover w-full h-full rounded-full"
             />
             }@else {
-
             <svg
               width="77"
               height="65"
@@ -394,7 +384,6 @@
       <h2 class="text-xl font-semibold text-mainColor1">
         Client Personal Information
       </h2>
-
       <div class="flex flex-col w-full gap-y-2 lg:flex-row gap-x-4">
         <div class="grid w-full grid-cols-2 gap-2 lg:w-7/12">
           <div class="flex flex-col gap-y-1">
@@ -531,7 +520,6 @@
             class="object-cover w-full h-full rounded-full"
           />
           }@else {
-
           <svg
             width="77"
             height="65"

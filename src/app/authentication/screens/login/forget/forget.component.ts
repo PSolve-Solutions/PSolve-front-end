@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-forget',
   standalone: true,
@@ -24,7 +23,6 @@ export class ForgetComponent {
   emailForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
-
   findEmail() {
     if (this.emailForm.invalid) {
       this.toastr.error('Email is required');

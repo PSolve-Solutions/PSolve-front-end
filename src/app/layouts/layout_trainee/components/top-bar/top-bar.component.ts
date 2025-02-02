@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../../authentication/services/auth.service';
@@ -8,14 +15,18 @@ import { ResponsiveService } from '../../../../pages/Trainee/Services/responsive
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { NotificationComponent } from '../../../../shared/Components/notification/notification.component';
 declare var $: any;
-
-
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, QRCodeModule, NotificationComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    QRCodeModule,
+    NotificationComponent,
+  ],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.scss'
+  styleUrl: './top-bar.component.scss',
 })
 export class TopBarComponent {
   authService = inject(AuthService);
@@ -43,10 +54,7 @@ export class TopBarComponent {
     { label: 'Standing', path: '/trainee/standing' },
   ];
   @ViewChild(NotificationComponent) childComponent!: NotificationComponent;
-
-
   constructor(private elementRef: ElementRef) {}
-
   ngOnInit() {
     this.currentUser = this.authService.currentUser();
     this.profilePhoto = this.authService.currentUser().photoUrl;
@@ -55,16 +63,14 @@ export class TopBarComponent {
     this.detectLocalStorageChange();
     this.newNotificationCheck();
   }
-
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
     const clickedInside = this.elementRef.nativeElement.contains(targetElement);
     if (!clickedInside && this.isShow) {
       this.isShow = false;
     }
-    if(clickedInside && !$('.dialog-container').hasClass('hidden')){
-
-      this.toggleDialog()
+    if (clickedInside && !$('.dialog-container').hasClass('hidden')) {
+      this.toggleDialog();
     }
   }
   toggleDropdown() {
@@ -79,22 +85,19 @@ export class TopBarComponent {
   goSpecificRole(role: string): void {
     this.router.navigate(['/', role.toLowerCase()]);
   }
-  toggleDialog():void{
-    this.getQrCode()
-    $('.dialog-container').fadeToggle(150)
+  toggleDialog(): void {
+    this.getQrCode();
+    $('.dialog-container').fadeToggle(150);
   }
-  getQrCode():void{
+  getQrCode(): void {
     this._homeService.QRCode().subscribe({
-      next:({statusCode,data})=>{
-        if(statusCode===200){
-          this.qrData=data
-
+      next: ({ statusCode, data }) => {
+        if (statusCode === 200) {
+          this.qrData = data;
         }
-      }
-    })
+      },
+    });
   }
-
-
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -142,6 +145,4 @@ export class TopBarComponent {
       }
     };
   }
-
-
 }

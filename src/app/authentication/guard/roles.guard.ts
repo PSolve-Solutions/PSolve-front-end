@@ -1,15 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Route, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-
 export const rolesGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-
   const userInfo = JSON.parse(localStorage.getItem('CURRENT_USER') || '{}');
   const { routeConfig } = route;
   const authService = inject(AuthService);
   const { path } = routeConfig as Route;
-
   const roles = userInfo.roles;
   if (path === '' && !authService.isAuth()) {
     return true;
@@ -23,14 +20,12 @@ export const rolesGuard: CanActivateFn = (route, state) => {
   if (path === 'mentor' && roles.includes('Mentor')) {
     return true;
   }
-
   if (path === 'trainee' && roles.includes('Trainee')) {
     return true;
   }
   if (path === 'psovle' && roles.includes('Admin')) {
     return true;
   }
-
   router.navigateByUrl(
     roles.includes('Leader')
       ? '/leader'
@@ -44,6 +39,5 @@ export const rolesGuard: CanActivateFn = (route, state) => {
       ? '/psovle'
       : '/'
   );
-
   return false;
 };

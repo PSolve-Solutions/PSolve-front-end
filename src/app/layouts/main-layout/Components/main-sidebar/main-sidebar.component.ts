@@ -4,7 +4,6 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-main-sidebar',
   standalone: true,
@@ -19,7 +18,6 @@ export class MainSidebarComponent {
   router = inject(Router);
   roles: string[] = [];
   currentPath: string = '';
-
   leaderLinks: { name: string; link: string; icon: SafeHtml }[] = [];
   hocLinks: { name: string; link: string; icon: SafeHtml }[] = [];
   constructor() {
@@ -461,7 +459,6 @@ export class MainSidebarComponent {
     this.roles = this.authService.currentUser().roles;
     this.currentPath = this.router.url;
   }
-
   show(): void {
     if (this.ocSidebarService.isOpen() === 'show') {
       this.ocSidebarService.openSidebar('semi');
@@ -470,7 +467,6 @@ export class MainSidebarComponent {
     }
     console.log(this.ocSidebarService.isOpen());
   }
-
   hideSidebar(): void {
     this.ocSidebarService.openSidebar('hide');
   }

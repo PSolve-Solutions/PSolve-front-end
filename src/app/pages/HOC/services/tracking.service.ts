@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class TrackingService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   trackingWithPaingation(
     currentPage: number,
     pageSize: number
@@ -23,7 +22,6 @@ export class TrackingService {
       params
     );
   }
-
   getTasksByTaskStatus(
     mentorId: string,
     taskStatus: number
@@ -36,7 +34,6 @@ export class TrackingService {
       { params }
     );
   }
-
   trackingTraineesSheets(
     currentPage: number,
     pageSize: number
@@ -49,7 +46,6 @@ export class TrackingService {
       { params }
     );
   }
-
   trackingTraineesContests(
     currentPage: number,
     pageSize: number
@@ -62,7 +58,6 @@ export class TrackingService {
       { params }
     );
   }
-
   sheetNames(): Observable<ResponseHeader> {
     return this.casheService.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/sheets/names`

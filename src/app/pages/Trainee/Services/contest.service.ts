@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +12,6 @@ export class ContestService {
   oldContest: BehaviorSubject<any> = new BehaviorSubject('');
   isLoading: boolean = true;
   constructor() {}
-
   assignContests(): void {
     this.isLoading = true;
     this.getAllTraineeContest().subscribe({

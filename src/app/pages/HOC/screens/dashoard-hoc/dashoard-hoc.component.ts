@@ -4,7 +4,6 @@ import { NgClass } from '@angular/common';
 import { DashboardData, StandingData } from '../../model/dashboarf-hoc';
 import { DashboardChartsHocComponent } from '../../components/dashboard-charts-hoc/dashboard-charts-hoc.component';
 import { ExportExcelService } from '../../../../shared/services/export-excel.service';
-
 @Component({
   selector: 'app-dashoard-hoc',
   standalone: true,
@@ -20,11 +19,9 @@ export class DashoardHOCComponent implements OnInit {
   dashboardData!: DashboardData;
   isLoading = signal<boolean>(false);
   isExporting = signal<boolean>(false);
-
   ngOnInit() {
     this.dashboard();
   }
-
   dashboard(): void {
     this.isLoading.set(true);
     this.dashboardHocService.dashboard().subscribe({
@@ -42,7 +39,6 @@ export class DashoardHOCComponent implements OnInit {
       },
     });
   }
-
   getStandingCamp(): void {
     this.isLoading.set(true);
     this.dashboardHocService.standingCamp().subscribe({
@@ -68,7 +64,6 @@ export class DashoardHOCComponent implements OnInit {
       this.getStandingCamp();
     }
   }
-
   downloadExcel() {
     this.isExporting.set(true);
     this.exportExcelService.downloadExcelHOC().subscribe({

@@ -8,7 +8,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Chart, Plugin, registerables } from 'chart.js';
-
 Chart.register(...registerables);
 @Component({
   selector: 'app-chart-dashboard',
@@ -25,13 +24,11 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
   percentagefemales: number = 0;
   chart: Chart | null = null;
   chart2: Chart | null = null;
-
   ngOnChanges(): void {
     if (this.traineesCount !== 0) {
       this.percentageMales = Math.round(
         (this.malesCount / this.traineesCount) * 100
       );
-
       this.percentagefemales = Math.round(
         (this.femalesCount / this.traineesCount) * 100
       );
@@ -41,7 +38,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
     this.renderChart(['Male', 'No'], data);
     this.renderChart2(['Female', 'No'], data2);
   }
-
   createCenterTextPlugin(
     text: string,
     font: string = 'bold 24px Arial',
@@ -56,7 +52,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
         const height = bottom - top;
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         ctx.save();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -67,7 +62,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
       },
     };
   }
-
   createDoughnutBackgroundPlugin(backgroundColor: string): Plugin {
     return {
       id: 'doughnutBackgroundPlugin',
@@ -78,11 +72,9 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
         const height = bottom - top;
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         const meta = chart.getDatasetMeta(0).data[0] as any;
         const cutout = (chart.config.options as any).cutout || '85%';
         const cutoutRadius = (meta.outerRadius * parseFloat(cutout)) / 85;
-
         ctx.save();
         ctx.beginPath();
         ctx.arc(centerX, centerY, cutoutRadius, 0, 2 * Math.PI);
@@ -93,7 +85,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
       },
     };
   }
-
   renderChart(lables: any[], data: any[]): void {
     if (this.chart) {
       this.chart.destroy();
@@ -134,7 +125,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
           },
         },
       } as any,
-
       plugins: [
         this.createDoughnutBackgroundPlugin('#c4e0e0'),
         this.createCenterTextPlugin(
@@ -153,7 +143,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
       type: 'doughnut',
       data: {
         labels: lables,
-
         datasets: [
           {
             data: data,
@@ -195,7 +184,6 @@ export class ChartDashboardComponent implements OnChanges, OnDestroy {
       ],
     });
   }
-
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();

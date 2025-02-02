@@ -11,7 +11,6 @@ export interface StaffInfo {
   data: Staff[];
   errors: any;
 }
-
 export interface Staff {
   id: string;
   firstName: string;
@@ -22,7 +21,6 @@ export interface Staff {
   grade: number;
   codeForceHandle: string;
 }
-
 export interface OnStaffInfo {
   id: string;
   firstName: string;
@@ -40,7 +38,6 @@ export interface OnStaffInfo {
   vjudgeHandle: any;
   userRoles: UserRole[];
 }
-
 export interface UserRole {
   role: string;
   campId?: number;

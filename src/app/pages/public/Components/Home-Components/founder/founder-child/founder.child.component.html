@@ -5,9 +5,9 @@
       [src]="founderData.image"
       class="founder-img rounded-xl"
       [alt]="founderData.name"
-      loading="lazy">
+      loading="lazy"
+    />
   </div>
-
   <!-- Founder Data -->
   <div class="found-data flex flex-col justify-evenly">
     <!-- Founder Name -->
@@ -15,23 +15,20 @@
       <h5>
         {{ founderData.name }}
       </h5>
-      <img
-        src="assets/img_public/p_solve_home/star.svg"
-        alt="star">
+      <img src="assets/img_public/p_solve_home/star.svg" alt="star" />
     </div>
-
     <!-- Founder Skills -->
     <div class="skills capitalize font-light text-[#002C3D] my-1">
-      {{ founderData.skills.join(' | ') }}
+      {{ founderData.skills.join(" | ") }}
     </div>
-
     <!-- LinkedIn Link -->
     <div class="link w-fit">
       <img
         src="assets/img_public/p_solve_home/linked_in.svg"
         class="linkedin cursor-pointer"
         (click)="openUrl(founderData.link)"
-        alt="linked_in">
+        alt="linked_in"
+      />
     </div>
   </div>
 </div>

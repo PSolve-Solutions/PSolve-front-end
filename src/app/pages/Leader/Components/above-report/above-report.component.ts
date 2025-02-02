@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Chart, Plugin, registerables } from 'chart.js';
-
 Chart.register(...registerables);
 @Component({
   selector: 'app-above-report',
@@ -29,13 +28,11 @@ export class AboveReportComponent
   collegePieCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('yearsDoughnutCanvas')
   yearsDoughnutCanvas!: ElementRef<HTMLCanvasElement>;
-
   private isViewInitialized = false;
   private chart: Chart | undefined;
   private genderChart: Chart | undefined;
   private collegeChart: Chart | undefined;
   private yearChart: Chart | undefined;
-
   ngAfterViewInit(): void {
     this.isViewInitialized = true;
     this.renderChart();
@@ -43,7 +40,6 @@ export class AboveReportComponent
     this.renderCollegePieChart();
     this.renderChartForYear();
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (this.isViewInitialized && changes['reportInfo'] && this.reportInfo) {
       this.renderChart();
@@ -52,7 +48,6 @@ export class AboveReportComponent
       this.renderChartForYear();
     }
   }
-
   createCenterTextPlugin(text: string, font: string, color: string): Plugin {
     return {
       id: 'centerTextPlugin',
@@ -63,11 +58,9 @@ export class AboveReportComponent
         const height = bottom - top;
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         const meta = chart.getDatasetMeta(0).data[0] as any;
         const cutout = (chart.config.options as any).cutout || '65%';
         const cutoutRadius = (meta.outerRadius * parseFloat(cutout)) / 100;
-
         ctx.save();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -83,11 +76,9 @@ export class AboveReportComponent
       console.error('Canvas element is not available.');
       return;
     }
-
     if (this.chart) {
       this.chart.destroy();
     }
-
     const ctx = this.canvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
@@ -127,7 +118,6 @@ export class AboveReportComponent
           },
         },
       } as any,
-
       plugins: [
         this.createCenterTextPlugin(
           String(this.reportInfo?.progressPrecentage),
@@ -137,7 +127,6 @@ export class AboveReportComponent
       ],
     });
   }
-
   doughnutCenterTextPlugin(): Plugin {
     return {
       id: 'doughnutCenterTextPlugin',
@@ -147,44 +136,36 @@ export class AboveReportComponent
           chartArea: { width, height },
         } = chart;
         ctx.save();
-
         chart.data.datasets.forEach((dataset, i) => {
           const meta = chart.getDatasetMeta(i);
           meta.data.forEach((element, index) => {
             const dataValue = dataset.data[index] as number;
             const position = element.tooltipPosition(false);
-
             ctx.fillStyle = '#fff';
             ctx.font = `12px sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-
             const text = `${dataValue}%`;
             ctx.fillText(text, position.x, position.y);
           });
         });
-
         ctx.restore();
       },
     };
   }
-
   renderChartForGender(): void {
     if (!this.genderCanvas) {
       console.error('Canvas element is not available.');
       return;
     }
-
     if (this.genderChart) {
       this.genderChart.destroy();
     }
-
     const ctx = this.genderCanvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
       return;
     }
-
     const roundedMalePercentage = Math.round(this.reportInfo?.malePrecentage);
     const roundedFemalePercentage = Math.round(
       this.reportInfo?.femalePrecentage
@@ -193,7 +174,6 @@ export class AboveReportComponent
       this.reportInfo?.malePrecentage + this.reportInfo?.femalePrecentage === 0
         ? [1, 1]
         : [roundedMalePercentage, roundedFemalePercentage];
-
     this.genderChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -228,27 +208,22 @@ export class AboveReportComponent
           },
         },
       } as any,
-
       plugins: [this.doughnutCenterTextPlugin()],
     });
   }
-
   renderCollegePieChart(): void {
     if (!this.collegePieCanvas) {
       console.error('Canvas element is not available.');
       return;
     }
-
     if (this.collegeChart) {
       this.collegeChart.destroy();
     }
-
     const ctx = this.collegePieCanvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
       return;
     }
-
     const lableCollege = this.reportInfo?.traineesColleges.map(
       (y: any) => y.college
     );
@@ -270,7 +245,6 @@ export class AboveReportComponent
             'Commerce',
           ]
         : lableCollege;
-
     this.collegeChart = new Chart(ctx, {
       type: 'pie',
       data: {
@@ -302,21 +276,17 @@ export class AboveReportComponent
           },
         },
       } as any,
-
       plugins: [this.doughnutCenterTextPlugin()],
     });
   }
-
   renderChartForYear(): void {
     if (!this.yearsDoughnutCanvas) {
       console.error('Canvas element is not available.');
       return;
     }
-
     if (this.yearChart) {
       this.yearChart.destroy();
     }
-
     const ctx = this.yearsDoughnutCanvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
@@ -334,7 +304,6 @@ export class AboveReportComponent
       this.reportInfo?.traineesGrades.length === 0
         ? ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5']
         : lableYear;
-
     this.yearChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -372,11 +341,9 @@ export class AboveReportComponent
           },
         },
       } as any,
-
       plugins: [this.doughnutCenterTextPlugin()],
     });
   }
-
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();

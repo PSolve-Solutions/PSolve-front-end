@@ -19,7 +19,6 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { ContestsHocService } from '../../services/contests-hoc.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-actions-contests',
   standalone: true,
@@ -52,7 +51,6 @@ export class ActionsContestsComponent implements OnInit {
   onlineJudgeIsCodeforces: boolean = false;
   is: boolean = false;
   allCommunities: { id: string; clientName: string }[] = [];
-
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = parseInt(params['id']);
@@ -72,10 +70,8 @@ export class ActionsContestsComponent implements OnInit {
       endTime: [null, [Validators.required]],
       startTime: [null, [Validators.required]],
     });
-
     this.fetchAllCommunitiesy();
   }
-
   positiveNumberValidator(control: AbstractControl) {
     const value = control.value;
     if (value !== null && value < 0) {
@@ -83,20 +79,17 @@ export class ActionsContestsComponent implements OnInit {
     }
     return null;
   }
-
   increase() {
     this.contestForm
       .get('problemCount')
       ?.setValue(this.contestForm.get('problemCount')?.value + 1);
   }
-
   decrease() {
     const current = this.contestForm.get('problemCount')?.value;
     if (current > 0) {
       this.contestForm.get('problemCount')?.setValue(current - 1);
     }
   }
-
   convertToLocal(utcDate: string): string {
     const date = new Date(utcDate);
     const year = date.getFullYear();
@@ -106,7 +99,6 @@ export class ActionsContestsComponent implements OnInit {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
-
   getOneContest(id: number): void {
     this.isLoading = true;
     this.contestsHocService.getOneContest(id).subscribe({
@@ -139,7 +131,6 @@ export class ActionsContestsComponent implements OnInit {
       },
     });
   }
-
   actionsContext(): void {
     this.submitted = true;
     if (this.contestForm.invalid) {
@@ -210,7 +201,6 @@ export class ActionsContestsComponent implements OnInit {
       });
     }
   }
-
   fetchAllCommunitiesy(): void {
     this.contestsHocService.getPublicCommunities().subscribe({
       next: ({ statusCode, data }) => {
@@ -225,7 +215,6 @@ export class ActionsContestsComponent implements OnInit {
       },
     });
   }
-
   changeJudge(item: number) {
     if (item === 0) {
       this.onlineJudgeIsCodeforces = true;
@@ -233,7 +222,6 @@ export class ActionsContestsComponent implements OnInit {
       this.onlineJudgeIsCodeforces = false;
     }
   }
-
   displayFormErrors() {
     Object.keys(this.contestForm.controls).forEach((field) => {
       const control = this.contestForm.get(field);
