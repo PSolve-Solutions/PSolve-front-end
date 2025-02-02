@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class AttendanceHocService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   getAllAttendances(
     currentPage: number,
     pageSize: number
@@ -23,7 +22,6 @@ export class AttendanceHocService {
       params
     );
   }
-
   getAttendanceBySessionId(sessionId: number): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/attendanceBySessionId/${sessionId}`
@@ -34,7 +32,6 @@ export class AttendanceHocService {
       `${environment.BASE_URL}/api/Head/sessions/getTopics`
     );
   }
-
   updateAatendance(info: any): Observable<ResponseHeader> {
     return this.http.put<any>(
       `${environment.BASE_URL}/api/Head/updateAatendance`,

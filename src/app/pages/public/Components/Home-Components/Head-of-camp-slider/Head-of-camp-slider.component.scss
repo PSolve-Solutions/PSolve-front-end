@@ -1,34 +1,34 @@
-.slider-section{
+.slider-section {
   border: 0.25px solid #002c3d2a;
   border-radius: 14px;
 }
-.top-heading{
+.top-heading {
   font-size: 50px;
   font-weight: 900;
   line-height: 60.95px;
   text-align: left;
-  color: #002C3D;
+  color: #002c3d;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   background-color: rgb(255, 255, 255);
   position: absolute;
   top: 0;
-  left:50%;
-  transform:translate(-50%,-50%) ;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 0 50px;
 }
-.slider-paragraph{
-    padding: 0 80px;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 18.29px;
-    text-align: center;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    color: #285C6A;
-    width: 70%;
+.slider-paragraph {
+  padding: 0 80px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18.29px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #285c6a;
+  width: 70%;
 }
-.sub-heading{
+.sub-heading {
   font-size: 20px;
   font-weight: 900;
   line-height: 24.38px;
@@ -36,10 +36,10 @@
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   margin-left: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
-.number{
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(0, 0, 0, 0) 100%);
+.number {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
   font-size: 120px;
   line-height: 120px;
   font-weight: 900;
@@ -47,50 +47,49 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.step{
-  background: #2A8E9E;
+.step {
+  background: #2a8e9e;
   width: 50px;
   height: 5px;
   cursor: pointer;
-  transition: all .4s;
+  transition: all 0.4s;
 }
-.step:last-child{
+.step:last-child {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
 }
-.step:first-child{
+.step:first-child {
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
 }
-.step.active{
-  background: #002C3D;
+.step.active {
+  background: #002c3d;
 }
-.slider{
-  transition: all .4s;
+.slider {
+  transition: all 0.4s;
 }
-.slide
-{
+.slide {
   min-width: 100%;
 }
-@media screen and (max-width:640px) {
-  .top-heading{
+@media screen and (max-width: 640px) {
+  .top-heading {
     font-size: 30px;
     font-weight: 900;
     line-height: 60.95px;
     text-align: left;
-    color: #002C3D;
+    color: #002c3d;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     background-color: rgb(255, 255, 255);
     position: absolute;
     top: 0;
     min-width: fit-content;
-    left:50%;
-    transform:translate(-50%,-50%) ;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 0 30px;
     width: max-content;
   }
-  .slider-paragraph{
+  .slider-paragraph {
     padding: 0px 0px;
     font-size: 12px;
     font-weight: 700;
@@ -98,31 +97,30 @@
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    color: #285C6A;
+    color: #285c6a;
     width: 100%;
-}
-.sub-heading{
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 12.38px;
-  text-align: center;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  margin-left: 10px;
-  color: #FFFFFF;
-}
-.number{
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(0, 0, 0, 0) 100%);
-  font-size: 40px;
-  line-height: 40px;
-  font-weight: 900;
-  opacity: 0.5;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.step{
-  width: 30px;
-  height: 3px;
-}
-
+  }
+  .sub-heading {
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 12.38px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-left: 10px;
+    color: #ffffff;
+  }
+  .number {
+    background: linear-gradient(180deg, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 900;
+    opacity: 0.5;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .step {
+    width: 30px;
+    height: 3px;
+  }
 }

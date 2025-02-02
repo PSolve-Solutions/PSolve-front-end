@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class WeeklyFilterService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   getToFilter(): Observable<ResponseHeader> {
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Head/weeklyFilter/getToFilter`
@@ -28,7 +27,6 @@ export class WeeklyFilterService {
       { body: traineesId }
     );
   }
-
   filterTrainee(traineeId: any): Observable<ResponseHeader> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.delete<any>(

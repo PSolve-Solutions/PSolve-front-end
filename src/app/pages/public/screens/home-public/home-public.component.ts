@@ -8,7 +8,6 @@ import { TraineeComponent } from '../../Components/Home-Components/trainee/train
 import { HomeService } from '../../Services/home.service';
 import { CommunitiesComponent } from '../../Components/Home-Components/Communities/Communities.component';
 import { AboutusComponent } from '../../Components/Home-Components/aboust-us/aboutus.component';
-
 @Component({
   selector: 'app-home-public',
   standalone: true,
@@ -28,7 +27,6 @@ import { AboutusComponent } from '../../Components/Home-Components/aboust-us/abo
 export class HomePublicComponent implements OnInit {
   homeService = inject(HomeService);
   Clintes: { id: string; name: string; logoUrl: string }[] = [];
-
   ngOnInit(): void {
     this.getAllClintes();
   }

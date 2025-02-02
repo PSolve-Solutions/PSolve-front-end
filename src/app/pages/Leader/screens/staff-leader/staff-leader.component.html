@@ -10,7 +10,6 @@
   >
     Staff members
   </h1>
-
   <div class="flex flex-col space-y-4">
     <form class="flex items-center justify-between px-2">
       <div class="relative w-full">
@@ -21,7 +20,6 @@
           (keyup)="onSearchInput(search.value)"
           placeholder="Search for staff"
         />
-
         <div class="absolute inset-y-0 left-0 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +122,6 @@
           <tbody>
             @if (!isLoading()) { @for (row of allStaffInfo.data; track i; let i
             = $index; let first = $first) {
-
             <tr
               class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
               [class.border-t-8]="first"
@@ -208,7 +205,6 @@
           </tbody>
         </table>
       </div>
-
       <div
         class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
         [class.mt-4]="!isLoading() ? allStaffInfo.data.length === 0 : 0"
@@ -232,7 +228,6 @@
             />
           </svg>
         </button>
-
         @for (page of pages; track $index) {
         <button
           class="px-6 py-1.5 shadow"
@@ -335,7 +330,6 @@
               d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Email:</span>
           <span>{{ staffInfo.email }}</span>
         </div>
@@ -354,7 +348,6 @@
               d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Phone:</span>
           <span>{{ staffInfo.phoneNumber }}</span>
         </div>
@@ -370,7 +363,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Gender:</span>
           <span> @if (staffInfo.gender === 0) { Male }@else { Female } </span>
         </div>
@@ -386,7 +378,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Collage:</span>
           @switch (staffInfo.college ) { @case (0) {
           <span>Computer and Ai</span>
@@ -419,7 +410,6 @@
               d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Year:</span>
           <span>{{ staffInfo.grade }}</span>
         </div>
@@ -435,7 +425,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Codeforces:</span>
           <span>
             <a
@@ -460,7 +449,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE]">Vjudge:</span>
           <span>{{ staffInfo.vjudgeHandle || "" }}</span>
         </div>
@@ -483,7 +471,6 @@
               </clipPath>
             </defs>
           </svg>
-
           <span class="text-[#EEEEEE]">National ID:</span>
           <span>{{ staffInfo.nationalId }}</span>
         </div>
@@ -499,7 +486,6 @@
               fill="white"
             />
           </svg>
-
           <span class="text-[#EEEEEE] self-start">Roles:</span>
           <app-dropdown-roles
             (staffRequested)="onStaffRequested($event)"
@@ -527,7 +513,6 @@
                 />
               </svg>
             </div>
-
             <div class="flex items-center justify-center gap-x-2">
               <span>{{ item.role }}</span> @if (item.campName) {
               <span>-</span>
@@ -570,7 +555,6 @@
                 />
               </svg>
             </div>
-
             <div class="flex items-center justify-center gap-x-2">
               <span>{{ item.role }}</span> @if (item.campName) {
               <span>-</span>
@@ -611,7 +595,6 @@
           </button>
         </div>
         } @if (deletedRoles.length > 0 ) {
-
         <div class="flex items-center justify-end mt-3 mb-2 pe-6">
           @if (isDeleted) {
           <div class="bg-opacity-60">
@@ -622,7 +605,6 @@
             </div>
           </div>
           }@else {
-
           <button
             (click)="saveDeleteRoles()"
             class="bg-[#52B788] px-6 rounded-md py-1.5"

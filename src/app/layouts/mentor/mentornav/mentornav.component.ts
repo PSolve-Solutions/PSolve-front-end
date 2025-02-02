@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
 import { NotificationComponent } from '../../../shared/Components/notification/notification.component';
-
 import {
   Component,
   ElementRef,
@@ -9,7 +8,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../authentication/services/auth.service';
 import { NotificationService } from '../../../shared/services/notification.service';
@@ -27,7 +25,6 @@ export class MentornavComponent implements OnInit {
   currentUser: any;
   notificationService = inject(NotificationService);
   constructor(private elementRef: ElementRef) {}
-
   ngOnInit() {
     this.currentUser = this.authService.currentUser();
     this.newNotificationCheck();

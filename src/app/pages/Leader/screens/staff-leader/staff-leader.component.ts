@@ -9,7 +9,6 @@ import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-staff-leader',
   standalone: true,
@@ -36,7 +35,6 @@ export class StaffLeaderComponent implements OnInit {
   keywordSearch: string = '';
   sortbyNum: number = 0 | 1 | 2;
   deletedRoles: any[] = [];
-
   currentPage: number = 1;
   pageSize: number = 5;
   totalPages: number = 1;
@@ -46,11 +44,9 @@ export class StaffLeaderComponent implements OnInit {
   pages: number[] = [];
   isDropdown: boolean = false;
   sortName: string = '';
-
   ngOnInit() {
     this.staffWithPagination(this.currentPage, this.pageSize);
   }
-
   staffWithPagination(
     currentPage: number,
     pageSize: number,
@@ -78,7 +74,6 @@ export class StaffLeaderComponent implements OnInit {
         },
       });
   }
-
   onSearchInput(keyWord: string) {
     this.keywordSearch = keyWord;
     this.casheService.clearCache();
@@ -89,7 +84,6 @@ export class StaffLeaderComponent implements OnInit {
       this.sortbyNum
     );
   }
-
   toggleDropdown() {
     this.isDropdown = !this.isDropdown;
   }
@@ -113,7 +107,6 @@ export class StaffLeaderComponent implements OnInit {
       this.isDropdown = false;
     }
   }
-
   showSideBar(id: string) {
     this.deletedRoles = [];
     this.selectedStaffId = id;
@@ -125,7 +118,6 @@ export class StaffLeaderComponent implements OnInit {
     this.showSideInfo = false;
     setTimeout(() => (this.hideSideInfo = true), 700);
   }
-
   getStaffById(id: string) {
     this.isLoadingForSide = true;
     this.staffLeaderService.getStaffById(id).subscribe({
@@ -144,11 +136,9 @@ export class StaffLeaderComponent implements OnInit {
       },
     });
   }
-
   onStaffRequested(id: string) {
     this.getStaffById(id);
   }
-
   deleteRole(index: number) {
     const deletedRole = this.staffInfo.userRoles.splice(index, 1)[0];
     // delete deletedRole.campName;
@@ -162,7 +152,6 @@ export class StaffLeaderComponent implements OnInit {
     const restoredRole = this.deletedRoles.splice(index, 1)[0];
     this.staffInfo.userRoles.push(restoredRole);
   }
-
   saveDeleteRoles(): void {
     this.isDeleted = true;
     this.rolesService.unAssignToRole(this.roleInfo).subscribe({
@@ -196,7 +185,6 @@ export class StaffLeaderComponent implements OnInit {
       },
     });
   }
-
   generatePages(): void {
     this.pages = [];
     if (this.allStaffInfo?.totalPages <= 3) {
@@ -209,12 +197,10 @@ export class StaffLeaderComponent implements OnInit {
       for (let i = start; i <= end; i++) {
         this.pages.push(i);
       }
-
       this.showEllipsis = end < this.allStaffInfo?.totalPages - 1;
       this.showLastPage = this.showEllipsis;
     }
   }
-
   changePage(page: number): void {
     if (page > 0 && page <= this.allStaffInfo?.totalPages) {
       this.currentPage = page;

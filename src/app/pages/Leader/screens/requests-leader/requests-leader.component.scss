@@ -2,35 +2,28 @@
   width: 8px !important;
   height: 10px !important;
 }
-
 .custom-scrollbar-request::-webkit-scrollbar-track {
   background: #abd0e7;
   border-radius: 2px;
 }
-
 .custom-scrollbar-request::-webkit-scrollbar-thumb {
   background: #285c6a;
   border-radius: 10px;
 }
-
 .custom-scrollbar-request::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
   font-size: 16px;
   font-weight: 600;
   color: white;
 }
-
 // .ng-select .ng-select-container .ng-value-container {
 //   padding-left: 6px;
 // }
-
 .ng-select .ng-select-container {
   width: 85% !important;
 }
-
 @media screen and (max-width: 768px) {
   .ng-select .ng-select-container .ng-value-container .ng-placeholder {
     font-size: 14px !important;

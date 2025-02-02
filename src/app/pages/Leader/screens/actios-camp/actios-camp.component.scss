@@ -2,17 +2,14 @@
 .ng-select:focus {
   height: 47px;
 }
-
 .ng-select.ng-select-multiple .ng-select-container,
 .ng-select .ng-select-container {
   width: 98% !important;
   border-radius: 12px;
 }
-
 .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
   height: 50px !important;
 }
-
 .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
   width: 100% !important;
   height: 50px !important;
@@ -24,7 +21,6 @@
   .ng-input {
   display: none;
 }
-
 .ng-select.ng-select-multiple
   .ng-select-container
   .ng-value-container
@@ -34,7 +30,6 @@
   font-weight: 600;
   color: #002c3d4d;
 }
-
 .ng-select.ng-select-multiple
   .ng-select-container
   .ng-value-container
@@ -46,28 +41,23 @@
   padding: 4px 8px;
   border-radius: 8px;
 }
-
 .ng-value-container::-webkit-scrollbar {
   width: 0px !important;
 }
 .scroll-host::-webkit-scrollbar {
   width: 8px !important;
 }
-
 .scroll-host::-webkit-scrollbar-track {
   background: #abd0e7;
   border-radius: 2px;
 }
-
 .scroll-host::-webkit-scrollbar-thumb {
   background: #3d91c7;
   border-radius: 10px;
 }
-
 .scroll-host::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
   background: #78bdc4;
 }

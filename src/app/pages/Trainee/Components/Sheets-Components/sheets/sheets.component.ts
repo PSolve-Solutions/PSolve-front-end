@@ -4,7 +4,6 @@ import { Matrial, Sheet } from '../../../model/trinee-sheets';
 import { CommonModule } from '@angular/common';
 import { FormatDatePipe } from '../../../Pipes/formatte-Date.pipe';
 declare var $: any;
-
 @Component({
   selector: 'app-sheets',
   standalone: true,
@@ -15,19 +14,16 @@ declare var $: any;
 export class SheetsComponent implements OnInit {
   // Inject services and dependencies
   private _sheetService = inject(SheetsService);
-
   // Arrays to hold sheets and materials data
   sheetMatrial: Matrial[] = [];
   sheets: Sheet[] = [];
   matrialName: string = '';
   isLoading: boolean = true;
   loadingSheet: boolean = false;
-
   // Lifecycle hook that runs after the component initializes
   ngOnInit(): void {
     this.loadSheets(); // Load sheets when the component initializes
   }
-
   // Fetches all sheets from the service
   loadSheets(): void {
     this._sheetService.getAllSheets().subscribe({
@@ -39,7 +35,6 @@ export class SheetsComponent implements OnInit {
       },
     });
   }
-
   // Fetches material data for a specific sheet by ID and sets the material name
   updateMatrial(id: any, matrialName: string): void {
     this.loadingSheet = true;
@@ -55,7 +50,6 @@ export class SheetsComponent implements OnInit {
       error: (err) => console.error('Error loading material:', err), // Handle errors
     });
   }
-
   // Opens a material link in a new tab
   public openLinkMatrial(url: string): void {
     window.open(url, '_blank'); // Open the URL in a new browser tab

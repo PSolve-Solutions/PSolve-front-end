@@ -2,12 +2,10 @@ export interface Data {
   sessions: SessionAttendance[];
   trainees: AttendanceTrainees;
 }
-
 export interface SessionAttendance {
   id: number;
   topic: string;
 }
-
 export interface AttendanceTrainees {
   currentPage: number;
   totalPages: number;
@@ -21,13 +19,11 @@ export interface AttendanceTrainees {
   data: Daum[];
   errors: any;
 }
-
 export interface Daum {
   traineeId: string;
   name: string;
   status: Status[];
 }
-
 export interface Status {
   sessionId: number;
   status?: boolean;

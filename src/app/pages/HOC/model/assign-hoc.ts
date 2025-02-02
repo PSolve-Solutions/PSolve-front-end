@@ -8,7 +8,6 @@ export interface Trainee {
   gender: string;
   grade: number;
 }
-
 export interface Mentor {
   id: string;
   firstName: string;

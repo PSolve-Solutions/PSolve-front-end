@@ -3,14 +3,12 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class AssignHocService {
   http = inject(HttpClient);
   // casheService = inject(CasheService);
-
   getAllAssignTrainees(
     SortBy: any,
     KeyWord?: string
@@ -28,7 +26,6 @@ export class AssignHocService {
       { params }
     );
   }
-
   getAllAssignMentors(): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/assign/mentors`

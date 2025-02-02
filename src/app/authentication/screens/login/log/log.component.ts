@@ -6,9 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
 import { AuthService } from '../../../services/auth.service';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-log',
   standalone: true,
@@ -18,7 +16,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LogComponent {
   authService = inject(AuthService);
-  toastr = inject(ToastrService);
   router = inject(Router);
   formBuilder = inject(FormBuilder);
   loginForm!: FormGroup;
@@ -27,7 +24,6 @@ export class LogComponent {
   isLoading: boolean = false;
   passwordFieldType: string = 'password';
   password: string = '';
-
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       userName: ['', [Validators.required]],
@@ -35,12 +31,10 @@ export class LogComponent {
       rememberMe: [false],
     });
   }
-
   togglePasswordVisibility(): void {
     this.passwordFieldType =
       this.passwordFieldType === 'password' ? 'text' : 'password';
   }
-
   onLogin() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -66,7 +60,6 @@ export class LogComponent {
           this.isLoading = false;
           this.authService.setIsAuth(true);
         } else if (statusCode === 400) {
-          this.toastr.error(message);
           this.isLoading = false;
           this.error = message;
           this.authService.setIsAuth(false);

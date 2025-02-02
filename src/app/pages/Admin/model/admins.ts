@@ -11,7 +11,6 @@ export interface Admins {
   data: Data[];
   errors: any;
 }
-
 export interface Data {
   id: string;
   firstName: string;
@@ -22,7 +21,6 @@ export interface Data {
   nationalId: string;
   photoUrl: any;
 }
-
 export interface OneAdmin {
   id: string;
   firstName: string;

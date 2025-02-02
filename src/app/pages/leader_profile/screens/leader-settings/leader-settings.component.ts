@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { ValidationProfileService } from '../../../../shared/services/validation-profile.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-leader-settings',
   standalone: true,
@@ -28,23 +27,18 @@ export class LeaderSettingsComponent implements OnInit {
   emailForm!: FormGroup;
   isSuccessEmail: boolean = true;
   msgEmail: string = '';
-
   usernameForm!: FormGroup;
   isSuccessUsername: boolean = true;
   msgUsername: string = '';
-
   passwordForm!: FormGroup;
   isSuccessPassword: boolean = false;
   msgPassword: string = '';
-
   codeforcesForm!: FormGroup;
   isSuccessCodeforces: boolean = true;
   msgCodeforces: string = '';
-
   vjudgeForm!: FormGroup;
   isSuccessVjudge: boolean = true;
   msgVjudge: string = '';
-
   isLoading: boolean = false;
   successMessage: string = '';
   errorMessage: string = '';
@@ -54,7 +48,6 @@ export class LeaderSettingsComponent implements OnInit {
   passwordFieldType3: string = 'password';
   password: string = '';
   currentPath: string = '';
-
   ngOnInit() {
     this.currentPath = this.router.url;
     this.getGeneralProfile();
@@ -76,7 +69,6 @@ export class LeaderSettingsComponent implements OnInit {
       vjudge: [''],
     });
   }
-
   getGeneralProfile(): void {
     this.isLoading = true;
     this.validationProfileService.accountInfo().subscribe({
@@ -101,7 +93,6 @@ export class LeaderSettingsComponent implements OnInit {
       },
     });
   }
-
   toggleEditMode(type: string) {
     if (type === 'email') {
       this.isEditEmail = !this.isEditEmail;
@@ -150,7 +141,6 @@ export class LeaderSettingsComponent implements OnInit {
       }
     }
   }
-
   vaildationEmail(): void {
     let email = this.emailForm.get('email')?.value;
     if (email) {
@@ -202,7 +192,6 @@ export class LeaderSettingsComponent implements OnInit {
         },
       });
   }
-
   // username
   vaildationUsername(): void {
     let username = this.usernameForm.get('username')?.value;
@@ -230,7 +219,6 @@ export class LeaderSettingsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-
     this.validationProfileService
       .updateUsername(this.usernameForm.value.username)
       .subscribe({
@@ -255,7 +243,6 @@ export class LeaderSettingsComponent implements OnInit {
         },
       });
   }
-
   //password
   togglePasswordVisibility(num: number): void {
     if (num == 1) {
@@ -318,7 +305,6 @@ export class LeaderSettingsComponent implements OnInit {
         },
       });
   }
-
   // codeforces
   vaildationCodeforces(): void {
     let codeforces = this.codeforcesForm.get('codeforces')?.value;
@@ -371,7 +357,6 @@ export class LeaderSettingsComponent implements OnInit {
         },
       });
   }
-
   // vjudge
   vaildationVjudge(): void {
     let vjudge = this.vjudgeForm.get('vjudge')?.value;
@@ -399,7 +384,6 @@ export class LeaderSettingsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-
     this.validationProfileService
       .updateVjudgeHandle(this.vjudgeForm.value.vjudge)
       .subscribe({
@@ -423,7 +407,6 @@ export class LeaderSettingsComponent implements OnInit {
         },
       });
   }
-
   removeErrorM() {
     this.errorMessage = '';
     this.successMessage = '';
@@ -431,7 +414,6 @@ export class LeaderSettingsComponent implements OnInit {
   removeError(index: number) {
     this.errorMessages.splice(index, 1);
   }
-
   handleApiErrors(errors: any) {
     this.errorMessages = [];
     if (errors) {

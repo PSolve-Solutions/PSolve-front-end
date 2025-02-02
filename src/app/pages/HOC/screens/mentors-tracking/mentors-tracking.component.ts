@@ -3,7 +3,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { TrackingService } from '../../services/tracking.service';
 import { MentorsData, RootMentors, TasksData } from '../../model/tracking-hoc';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-mentors-tracking',
   standalone: true,
@@ -25,15 +24,12 @@ export class MentorsTrackingComponent implements OnInit {
   bars = Array(5).fill(0);
   allTasksData: TasksData[] = [];
   isShowLable: boolean = false;
-
   ngOnInit() {
     this.getAllMentors(this.currentPage, this.pageSize);
   }
-
   filledBars(progress: number): number {
     return Math.round((progress / 100) * this.bars.length);
   }
-
   getAllMentors(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.trackingService
@@ -54,7 +50,6 @@ export class MentorsTrackingComponent implements OnInit {
         },
       });
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;
@@ -65,7 +60,6 @@ export class MentorsTrackingComponent implements OnInit {
       this.getAllMentors(++this.currentPage, this.pageSize);
     }
   }
-
   getMentorId(mentorId: string): void {
     if (this.mentorId === mentorId) {
       this.mentorId = null;
@@ -75,7 +69,6 @@ export class MentorsTrackingComponent implements OnInit {
       this.getTasksByTaskStatus(mentorId, this.taskId);
     }
   }
-
   getTasksByTaskStatus(mentorId: string, taskStatus: number): void {
     // this.isLoading.set(true);
     this.trackingService.getTasksByTaskStatus(mentorId, taskStatus).subscribe({
@@ -94,14 +87,12 @@ export class MentorsTrackingComponent implements OnInit {
       },
     });
   }
-
   changeTaskTitle(item: number): void {
     this.taskId = item;
     if (this.mentorId !== null) {
       this.getTasksByTaskStatus(this.mentorId, this.taskId);
     }
   }
-
   showLable(id: string): void {
     this.id = id;
   }

@@ -9,7 +9,6 @@ import {
 import { RegisterationService } from '../../../pages/public/Services/registeration.service';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
-
 type RequiredFields = {
   isRequiredTraineeNationalId: boolean;
   isRequiredTraineePhoneNumber: boolean;
@@ -17,7 +16,6 @@ type RequiredFields = {
   isRequiredCodeforce: boolean;
   isRequiredVjudge: boolean;
 };
-
 @Component({
   selector: 'app-registration-trainee',
   standalone: true,
@@ -68,7 +66,6 @@ export class RegistrationTraineeComponent implements OnInit {
   };
   isEmailUsed: boolean = false;
   isReset: boolean = false;
-
   constructor() {
     this.registrationForm = this.fb.group({
       FirstName: ['', [Validators.required]],
@@ -102,12 +99,10 @@ export class RegistrationTraineeComponent implements OnInit {
       { id: 6, name: 'Others' },
     ];
   }
-
   ngOnInit() {
     this.getAllCommunities();
     this.getAllUniversities();
   }
-
   filterNullValues(form: FormGroup): { [key: string]: any } {
     const filteredData: { [key: string]: any } = {};
     Object.keys(form.value).forEach((key) => {
@@ -118,7 +113,6 @@ export class RegistrationTraineeComponent implements OnInit {
     });
     return filteredData;
   }
-
   registration(): void {
     const myForm = this.filterNullValues(this.registrationForm);
     const formData = new FormData();
@@ -160,13 +154,11 @@ export class RegistrationTraineeComponent implements OnInit {
       },
     });
   }
-
   displayFormErrors(controls: string[] = []) {
     const formControls =
       controls.length > 0
         ? controls
         : Object.keys(this.registrationForm.controls);
-
     formControls.forEach((field) => {
       const control = this.registrationForm.get(field);
       if (control?.invalid) {
@@ -179,7 +171,6 @@ export class RegistrationTraineeComponent implements OnInit {
             this.toastr.error(`${field} is required`);
           }
         }
-        // Add checks for other error types if needed
         if (control.errors?.['minlength']) {
           this.toastr.error(
             `${field} must be at least ${control.errors['minlength'].requiredLength} characters`
@@ -193,7 +184,6 @@ export class RegistrationTraineeComponent implements OnInit {
       }
     });
   }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -202,7 +192,6 @@ export class RegistrationTraineeComponent implements OnInit {
       this.registrationForm.get('Photo')?.setValue(file);
     }
   }
-
   sendOTP(): void {
     if (this.registrationForm.get('Email')?.invalid) {
       this.toastr.error('Email is required');
@@ -225,7 +214,6 @@ export class RegistrationTraineeComponent implements OnInit {
         });
     }
   }
-
   getAllCommunities(): void {
     this.registerationService.getCommunities().subscribe({
       next: ({ statusCode, data }) => {
@@ -268,7 +256,6 @@ export class RegistrationTraineeComponent implements OnInit {
       },
     });
   }
-
   checkContactInfo(): void {
     if (this.registrationForm.invalid) {
       this.displayFormErrors();
@@ -307,7 +294,6 @@ export class RegistrationTraineeComponent implements OnInit {
       },
     });
   }
-
   checkNationalId(nationalId: string): void {
     this.registerationService.checkNationalId(nationalId).subscribe({
       next: ({ statusCode, message }) => {
@@ -324,7 +310,6 @@ export class RegistrationTraineeComponent implements OnInit {
       },
     });
   }
-
   updateValidators(requiredFields: { [key: string]: boolean }) {
     Object.keys(requiredFields).forEach((field) => {
       const control = this.registrationForm.get(field);
@@ -338,7 +323,6 @@ export class RegistrationTraineeComponent implements OnInit {
       }
     });
   }
-
   campConditions(campId: number): void {
     this.registerationService.campConditions(campId).subscribe({
       next: ({ statusCode, message, data }) => {
@@ -370,7 +354,6 @@ export class RegistrationTraineeComponent implements OnInit {
       },
     });
   }
-
   swipPage(num: number): void {
     if (num === 1) {
       if (this.currentTab === 1) {
@@ -412,12 +395,10 @@ export class RegistrationTraineeComponent implements OnInit {
       this.currentTab = --this.currentTab;
     }
   }
-
   toResetData() {
     this.currentTab = 4;
     this.isEmailUsed = false;
   }
-
   resetData(inputEmail: HTMLInputElement): void {
     const otp = this.registrationForm.get('otp')?.value;
     if (!otp) {
@@ -461,7 +442,6 @@ export class RegistrationTraineeComponent implements OnInit {
       }
     );
   }
-
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const targetElement = event.target as HTMLElement;
@@ -494,7 +474,6 @@ export class RegistrationTraineeComponent implements OnInit {
       this.isDropdownGender = false;
     }
   }
-
   selectOrganization(option: {
     id: string;
     clientName: string;
@@ -507,14 +486,12 @@ export class RegistrationTraineeComponent implements OnInit {
     this.communityId = option.id;
     this.isDropdownOrganization = false;
   }
-
   selectCamp(option: any): void {
     this.campName = option.name;
     this.isDropdownCamp = false;
     this.campConditions(option.id);
     this.registrationForm.get('CampId')?.setValue(option.id);
   }
-
   selectHasLab(option: any): void {
     this.hasLab = option.name;
     this.isDropdownHas = false;
@@ -522,38 +499,32 @@ export class RegistrationTraineeComponent implements OnInit {
       .get('HasLaptop')
       ?.setValue(option.name === 'Yes' ? true : false);
   }
-
   selectCollege(option: any): void {
     this.collegeName = option.name;
     this.isDropdownCollege = false;
     this.registrationForm.get('College')?.setValue(option.id);
   }
-
   selectUniversity(option: { name: string }): void {
     this.universityName = option.name;
     this.isDropdownUniversity = false;
     this.registrationForm.get('University')?.setValue(option.name);
   }
-
   selectGrade(option: number): void {
     this.grade = option;
     this.isDropdownGrade = false;
     this.registrationForm.get('Grade')?.setValue(option);
   }
-
   selectGender(option: any): void {
     this.gender = option.name;
     this.isDropdownGender = false;
     this.registrationForm.get('Gender')?.setValue(option.id);
   }
-
   toggleDropdownGrade() {
     this.isDropdownGrade = !this.isDropdownGrade;
   }
   toggleDropdownGender() {
     this.isDropdownGender = !this.isDropdownGender;
   }
-
   toggleDropdown() {
     this.isDropdownOrganization = !this.isDropdownOrganization;
   }

@@ -6,7 +6,6 @@ import { Sessions } from '../../model/sessions';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
 import { DatePipe, NgClass } from '@angular/common';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-sessions-hoc',
   standalone: true,
@@ -28,16 +27,13 @@ export class SessionsHOCComponent implements OnInit {
   selectedItemId: number | null = null;
   dataRequest: Sessions[] = [];
   sessionId: number | null = null;
-
   ngOnInit() {
     this.getAllSessions(this.currentPage, this.pageSize);
   }
-
   convertToLocal(date: string): Date {
     const localDate = new Date(date);
     return localDate;
   }
-
   getAllSessions(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.sessionsHOCService.getAllSessions(currentPage, pageSize).subscribe({
@@ -57,7 +53,6 @@ export class SessionsHOCComponent implements OnInit {
       },
     });
   }
-
   toggleDetails(id: number) {
     if (id === this.sessionId) {
       this.sessionId = 0;
@@ -65,12 +60,10 @@ export class SessionsHOCComponent implements OnInit {
       this.sessionId = id;
     }
   }
-
   showConfirmDelete(id: number) {
     this.selectedItemId = id;
     this.showModal = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       this.dataRequest = [];
@@ -79,11 +72,9 @@ export class SessionsHOCComponent implements OnInit {
     }
     this.showModal = false;
   }
-
   goToActionSession(id: number): void {
     this.router.navigate(['head_of_camp/sessions/action-session/', id]);
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;

@@ -11,7 +11,6 @@ export interface Sessions {
   data: Data[];
   errors: any;
 }
-
 export interface Data {
   id: number;
   topic: string;

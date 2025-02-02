@@ -1,16 +1,14 @@
 import { NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { OnArchiveUserInfo, ArchiveInfo } from '../../model/archive-leader';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ArchiveLeaderService } from '../../services/archive-leader.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-archive-leader',
   standalone: true,
-  imports: [NgSelectModule, ReactiveFormsModule, NgClass],
+  imports: [NgSelectModule, NgClass],
   templateUrl: './archive-leader.component.html',
   styleUrl: './archive-leader.component.scss',
 })
@@ -31,7 +29,6 @@ export class ArchiveLeaderComponent implements OnInit {
   sortbyNum: number = 0 | 1 | 2;
   sortbyNumStaff: number = 0 | 1 | 2;
   activeTab: string = 'tab1';
-
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 1;
@@ -39,11 +36,9 @@ export class ArchiveLeaderComponent implements OnInit {
   showEllipsis: boolean = false;
   showLastPage: boolean = false;
   pages: number[] = [];
-
   ngOnInit() {
     this.traineesWithPagination(this.currentPage, this.pageSize);
   }
-
   traineesWithPagination(
     currentPage: number,
     pageSize: number,
@@ -71,7 +66,6 @@ export class ArchiveLeaderComponent implements OnInit {
         },
       });
   }
-
   staffArchiveWithPagination(
     currentPage: number,
     pageSize: number,
@@ -99,7 +93,6 @@ export class ArchiveLeaderComponent implements OnInit {
         },
       });
   }
-
   getTraineeById(id: number) {
     this.isLoadingForSide = true;
     this.archiveLeaderService.getTraineeArchiveById(id).subscribe({
@@ -117,7 +110,6 @@ export class ArchiveLeaderComponent implements OnInit {
       },
     });
   }
-
   getStaffArchiveById(id: number) {
     this.isLoadingForSide = true;
     this.archiveLeaderService.getStaffArchiveById(id).subscribe({
@@ -135,7 +127,6 @@ export class ArchiveLeaderComponent implements OnInit {
       },
     });
   }
-
   showSideBar(id: number) {
     this.selectedUserId = id;
     this.showSideInfo = true;
@@ -146,12 +137,10 @@ export class ArchiveLeaderComponent implements OnInit {
       this.getStaffArchiveById(id);
     }
   }
-
   handleClose() {
     this.showSideInfo = false;
     setTimeout(() => (this.hideSideInfo = true), 700);
   }
-
   onSearchInput(keyWord: string) {
     this.keywordSearch = keyWord;
     this.casheService.clearCache();
@@ -171,7 +160,6 @@ export class ArchiveLeaderComponent implements OnInit {
       );
     }
   }
-
   sortBy(item: number): void {
     this.casheService.clearCache();
     this.sortbyNum = item;
@@ -192,7 +180,6 @@ export class ArchiveLeaderComponent implements OnInit {
       this.sortbyNumStaff
     );
   }
-
   generatePages(): void {
     this.pages = [];
     if (this.activeTab === 'tab1') {
@@ -209,7 +196,6 @@ export class ArchiveLeaderComponent implements OnInit {
         for (let i = start; i <= end; i++) {
           this.pages.push(i);
         }
-
         this.showEllipsis = end < this.traineeArchiveInfo?.totalPages - 1;
         this.showLastPage = this.showEllipsis;
       }
@@ -227,13 +213,11 @@ export class ArchiveLeaderComponent implements OnInit {
         for (let i = start; i <= end; i++) {
           this.pages.push(i);
         }
-
         this.showEllipsis = end < this.staffArchiveInfo?.totalPages - 1;
         this.showLastPage = this.showEllipsis;
       }
     }
   }
-
   changePage(page: number): void {
     if (this.activeTab === 'tab1') {
       if (page > 0 && page <= this.traineeArchiveInfo?.totalPages) {
@@ -257,7 +241,6 @@ export class ArchiveLeaderComponent implements OnInit {
       }
     }
   }
-
   closeSort() {}
   handleOverlayClick(event: MouseEvent) {
     if ((event.target as HTMLElement).classList.contains('fixed')) {
@@ -265,7 +248,6 @@ export class ArchiveLeaderComponent implements OnInit {
       this.closeSort();
     }
   }
-
   selectTab(tab: string) {
     this.activeTab = tab;
     if (this.activeTab !== 'tab1') {

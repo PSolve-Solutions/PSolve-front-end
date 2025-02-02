@@ -19,26 +19,22 @@ export class SessionsHOCService {
       params
     );
   }
-
   deleteSession(id: number): Observable<ResponseHeader> {
     return this.http.delete<any>(
       `${environment.BASE_URL}/api/Head/sessions/${id}`
     );
   }
-
   getOneSession(id: number): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Head/sessions/${id}`
     );
   }
-
   actionsSession(formData: any): Observable<ResponseHeader> {
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Head/sessions`,
       formData
     );
   }
-
   updateSession(info: any): Observable<ResponseHeader> {
     return this.http.put<any>(
       `${environment.BASE_URL}/api/Head/sessions`,

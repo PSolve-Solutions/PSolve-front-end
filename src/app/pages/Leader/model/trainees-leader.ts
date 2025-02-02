@@ -11,7 +11,6 @@ export interface TraineeInfo {
   data: Trainee[];
   errors: any;
 }
-
 export interface Trainee {
   id: string;
   firstName: string;
@@ -21,7 +20,6 @@ export interface Trainee {
   phoneNumber: string;
   codeForceHandle: string;
 }
-
 export interface OnTraineeInfo {
   id: string;
   firstName: string;
@@ -39,7 +37,6 @@ export interface OnTraineeInfo {
   vjudgeHandle: any;
   userRoles: UserRole[];
 }
-
 export interface UserRole {
   role: string;
   campId?: number;

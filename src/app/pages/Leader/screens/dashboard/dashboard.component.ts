@@ -12,7 +12,6 @@ import { dashboardFeedbacks, traineesAnalysis } from '../../model/dashboard';
 import { TestimonialComponent } from '../../Components/testimonial/testimonial.component';
 import { RouterLink } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -43,13 +42,11 @@ export class DashboardComponent implements OnInit {
     progress: number;
   }[] = [];
   dashboardFeedbacks: dashboardFeedbacks[] = [];
-
   ngOnInit() {
     this.fetchTraineesAnalysis();
     this.fetchDashboardCamps();
     this.fetchDashboardFeedbacks();
   }
-
   fetchTraineesAnalysis(): void {
     this.isLoading.set(true);
     this.dashboardService.traineesAnalysis().subscribe({
@@ -71,7 +68,6 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
-
   fetchDashboardCamps(): void {
     this.isLoading.set(true);
     this.dashboardService.dashboardCamps().subscribe({
@@ -89,7 +85,6 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
-
   fetchDashboardFeedbacks(): void {
     this.dashboardService.dashboardFeedbacks().subscribe({
       next: ({ statusCode, data }) => {

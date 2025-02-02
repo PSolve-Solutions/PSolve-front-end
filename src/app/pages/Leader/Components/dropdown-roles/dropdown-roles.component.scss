@@ -2,21 +2,17 @@
   // width: 6px !important;
   display: none;
 }
-
 .custom-scrollbar-camp::-webkit-scrollbar {
   width: 6px !important;
 }
-
 .custom-scrollbar-camp::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 6px;
 }
-
 .custom-scrollbar-camp::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 6px;
 }
-
 .custom-scrollbar-camp::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

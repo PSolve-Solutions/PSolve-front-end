@@ -13,7 +13,6 @@ import { SuccessMessageComponent } from '../success-message/success-message.comp
 import { AllTraineesInfo } from '../../model/requests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
-
 @Component({
   selector: 'app-requests-leader',
   standalone: true,
@@ -51,11 +50,9 @@ export class RequestsLeaderComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 5;
   totalPages: number = 1;
-
   ngOnInit() {
     this.fetchAllCamps();
   }
-
   traineesRegisterations(
     pageNumber: number,
     pageSize: number,
@@ -98,7 +95,6 @@ export class RequestsLeaderComponent implements OnInit {
         },
       });
   }
-
   chooseCamp(item: any): void {
     this.allTraineesInfoData = [];
     this.campId = item.id;
@@ -106,7 +102,6 @@ export class RequestsLeaderComponent implements OnInit {
     this.currentPage = 1;
     this.traineesRegisterations(this.currentPage, this.pageSize, this.campId);
   }
-
   sortTrainee(item: any): void {
     this.allTraineesInfoData = [];
     this.sortbyNum = item;
@@ -121,7 +116,6 @@ export class RequestsLeaderComponent implements OnInit {
       this.vjudgeFilters
     );
   }
-
   // open & close Filter
   showConfirmFilter() {
     this.showFilterModel = true;
@@ -129,7 +123,6 @@ export class RequestsLeaderComponent implements OnInit {
   closeConfirmFilter() {
     this.showFilterModel = false;
   }
-
   handleSaveFilter(data: any) {
     this.allTraineesInfoData = [];
     this.vjudgeFilters = data.value.filtersV;
@@ -146,7 +139,6 @@ export class RequestsLeaderComponent implements OnInit {
     );
     this.closeConfirmFilter();
   }
-
   systemFilter(event: any): void {
     this.allTraineesInfoData = [];
     this.applySystemFilter = event.target.checked;
@@ -161,12 +153,10 @@ export class RequestsLeaderComponent implements OnInit {
       this.vjudgeFilters
     );
   }
-
   // Delete
   showConfirmDelete() {
     this.showModalDelete = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedIds.length !== 0) {
       this.allTraineesInfoData = [];
@@ -183,7 +173,6 @@ export class RequestsLeaderComponent implements OnInit {
     }
     this.showModalDelete = false;
   }
-
   closeRequestMessage() {
     this.allTraineesInfoData = [];
     this.showSubmitModel = false;
@@ -198,7 +187,6 @@ export class RequestsLeaderComponent implements OnInit {
       this.vjudgeFilters
     );
   }
-
   changePage(): void {
     if (this.allTraineesInfo?.hasNextPage) {
       this.currentPage = this.currentPage + 1;
@@ -213,7 +201,6 @@ export class RequestsLeaderComponent implements OnInit {
       );
     }
   }
-
   fetchAllCamps(): void {
     this.isLoadingCamp.set(true);
     this.requestsLeaderService.openedCampsRegister().subscribe({
@@ -231,11 +218,9 @@ export class RequestsLeaderComponent implements OnInit {
       },
     });
   }
-
   closeModalOnOutsideClick(event: MouseEvent) {
     this.closeConfirmFilter();
   }
-
   submitRequests() {
     this.isLoadingSubmit.set(true);
     const info = {
@@ -253,12 +238,10 @@ export class RequestsLeaderComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-
         this.isLoadingSubmit.update((v) => (v = false));
       },
     });
   }
-
   // Checkbox
   toggleAll(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -269,7 +252,6 @@ export class RequestsLeaderComponent implements OnInit {
       this.selectedIds = [];
     }
   }
-
   toggleItem(id: number, event: any): void {
     const isChecked = event.target.checked;
     if (isChecked) {
@@ -282,7 +264,6 @@ export class RequestsLeaderComponent implements OnInit {
       );
     }
   }
-
   areAllItemsSelected(): boolean {
     return this.selectedIds.length === this.allTraineesInfo.data.length;
   }

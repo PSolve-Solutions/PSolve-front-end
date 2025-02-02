@@ -1,51 +1,47 @@
 /* General Typography */
-h2, h4, .dash, .sub, .start-line, .text {
-  color: #002C3D;
+h2,
+h4,
+.dash,
+.sub,
+.start-line,
+.text {
+  color: #002c3d;
   font-weight: 800;
 }
-
 h2 {
   font-size: 4rem;
   font-weight: 800;
-  color: #002C3D;
+  color: #002c3d;
 }
-
 h4 {
   font-size: 2.5rem;
-  color: #F8444F;
+  color: #f8444f;
 }
-
 .dash {
   font-size: 1.5rem;
   font-weight: 300;
-  color: #F8444F;
+  color: #f8444f;
 }
-
 .sub,
 .start-line {
   font-size: 1.15rem;
 }
-
 .text {
-  color: #2A8E9E;
+  color: #2a8e9e;
   font-size: 1.15rem;
 }
-
 /* Media Queries */
 @media screen and (max-width: 640px) {
   h2 {
     font-size: 30px;
   }
-
   h4 {
     font-size: 1.25rem;
   }
-
   .sub,
   .start-line {
     font-size: 0.5rem;
   }
-
   .text {
     font-size: 0.5rem;
     line-height: 9.75px;

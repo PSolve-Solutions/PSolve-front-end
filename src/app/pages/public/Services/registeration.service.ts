@@ -3,13 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class RegisterationService {
   http = inject(HttpClient);
-
   getCamps(communityId: string): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Home/traineeApplication/campOfCommunity/${communityId}`
@@ -25,7 +23,6 @@ export class RegisterationService {
       `${environment.BASE_URL}/api/Home/universities`
     );
   }
-
   sendOtp(email: string): Observable<ResponseHeader> {
     const myHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -36,7 +33,6 @@ export class RegisterationService {
       { headers: myHeaders }
     );
   }
-
   applyForm(formData: any): Observable<ResponseHeader> {
     return this.http.post<ResponseHeader>(
       `${environment.BASE_URL}/api/Auth/traineeRegister`,
@@ -67,7 +63,6 @@ export class RegisterationService {
       { params }
     );
   }
-
   resetRegister(info: any): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Home/traineeApplication/reset`,

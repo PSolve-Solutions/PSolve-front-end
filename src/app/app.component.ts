@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CasheService } from './shared/services/cashe.service';
-
 @Component({
   selector: 'app-root',
   standalone: true,

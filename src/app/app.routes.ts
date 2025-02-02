@@ -4,9 +4,7 @@ import { rolesGuard } from './authentication/guard/roles.guard';
 import { DashboardComponent } from './pages/Leader/screens/dashboard/dashboard.component';
 import { LayoutTraineeComponent } from './layouts/layout_trainee/layout-trainee.component';
 import { HomeTraineeComponent } from './pages/Trainee/screens/home-trainee/home-trainee.component';
-
 import { AddUserComponent } from './pages/Leader/screens/add-user/add-user.component';
-
 import { MentorLayoutComponent } from './layouts/mentor/mentor-layout/mentor-layout.component';
 import { TraineesComponent } from './pages/mentor/trainees/trainees.component';
 import { AttendanceComponent } from './pages/mentor/attendance/attendance.component';
@@ -14,7 +12,6 @@ import { StandingsComponent } from './pages/mentor/standings/standings.component
 import { TrackingComponent } from './pages/mentor/tracking/tracking.component';
 import { TasksComponent } from './pages/mentor/tasks/tasks.component';
 import { PracticeComponent } from './pages/mentor/practice/practice.component';
-
 import { CampsLeaderComponent } from './pages/Leader/screens/camps-leader/camps-leader.component';
 import { ActiosCampComponent } from './pages/Leader/screens/actios-camp/actios-camp.component';
 import { StandingCampComponent } from './pages/Leader/screens/standing-camp/standing-camp.component';
@@ -23,12 +20,9 @@ import { TraineesLeaderComponent } from './pages/Leader/screens/trainees-leader/
 import { ArchiveLeaderComponent } from './pages/Leader/screens/archive-leader/archive-leader.component';
 import { SheetsTraineeComponent } from './pages/Trainee/screens/sheets-trainee/sheets-trainee.component';
 import { ContestTraineeComponent } from './pages/Trainee/screens/contest-trainee/contest-trainee.component';
-
 import { ReportsLeaderComponent } from './pages/Leader/screens/reports-leader/reports-leader.component';
 import { RequestsLeaderComponent } from './pages/Leader/screens/requests-leader/requests-leader.component';
-
 import { StandingTraineeComponent } from './pages/Trainee/screens/standing-trainee/standing-trainee.component';
-
 import { ContestsHOCComponent } from './pages/HOC/screens/contests-hoc/contests-hoc.component';
 import { SessionsHOCComponent } from './pages/HOC/screens/sessions-hoc/sessions-hoc.component';
 import { ActionsContestsComponent } from './pages/HOC/screens/actions-contests/actions-contests.component';
@@ -40,7 +34,6 @@ import { ActionsSheetsComponent } from './pages/HOC/screens/actions-sheets/actio
 import { EditAttendanceComponent } from './pages/HOC/screens/edit-attendance/edit-attendance.component';
 import { WeeklyFilterHOCComponent } from './pages/HOC/screens/weekly-filter-hoc/weekly-filter-hoc.component';
 import { AttendanceHOCComponent } from './pages/HOC/screens/attendance-hoc/attendance-hoc.component';
-
 import { OtpComponent } from './authentication/screens/login/otp/otp.component';
 import { SetpassComponent } from './authentication/screens/login/setpass/setpass.component';
 import { ForgetComponent } from './authentication/screens/login/forget/forget.component';
@@ -49,7 +42,6 @@ import { LayoutPublicComponent } from './layouts/layout_public/layout-public.com
 import { HomePublicComponent } from './pages/public/screens/home-public/home-public.component';
 import { BlankComponent } from './pages/mentor/blank/blank.component';
 import { CampsPublicComponent } from './pages/public/screens/camps-public/camps-public.component';
-
 import { LayoutProfileComponent } from './layouts/layout_profile/layout-profile/layout-profile.component';
 import { ProfileDetailsComponent } from './pages/leader_profile/screens/profile-details/profile-details.component';
 import { LeaderSettingsComponent } from './pages/leader_profile/screens/leader-settings/leader-settings.component';
@@ -66,7 +58,6 @@ import { CommunityLeaderComponent } from './pages/Leader/screens/community-leade
 import { UniversityAdminComponent } from './pages/Admin/screens/university-admin/university-admin.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-
 export const routes: Routes = [
   // Trainee Pages
   {
@@ -74,7 +65,6 @@ export const routes: Routes = [
     title: 'PSovle',
     canActivate: [rolesGuard],
     component: LayoutTraineeComponent,
-
     children: [
       {
         path: '',
@@ -103,7 +93,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // Main Home Page
   {
     path: '',
@@ -123,14 +112,12 @@ export const routes: Routes = [
       },
     ],
   },
-
   {
     path: 'registration',
     // component: FormsCampsPublicComponent,
     component: RegistrationTraineeComponent,
     title: 'Apply Now - PSolve',
   },
-
   // Admin Routes
   {
     path: 'psovle',
@@ -175,7 +162,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // Leader Routes
   {
     path: 'leader',
@@ -228,7 +214,6 @@ export const routes: Routes = [
         component: TraineesLeaderComponent,
         title: 'Leader / Trainees - PSovle',
       },
-
       {
         path: 'reports',
         component: ReportsLeaderComponent,
@@ -251,7 +236,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // HOC Pages
   {
     path: 'head_of_camp',
@@ -346,7 +330,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // mentor Pages
   {
     path: 'mentor',
@@ -384,7 +367,6 @@ export const routes: Routes = [
         component: PracticeComponent,
         title: 'mentor / Practice - PSovle',
       },
-
       {
         path: 'blank',
         component: BlankComponent,
@@ -392,7 +374,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // Login Page
   {
     path: 'login',
@@ -422,7 +403,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   // Profile Pages
   //leader and HOC
   {
@@ -449,7 +429,6 @@ export const routes: Routes = [
       {
         path: 'head_of_camp/settings',
         component: LeaderSettingsComponent,
-
         title: 'PSovle - Head Of Camp / Account',
       },
       //trainee

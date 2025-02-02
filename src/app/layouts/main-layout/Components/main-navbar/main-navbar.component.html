@@ -35,7 +35,6 @@
           ></span>
           }
         </button>
-
         <!-- Dropdown -->
         <div class="relative inline-flex">
           <div class="flex items-center">
@@ -62,7 +61,6 @@
                 {{ currentUser.firstName }}
                 {{ currentUser.middleName }}
               </h2>
-
               <div class="relative inline-block text-left w-fit">
                 <button
                   (click)="showRoles()"
@@ -99,7 +97,6 @@
                 >
                   <div class="py-1 text-sm text-gray-700 w-fit">
                     @for (item of roles; track $index; let last = $last) {
-
                     <button
                       (click)="goSpecificRole(item)"
                       [ngClass]="last ? '' : 'border-b border-activeLink'"
@@ -120,7 +117,6 @@
     </div>
   </nav>
 </header>
-
 <app-notification
   [isOpen]="isOpenNotification"
   [newNotificationCheck]="newNotificationCheck"

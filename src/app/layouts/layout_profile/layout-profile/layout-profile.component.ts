@@ -4,7 +4,6 @@ import { SidebarProfileComponent } from '../components/sidebar-profile/sidebar-p
 import { TopBarComponent } from '../../layout_trainee/components/top-bar/top-bar.component';
 import { MentornavComponent } from '../../mentor/mentornav/mentornav.component';
 import { MainNavbarComponent } from '../../main-layout/Components/main-navbar/main-navbar.component';
-
 @Component({
   selector: 'app-layout-profile',
   standalone: true,

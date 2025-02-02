@@ -1,36 +1,47 @@
 @if( homeService.isLoading) {
-  <div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
-    <div class="flex items-center">
-      <div
-        class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
-      ></div>
-    </div>
+<div class="fixed z-50 top-[40%] lg:left-[50%] left-[40%] bg-opacity-60">
+  <div class="flex items-center">
+    <div
+      class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+    ></div>
   </div>
-  } @else {
-    <div class="w-11/12 mx-auto container">
-      <app-trainee-cards/>
-       <app-trainee-chart/>
-       <app-trainee-home-mentor/>
-        <app-heads-carousel/>
-        <app-home-tasks-todo/>
-        <app-home-tasks-in-progress/>
-        <app-home-tasks-done/>
-        <div class="feed-back fixed hidden flex-col w-11/12 sm:w-80 h-fit z-20 min-h-dvh sm:min-h-fit sm:left-[85%] sm:top-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-montserrat" >
-          <div class="inner border-feed-back" (mouseleave)="onLeave()"  (mouseenter)="onEnterFeedBack(true)">
-            <div class="header font-bold text-[1.1rem] bg-white px-6 py-5 rounded-t-[7px]">
-              <h4 class="text-[#002C3D] text-center">
-              Your opinion matters to us!
-              </h4>
-            </div>
-            <div
-          class="flex flex-col items-center justify-center gap-5 transition-all duration-500  bg-[#b7bdc8] px-4 py-3"
-        >
-        <p class="text-[#2A8E9E] text-[.9rem] font-bold">Give feedback last session, mentor</p>
-          <div class="flex">
-
-            @for (star of stars; track stars ; let i = $index) {
-              <div class=" star cursor-pointer text-black text-opacity-25" [id]="i"  (click)="getRating(i+1)">
-                <svg
+</div>
+} @else {
+<div class="w-11/12 mx-auto container">
+  <app-trainee-cards />
+  <app-trainee-chart />
+  <app-trainee-home-mentor />
+  <app-heads-carousel />
+  <app-home-tasks-todo />
+  <app-home-tasks-in-progress />
+  <app-home-tasks-done />
+  <div
+    class="feed-back fixed hidden flex-col w-11/12 sm:w-80 h-fit z-20 min-h-dvh sm:min-h-fit sm:left-[85%] sm:top-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-montserrat"
+  >
+    <div
+      class="inner border-feed-back"
+      (mouseleave)="onLeave()"
+      (mouseenter)="onEnterFeedBack(true)"
+    >
+      <div
+        class="header font-bold text-[1.1rem] bg-white px-6 py-5 rounded-t-[7px]"
+      >
+        <h4 class="text-[#002C3D] text-center">Your opinion matters to us!</h4>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center gap-5 transition-all duration-500 bg-[#b7bdc8] px-4 py-3"
+      >
+        <p class="text-[#2A8E9E] text-[.9rem] font-bold">
+          Give feedback last session, mentor
+        </p>
+        <div class="flex">
+          @for (star of stars; track stars ; let i = $index) {
+          <div
+            class="star cursor-pointer text-black text-opacity-25"
+            [id]="i"
+            (click)="getRating(i + 1)"
+          >
+            <svg
               class="size-8"
               viewBox="0 0 18 17"
               fill="none"
@@ -41,24 +52,38 @@
                 fill="currentColor"
               />
             </svg>
-              </div>
-            }
           </div>
-          <div class="flex flex-col items-center gap-2">
-            <form [formGroup]="feedBackForm">
-              <textarea type="text" placeholder="Add your feedback" formControlName="feedback"   class="p-3 rounded-[10px] focus:outline-none max-h-[50px]"></textarea>
-            <p class=" text-red-500 flex items-center gap-1" *ngIf="feedBackForm.get('feedback')?.touched && feedBackForm.get('feedback')?.getError('required')">
+          }
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <form [formGroup]="feedBackForm">
+            <textarea
+              type="text"
+              placeholder="Add your feedback"
+              formControlName="feedback"
+              class="p-3 rounded-[10px] focus:outline-none max-h-[50px]"
+            ></textarea>
+            <p
+              class="text-red-500 flex items-center gap-1"
+              *ngIf="
+                feedBackForm.get('feedback')?.touched &&
+                feedBackForm.get('feedback')?.getError('required')
+              "
+            >
               <i class="fa-solid fa-circle-info"></i> Please Write Your feedback
             </p>
-            </form>
-          </div>
+          </form>
         </div>
-            <div class="footer bg-white px-4 py-2 rounded-b-[7px]">
-              <button class="bg-[#2A8E9E] w-full p-2 rounded-[10px] text-white" (click)="addFeedBack()">
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="footer bg-white px-4 py-2 rounded-b-[7px]">
+        <button
+          class="bg-[#2A8E9E] w-full p-2 rounded-[10px] text-white"
+          (click)="addFeedBack()"
+        >
+          Submit
+        </button>
+      </div>
     </div>
-  }
+  </div>
+</div>
+}

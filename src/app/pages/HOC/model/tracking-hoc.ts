@@ -12,7 +12,6 @@ export interface MentorsData {
   lastPracticeDate: any;
   photoUrl: any;
 }
-
 export interface RootMentors {
   currentPage: number;
   totalPages: number;
@@ -26,7 +25,6 @@ export interface RootMentors {
   data: MentorsData[];
   errors: any;
 }
-
 export interface TasksData {
   traineeId: number;
   firstName: string;
@@ -37,7 +35,6 @@ export interface TasksData {
   startTime: string;
   endTime: string;
 }
-
 export interface Root {
   currentPage: number;
   totalPages: number;
@@ -51,7 +48,6 @@ export interface Root {
   data: Data[];
   errors: any;
 }
-
 export interface Data {
   id: string;
   firstName: string;
@@ -59,7 +55,6 @@ export interface Data {
   middleName: string;
   tracking: Tracking[];
 }
-
 export interface Tracking {
   sheetId: number;
   contestId: number;

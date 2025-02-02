@@ -1,45 +1,80 @@
 <footer class="footer-2 sm:p-6 font-montserrat">
   <div class="flex justify-evenly sm:justify-center gap-3 sm:gap-10 pt-14">
-      <div class="logo flex items-center justify-center">
-        <div class="logo-container bg-[#002C3D] py-4 px-5 sm:py-7 sm:px-9 rounded-xl">
-          <img src="assets/img_public/p_solve_home/logo_ps.svg" class="min-w-11" alt="psolve">
-        </div>
+    <div class="logo flex items-center justify-center">
+      <div
+        class="logo-container bg-[#002C3D] py-4 px-5 sm:py-7 sm:px-9 rounded-xl"
+      >
+        <img
+          src="assets/img_public/p_solve_home/logo_ps.svg"
+          class="min-w-11"
+          alt="psolve"
+        />
       </div>
-
-
-      <div class="flex items-center contact-us">
-        <div class=" flex flex-col items-start justify gap-0 sm:gap-4">
-          <h2 class="header">
-            Contact Us
-          </h2>
-          <div class="flex items-center gap-1 sm:gap-2 cursor-pointer" (click)="openUrl('https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=CllgCJTKWlzkCCxCNsgQXQPjDnzXDtLHDsbJxFPFzXLgJstCZvdbfPHXRFmrTNBjBpMpCrzsWpg')">
-             <span class="icon"><img class="w-2 sm:w-6" src="assets/img_public/p_solve_home/mail_icon.svg" ></span><span class="text">psolvecompany&#64;gmail.com</span>
-          </div>
-          <div class="flex items-center gap-1 sm:gap-2 cursor-pointer" (click)="openUrl('https://www.facebook.com/icpcsohag')">
-             <span class="icon"><img class="w-2 sm:w-6" src="assets/img_public/p_solve_home/meta_icon.svg"></span><span class="text">Meta</span>
-          </div>
-          <div class="flex items-center gap-1 sm:gap-2 cursor-pointer" (click)="openUrl('https://www.linkedin.com/company/psolve/about/')">
-             <span class="icon"><img class="w-2 sm:w-6" src="assets/img_public/p_solve_home/linkedin_icon.svg"></span><span class="text">LinkedIn</span>
-          </div>
-        </div>
-      </div>
-
-
-
     </div>
-  <div class="footer flex mt-10 sm:mt-28 mb-4 justify-between sm:justify-around gap-14 sm:gap-32 items-center pb-6 sm:pb-0 px-4 sm:px-0 ">
-      <div class="right-footer flex items-center gap-2 sm:gap-3">
-        <div class="logo-container bg-[#002C3D] p-2 sm:p-3 rounded-[4px] w-fit">
-          <img src="assets/img_public/p_solve_home/logo_ps.svg" class="w-4" alt="psolve">
+    <div class="flex items-center contact-us">
+      <div class="flex flex-col items-start justify gap-0 sm:gap-4">
+        <h2 class="header">Contact Us</h2>
+        <div
+          class="flex items-center gap-1 sm:gap-2 cursor-pointer"
+          (click)="
+            openUrl(
+              'https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=CllgCJTKWlzkCCxCNsgQXQPjDnzXDtLHDsbJxFPFzXLgJstCZvdbfPHXRFmrTNBjBpMpCrzsWpg'
+            )
+          "
+        >
+          <span class="icon"
+            ><img
+              class="w-2 sm:w-6"
+              src="assets/img_public/p_solve_home/mail_icon.svg" /></span
+          ><span class="text">psolvecompany&#64;gmail.com</span>
         </div>
-        <p class="uppercase flex items-center gap-1 sm:gap-2 font-medium"><span class="text-[6px] min-w-fit">© Powerd By</span><img src="assets/img_public/p_solve_home/logo_hero.svg" class="w-7 sm:w-16" alt="psolve">.</p>
+        <div
+          class="flex items-center gap-1 sm:gap-2 cursor-pointer"
+          (click)="openUrl('https://www.facebook.com/icpcsohag')"
+        >
+          <span class="icon"
+            ><img
+              class="w-2 sm:w-6"
+              src="assets/img_public/p_solve_home/meta_icon.svg" /></span
+          ><span class="text">Meta</span>
+        </div>
+        <div
+          class="flex items-center gap-1 sm:gap-2 cursor-pointer"
+          (click)="openUrl('https://www.linkedin.com/company/psolve/about/')"
+        >
+          <span class="icon"
+            ><img
+              class="w-2 sm:w-6"
+              src="assets/img_public/p_solve_home/linkedin_icon.svg" /></span
+          ><span class="text">LinkedIn</span>
+        </div>
       </div>
-
+    </div>
+  </div>
+  <div
+    class="footer flex mt-10 sm:mt-28 mb-4 justify-between sm:justify-around gap-14 sm:gap-32 items-center pb-6 sm:pb-0 px-4 sm:px-0"
+  >
+    <div class="right-footer flex items-center gap-2 sm:gap-3">
+      <div class="logo-container bg-[#002C3D] p-2 sm:p-3 rounded-[4px] w-fit">
+        <img
+          src="assets/img_public/p_solve_home/logo_ps.svg"
+          class="w-4"
+          alt="psolve"
+        />
+      </div>
+      <p class="uppercase flex items-center gap-1 sm:gap-2 font-medium">
+        <span class="text-[6px] min-w-fit">© Powerd By</span
+        ><img
+          src="assets/img_public/p_solve_home/logo_hero.svg"
+          class="w-7 sm:w-16"
+          alt="psolve"
+        />.
+      </p>
+    </div>
     <div class="links flex items-center justify-between gap-3 sm:gap-8">
       <span>Terms</span>
       <span>Privacy</span>
       <span>Cookies</span>
     </div>
   </div>
-
 </footer>

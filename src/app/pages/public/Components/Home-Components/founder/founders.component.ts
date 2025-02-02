@@ -1,7 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { FounderChildComponent } from './founder-child/founder.child.component';
-
 @Component({
   selector: 'app-founders',
   standalone: true,

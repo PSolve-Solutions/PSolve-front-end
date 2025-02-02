@@ -11,7 +11,6 @@ export interface Clinets {
   data: Data[];
   errors: any;
 }
-
 export interface Data {
   id: string;
   clientName: string;
@@ -20,7 +19,6 @@ export interface Data {
   isLocked: boolean;
   logoUrl: string;
 }
-
 export interface OneClient {
   id: string;
   clientName: string;
@@ -32,7 +30,6 @@ export interface OneClient {
   endDate: string;
   leaders: Leaders[];
 }
-
 interface Leaders {
   email: string;
   firstName: string;

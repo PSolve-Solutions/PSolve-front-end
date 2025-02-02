@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class RequestsLeaderService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   // get date
   traineesRegisterations(
     pageNumber: number,
@@ -30,19 +29,16 @@ export class RequestsLeaderService {
       vjudgeFilters,
       codeforcesFilters,
     };
-
     return this.http.post<any>(
       `${environment.BASE_URL}/api/Leader/traineesRegisterations`,
       settingsRequest
     );
   }
-
   openedCampsRegister(): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/openedCampsRegister`
     );
   }
-
   // delete
   deleteRequests(ids: any): Observable<ResponseHeader> {
     return this.http.delete<any>(
@@ -52,7 +48,6 @@ export class RequestsLeaderService {
       }
     );
   }
-
   // Submit
   traineeRequestsSubmit(info: any): Observable<ResponseHeader> {
     return this.http.post<any>(
@@ -60,7 +55,6 @@ export class RequestsLeaderService {
       info
     );
   }
-
   getCommunities(): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Leader/getPublicCommunities`

@@ -4,14 +4,12 @@ import { CasheService } from '../../../shared/services/cashe.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ReportsService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   reportsWithPagination(
     currentPage: number,
     pageSize: number

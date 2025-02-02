@@ -8,7 +8,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 })
 export class DashboardService {
   http = inject(HttpClient);
-
   //Dashboard Service
   traineesAnalysis(): Observable<any> {
     return this.http.get<ResponseHeader>(
@@ -25,17 +24,14 @@ export class DashboardService {
       `${environment.BASE_URL}/api/Leader/dashboard/feedbacks`
     );
   }
-
   roles(): Observable<ResponseHeader> {
     return this.http.get<any>(`${environment.BASE_URL}/api/Roles/roles`);
   }
-
   getAllCamps(): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/camps/getAll`
     );
   }
-
   createAccount(formData: any): Observable<ResponseHeader> {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',

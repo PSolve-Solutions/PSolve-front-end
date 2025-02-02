@@ -10,7 +10,6 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ClientsService } from '../../services/clients.service';
-
 @Component({
   selector: 'app-add-client',
   standalone: true,
@@ -37,7 +36,6 @@ export class AddClientComponent implements OnInit {
   allCollege: { id: number; name: string }[] = [];
   collegeName: string = '';
   logoName: string = '';
-
   constructor() {
     this.allCollege = [
       { id: 0, name: 'Computer and Ai' },
@@ -73,7 +71,6 @@ export class AddClientComponent implements OnInit {
       Logo: [null, [Validators.required]],
     });
   }
-
   filterNullValues(form: FormGroup): { [key: string]: any } {
     const filteredData: { [key: string]: any } = {};
     Object.keys(form.value).forEach((key) => {
@@ -84,7 +81,6 @@ export class AddClientComponent implements OnInit {
     });
     return filteredData;
   }
-
   addClient() {
     this.submitted = true;
     if (this.clientForm.invalid) {
@@ -131,7 +127,6 @@ export class AddClientComponent implements OnInit {
       },
     });
   }
-
   displayFormErrors() {
     Object.keys(this.clientForm.controls).forEach((field) => {
       const control = this.clientForm.get(field);
@@ -142,7 +137,6 @@ export class AddClientComponent implements OnInit {
       }
     });
   }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -155,7 +149,6 @@ export class AddClientComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
-
   onLogoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -164,7 +157,6 @@ export class AddClientComponent implements OnInit {
       this.clientForm.get('Logo')?.setValue(file);
     }
   }
-
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const targetElement = event.target as HTMLElement;
@@ -181,7 +173,6 @@ export class AddClientComponent implements OnInit {
       this.isDropdownCollege = false;
     }
   }
-
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }

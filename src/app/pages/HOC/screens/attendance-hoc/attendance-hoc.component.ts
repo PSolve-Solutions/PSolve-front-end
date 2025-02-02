@@ -9,7 +9,6 @@ import {
   SessionAttendance,
 } from '../../model/attenances-hoc';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-attendance-hoc',
   standalone: true,
@@ -24,18 +23,15 @@ export class AttendanceHOCComponent implements OnInit {
   allData!: Data;
   allSesions!: SessionAttendance[];
   allTraniees!: AttendanceTrainees;
-
   currentPage: number = 1;
   pageSize: number = 15;
   isLoading = signal<boolean>(false);
   dataRequest: AttendanceTrainees[] = [];
   hoveredRow: number | null = null;
   hoveredCol: number | null = null;
-
   ngOnInit() {
     this.getTopics();
   }
-
   getAllAttendances(currentPage: number, pageSize: number): void {
     this.isLoading.set(true);
     this.attendanceHocService
@@ -57,7 +53,6 @@ export class AttendanceHOCComponent implements OnInit {
         },
       });
   }
-
   getTopics(): void {
     this.isLoading.set(true);
     this.attendanceHocService.getTopics().subscribe({
@@ -76,7 +71,6 @@ export class AttendanceHOCComponent implements OnInit {
       },
     });
   }
-
   loadMoreData(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;
@@ -87,12 +81,10 @@ export class AttendanceHOCComponent implements OnInit {
       this.getAllAttendances(++this.currentPage, this.pageSize);
     }
   }
-
   onHover(rowIndex: number, colIndex: number) {
     this.hoveredRow = rowIndex;
     this.hoveredCol = colIndex;
   }
-
   onLeave() {
     this.hoveredRow = null;
     this.hoveredCol = null;

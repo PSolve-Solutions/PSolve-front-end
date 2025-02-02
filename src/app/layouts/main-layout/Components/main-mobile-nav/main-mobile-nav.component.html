@@ -117,7 +117,6 @@
           >
             <div class="py-1 text-sm text-gray-700 w-fit">
               @for (item of roles; track $index; let last = $last) {
-
               <button
                 (click)="goSpecificRole(item)"
                 [ngClass]="last ? '' : 'border-b border-activeLink'"
@@ -134,7 +133,6 @@
     </ul>
   </div>
 </nav>
-
 <app-notification
   [isOpen]="isOpenNotification"
   [newNotificationCheck]="newNotificationCheck"

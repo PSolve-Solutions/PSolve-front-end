@@ -45,7 +45,6 @@
         routerLink="/"
       />
     </div>
-
     <div class="flex flex-col w-full pt-2 pb-4 md:ps-6 md:pe-4 md:w-2/3">
       <div class="flex flex-col items-end justify-end mb-2">
         <div class="font-semibold text-mainColor1">
@@ -70,7 +69,6 @@
           {{ currentTab == 4 ? "why?" : "Apply Now" }}
         </h1>
       </div>
-
       <form
         [formGroup]="registrationForm"
         class="p-4 mt-4 bg-white border min-h-[450px] rounded-lg shadow-lg"
@@ -93,7 +91,6 @@
             >
               <div class="flex items-center gap-x-4">
                 @if (selectedOrganization?.logoUrl) {
-
                 <img
                   [src]="selectedOrganization?.logoUrl"
                   alt="{{ selectedOrganization?.clientName }}"
@@ -140,7 +137,6 @@
                   [class.border-b]="!last"
                 >
                   @if (option.logoUrl) {
-
                   <img
                     [src]="option.logoUrl"
                     alt="{{ option.clientName }}"
@@ -148,7 +144,6 @@
                   />
                   }@else {
                   <div class="rounded-full size-9 bg-mainColor1"></div>
-
                   }
                   {{ option.clientName }}
                 </li>
@@ -170,7 +165,6 @@
                 class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
               >
                 @if (campName) { {{ campName }} }@else {
-
                 <span class="text-[#002C3D4D]">Camp</span>
                 }
                 <svg
@@ -192,7 +186,6 @@
               >
                 <ul>
                   @for (option of allCamps; track option.id) {
-
                   <li
                     (click)="selectCamp(option)"
                     [class.text-[#2A8E9E]]="option.name === campName"
@@ -216,7 +209,6 @@
                 class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
               >
                 @if (hasLab) { {{ hasLab }} }@else {
-
                 <span class="text-[#002C3D4D]">Has Labtop</span>
                 }
                 <svg
@@ -239,7 +231,6 @@
                 <ul>
                   @for (option of [{id: 0, name: 'Yes'}, {id: 1, name: 'No'}];
                   track option.id) {
-
                   <li
                     (click)="selectHasLab(option)"
                     [class.text-[#2A8E9E]]="option.name === hasLab"
@@ -254,7 +245,6 @@
               }
             </div>
           </div>
-
           <div class="flex flex-col mt-4 gap-y-1">
             <label for="Any Comments" class="text-subColor1"
               >Any Comments</label
@@ -268,13 +258,10 @@
           </div>
         </div>
         } @if (currentTab === 2) {
-        <!-- Step 2 -->
-
         <div>
           <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">
             Personal Information
           </h3>
-
           <div
             class="grid w-full grid-cols-1 grid-rows-3 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-3"
           >
@@ -353,7 +340,6 @@
               >
                 <ul>
                   @for (option of allUniversity; track option.name) {
-
                   <li
                     (click)="selectUniversity(option)"
                     [class.text-[#2A8E9E]]="option.name === universityName"
@@ -395,7 +381,6 @@
                 class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
               >
                 @if (collegeName) { {{ collegeName }} }@else {
-
                 <span class="text-[#002C3D4D]">College</span>
                 }
                 <svg
@@ -417,7 +402,6 @@
               >
                 <ul>
                   @for (option of allUCollege; track option.id) {
-
                   <li
                     (click)="selectCollege(option)"
                     [class.text-[#2A8E9E]]="option.name === collegeName"
@@ -443,12 +427,10 @@
                   (change)="onFileSelected($event)"
                   class="hidden"
                 />
-
                 <p
                   class="flex items-center justify-between w-full text-sm truncate"
                 >
                   <span class="truncate">{{ profileImageName || "File" }}</span>
-
                   <label
                     for="Photo"
                     class="flex items-center px-4 py-1.5 font-semibold text-white bg-black rounded-lg cursor-pointer w-fit right-1 gap-x-1 hover:bg-subColor1"
@@ -519,7 +501,6 @@
                 class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
               >
                 @if (gender) { {{ gender }} }@else {
-
                 <span class="text-[#002C3D4D]">gender</span>
                 }
                 <svg
@@ -542,7 +523,6 @@
                 <ul>
                   @for (option of [{id: 0, name:'Male'}, {id: 1, name:
                   'Female'}]; track option.id) {
-
                   <li
                     (click)="selectGender(option)"
                     [class.text-[#2A8E9E]]="option.name === gender"
@@ -566,7 +546,6 @@
                 class="flex items-center justify-between px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
               >
                 @if (grade) { {{ grade }} }@else {
-
                 <span class="text-[#002C3D4D]">Year</span>
                 }
                 <svg
@@ -588,7 +567,6 @@
               >
                 <ul>
                   @for (option of [1, 2, 3, 4, 5]; track option) {
-
                   <li
                     (click)="selectGrade(option)"
                     [class.text-[#2A8E9E]]="option === grade"
@@ -604,7 +582,6 @@
             </div>
           </div>
         </div>
-
         } @if (currentTab === 3) {
         <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">
           Contact Information
@@ -624,7 +601,6 @@
               class="px-4 py-3 font-semibold bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
             />
             @if (isEmailUsed) {
-
             <p class="text-xs pt-0.5 italic ps-2 text-mainColor2">
               The email you have provided is already associated with an account.
             </p>
@@ -672,7 +648,6 @@
               maxlength="4"
               class="px-4 py-3 placeholder:text-2xl font-semibold tracking-[10px] bg-[#eef3f3] rounded-lg outline-none text-mainColor1 border-mainColor1 focus:border-subColor1"
             />
-
             <button
               type="button"
               (click)="sendOTP()"
@@ -690,7 +665,6 @@
                 <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
               </div>
               }@else {
-
               <span class="text-xs">Send OTP</span>
               <svg
                 width="16"
@@ -744,7 +718,6 @@
         }
         <div class="mt-4">
           <h3 class="mb-4 text-xl text-[#5FC7E1] font-bold">Online Profiles</h3>
-
           <div
             class="grid w-full grid-cols-1 grid-rows-2 gap-3 mt-4 lg:grid-rows-1 lg:grid-cols-2"
           >
@@ -776,14 +749,12 @@
             </div>
           </div>
         </div>
-
         }@if (currentTab === 4) {
         <div class="flex flex-col w-full p-2 md:p-6 gap-y-8">
           <div class="flex flex-col gap-y-4">
             <h4 class="text-sm font-bold md:text-base text-mainColor1">
               Here are some reasons why you might not be able to apply:
             </h4>
-
             <ul
               class="flex flex-col text-xs font-medium md:text-base gap-y-2 ps-6"
             >
@@ -831,6 +802,7 @@
                   (click)="resetData(emailReset)"
                   class="flex items-center px-6 py-3 font-bold transition-colors rounded-tr-md rounded-br-md hover:bg-subColor1 w-fit bg-mainColor1 text-mainColor4"
                 >
+                  <span class="sr-only">reset</span>
                   @if (isReset) {
                   <div
                     class="flex items-center justify-center w-full bg-opacity-60"
@@ -849,8 +821,6 @@
         </div>
         }
       </form>
-
-      <!-- Footer: Pagination -->
       <div class="flex items-center justify-end w-full mt-6 pe-8">
         <div class="flex items-center justify-between w-full md:w-1/2">
           <div class="flex items-center justify-center gap-x-3">
@@ -860,6 +830,7 @@
               class="p-1 bg-white border rounded-lg disabled:bg-gray-200"
               [disabled]="currentTab === 1"
             >
+              <span class="sr-only">prev</span>
               <svg
                 class="rotate-180 size-4 fill-mainColor1"
                 viewBox="0 0 10 10"
@@ -872,12 +843,12 @@
               </svg>
             </button>
             @if (currentTab !== 3) { @if (currentTab !== 4) {
-
             <button
               (click)="swipPage(1)"
               type="button"
               class="p-1 rounded-lg bg-mainColor1"
             >
+              <span class="sr-only">next</span>
               <svg
                 class="size-4"
                 viewBox="0 0 10 10"

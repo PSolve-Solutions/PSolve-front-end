@@ -4,14 +4,12 @@ import { CasheService } from '../../../shared/services/cashe.service';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class StaffLeaderService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   staffWithPagination(
     currentPage: number,
     pageSize: number,
@@ -31,13 +29,11 @@ export class StaffLeaderService {
         .set('KeyWord', KeyWord ? KeyWord : '')
         .set('SortBy', SortBy);
     }
-
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Leader/staffWithPagination`,
       params
     );
   }
-
   getStaffById(id: string): Observable<ResponseHeader> {
     return this.http.get<any>(`${environment.BASE_URL}/api/Leader/staff/${id}`);
   }

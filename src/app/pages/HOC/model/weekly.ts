@@ -8,7 +8,6 @@ export interface UsersWeekly {
   absenceCount: number;
   weeklySolvingPrecent: number;
 }
-
 export interface UsersOther {
   id: string;
   firstName: string;

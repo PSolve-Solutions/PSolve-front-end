@@ -4,14 +4,12 @@ import { CasheService } from '../../../shared/services/cashe.service';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ResponseHeader } from '../../../shared/model/responseHeader';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ArchiveLeaderService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   traineesArchiveWithPagination(
     currentPage: number,
     pageSize: number,
@@ -31,19 +29,16 @@ export class ArchiveLeaderService {
         .set('KeyWord', KeyWord ? KeyWord : '')
         .set('SortBy', SortBy);
     }
-
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Leader/traineesArchiveWithPagination`,
       params
     );
   }
-
   getTraineeArchiveById(id: number): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/traineeArchive/${id}`
     );
   }
-
   staffArchiveWithPagination(
     currentPage: number,
     pageSize: number,
@@ -63,13 +58,11 @@ export class ArchiveLeaderService {
         .set('KeyWord', KeyWord ? KeyWord : '')
         .set('SortBy', SortBy);
     }
-
     return this.casheService.get<any>(
       `${environment.BASE_URL}/api/Leader/staffArchiveWithPagination`,
       params
     );
   }
-
   getStaffArchiveById(id: number): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/staffArchive/${id}`

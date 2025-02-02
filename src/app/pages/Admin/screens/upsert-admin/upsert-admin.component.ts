@@ -11,7 +11,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AdminsService } from '../../services/admins.service';
 import { ToastrService } from 'ngx-toastr';
 import { OneAdmin } from '../../model/admins';
-
 @Component({
   selector: 'app-upsert-admin',
   standalone: true,
@@ -34,7 +33,6 @@ export class UpsertAdminComponent implements OnInit {
   isDropdownOpen: boolean = false;
   profileImage: string = '';
   isReadOnly: boolean = false;
-
   constructor() {
     this.route.params.subscribe((params) => {
       this.adminId = params['id'];
@@ -46,7 +44,6 @@ export class UpsertAdminComponent implements OnInit {
       }
     });
   }
-
   ngOnInit(): void {
     this.adminForm = this.fb.group({
       FirstName: ['', [Validators.required]],
@@ -60,7 +57,6 @@ export class UpsertAdminComponent implements OnInit {
       ProfileImage: [null],
     });
   }
-
   filterNullValues(form: FormGroup): { [key: string]: any } {
     const filteredData: { [key: string]: any } = {};
     Object.keys(form.value).forEach((key) => {
@@ -71,7 +67,6 @@ export class UpsertAdminComponent implements OnInit {
     });
     return filteredData;
   }
-
   addAdmin() {
     this.submitted = true;
     if (this.adminForm.invalid) {
@@ -112,7 +107,6 @@ export class UpsertAdminComponent implements OnInit {
       },
     });
   }
-
   displayFormErrors() {
     Object.keys(this.adminForm.controls).forEach((field) => {
       const control = this.adminForm.get(field);
@@ -123,7 +117,6 @@ export class UpsertAdminComponent implements OnInit {
       }
     });
   }
-
   getAdminById(id: string): void {
     this.isLoading = true;
     this.adminsService.getAdminById(id).subscribe({
@@ -148,18 +141,15 @@ export class UpsertAdminComponent implements OnInit {
       },
     });
   }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
       this.adminForm.get('ProfileImage')?.setValue(file);
       const reader = new FileReader();
-
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.profileImage = e.target?.result as string;
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -171,7 +161,6 @@ export class UpsertAdminComponent implements OnInit {
       this.isDropdownOpen = false;
     }
   }
-
   toggleDropdown() {
     if (this.isReadOnly) {
       this.isDropdownOpen = false;

@@ -10,7 +10,6 @@
   >
     Contests
   </h1>
-
   <div class="flex flex-col space-y-4">
     <button
       (click)="goToActionContest(0)"
@@ -28,10 +27,8 @@
           fill="#F7F8F3"
         />
       </svg>
-
       <span>Add Contest</span>
     </button>
-
     <div
       style="max-height: calc(100vh - 218px)"
       class="overflow-y-auto border-black rounded-lg pe-2 scroll-host-table"
@@ -137,7 +134,6 @@
                 class="flex items-center justify-start gap-x-2 whitespace-nowrap hover:text-mainColor4"
               >
                 <span>{{ row.name }}</span>
-
                 <svg
                   class="size-5 hover:text-activeLink"
                   viewBox="0 0 30 30"
@@ -165,11 +161,9 @@
             <td class="hidden px-4 py-2 lg:table-cell">
               {{ convertToLocal(row.endTime) | date : "MM/dd/yyyy hh:mm a" }}
             </td>
-
             <td class="hidden px-4 py-2 lg:table-cell">
               {{ row.problemCount }}
             </td>
-
             <td class="py-2 text-center lg:px-4">
               <button
                 (click)="goToActionContest(row.id)"
@@ -273,7 +267,6 @@
       </table>
     </div>
   </div>
-
   @if (showModal) {
   <app-confirm-delete-hoc
     (closeModal)="handleClose($event)"

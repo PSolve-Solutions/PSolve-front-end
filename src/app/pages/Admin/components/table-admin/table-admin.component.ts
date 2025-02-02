@@ -13,7 +13,6 @@ import { DeleteUserComponent } from '../delete-user/delete-user.component';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrService } from 'ngx-toastr';
 import { ClientsService } from '../../services/clients.service';
-
 @Component({
   selector: 'app-table-admin',
   standalone: true,
@@ -46,30 +45,25 @@ export class TableAdminComponent implements OnChanges {
   selectedUserId: string | null = null;
   isPastDate: boolean = false;
   isLocked: boolean = false;
-
   ngOnChanges() {
     this.generatePages();
     this.totalPages = this.allDataTable?.totalPages;
     this.pageSize = this.allDataTable?.pageSize;
     this.totalCount = this.allDataTable?.totalCount;
   }
-
   changeLockStatus(clientId: string): void {
     this.clientId.emit(clientId);
   }
-
   checkEndDateForClinet(endDate: string): boolean {
     const currentDate = new Date();
     const apiEndDate = new Date(endDate);
     this.isPastDate = apiEndDate > currentDate;
     return this.isPastDate;
   }
-
   showConfirmDelete(id: string) {
     this.selectedUserId = id;
     this.showModalDelete = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedUserId !== null) {
       this.casheService.clearCache();
@@ -79,7 +73,6 @@ export class TableAdminComponent implements OnChanges {
     }
     this.showModalDelete = false;
   }
-
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -91,7 +84,6 @@ export class TableAdminComponent implements OnChanges {
       rowsPerPage: this.rowsPerPage,
     });
   }
-
   generatePages(): void {
     this.pages = [];
     if (this.allDataTable?.totalPages <= 3) {
@@ -104,12 +96,10 @@ export class TableAdminComponent implements OnChanges {
       for (let i = start; i <= end; i++) {
         this.pages.push(i);
       }
-
       this.showEllipsis = end < this.allDataTable?.totalPages - 1;
       this.showLastPage = this.showEllipsis;
     }
   }
-
   changePage(page: number): void {
     if (page > 0 && page <= this.allDataTable?.totalPages) {
       this.currPage = page;

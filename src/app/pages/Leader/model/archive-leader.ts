@@ -11,7 +11,6 @@ export interface ArchiveInfo {
   data: UserArchive[];
   errors: any;
 }
-
 export interface UserArchive {
   id: number;
   firstName: string;
@@ -23,7 +22,6 @@ export interface UserArchive {
   role?: string;
   college: string;
 }
-
 export interface OnArchiveUserInfo {
   id: string;
   firstName: string;

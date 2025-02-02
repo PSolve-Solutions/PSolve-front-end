@@ -1,18 +1,14 @@
-h4{
+h4 {
   // font-family: DM Sans;
-font-size: 35px;
-font-weight: 700;
-line-height: 45.57px;
-text-align: left;
-
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 45.57px;
+  text-align: left;
 }
-
-@media screen and (max-width:640px) {
-
-  p{
-    span{
+@media screen and (max-width: 640px) {
+  p {
+    span {
       font-size: 12px;
     }
   }
-
 }

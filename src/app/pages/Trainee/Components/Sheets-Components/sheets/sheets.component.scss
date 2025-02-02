@@ -1,5 +1,5 @@
-.card-bg-img{
-  background-image: url('../../../../../../assets/img_trainee/sheet_card_bg.png');
+.card-bg-img {
+  background-image: url("../../../../../../assets/img_trainee/sheet_card_bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7,52 +7,47 @@
   // padding: 10px;
   min-height: 24rem;
 }
-.left h1{
+.left h1 {
   line-height: 60.51px;
   font-size: 3.125rem;
   font-weight: 700;
   font-family: Inter;
   max-width: 75%;
 }
-small{
+small {
   font-size: 1.25rem;
   // font-family: DM Sans;
-font-weight: 500;
-line-height: 31.25px;
-
+  font-weight: 500;
+  line-height: 31.25px;
 }
-.left,.right{
-  min-height: calc( 100dvh - 134px );
-  max-height: calc( 100dvh - 134px );
-
+.left,
+.right {
+  min-height: calc(100dvh - 134px);
+  max-height: calc(100dvh - 134px);
 }
-.right{
-    background-image: url('../../../../../../assets/img_trainee/students-jumping-NurEYbJFKC.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.right {
+  background-image: url("../../../../../../assets/img_trainee/students-jumping-NurEYbJFKC.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-
-.border-card{
-  border: 6px solid #EF4A50;
-  transition: all .05s;
-
+.border-card {
+  border: 6px solid #ef4a50;
+  transition: all 0.05s;
 }
-.border-btn{
-  border: 2px solid #EF4A50;
-  transition: all .05s;
+.border-btn {
+  border: 2px solid #ef4a50;
+  transition: all 0.05s;
 }
 button {
-  span{
+  span {
     font-family: Inter;
-font-size: 1.5rem;
-font-weight: 500;
-line-height: 36.31px;
-text-align: left;
-
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 36.31px;
+    text-align: left;
   }
 }
-
 // <div [id]="sheet.id" class="card min-h- bg-black"  [ngClass]="{'mb-2': !last}">
 //               <div class=" card-bg-img rounded-[12px] relative flex flex-col justify-between items-center px-5 py-7 text-white  min-h-25.5rem] bg-red-300 cursor-pointer" (click)="openLink(sheet.sheetLink)">
 //                 <!-- Sheet Name -->

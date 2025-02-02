@@ -10,7 +10,6 @@ import { ResponseHeader } from '../../../shared/model/responseHeader';
 export class CampLeaderService {
   http = inject(HttpClient);
   casheService = inject(CasheService);
-
   getAllWithPagination(currentPage: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('PageNumber', currentPage)
@@ -20,26 +19,22 @@ export class CampLeaderService {
       params
     );
   }
-
   deleteCamp(id: number): Observable<ResponseHeader> {
     return this.http.delete<any>(
       `${environment.BASE_URL}/api/Leader/camps/${id}`
     );
   }
-
   emptyCamp(id: number): Observable<ResponseHeader> {
     return this.http.delete<any>(
       `${environment.BASE_URL}/api/Leader/camps/Emtpy/${id}`
     );
   }
-
   standingCamp(campId: number): Observable<ResponseHeader> {
     const params = new HttpParams().set('campId', campId);
     return this.http.get<any>(`${environment.BASE_URL}/api/Leader/standing`, {
       params,
     });
   }
-
   getAllMentors(): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/camps/mentors`
@@ -50,11 +45,9 @@ export class CampLeaderService {
       `${environment.BASE_URL}/api/Leader/camps/headsOfCamp`
     );
   }
-
   getAllCamps(): Observable<ResponseHeader> {
     return this.http.get<any>(`${environment.BASE_URL}/api/CampModel`);
   }
-
   addCamp(name: string): Observable<ResponseHeader> {
     return this.http.post<any>(
       `${environment.BASE_URL}/api/CampModel/${name}`,
@@ -66,7 +59,6 @@ export class CampLeaderService {
       `${environment.BASE_URL}/api/CampModel/${name}`
     );
   }
-
   createCamp(formData: any): Observable<ResponseHeader> {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',
@@ -77,7 +69,6 @@ export class CampLeaderService {
       { headers: myHeaders }
     );
   }
-
   getOneCamp(id: number): Observable<ResponseHeader> {
     return this.http.get<any>(
       `${environment.BASE_URL}/api/Leader/camps/displayEdit/${id}`

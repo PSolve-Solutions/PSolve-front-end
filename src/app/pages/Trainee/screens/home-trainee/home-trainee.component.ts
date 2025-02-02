@@ -14,14 +14,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-
 declare var $: any;
-
-
-
-
 // let steps = document.querySelectorAll(".step")
-
 @Component({
   selector: 'app-home-trainee',
   standalone: true,
@@ -40,9 +34,6 @@ declare var $: any;
   styleUrls: ['./home-trainee.component.scss'],
 })
 export class HomeTraineeComponent implements OnInit {
-
-
-
   public homeService = inject(HomeService);
   rate: number = 0;
   enterFeedBack: boolean = false;
@@ -52,27 +43,22 @@ export class HomeTraineeComponent implements OnInit {
   feedBackForm: FormGroup = new FormGroup({
     feedback: new FormControl('', [Validators.required]),
   });
-  currentStep:number = 0;
-
-  slides:any = [
+  currentStep: number = 0;
+  slides: any = [
     { image: 'assets/for_carousel.png' },
     { image: 'assets/for_carousel.png' },
     { image: 'assets/for_carousel.png' },
-    { image: 'assets/for_carousel.png' }
+    { image: 'assets/for_carousel.png' },
   ];
-
   ngOnInit(): void {
     this.canAddFeedBack();
     this.getCards();
   }
-
-
   getCards(): void {
     this.homeService.assignTraineeCurrentSheetCard();
     this.homeService.assignTraineeIncomingContestCard();
     this.homeService.assignTraineeNextSessionCard();
   }
-
   canAddFeedBack(): void {
     this.homeService.TraineeCanAddFeedBack().subscribe({
       next: ({ statusCode, data }) => {
@@ -95,52 +81,44 @@ export class HomeTraineeComponent implements OnInit {
       });
     }
   }
-
   calcTime(data: any): void {
-    if (typeof data == "number") {
+    if (typeof data == 'number') {
       const timeId = setInterval(() => {
         if (!this.homeService.isLoading) {
           this.showFeedBack();
-          this.onEnterFeedBack(false)
-
+          this.onEnterFeedBack(false);
           clearInterval(timeId);
         }
       }, 500);
     }
   }
-
   showFeedBack(): void {
     $('.feed-back').removeClass('hidden').animate({ top: '75%' });
   }
-
   hideFeedBack(): void {
     $('.feed-back').animate(
       { top: '150%' },
       { complete: () => $('.feed-back').addClass('hidden') }
     );
   }
-
-    onEnterFeedBack(bool:boolean):void{
-      if(!bool){
-         this.leaveTimer = setTimeout(()=>{
-
-          this.hideFeedBack()
-          clearTimeout(this.leaveTimer)
-
-        },4000)
-      }
-      else{
-        clearTimeout(this.leaveTimer)
-      }
-
+  onEnterFeedBack(bool: boolean): void {
+    if (!bool) {
+      this.leaveTimer = setTimeout(() => {
+        this.hideFeedBack();
+        clearTimeout(this.leaveTimer);
+      }, 4000);
+    } else {
+      clearTimeout(this.leaveTimer);
     }
-
+  }
   onLeave(): void {
-    this.enterFeedBack=true
-    if(this.feedBackForm.get('feedback')?.value == '' && !this.feedBackForm.get('feedback')?.touched){
-      this.onEnterFeedBack(false)
+    this.enterFeedBack = true;
+    if (
+      this.feedBackForm.get('feedback')?.value == '' &&
+      !this.feedBackForm.get('feedback')?.touched
+    ) {
+      this.onEnterFeedBack(false);
     }
-
   }
   getRating(rate: number): void {
     for (let i = 0; i < rate; i++) {
@@ -153,20 +131,11 @@ export class HomeTraineeComponent implements OnInit {
     }
     this.rate = rate;
   }
-
-
-
-
-
-
-   goToStep(index: number): void {
+  goToStep(index: number): void {
     this.currentStep = index;
     const slider = document.querySelector('.slider') as HTMLElement;
     if (slider) {
       slider.style.transform = `translateX(-${index * 100}%)`;
     }
   }
-
-
-
 }

@@ -110,7 +110,6 @@
               <td class="hidden px-4 py-2 lg:table-cell">
                 {{ row.durationInWeeks }}
               </td>
-
               <td class="py-2 text-center lg:px-4">
                 <button
                   (click)="goToActionCamp(row.id)"
@@ -300,7 +299,6 @@
           </tbody>
         </table>
       </div>
-
       <div
         class="flex items-center justify-center w-full p-2 bg-[#DEDFE1] space-x-2 text-sm font-semibold rounded-lg"
         [class.mt-4]="!isLoading() ? allCampsInfo.data.length === 0 : ''"
@@ -324,7 +322,6 @@
             />
           </svg>
         </button>
-
         @for (page of pages; track $index) {
         <button
           class="px-6 py-1.5 shadow"
@@ -368,7 +365,6 @@
       </div>
     </div>
   </div>
-
   @if (showModalDelete) {
   <app-delete-confirm-modal
     (closeModal)="handleClose($event)"
