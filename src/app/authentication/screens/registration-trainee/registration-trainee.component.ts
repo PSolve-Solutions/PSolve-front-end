@@ -188,6 +188,11 @@ export class RegistrationTraineeComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size <= maxSize) {
+        this.toastr.error('The image size must be less than or equal 2MB');
+        return;
+      }
       this.profileImageName = input.files[0].name;
       this.registrationForm.get('Photo')?.setValue(file);
     }
