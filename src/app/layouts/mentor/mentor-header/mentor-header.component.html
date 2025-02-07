@@ -1,20 +1,24 @@
-<header class="flex items-center gap-3 justify-end sm:px-10 px-7 pt-[32px] lg:py-[32px] bg-transparent">
-    <div class="sm:text-[20px] text-sm text-[#686666] px-2">camp</div>
-    <div class="relative inline-block sm:text-[20px] text-sm text-left sm:min-w-[200px] min-w-[140px] bg-[#EEEEEE]  h-[40px] rounded-full">
+<header class="flex items-center gap-3 justify-end sm:px-10 px-2 pt-[32px] lg:py-[32px] bg-transparent">
+    <div class="sm:text-[20px] hidden sm:block text-sm text-[#686666] px-2">camp</div>
+    <div class="relative inline-block sm:text-[20px] text-sm text-left sm:min-w-[200px] min-w-[100px] sm:bg-[#EEEEEE] bg-[#002C3D]  h-[40px] sm:rounded-full rounded-lg my-3">
     
     <button 
       (click)="show()"
-      class="flex items-center pl-4 justify-between w-full py-1 h-full font-medium text-black pe-6"
+      class="flex items-center pl-4 justify-between w-full py-1 h-full font-medium sm:text-black text-white  pe-6"
     >
-    {{this.campName}}
-    <svg [ngClass]="isShow ? 'rotate-180' : ''" class="duration-200" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <p class="px-2">{{this.campName?this.campName:'camp'}}</p>
+    <svg [ngClass]="isShow ? 'rotate-180' : ''" class="duration-200 hidden sm:block ml-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M16.6031 0.735614L9.57559 7.65211C9.42226 7.80381 9.21528 7.88889 8.99959 7.88889C8.7839 7.88889 8.57692 7.80381 8.42359 7.65211L1.39459 0.737114C1.23993 0.586212 1.03242 0.501745 0.816338 0.501745C0.60026 0.501745 0.392743 0.586212 0.238088 0.737114C0.162115 0.81118 0.101737 0.899703 0.0605112 0.997469C0.0192857 1.09523 -0.00195312 1.20026 -0.00195312 1.30636C-0.00195312 1.41247 0.0192857 1.51749 0.0605112 1.61526C0.101737 1.71302 0.162115 1.80155 0.238088 1.87561L7.26409 8.79062C7.72687 9.245 8.34952 9.49958 8.99809 9.49958C9.64666 9.49958 10.2693 9.245 10.7321 8.79062L17.7581 1.87561C17.8343 1.80152 17.8949 1.71291 17.9362 1.615C17.9776 1.5171 17.9989 1.4119 17.9989 1.30561C17.9989 1.19933 17.9776 1.09413 17.9362 0.996223C17.8949 0.898319 17.8343 0.809703 17.7581 0.735614C17.6034 0.584712 17.3959 0.500244 17.1798 0.500244C16.9638 0.500244 16.7562 0.584712 16.6016 0.735614" fill="#696969"/>
         </svg>
+        <svg [ngClass]="isShow ? 'rotate-180' : ''" class="duration-200 block sm:hidden" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6031 0.735614L9.57559 7.65211C9.42226 7.80381 9.21528 7.88889 8.99959 7.88889C8.7839 7.88889 8.57692 7.80381 8.42359 7.65211L1.39459 0.737114C1.23993 0.586212 1.03242 0.501745 0.816338 0.501745C0.60026 0.501745 0.392743 0.586212 0.238088 0.737114C0.162115 0.81118 0.101737 0.899703 0.0605112 0.997469C0.0192857 1.09523 -0.00195312 1.20026 -0.00195312 1.30636C-0.00195312 1.41247 0.0192857 1.51749 0.0605112 1.61526C0.101737 1.71302 0.162115 1.80155 0.238088 1.87561L7.26409 8.79062C7.72687 9.245 8.34952 9.49958 8.99809 9.49958C9.64666 9.49958 10.2693 9.245 10.7321 8.79062L17.7581 1.87561C17.8343 1.80152 17.8949 1.71291 17.9362 1.615C17.9776 1.5171 17.9989 1.4119 17.9989 1.30561C17.9989 1.19933 17.9776 1.09413 17.9362 0.996223C17.8949 0.898319 17.8343 0.809703 17.7581 0.735614C17.6034 0.584712 17.3959 0.500244 17.1798 0.500244C16.9638 0.500244 16.7562 0.584712 16.6016 0.735614" fill="#fff"/>
+          </svg>
+
     </button>
 
     <div
       [ngClass]="isShow ? 'block' : 'hidden'"
-      class="absolute dropdown border rounded-xl bg-[#EEEEEE] z-20  w-[200px] text-[20px]  mt-2 transition-all duration-500 py-3 "
+      class="absolute right-0 dropdown border rounded-xl bg-[#EEEEEE] z-20  w-[200px] text-[20px]  mt-2 transition-all duration-500 py-3 "
     >
       <button *ngFor="let camp of camps; let i = index" (click)="train(camp.id , camp.name)" class="block w-full pl-[32px] text-left hover:bg-[#2A8E9E] hover:text-white">{{camp.name}} </button> 
 

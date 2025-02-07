@@ -80,8 +80,12 @@ mb:boolean = false;
        this.info = response.data;
        const element = this.renderer.selectRootElement(`#z${id}`, true);
     const element2 = this.renderer.selectRootElement(`#x${id}`, true);
+    const element3 = this.renderer.selectRootElement(`#zz${this.id}`, true);
+    const element4 = this.renderer.selectRootElement(`#xx${this.id}`, true);
+    const element5 = this.renderer.selectRootElement(`#bar${this.id}`, true);
     this.renderer.addClass(element, 'block');
     this.renderer.removeClass(element, 'hidden');
+    this.renderer.removeClass(element5, 'hidden');
     this.renderer.addClass(element2, 'absolute');
     this.renderer.addClass(element2, 'z-40');
     this.renderer.addClass(element2, 'sm:left-[-40px]');
@@ -89,6 +93,16 @@ mb:boolean = false;
     this.renderer.addClass(element2, 'sm:w-[380px]');
     this.renderer.addClass(element2, 'w-[95%]');
     this.renderer.addClass(element2, 'top-[-70px]');
+
+    this.renderer.addClass(element3, 'block');
+    this.renderer.removeClass(element3, 'hidden');
+    this.renderer.addClass(element4, 'absolute');
+    this.renderer.addClass(element4, 'z-40');
+    this.renderer.addClass(element4, 'sm:left-[-40px]');
+    this.renderer.addClass(element4, 'left-[0px]');
+    this.renderer.addClass(element4, 'sm:w-[380px]');
+    this.renderer.addClass(element4, 'w-[95%]');
+    this.renderer.addClass(element4, 'top-[-70px]');
     
       } else {
         
@@ -104,12 +118,36 @@ mb:boolean = false;
     this.trainee = false;
     const element = this.renderer.selectRootElement(`#z${this.id}`, true);
     const element2 = this.renderer.selectRootElement(`#x${this.id}`, true);
+    const element3 = this.renderer.selectRootElement(`#zz${this.id}`, true);
+    const element4 = this.renderer.selectRootElement(`#xx${this.id}`, true);
+    const element5 = this.renderer.selectRootElement(`#bar${this.id}`, true);
+    // this.renderer.removeClass(element, 'block');
+    // this.renderer.addClass(element, 'hidden');
+    // this.renderer.removeClass(element2, 'absolute');
+    // this.renderer.removeClass(element2, 'z-40');
+    // this.renderer.removeClass(element2, 'sm:w-[380px]');
+    // this.renderer.removeClass(element2, 'w-[95%]');
     this.renderer.removeClass(element, 'block');
     this.renderer.addClass(element, 'hidden');
+    this.renderer.addClass(element5, 'hidden');
     this.renderer.removeClass(element2, 'absolute');
     this.renderer.removeClass(element2, 'z-40');
+    this.renderer.removeClass(element2, 'sm:left-[-40px]');
+    this.renderer.removeClass(element2, 'left-[0px]');
     this.renderer.removeClass(element2, 'sm:w-[380px]');
     this.renderer.removeClass(element2, 'w-[95%]');
+    this.renderer.removeClass(element2, 'top-[-70px]');
+    
+    this.renderer.removeClass(element3, 'block');
+    this.renderer.addClass(element3, 'hidden');
+    this.renderer.removeClass(element4, 'absolute');
+    this.renderer.removeClass(element4, 'z-40');
+    this.renderer.removeClass(element4, 'hidden');
+    this.renderer.removeClass(element4, 'sm:left-[-40px]');
+    this.renderer.removeClass(element4, 'left-[0px]');
+    this.renderer.removeClass(element4, 'sm:w-[380px]');
+    this.renderer.removeClass(element4, 'w-[95%]');
+    this.renderer.removeClass(element4, 'top-[-70px]');
     this.arr[this.id] = false;
   }
 
