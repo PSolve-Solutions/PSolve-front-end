@@ -15,7 +15,7 @@
 .slide img {
   max-width: 220px;
 }
-/* تحريك السلايدر بشكل دائري */
+
 @keyframes slide {
   0% {
     transform: translateX(0);
@@ -32,7 +32,7 @@
     transform: translateX(-700%);
   }
 }
-/* للتأكد من التوافق مع الأجهزة الصغيرة */
+
 @media screen and (max-width: 640px) {
   h2 {
     font-size: 30px;

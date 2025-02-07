@@ -33,7 +33,7 @@
 <!-- Container for the cards -->
 @if (isLoading) {
 <img
-  class="w-8 h-8 block mx-auto my-12 animate-spin text-purple-950"
+  class="block w-8 h-8 mx-auto my-12 animate-spin text-purple-950"
   src="https://www.svgrepo.com/show/474682/loading.svg"
   alt="Loading icon"
 />
@@ -46,7 +46,7 @@
     class="bg-[#E0E0E0] sm:w-[400px] w-[90%] shadow-lg rounded-[8px] p-4 gap-y-3 flex flex-col justify-between"
   >
     <!-- Header -->
-    <div class="flex justify-between items-start">
+    <div class="flex items-start justify-between">
       <h2 class="text-lg font-semibold">{{ item.title }}</h2>
       <div class="flex gap-3">
         <button
@@ -104,18 +104,18 @@
           <div
             id="{{ 'done' + i }}"
             (click)="show('done' + i)"
-            class="hidden dropdown origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            class="absolute right-0 hidden w-32 mt-2 origin-top-right bg-white rounded-md shadow-lg dropdown ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
             <div class="py-1">
               <button
                 (click)="edit(item)"
-                class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
               >
                 Edit
               </button>
               <button
                 (click)="del(item.id)"
-                class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
               >
                 Delete
               </button>
@@ -201,7 +201,7 @@
     </p>
     <!-- Link -->
     <div
-      class="flex items-center justify-between relative bg-gray-100 mt-3 border border-gray-300 rounded-lg px-2 py-1"
+      class="relative flex items-center justify-between px-2 py-1 mt-3 bg-gray-100 border border-gray-300 rounded-lg"
     >
       <div class="flex items-center justify-between w-[300px]">
         <div class="flex items-center">
@@ -292,19 +292,19 @@
     />
     <div
       *ngIf="error"
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+      class="relative px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded"
       role="alert"
     >
       <strong class="font-bold">Invalid Data!</strong> <br />
       <div *ngFor="let i of err" class="block">{{ i }}</div>
     </div>
-    <!-- <div *ngIf="success" class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <!-- <div *ngIf="success" class="relative px-4 py-3 mb-4 text-green-700 bg-green-100 border border-green-400 rounded" role="alert">
             <strong class="font-bold">Success! </strong>
             <span class="">The Practice added succeesfully</span>
         </div> -->
-    <div class="flex flex-wrap justify-between items-center gap-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center justify-around gap-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1" for="time"
+        <label class="block mb-1 text-sm font-medium text-gray-700" for="time"
           >Time</label
         >
         <input
@@ -316,7 +316,7 @@
         />
       </div>
       <div class="flex items-center justify-around gap-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1" for="status"
+        <label class="block mb-1 text-sm font-medium text-gray-700" for="status"
           >Status</label
         >
         <div class="relative">
@@ -345,7 +345,7 @@
             class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
           >
             <svg
-              class="h-4 w-4 text-gray-400"
+              class="w-4 h-4 text-gray-400"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -357,9 +357,9 @@
         </div>
       </div>
     </div>
-    <div class="mb-4 flex items-center justify-between mt-4">
+    <div class="flex items-center justify-between mt-4 mb-4">
       <label
-        class="block text-sm font-medium text-gray-700 mb-1"
+        class="block mb-1 text-sm font-medium text-gray-700"
         for="meeting-link"
         >Meeting's link</label
       >
@@ -371,8 +371,8 @@
         placeholder="Enter meeting link"
       />
     </div>
-    <div class="mb-4 flex items-center justify-between mt-4">
-      <label class="block text-sm font-medium text-gray-700 mb-1" for="notes"
+    <div class="flex items-center justify-between mt-4 mb-4">
+      <label class="block mb-1 text-sm font-medium text-gray-700" for="notes"
         >Notes</label
       >
       <textarea
@@ -411,19 +411,19 @@
     />
     <div
       *ngIf="edError.length > 0"
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+      class="relative px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded"
       role="alert"
     >
       <strong class="font-bold">Invalid Data!</strong> <br />
       <div *ngFor="let i of edError" class="block">{{ i }}</div>
     </div>
-    <!-- <div *ngIf="success" class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <!-- <div *ngIf="success" class="relative px-4 py-3 mb-4 text-green-700 bg-green-100 border border-green-400 rounded" role="alert">
             <strong class="font-bold">Success! </strong>
             <span class="">The Practice added succeesfully</span>
         </div> -->
-    <div class="flex flex-wrap justify-between items-center gap-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center justify-around gap-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1" for="time"
+        <label class="block mb-1 text-sm font-medium text-gray-700" for="time"
           >Time</label
         >
         <input
@@ -436,7 +436,7 @@
         />
       </div>
       <div class="flex items-center justify-around gap-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1" for="status"
+        <label class="block mb-1 text-sm font-medium text-gray-700" for="status"
           >Status</label
         >
         <div class="relative">
@@ -470,7 +470,7 @@
             class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
           >
             <svg
-              class="h-4 w-4 text-gray-400"
+              class="w-4 h-4 text-gray-400"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -482,9 +482,9 @@
         </div>
       </div>
     </div>
-    <div class="mb-4 flex items-center justify-between mt-4">
+    <div class="flex items-center justify-between mt-4 mb-4">
       <label
-        class="block text-sm font-medium text-gray-700 mb-1"
+        class="block mb-1 text-sm font-medium text-gray-700"
         for="meeting-link"
         >Meeting's link</label
       >
@@ -496,8 +496,8 @@
         placeholder="Enter meeting link"
       />
     </div>
-    <div class="mb-4 flex items-center justify-between mt-4">
-      <label class="block text-sm font-medium text-gray-700 mb-1" for="notes"
+    <div class="flex items-center justify-between mt-4 mb-4">
+      <label class="block mb-1 text-sm font-medium text-gray-700" for="notes"
         >Notes</label
       >
       <textarea
@@ -507,7 +507,7 @@
         placeholder="Add notes here"
       ></textarea>
     </div>
-    <div class="flex justify-end mt-12 gap-6">
+    <div class="flex justify-end gap-6 mt-12">
       <button
         (click)="show('edit')"
         class="px-6 py-2 text-white ] rounded-md bg-[#EF4A50]"

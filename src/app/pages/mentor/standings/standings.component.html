@@ -6,7 +6,7 @@
 </h1>
 @if (isLoading) {
 <img
-  class="w-8 h-8 block mx-auto my-12 animate-spin text-purple-950"
+  class="block w-8 h-8 mx-auto my-12 animate-spin text-purple-950"
   src="https://www.svgrepo.com/show/474682/loading.svg"
   alt="Loading icon"
 />
@@ -15,23 +15,23 @@
   <table
     class="w-[calc(100vw-64px)] text-lg m-auto border-spacing-y-4 border-spacing-x-0 border-separate"
   >
-    <thead class="text-gray-600 sm:text-lg text-sm leading-normal text-center">
+    <thead class="text-sm leading-normal text-center text-gray-600 sm:text-lg">
       <tr>
-        <th class="px-6 rounded-l-lg py-3 text-start" colspan="2">Achievers</th>
-        <!-- <th class="px-6  py-3 text-center">  </th> -->
+        <th class="px-6 py-3 rounded-l-lg text-start" colspan="2">Achievers</th>
+        <!-- <th class="px-6 py-3 text-center">  </th> -->
         <th class="px-6 py-3 text-center">Codeforces</th>
         <th class="px-6 py-3 text-center">Vjudge</th>
-        <th class="px-6 sm:block hidden py-3 text-center">Mentor</th>
+        <th class="hidden px-6 py-3 text-center sm:block">Mentor</th>
         <th class="px-6 py-3 text-center">Solve</th>
-        <th class="px-6 sm:block hidden rounded-r-lg py-3 text-center">
+        <th class="hidden px-6 py-3 text-center rounded-r-lg sm:block">
           Points
         </th>
       </tr>
     </thead>
-    <tbody class="sm:text-lg text-sm font-light">
+    <tbody class="text-sm font-light sm:text-lg">
       <tr
         *ngFor="let item of stand?.achivers; let i = index"
-        class="text-white text-center rounded-lg my-2"
+        class="my-2 text-center text-white rounded-lg"
         [ngClass]="{
           'border-black border-[10px]':
             item.mentorId == this.auth.currentUser().id,
@@ -43,14 +43,14 @@
         }"
       >
         <td
-          class="pl-6 py-4 rounded-l-lg"
+          class="py-4 pl-6 rounded-l-lg"
           [ngClass]="{
             'border-black  border-4 border-r-0':
               item.mentorId == this.auth.currentUser().id
           }"
         >
           <div
-            class="sm:none inline-block relative mr-2 px-2 py-1 bg-white rounded-md font-bold"
+            class="relative inline-block px-2 py-1 mr-2 font-bold bg-white rounded-md sm:none"
             [ngClass]="{
               'text-[#41B253] ': item.solvedProblems / stand.totalProblems <= 1,
               'text-[#CCA827] ':
@@ -78,7 +78,7 @@
           </div>
         </td>
         <td
-          class="pr-6 pl-2 py-4 text-start"
+          class="py-4 pl-2 pr-6 text-start"
           [ngClass]="{
             'border-black  border-4 border-x-0':
               item.mentorId == this.auth.currentUser().id
@@ -115,7 +115,7 @@
           >
         </td>
         <td
-          class="px-6 py-6 sm:table-cell hidden"
+          class="hidden px-6 py-6 sm:table-cell"
           [ngClass]="{
             'border-black  border-4 border-x-0':
               item.mentorId == this.auth.currentUser().id
@@ -124,7 +124,7 @@
           <div>{{ item.mentorName }}</div>
         </td>
         <td
-          class="px-6 py-4 text-center sm:rounded-r-none rounded-r-lg"
+          class="px-6 py-4 text-center rounded-r-lg sm:rounded-r-none"
           [ngClass]="{
             'border-black  border-y-4  border-r-4 sm:border-x-0 ':
               item.mentorId == this.auth.currentUser().id
@@ -133,17 +133,17 @@
           {{ item.solvedProblems }} / {{ stand.totalProblems }}
         </td>
         <td
-          class="px-6 py-4 rounded-r-lg text-center sm:table-cell hidden"
+          class="hidden px-6 py-4 text-center rounded-r-lg sm:table-cell"
           [ngClass]="{
             'border-black  border-4 border-x-4 border-l-0':
               item.mentorId == this.auth.currentUser().id
           }"
         >
-          <div class="flex justify-center items-center">
+          <div class="flex items-center justify-center">
             <button
               *ngIf="item.mentorId == this.auth.currentUser().id"
               (click)="change(i, item.id, false, item.points)"
-              class="px-2 rounded-md text-lg text-black mx-2 bg-white"
+              class="px-2 mx-2 text-lg text-black bg-white rounded-md"
             >
               -
             </button>
@@ -153,7 +153,7 @@
             <button
               *ngIf="item.mentorId == this.auth.currentUser().id"
               (click)="change(i, item.id, true, item.points)"
-              class="px-2 rounded-md text-lg text-black mx-2 bg-white"
+              class="px-2 mx-2 text-lg text-black bg-white rounded-md"
             >
               +
             </button>

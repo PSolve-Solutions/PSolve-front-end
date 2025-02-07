@@ -5,10 +5,10 @@
     <button
       (click)="toggleTables()"
       type="button"
-      class="relative flex rounded-full w-full sm:w-fit text-sm"
+      class="relative flex w-full text-sm rounded-full sm:w-fit"
     >
       <div
-        class="flex justify-between items-center gap-4 w-11/12 mx-auto sm:w-fit"
+        class="flex items-center justify-between w-11/12 gap-4 mx-auto sm:w-fit"
       >
         <!-- Arrow icon with rotation class -->
         <img
@@ -29,8 +29,11 @@
       </div>
     </button>
     <!-- Done Table -->
-    <div class="content sm:ml-9 mt-4 min-w-full done-table hidden">
-      <table class="w-full text-sm text-left">
+    <div class="min-w-full mt-4 content sm:ml-9 done-table">
+      <table
+        class="w-full text-sm text-left"
+        [@slideToggle]="tableVisible ? 'visible' : 'hidden'"
+      >
         <!-- Table header -->
         <thead class="text-xs">
           <tr
@@ -47,7 +50,7 @@
           @for(done of doneTasks; track done.id) {
           <tr class="border-b border-[#D9D9D9] relative">
             <th
-              class="p-4 font-medium text-base capitalize flex items-center justify-between"
+              class="flex items-center justify-between p-4 text-base font-medium capitalize"
             >
               <div class="flex items-center gap-4">
                 <!-- Status toggle button -->
@@ -57,7 +60,7 @@
                 <!-- Dropdown list for task status -->
                 <div
                   [id]="done.id"
-                  class="list flex flex-col w-fit absolute top-full left-0 z-10 min-h-fit"
+                  class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
                 >
                   <a
                     (click)="changeTaskStatus(done, 0)"

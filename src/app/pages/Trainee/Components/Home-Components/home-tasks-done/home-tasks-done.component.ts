@@ -1,6 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { HomeService } from '../../../Services/home.service';
 import { task } from '../../../model/trinee-home';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 declare var $: any;
 @Component({
   selector: 'app-home-tasks-done',
@@ -39,12 +46,12 @@ export class HomeTasksDoneComponent {
       },
     });
     // Hide the task list after updating the status
-    $(`#${task.id}`).slideToggle(300);
+    this.listVisibility[task.id] = !this.listVisibility[task.id];
   }
   // Toggle the visibility of the task tables
   toggleTables(): void {
-    $('.done-table').slideToggle(500);
-    $('.done-arrow').toggleClass('rotate');
+    this.tableVisible = !this.tableVisible;
+    this.arrowState = this.tableVisible ? 'rotated' : 'default';
   }
   // Toggle the visibility of task lists within each category
   toggleList(id: string): void {

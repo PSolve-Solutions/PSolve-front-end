@@ -1,16 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { HomeService } from '../../../Services/home.service';
 import { task } from '../../../model/trinee-home';
 declare var $: any;
 @Component({
   selector: 'app-home-tasks-in-progress',
   standalone: true,
-  imports: [],
   templateUrl: './home-tasks-in-progress.component.html',
   styleUrl: './home-tasks-in-progress.component.scss',
 })
 export class HomeTasksInProgressComponent {
-  // Inject HomeService to handle task-related operations
   private _homeService = inject(HomeService);
   inProgressTasks: task[] = [];
   // Lifecycle hook to load tasks when the component initializes
@@ -25,7 +23,7 @@ export class HomeTasksInProgressComponent {
       },
     });
   }
-  // Change the status of a task and reload the tasks
+
   changeTaskStatus(task: task, status: number): void {
     const model = {
       taskId: task.id,
@@ -39,15 +37,37 @@ export class HomeTasksInProgressComponent {
       },
     });
     // Hide the task list after updating the status
-    $(`#${task.id}`).slideToggle(300);
+    this.listVisibility[task.id] = !this.listVisibility[task.id];
   }
   // Toggle the visibility of the task tables
   toggleTables(): void {
-    $('.progress-table').slideToggle(500);
-    $('.progress-arrow').toggleClass('rotate');
+    this.tableVisible = !this.tableVisible;
+    this.arrowState = this.tableVisible ? 'rotated' : 'default';
   }
-  // Toggle the visibility of task lists within each category
-  toggleList(id: string): void {
-    $(`#${id}`).slideToggle(300);
+
+  toggleList(taskId: string): void {
+    if (this.listVisibility[taskId]) {
+      this.listVisibility = {};
+    } else {
+      this.listVisibility = {};
+
+      this.listVisibility[taskId] = true;
+    }
+  }
+
+  // Close all lists if a click occurs outside the component
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      // Close all lists
+      for (let taskId in this.listVisibility) {
+        this.listVisibility[taskId] = false;
+      }
+    }
+  }
+
+  // Track task by ID to improve rendering performance
+  trackTask(index: number, task: task): string {
+    return task.id;
   }
 }

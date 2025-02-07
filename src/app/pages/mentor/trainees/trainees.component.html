@@ -1,8 +1,8 @@
-<div class=" " id="backDiv">
+<div class="" id="backDiv">
   <app-mentor-header></app-mentor-header>
   @if (isLoading) {
   <img
-    class="w-8 h-8 block mx-auto animate-spin text-purple-950"
+    class="block w-8 h-8 mx-auto animate-spin text-purple-950"
     src="https://www.svgrepo.com/show/474682/loading.svg"
     alt="Loading icon"
   />
@@ -22,7 +22,7 @@
         class="bg-[#EEEEEE] cursor-pointer sm:w-[300px] w-[95%] pr-5 py-5 rounded-[20px]"
       >
         <div
-          class="mt-6 text-center pl-5 mb-3 gap-2 sm:block items-center justify-start"
+          class="items-center justify-start gap-2 pl-5 mt-6 mb-3 text-center sm:block"
           [ngClass]="arr[i] ? 'block' : 'flex'"
         >
           <img
@@ -42,7 +42,7 @@
             {{ trainee.lastName }}
           </h3>
         </div>
-        <div class="flex pl-8 gap-2 justify-start mt-2">
+        <div class="flex justify-start gap-2 pl-8 mt-2">
           <svg
             width="24"
             height="24"
@@ -57,7 +57,7 @@
           </svg>
           <p class="text-[18px]">{{ trainee.college }}</p>
         </div>
-        <div class="flex pl-8 gap-2 justify-start mt-2">
+        <div class="flex justify-start gap-2 pl-8 mt-2">
           <svg
             width="24"
             height="24"
@@ -80,7 +80,7 @@
             >
           </p>
         </div>
-        <div class="flex pl-8 gap-2 justify-start mt-2">
+        <div class="flex justify-start gap-2 pl-8 mt-2">
           <svg
             width="24"
             height="24"
@@ -112,7 +112,7 @@
             >{{ trainee.facebookLink ? "" : "Null" }}
           </p>
         </div>
-        <div class="flex pl-8 gap-2 justify-start mt-2">
+        <div class="flex justify-start gap-2 pl-8 mt-2">
           <svg
             width="24"
             height="24"
@@ -127,8 +127,8 @@
           </svg>
           <p class="text-[18px]">{{ trainee.phoneNumber }}</p>
         </div>
-        <div class="hidden relative" id="z{{ i }}">
-          <div class="flex pl-8 gap-2 justify-start mt-2">
+        <div class="relative hidden" id="z{{ i }}">
+          <div class="flex justify-start gap-2 pl-8 mt-2">
             <svg
               width="24"
               height="24"
@@ -145,7 +145,7 @@
               <span class="font-bold"> Grade : </span>{{ this.info.grade }}
             </p>
           </div>
-          <div class="flex pl-8 gap-2 justify-start mt-2">
+          <div class="flex justify-start gap-2 pl-8 mt-2">
             <svg
               width="24"
               height="24"
@@ -163,7 +163,7 @@
               >{{ this.info.vjudgeHandle ? this.info.vjudgeHandle : "Null" }}
             </p>
           </div>
-          <div class="flex pl-8 gap-2 justify-start mt-2">
+          <div class="flex justify-start gap-2 pl-8 mt-2">
             <svg
               width="24"
               height="24"
@@ -181,7 +181,7 @@
               >{{ this.info.email ? this.info.email : "Null" }}
             </p>
           </div>
-          <div class="flex pl-8 gap-2 justify-start mt-2">
+          <div class="flex justify-start gap-2 pl-8 mt-2">
             <svg
               width="24"
               height="24"

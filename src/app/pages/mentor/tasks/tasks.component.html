@@ -1,8 +1,8 @@
 <div
-  class="flex justify-between items-center sm:pr-10 pr-2"
+  class="flex items-center justify-between pr-2 sm:pr-10"
   (click)="onClickOutside($event)"
 >
-  <div class="flex gap-x-5 lg:flex-row flex-col gap-y-4">
+  <div class="flex flex-col gap-x-5 lg:flex-row gap-y-4">
     <app-mentor-header></app-mentor-header>
     <div
       class="flex items-center gap-3 justify-end sm:px-10 px-7 pb-[32px] lg:py-[32px] bg-transparent"
@@ -13,7 +13,7 @@
       >
         <button
           (click)="show('select')"
-          class="flex selBut items-center pl-4 justify-between w-full py-1 h-full font-medium text-black pe-6"
+          class="flex items-center justify-between w-full h-full py-1 pl-4 font-medium text-black selBut pe-6"
         >
           {{ this.selName | truncate }}
           <svg
@@ -63,14 +63,14 @@
 </div>
 @if (isLoading) {
 <img
-  class="w-8 h-8 block mx-auto my-12 animate-spin text-purple-950"
+  class="block w-8 h-8 mx-auto my-12 animate-spin text-purple-950"
   src="https://www.svgrepo.com/show/474682/loading.svg"
   alt="Loading icon"
 />
 } @else {
 <div
   *ngIf="id != null"
-  class="flex flex-wrap lg:flex-nowrap justify-around px-8 items-start gap-4"
+  class="flex flex-wrap items-start justify-around gap-4 px-8 lg:flex-nowrap"
 >
   <!-- To Do Column -->
   <div
@@ -88,12 +88,12 @@
         class="bg-[#2A8E9E33] rounded-lg p-4 mb-4"
       >
         <!-- Avatar and Name -->
-        <div class="flex items-center mb-2 justify-between">
+        <div class="flex items-center justify-between mb-2">
           <!--  img tag for the avatar -->
           <div class="flex items-center mb-2">
             <img
               alt=" "
-              class="w-8 h-8 bg-gray-300 rounded-lg mr-2"
+              class="w-8 h-8 mr-2 bg-gray-300 rounded-lg"
               src="{{
                 item.photoUrl
                   ? item.photoUrl
@@ -136,18 +136,18 @@
             <div
               id="{{ 'to' + i }}"
               (click)="show('to' + i)"
-              class="dropdown hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute right-0 hidden w-32 mt-2 origin-top-right bg-white rounded-md shadow-lg dropdown ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <div class="py-1">
                 <button
                   (click)="edit(item)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Edit
                 </button>
                 <button
                   (click)="del(item.id)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Delete
                 </button>
@@ -239,12 +239,12 @@
         class="bg-[#2A8E9E33] rounded-lg p-4 mb-4"
       >
         <!-- Avatar and Name -->
-        <div class="flex items-center mb-2 justify-between">
+        <div class="flex items-center justify-between mb-2">
           <!-- Replace with an img tag for the avatar -->
           <div class="flex items-center mb-2">
             <img
               alt=" "
-              class="w-8 h-8 bg-gray-300 rounded-lg mr-2"
+              class="w-8 h-8 mr-2 bg-gray-300 rounded-lg"
               src="{{
                 item.photoUrl
                   ? item.photoUrl
@@ -287,18 +287,18 @@
             <div
               id="{{ 'in' + i }}"
               (click)="show('in' + i)"
-              class="hidden dropdown origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute right-0 hidden w-32 mt-2 origin-top-right bg-white rounded-md shadow-lg dropdown ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <div class="py-1">
                 <button
                   (click)="edit(item)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Edit
                 </button>
                 <button
                   (click)="del(item.id)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Delete
                 </button>
@@ -394,12 +394,12 @@
         class="bg-[#2A8E9E33] rounded-lg p-4 mb-4"
       >
         <!-- Avatar and Name -->
-        <div class="flex items-center mb-2 justify-between">
+        <div class="flex items-center justify-between mb-2">
           <!-- Replace with an img tag for the avatar -->
           <div class="flex items-center mb-2">
             <img
               alt=" "
-              class="w-8 h-8 bg-gray-300 rounded-lg mr-2"
+              class="w-8 h-8 mr-2 bg-gray-300 rounded-lg"
               src="{{
                 item.photoUrl
                   ? item.photoUrl
@@ -442,18 +442,18 @@
             <div
               id="{{ 'done' + i }}"
               (click)="show('done' + i)"
-              class="dropdown hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute right-0 hidden w-32 mt-2 origin-top-right bg-white rounded-md shadow-lg dropdown ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <div class="py-1">
                 <button
                   (click)="edit(item)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Edit
                 </button>
                 <button
                   (click)="del(item.id)"
-                  class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                  class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                   Delete
                 </button>
@@ -662,7 +662,7 @@
       </div>
     </div>
     <!-- Due to -->
-    <div class="mb-4 flex gap-6 items-center">
+    <div class="flex items-center gap-6 mb-4">
       <label class="flex items-center text-sm font-medium">Start Time</label>
       <input
         #startTime
@@ -670,7 +670,7 @@
         class="mt-2 w-[170px] px-4 py-2 border border-[rgba(151,151,151,0.5)] rounded-lg text-[#979797] focus:outline-none focus:ring-1 focus:ring-[rgba(151,151,151,1)]"
       />
     </div>
-    <div class="mb-4 flex gap-6 items-center">
+    <div class="flex items-center gap-6 mb-4">
       <label class="flex items-center text-sm font-medium"
         >End Time&nbsp;&nbsp;</label
       >
@@ -685,18 +685,18 @@
       <label class="block text-[20px] font-medium text-[#979797]"
         >Tasks' agenda</label
       >
-      <div class="border rounded-lg mt-2">
+      <div class="mt-2 border rounded-lg">
         <input
           type="text"
           disabled
           placeholder="Tasks"
-          class="text-black placeholder-black w-full px-4 py-2"
+          class="w-full px-4 py-2 text-black placeholder-black"
         />
         <div id="tasks" class="max-h-[200px] overflow-auto custom-scrollbar">
           <div *ngFor="let i of this.taskNo; let ind = index">
             <div
               *ngIf="i != null"
-              class="w-full flex justify-between px-4 py-2 border"
+              class="flex justify-between w-full px-4 py-2 border"
             >
               <textarea
                 style="resize: none"
@@ -710,7 +710,7 @@
                 disabled
                 style="resize: none"
               ></textarea>
-              <p class="flex gap-3 items-center">
+              <p class="flex items-center gap-3">
                 <svg
                   (click)="enable('en' + ind)"
                   class="cursor-pointer"
@@ -839,15 +839,15 @@
       <img
         src="{{ this.ed.photoUrl ?? './../../../../../assets/img/user.jpeg' }}"
         alt="User Image"
-        class="w-10 h-10 rounded-lg mr-3"
+        class="w-10 h-10 mr-3 rounded-lg"
       />
       <div>
         <p class="text-lg font-semibold">
           {{ this.ed.firstName }} {{ this.ed.middleName }}
           {{ this.ed.lastName }}
         </p>
-        <!-- <p class="text-gray-500 text-sm">Deadline: {{this.ed.deadLine | localTime}}</p> -->
-        <label class="text-gray-500 text-sm" for="sdateEdit"
+        <!-- <p class="text-sm text-gray-500">Deadline: {{this.ed.deadLine | localTime}}</p> -->
+        <label class="text-sm text-gray-500" for="sdateEdit"
           >Start Time:
         </label>
         <input
@@ -858,7 +858,7 @@
           [value]="edSt"
         />
         <br />
-        <label class="text-gray-500 text-sm" for="edateEdit"
+        <label class="text-sm text-gray-500" for="edateEdit"
           >End Time:&nbsp;&nbsp;</label
         >
         <input
@@ -874,12 +874,12 @@
     <textarea
       #taskEd
       id="edTitle"
-      class="w-full border rounded p-2 mb-4"
+      class="w-full p-2 mb-4 border rounded"
       style="resize: none"
     ></textarea>
     <div *ngFor="let error of errors" class="text-[#EF4A50]">{{ error }}</div>
     <!-- Action Buttons -->
-    <div class="flex justify-center space-x-2 mt-10">
+    <div class="flex justify-center mt-10 space-x-2">
       <button
         (click)="show('edit')"
         class="bg-[#EF4A50] text-white px-6 py-1 rounded"

@@ -7,14 +7,16 @@
   </h2>
   <div class="slider-container bg-[#F5F9F9]">
     <div class="slider" #slider>
+      <!-- Slider Images -->
       @for (clinet of clientData; track $index) {
-      <div class="slide">
-        <img [src]="clinet.logoUrl" alt="Slider Image" class="" />
-      </div>
-      } @for (clinet of clientData; track $index) {
-      <div class="slide">
-        <img [src]="clinet.logoUrl" alt="Slider Image" class="" />
-      </div>
+      <ng-container>
+        <div class="flex flex-col items-center justify-center gap-2 slide">
+          <img [src]="clinet.logoUrl" alt="Slider Image" />
+          <h5>
+            {{ clinet.name == null ? "Clinet Name" : clinet.name }}
+          </h5>
+        </div>
+      </ng-container>
       }
     </div>
   </div>
