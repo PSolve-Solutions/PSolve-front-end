@@ -17,7 +17,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionsHOCService } from '../../services/sessions-hoc.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-actions-sessions',
   standalone: true,
@@ -36,7 +35,6 @@ export class ActionsSessionsComponent implements OnInit {
   submitted: boolean = false;
   isLoading: boolean = false;
   sessionForm!: FormGroup;
-
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = parseInt(params['id']);
@@ -54,7 +52,6 @@ export class ActionsSessionsComponent implements OnInit {
       startDate: [null, [Validators.required]],
     });
   }
-
   convertToLocal(utcDate: string): string {
     const date = new Date(utcDate);
     const year = date.getFullYear();
@@ -64,7 +61,6 @@ export class ActionsSessionsComponent implements OnInit {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
-
   getOneSession(id: number): void {
     this.isLoading = true;
     this.sessionsHOCService.getOneSession(id).subscribe({
@@ -88,7 +84,6 @@ export class ActionsSessionsComponent implements OnInit {
       },
     });
   }
-
   actionsSession(): void {
     this.submitted = true;
     if (this.sessionForm.invalid) {
@@ -158,7 +153,6 @@ export class ActionsSessionsComponent implements OnInit {
       });
     }
   }
-
   displayFormErrors() {
     Object.keys(this.sessionForm.controls).forEach((field) => {
       const control = this.sessionForm.get(field);

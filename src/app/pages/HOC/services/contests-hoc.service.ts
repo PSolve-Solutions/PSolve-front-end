@@ -19,7 +19,6 @@ export class ContestsHocService {
       params
     );
   }
-
   deleteContest(id: number): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests`,
@@ -28,13 +27,11 @@ export class ContestsHocService {
       }
     );
   }
-
   getOneContest(id: number): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests/${id}`
     );
   }
-
   createContest(formData: any): Observable<ResponseHeader> {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',
@@ -45,14 +42,12 @@ export class ContestsHocService {
       { headers: myHeaders }
     );
   }
-
   updateContest(info: any): Observable<ResponseHeader> {
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/contests`,
       info
     );
   }
-
   getPublicCommunities(): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/getPublicCommunities`

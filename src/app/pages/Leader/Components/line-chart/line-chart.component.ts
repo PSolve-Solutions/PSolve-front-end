@@ -5,12 +5,10 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Chart, Plugin, registerables } from 'chart.js';
-
 Chart.register(...registerables);
 @Component({
   selector: 'app-line-chart',
@@ -23,9 +21,7 @@ export class LineChartComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() contestRates!: { id: number; name: string; rate: number }[];
   @ViewChild('lineChartCanvas') canvas!: ElementRef<HTMLCanvasElement>;
   private isViewInitialized = false;
-
   private chart: Chart | undefined;
-
   ngAfterViewInit(): void {
     this.isViewInitialized = true;
     this.renderChart();
@@ -43,13 +39,11 @@ export class LineChartComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (this.chart) {
       this.chart.destroy();
     }
-
     const ctx = this.canvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
       return;
     }
-
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -99,7 +93,6 @@ export class LineChartComponent implements OnChanges, AfterViewInit, OnDestroy {
       },
     });
   }
-
   ngOnDestroy(): void {
     // Destroy chart instance to prevent memory leaks
     if (this.chart) {

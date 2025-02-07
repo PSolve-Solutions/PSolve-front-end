@@ -20,7 +20,6 @@ import { SheetsHOCService } from '../../services/sheets-hoc.service';
 import { CasheService } from '../../../../shared/services/cashe.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-actions-sheets',
   standalone: true,
@@ -79,7 +78,6 @@ export class ActionsSheetsComponent implements OnInit {
     });
     this.fetchAllCommunitiesy();
   }
-
   getOneSheet(id: number): void {
     this.isLoading = true;
     this.sheetsHOCService.getOneSheet(id).subscribe({
@@ -109,7 +107,6 @@ export class ActionsSheetsComponent implements OnInit {
       },
     });
   }
-
   changeJudge(item: number) {
     if (item === 0) {
       this.onlineJudgeIsCodeforces = true;
@@ -117,7 +114,6 @@ export class ActionsSheetsComponent implements OnInit {
       this.onlineJudgeIsCodeforces = false;
     }
   }
-
   actionsSheet(): void {
     this.submitted = true;
     if (this.sheetForm.invalid) {
@@ -179,7 +175,6 @@ export class ActionsSheetsComponent implements OnInit {
       });
     }
   }
-
   displayFormErrors() {
     Object.keys(this.sheetForm.controls).forEach((field) => {
       const control = this.sheetForm.get(field);
@@ -190,7 +185,6 @@ export class ActionsSheetsComponent implements OnInit {
       }
     });
   }
-
   fetchAllCommunitiesy(): void {
     this.sheetsHOCService.getPublicCommunities().subscribe({
       next: ({ statusCode, data }) => {
@@ -205,7 +199,6 @@ export class ActionsSheetsComponent implements OnInit {
       },
     });
   }
-
   @HostListener('document:click', ['$event'])
   onClickOutside() {
     if (this.community.dropdownPanel === undefined) {
@@ -218,7 +211,6 @@ export class ActionsSheetsComponent implements OnInit {
       this.foucsJ = false;
     }
   }
-
   toggleDropdown() {
     if (this.dropdownOpen) {
       this.community.close();
@@ -243,13 +235,11 @@ export class ActionsSheetsComponent implements OnInit {
     }
     this.foucsJ = !this.foucsJ;
   }
-
   increase() {
     this.sheetForm
       .get('problemCount')
       ?.setValue(this.sheetForm.get('problemCount')?.value + 1);
   }
-
   decrease() {
     const current = this.sheetForm.get('problemCount')?.value;
     if (current > 0) {

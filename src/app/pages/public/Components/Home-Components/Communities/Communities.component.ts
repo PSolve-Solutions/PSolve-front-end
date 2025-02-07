@@ -1,9 +1,5 @@
-
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
-
-
-
 @Component({
   selector: 'app-communities',
   standalone: true,
@@ -12,13 +8,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./Communities.component.scss'],
 })
 export class CommunitiesComponent {
-
-  @Input() clientData!: any; // Input property
-
-
-  openLink(url:string){
-
-    window.open(url)
-
-  }
+  @Input() clientData: { id: string; name: string; logoUrl: string }[] = [];
 }

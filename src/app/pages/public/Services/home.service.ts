@@ -2,25 +2,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
-  http = inject(HttpClient)
+  http = inject(HttpClient);
   constructor() {}
-
-  anyOpenCamps():Observable<any>{
-    return this.http.get(environment.BASE_URL + `/api/Home/isAnyOpenCamps`)
+  anyOpenCamps(): Observable<any> {
+    return this.http.get(environment.BASE_URL + `/api/Home/isAnyOpenCamps`);
   }
-  getFeedBacks():Observable<any>{
-    return this.http.get(environment.BASE_URL + `/api/Home/feedbacks`)
+  getFeedBacks(): Observable<any> {
+    return this.http.get(environment.BASE_URL + `/api/Home/feedbacks`);
   }
-  getClintes():Observable<any>{
-    return this.http.get(environment.BASE_URL + `/api/Home/subscribeClients`)
+  getClintes(): Observable<any> {
+    return this.http.get(environment.BASE_URL + `/api/Home/subscribeClients`);
   }
-
-
-
-
 }

@@ -3,18 +3,17 @@ export interface StandingData {
   totalProblems: number;
   achivers: Achiver[];
 }
-
 export interface Achiver {
   id: string;
   firstName: string;
   middleName: string;
   lastName: string;
   codeForceHandle: string;
+  vjudgeHandle: string;
   solvedProblems: number;
   points: number;
   mentorName: string;
 }
-
 export interface DashboardData {
   traineesMalePrecentage: number;
   traineesMaleCount: number;
@@ -32,17 +31,14 @@ export interface DashboardData {
   contestsAnalysis: ContestsAnalysi[];
   colleges: College[];
 }
-
 export interface SheetsAnalysi {
   name: string;
   precentage: number;
 }
-
 export interface ContestsAnalysi {
   name: string;
   precentage: number;
 }
-
 export interface College {
   name: string;
   count: number;

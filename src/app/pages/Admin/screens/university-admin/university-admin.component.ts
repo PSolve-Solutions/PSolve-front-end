@@ -4,7 +4,6 @@ import { TableAdminComponent } from '../../components/table-admin/table-admin.co
 import { AdminsService } from '../../services/admins.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-university-admin',
   standalone: true,
@@ -26,7 +25,6 @@ export class UniversityAdminComponent {
   constructor() {
     this.getAllUniversities();
   }
-
   getAllUniversities(): void {
     this.isLoading = true;
     this.adminsService.getUniversities().subscribe({
@@ -44,7 +42,6 @@ export class UniversityAdminComponent {
       },
     });
   }
-
   addUniversity(universityNameInput: HTMLInputElement): void {
     const universityName = universityNameInput.value.trim();
     if (!universityName) return;
@@ -68,18 +65,15 @@ export class UniversityAdminComponent {
       },
     });
   }
-
   showConfirmDelete(universityName: string) {
     this.selectedUniversityName = universityName;
     this.showModalDelete = true;
     this.isDeleted = false;
   }
-
   cancel() {
     this.selectedUniversityName = null;
     this.showModalDelete = false;
   }
-
   confirmDelete() {
     if (this.selectedUniversityName !== null) {
       this.isLoadingDelete = true;

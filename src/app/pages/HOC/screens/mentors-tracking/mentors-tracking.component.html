@@ -10,7 +10,6 @@
   >
     Mentors Tracking
   </h1>
-
   @if( isLoading()&& dataRequest.length === 0) {
   <div class="fixed z-50 top-[50%] left-[50%] bg-opacity-60">
     <div class="flex items-center">
@@ -197,7 +196,6 @@
           DONE
         </button>
       </div>
-
       <!-- Table -->
       <div class="overflow-x-auto overflow-y-auto h-96 scroll-host-table">
         <table class="w-full rounded-lg shadow-sm table-auto">
@@ -213,7 +211,6 @@
           </thead>
           <tbody>
             @for (task of allTasksData; track task.traineeId; let i = $index) {
-
             <tr class="text-[#686666] border-b">
               <td class="px-6 py-4">
                 <div class="flex items-start space-x-4">
@@ -278,7 +275,6 @@
         </table>
       </div>
     </div>
-
     } } @if (isLoading() && dataRequest.length !== 0) {
     <div class="flex items-center justify-center w-full mt-4 bg-opacity-60">
       <div class="flex items-center justify-center">

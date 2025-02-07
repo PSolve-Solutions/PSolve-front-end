@@ -9,7 +9,6 @@ import { RolesService } from '../../services/roles.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-trainees-leader',
   standalone: true,
@@ -36,7 +35,6 @@ export class TraineesLeaderComponent implements OnInit {
   keywordSearch: string = '';
   sortbyNum: number = 0 | 1 | 2;
   deletedRoles: any[] = [];
-
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 1;
@@ -46,11 +44,9 @@ export class TraineesLeaderComponent implements OnInit {
   pages: number[] = [];
   isDropdown: boolean = false;
   sortName: string = '';
-
   ngOnInit() {
     this.traineesWithPagination(this.currentPage, this.pageSize);
   }
-
   traineesWithPagination(
     currentPage: number,
     pageSize: number,
@@ -78,7 +74,6 @@ export class TraineesLeaderComponent implements OnInit {
         },
       });
   }
-
   onSearchInput(keyWord: string) {
     this.keywordSearch = keyWord;
     this.casheService.clearCache();
@@ -89,7 +84,6 @@ export class TraineesLeaderComponent implements OnInit {
       this.sortbyNum
     );
   }
-
   toggleDropdown() {
     this.isDropdown = !this.isDropdown;
   }
@@ -113,7 +107,6 @@ export class TraineesLeaderComponent implements OnInit {
       this.isDropdown = false;
     }
   }
-
   showSideBar(id: string) {
     this.deletedRoles = [];
     this.selectedTraineeId = id;
@@ -125,7 +118,6 @@ export class TraineesLeaderComponent implements OnInit {
     this.showSideInfo = false;
     setTimeout(() => (this.hideSideInfo = true), 700);
   }
-
   getTraineeById(id: string) {
     this.isLoadingForSide = true;
     this.traineesLeaderService.getTraineeById(id).subscribe({
@@ -144,11 +136,9 @@ export class TraineesLeaderComponent implements OnInit {
       },
     });
   }
-
   onStaffRequested(id: string) {
     this.getTraineeById(id);
   }
-
   deleteRole(index: number) {
     const deletedRole = this.traineeInfo.userRoles.splice(index, 1)[0];
     this.deletedRoles.push(deletedRole);
@@ -157,12 +147,10 @@ export class TraineesLeaderComponent implements OnInit {
       roleInfos: this.deletedRoles,
     };
   }
-
   restoreRole(index: number) {
     const restoredRole = this.deletedRoles.splice(index, 1)[0];
     this.traineeInfo.userRoles.push(restoredRole);
   }
-
   saveDeleteRoles(): void {
     this.isDeleted = true;
     this.rolesService.unAssignToRole(this.roleInfo).subscribe({
@@ -196,7 +184,6 @@ export class TraineesLeaderComponent implements OnInit {
       },
     });
   }
-
   generatePages(): void {
     this.pages = [];
     if (this.allTraineesInfo?.totalPages <= 3) {
@@ -212,12 +199,10 @@ export class TraineesLeaderComponent implements OnInit {
       for (let i = start; i <= end; i++) {
         this.pages.push(i);
       }
-
       this.showEllipsis = end < this.allTraineesInfo?.totalPages - 1;
       this.showLastPage = this.showEllipsis;
     }
   }
-
   changePage(page: number): void {
     console.log(page);
     if (page > 0 && page <= this.allTraineesInfo?.totalPages) {
@@ -230,7 +215,6 @@ export class TraineesLeaderComponent implements OnInit {
       );
     }
   }
-
   handleOverlayClick(event: MouseEvent) {
     if ((event.target as HTMLElement).classList.contains('fixed')) {
       this.handleClose();

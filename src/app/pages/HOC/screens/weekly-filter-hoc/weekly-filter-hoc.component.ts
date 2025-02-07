@@ -6,7 +6,6 @@ import { UsersOther, UsersWeekly } from '../../model/weekly';
 import { ConfirmDeleteHocComponent } from '../../components/confirm-delete-hoc/confirm-delete-hoc.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-weekly-filter-hoc',
   standalone: true,
@@ -27,11 +26,9 @@ export class WeeklyFilterHOCComponent implements OnInit {
   selectedUsers: Set<string> = new Set();
   showModal: boolean = false;
   selectedItemId: string | null = null;
-
   ngOnInit() {
     this.getToFilter();
   }
-
   getToFilter(): void {
     this.isLoading.set(true);
     this.weeklyFilterService.getToFilter().subscribe({
@@ -49,7 +46,6 @@ export class WeeklyFilterHOCComponent implements OnInit {
       },
     });
   }
-
   getOthers(traineesIds: any): void {
     this.isLoading.set(true);
     this.weeklyFilterService.getOthers(traineesIds).subscribe({
@@ -67,7 +63,6 @@ export class WeeklyFilterHOCComponent implements OnInit {
       },
     });
   }
-
   toggleSelectAll(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
@@ -76,14 +71,12 @@ export class WeeklyFilterHOCComponent implements OnInit {
       this.selectedUsers.clear();
     }
   }
-
   areAllSelected(): boolean {
     return (
       this.filterData.length > 0 &&
       this.selectedUsers.size === this.filterData.length
     );
   }
-
   toggleSelection(userId: string) {
     if (this.selectedUsers.has(userId)) {
       this.selectedUsers.delete(userId);
@@ -91,11 +84,9 @@ export class WeeklyFilterHOCComponent implements OnInit {
       this.selectedUsers.add(userId);
     }
   }
-
   isSelected(userId: string): boolean {
     return this.selectedUsers.has(userId);
   }
-
   removeSelectedUsers(): void {
     this.isLoadingConfirm.set(true);
     const selectedIds = Array.from(this.selectedUsers);
@@ -108,7 +99,6 @@ export class WeeklyFilterHOCComponent implements OnInit {
           this.toastr.success(message);
           this.selectedUsers.clear();
           this.casheService.clearCache();
-
           this.isLoadingConfirm.update((v) => (v = false));
         } else {
           this.toastr.error(message);
@@ -121,12 +111,10 @@ export class WeeklyFilterHOCComponent implements OnInit {
       },
     });
   }
-
   showConfirmDelete(id: string) {
     this.selectedItemId = id;
     this.showModal = true;
   }
-
   handleClose(confirmed: boolean) {
     if (confirmed && this.selectedItemId !== null) {
       const idsOfTrainees = this.filterData.map((t) => t.id);
@@ -134,7 +122,6 @@ export class WeeklyFilterHOCComponent implements OnInit {
     }
     this.showModal = false;
   }
-
   selectTab(tab: string) {
     this.activeTab = tab;
     if (this.activeTab !== 'tab1') {

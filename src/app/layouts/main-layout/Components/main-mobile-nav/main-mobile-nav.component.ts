@@ -5,7 +5,6 @@ import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service
 import { NotificationComponent } from '../../../../shared/Components/notification/notification.component';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { NgClass } from '@angular/common';
-
 @Component({
   selector: 'app-main-mobile-nav',
   standalone: true,
@@ -25,9 +24,7 @@ export class MainMobileNavComponent {
   isShow: boolean = false;
   isShowR: boolean = false;
   roles: string[] = [];
-
   @ViewChild(NotificationComponent) childComponent!: NotificationComponent;
-
   constructor() {
     this.currentPath = this.router.url;
     this.profilePhoto = this.auth.currentUser().photoUrl;
@@ -39,7 +36,6 @@ export class MainMobileNavComponent {
       ) || [];
     this.newNotificationCheck();
   }
-
   openNotification(): void {
     this.childComponent.allNotification = [];
     this.childComponent.currentPage = 1;
@@ -53,7 +49,6 @@ export class MainMobileNavComponent {
       );
     }
   }
-
   newNotificationCheck() {
     this.notificationService.newNotificationCheck().subscribe({
       next: ({ statusCode, data }) => {
@@ -66,7 +61,6 @@ export class MainMobileNavComponent {
       },
     });
   }
-
   show(): void {
     if (
       this.ocSidebarService.isOpen() === 'show' ||

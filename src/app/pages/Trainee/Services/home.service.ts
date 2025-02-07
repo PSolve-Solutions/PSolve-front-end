@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { task } from '../model/trinee-home';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,9 +15,7 @@ export class HomeService {
   inComingContest: BehaviorSubject<any> = new BehaviorSubject('');
   currentSheet: BehaviorSubject<any> = new BehaviorSubject('');
   isLoading: boolean = true;
-
   constructor() {}
-
   TraineeCurrentSheet(): Observable<any> {
     return this._HttpClient.get(
       environment.BASE_URL + `/api/Trainee/currentSheet`
@@ -77,7 +74,6 @@ export class HomeService {
       model
     );
   }
-
   loadTasks(): void {
     this.TraineeTasks().subscribe({
       next: ({ statusCode, data }) => {
@@ -89,7 +85,6 @@ export class HomeService {
       },
     });
   }
-
   assignTraineeNextSessionCard(): void {
     this.TraineeNextSession().subscribe({
       next: ({ statusCode, data }) => {

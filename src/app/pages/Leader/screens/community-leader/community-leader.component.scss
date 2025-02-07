@@ -20,12 +20,10 @@ details {
       transition: transform 0.2s ease;
       transform: rotate(-90deg);
     }
-
     &:hover::before {
       background-color: #005572; // Change color on hover
     }
   }
-
   &[open] {
     summary::before {
       transform: rotate(0deg); // Flip the icon when open

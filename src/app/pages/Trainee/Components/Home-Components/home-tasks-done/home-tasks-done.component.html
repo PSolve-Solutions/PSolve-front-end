@@ -2,57 +2,99 @@
   <!-- Done Section -->
   <div class="relative w-full mr-auto">
     <!-- Button to toggle the Done table -->
-    <button (click)="toggleTables()" type="button" class="relative flex rounded-full  w-full sm:w-fit text-sm">
-      <div class="flex justify-between items-center gap-4 w-11/12 mx-auto sm:w-fit">
+    <button
+      (click)="toggleTables()"
+      type="button"
+      class="relative flex w-full text-sm rounded-full sm:w-fit"
+    >
+      <div
+        class="flex items-center justify-between w-11/12 gap-4 mx-auto sm:w-fit"
+      >
         <!-- Arrow icon with rotation class -->
-        <img src="assets/img_trainee/arrow_down.svg" class="done-arrow" [@rotateArrow]="arrowState">
+        <img
+          src="assets/img_trainee/arrow_down.svg"
+          class="done-arrow"
+          [@rotateArrow]="arrowState"
+        />
 
         <!-- Done button label -->
-        <a class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold " role="menuitem" tabindex="-1">
-          <img src="assets/img_trainee/done.svg">
+        <a
+          class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold"
+          role="menuitem"
+          tabindex="-1"
+        >
+          <img src="assets/img_trainee/done.svg" />
           <span>Done</span>
         </a>
 
         <!-- Done task count -->
-        <span class="text-[#2A8E9E] font-semibold">{{doneTasks.length}}</span>
+        <span class="text-[#2A8E9E] font-semibold">{{ doneTasks.length }}</span>
       </div>
     </button>
 
     <!-- Done Table -->
-    <div class="content sm:ml-9 mt-4 min-w-full done-table">
-      <table class="w-full text-sm text-left" [@slideToggle]="tableVisible ? 'visible' : 'hidden'">
+    <div class="min-w-full mt-4 content sm:ml-9 done-table">
+      <table
+        class="w-full text-sm text-left"
+        [@slideToggle]="tableVisible ? 'visible' : 'hidden'"
+      >
         <!-- Table header -->
         <thead class="text-xs">
-          <tr class="w-full flex items-center justify-between border-b border-[#D9D9D9]">
+          <tr
+            class="w-full flex items-center justify-between border-b border-[#D9D9D9]"
+          >
             <th class="px-1 py-3 text-xl font-medium text-[#777575]">Name</th>
-            <th class="px-2 sm:px-4 text-xl font-medium text-[#EF4A50]">DeadLine</th>
+            <th class="px-2 sm:px-4 text-xl font-medium text-[#EF4A50]">
+              DeadLine
+            </th>
           </tr>
         </thead>
         <!-- Table body -->
         <tbody>
           @for(done of doneTasks; track done.id) {
-            <tr class="border-b border-[#D9D9D9] relative">
-              <th class="p-4 font-medium text-base capitalize flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                  <!-- Status toggle button -->
-                  <div (click)="toggleList(done.id)" class="cursor-pointer">
-                    <img src="assets/img_trainee/done_green.svg">
-                  </div>
-                  <!-- Dropdown list for task status -->
-                  <div
-                  [@slideToggle]="listVisibility[done.id] ? 'visible' : 'hidden'"
-                  [@fadeToggle]="listVisibility[done.id] ? 'open' : 'closed'"
-                   class="list flex flex-col w-fit absolute top-full left-0 z-10 min-h-fit">
-                    <a (click)="changeTaskStatus(done, 0)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 font-bold w-full rounded-t-[10px]">To Do</a>
-                    <a (click)="changeTaskStatus(done, 1)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] text-white p-2 font-bold w-full">In Progress</a>
-                    <a (click)="changeTaskStatus(done, 2)" class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] text-white p-2 font-bold w-full rounded-b-[10px]">Done</a>
-                  </div>
-                  <span class="font-semibold text-[14px] sm:text-xl">{{done.title}}</span>
+          <tr class="border-b border-[#D9D9D9] relative">
+            <th
+              class="flex items-center justify-between p-4 text-base font-medium capitalize"
+            >
+              <div class="flex items-center gap-4">
+                <!-- Status toggle button -->
+                <div (click)="toggleList(done.id)" class="cursor-pointer">
+                  <img src="assets/img_trainee/done_green.svg" />
                 </div>
-                <!-- Deadline date -->
-                <span class="font-semibold text-[14px] sm:text-xl">{{done.startTime.split('T')[0]}}</span>
-              </th>
-            </tr>
+                <!-- Dropdown list for task status -->
+                <div
+                  [@slideToggle]="
+                    listVisibility[done.id] ? 'visible' : 'hidden'
+                  "
+                  [@fadeToggle]="listVisibility[done.id] ? 'open' : 'closed'"
+                  class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
+                >
+                  <a
+                    (click)="changeTaskStatus(done, 0)"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 font-bold w-full rounded-t-[10px]"
+                    >To Do</a
+                  >
+                  <a
+                    (click)="changeTaskStatus(done, 1)"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] text-white p-2 font-bold w-full"
+                    >In Progress</a
+                  >
+                  <a
+                    (click)="changeTaskStatus(done, 2)"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] text-white p-2 font-bold w-full rounded-b-[10px]"
+                    >Done</a
+                  >
+                </div>
+                <span class="font-semibold text-[14px] sm:text-xl">{{
+                  done.title
+                }}</span>
+              </div>
+              <!-- Deadline date -->
+              <span class="font-semibold text-[14px] sm:text-xl">{{
+                done.startTime.split("T")[0]
+              }}</span>
+            </th>
+          </tr>
           }
         </tbody>
       </table>

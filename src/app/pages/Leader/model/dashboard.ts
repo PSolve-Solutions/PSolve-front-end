@@ -4,12 +4,10 @@ export interface traineesAnalysis {
   femalesCount: number;
   collegesAnalisis: CollegesAnalisi[];
 }
-
 export interface CollegesAnalisi {
   name: string;
   count: number;
 }
-
 export interface dashboardFeedbacks {
   rate: number;
   feedback: string;

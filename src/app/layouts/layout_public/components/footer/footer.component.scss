@@ -1,80 +1,77 @@
-footer{
-  background: #F5F9F9;
-  .header{
-        font-size: 25px;
-        font-weight: 700;
-        line-height: 32.7px;
-        text-align: left;
-        color: #002C3D;
-        }
-      .text{
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 26.16px;
-        text-align: left;
-        color: #002C3D;
-      }
-      .contact-us,.logo{
-        flex: 1;
-      }
-      .footer{
-        position: relative;
-        color: #002C3D;
-        p{
-          font-size: 15px;
-          font-weight: 400;
-          line-height: 20px;
-          text-align: left;
-
-        }
-        .links{
-          font-size: 15px;
-          font-weight: 400;
-          line-height: 20px;
-          text-align: left;
-        }
-      }
-
-}
-@media screen and (max-width:640px) {
-
-  footer{
-    background: #F5F9F9;
-    .header{
-          font-size: 14px;
-          font-weight: 700;
-          line-height: 22.7px;
-          text-align: left;
-          color: #002C3D;
-          }
-        .text{
-          font-size: 6px;
-          font-weight: 400;
-          line-height: 26.16px;
-          text-align: left;
-          color: #002C3D;
-        }
-        .contact-us,.location,.logo{
-          flex: 0;
-        }
-        .footer{
-          position: relative;
-          color: #002C3D;
-          p{
-            font-size: 15px;
-            font-weight: 400;
-            line-height: 20px;
-            text-align: left;
-
-          }
-          .links{
-            font-size: 7px;
-            font-weight: 400;
-            line-height: 20px;
-            text-align: left;
-          }
-        }
-
+footer {
+  background: #f5f9f9;
+  .header {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 32.7px;
+    text-align: left;
+    color: #002c3d;
   }
-
+  .text {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26.16px;
+    text-align: left;
+    color: #002c3d;
+  }
+  .contact-us,
+  .logo {
+    flex: 1;
+  }
+  .footer {
+    position: relative;
+    color: #002c3d;
+    p {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+    }
+    .links {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  footer {
+    background: #f5f9f9;
+    .header {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22.7px;
+      text-align: left;
+      color: #002c3d;
+    }
+    .text {
+      font-size: 6px;
+      font-weight: 400;
+      line-height: 26.16px;
+      text-align: left;
+      color: #002c3d;
+    }
+    .contact-us,
+    .location,
+    .logo {
+      flex: 0;
+    }
+    .footer {
+      position: relative;
+      color: #002c3d;
+      p {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: left;
+      }
+      .links {
+        font-size: 7px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: left;
+      }
+    }
+  }
 }

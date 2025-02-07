@@ -5,7 +5,6 @@ import { MainSidebarComponent } from './Components/main-sidebar/main-sidebar.com
 import { MainNavbarComponent } from './Components/main-navbar/main-navbar.component';
 import { MainMobileNavComponent } from './Components/main-mobile-nav/main-mobile-nav.component';
 import { OcSidebarService } from '../../shared/services/oc-sidebar.service';
-
 @Component({
   selector: 'app-main-layout',
   standalone: true,
@@ -23,7 +22,6 @@ export class MainLayoutComponent {
   os = inject(OcSidebarService);
   router = inject(Router);
   currentPath: string = '';
-
   constructor() {
     this.currentPath = this.router.url;
   }

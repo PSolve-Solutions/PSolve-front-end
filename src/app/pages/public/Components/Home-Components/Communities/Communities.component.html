@@ -10,14 +10,14 @@
     <div class="slider" #slider>
       <!-- Slider Images -->
       @for (clinet of clientData; track $index) {
-        <ng-container>
-          <div class="slide flex justify-center items-center flex-col gap-2">
-            <img [src]="clinet.logoUrl" alt="Slider Image">
-            <h5>
-              {{clinet.name == null ? "Clinet Name" : clinet.name }}
-            </h5>
-          </div>
-        </ng-container>
+      <ng-container>
+        <div class="slide flex justify-center items-center flex-col gap-2">
+          <img [src]="clinet.logoUrl" alt="Slider Image" />
+          <h5>
+            {{ clinet.name == null ? "Clinet Name" : clinet.name }}
+          </h5>
+        </div>
+      </ng-container>
       }
     </div>
   </div>

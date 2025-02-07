@@ -109,7 +109,6 @@
             [ngClass]="isSuccessEmail ? 'text-[#52B788]' : 'text-[#EF4A50]'"
           >
             @if (isSuccessEmail ) {
-
             <div
               class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
             >
@@ -237,7 +236,6 @@
             [ngClass]="isSuccessUsername ? 'text-[#52B788]' : 'text-[#EF4A50]'"
           >
             @if (isSuccessUsername ) {
-
             <div
               class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
             >
@@ -273,7 +271,6 @@
               [class.font-bold]="!isEditPassword"
               [readonly]="!isEditPassword"
             />
-
             <button
               type="button"
               (click)="toggleEditMode('password')"
@@ -304,7 +301,6 @@
               </svg>
             </button>
           </div>
-
           }@else {
           <label class="font-semibold">Old Password</label>
           <div class="flex items-center gap-x-4">
@@ -333,7 +329,6 @@
                     fill="#3D91C7"
                   />
                 </svg>
-
                 }@else {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -350,7 +345,6 @@
               </button>
             </div>
           </div>
-
           <label class="font-semibold">New Password</label>
           <div class="flex items-center gap-x-4">
             <div class="relative">
@@ -379,7 +373,6 @@
                     fill="#3D91C7"
                   />
                 </svg>
-
                 }@else {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -424,7 +417,6 @@
                     fill="#3D91C7"
                   />
                 </svg>
-
                 }@else {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -498,7 +490,6 @@
             [ngClass]="isSuccessPassword ? 'text-[#52B788]' : 'text-[#EF4A50]'"
           >
             @if (isSuccessPassword ) {
-
             <div
               class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
             >
@@ -628,7 +619,6 @@
             "
           >
             @if (isSuccessCodeforces ) {
-
             <div
               class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
             >
@@ -756,7 +746,6 @@
             [ngClass]="isSuccessVjudge ? 'text-[#52B788]' : 'text-[#EF4A50]'"
           >
             @if (isSuccessVjudge ) {
-
             <div
               class="flex items-center justify-center bg-[#b5e0cc] w-5 h-5 rounded-full"
             >
@@ -811,10 +800,8 @@
             stroke-linejoin="round"
           />
         </svg>
-
         <span class="text-red-800"> {{ error }} </span>
       </div>
-
       <button
         (click)="removeError(i)"
         type="button"
@@ -836,7 +823,6 @@
         </svg>
       </button>
     </div>
-
     }
   </div>
   @if (errorMessage || successMessage) {
@@ -902,14 +888,11 @@
             stroke-linejoin="round"
           />
         </svg>
-
         }
-
         <span [ngClass]="errorMessage ? 'text-red-800' : 'text-green-800'">
           {{ errorMessage || successMessage }}
         </span>
       </div>
-
       <button
         (click)="removeErrorM()"
         type="button"

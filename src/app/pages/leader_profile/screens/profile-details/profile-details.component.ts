@@ -18,7 +18,6 @@ import { LeaderProfileService } from '../../services/leader-profile.service';
 import { ValidationProfileService } from '../../../../shared/services/validation-profile.service';
 import { Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-profile-details',
   standalone: true,
@@ -48,7 +47,6 @@ export class ProfileDetailsComponent implements OnInit {
   camp: string = '';
   @ViewChild('term') term!: NgSelectComponent;
   @ViewChild('college') college!: NgSelectComponent;
-
   ngOnInit(): void {
     this.currentPath = this.router.url;
     if (this.currentPath.includes('leader')) {
@@ -83,7 +81,6 @@ export class ProfileDetailsComponent implements OnInit {
       facebookLink: [null],
       birthDate: ['', [Validators.required]],
     });
-
     this.profileForm.disable();
     this.allCollege = [
       { id: 0, name: 'Computer and Ai' },
@@ -96,7 +93,6 @@ export class ProfileDetailsComponent implements OnInit {
     ];
     this.addFieldsForHead();
   }
-
   addFieldsForHead() {
     if (
       this.currentPath.includes('head_of_camp') ||
@@ -111,7 +107,6 @@ export class ProfileDetailsComponent implements OnInit {
       }
     }
   }
-
   toggleEditMode() {
     this.isEditMode = !this.isEditMode;
     if (this.isEditMode) {
@@ -129,7 +124,6 @@ export class ProfileDetailsComponent implements OnInit {
       }
     }
   }
-
   vaildationPhone(): void {
     let phoneNumber = this.profileForm.get('phoneNumber')?.value;
     if (phoneNumber.length > 10) {
@@ -172,7 +166,6 @@ export class ProfileDetailsComponent implements OnInit {
       this.idMessage = '';
     }
   }
-
   onSubmit() {
     this.isLoading = true;
     if (
@@ -182,7 +175,6 @@ export class ProfileDetailsComponent implements OnInit {
     ) {
       this.isLoading = false;
       this.displayFormErrors();
-
       return;
     }
     if (this.profileForm.get('facebookLink')?.value === '') {
@@ -196,7 +188,6 @@ export class ProfileDetailsComponent implements OnInit {
       this.updateMentor();
     }
   }
-
   getGeneralProfile(): void {
     this.isLoading = true;
     this.leaderProfileService.generalLeaderProfile().subscribe({
@@ -245,7 +236,6 @@ export class ProfileDetailsComponent implements OnInit {
       },
     });
   }
-
   generalMentorProfile(): void {
     this.isLoading = true;
     this.leaderProfileService.generalMentorProfile().subscribe({
@@ -271,7 +261,6 @@ export class ProfileDetailsComponent implements OnInit {
       },
     });
   }
-
   // update leader
   updateLeaderProfile() {
     this.leaderProfileService.updateProfile(this.profileForm.value).subscribe({
@@ -301,7 +290,6 @@ export class ProfileDetailsComponent implements OnInit {
       },
     });
   }
-
   // update HOC
   updateHeadOfCamp() {
     this.leaderProfileService
@@ -333,7 +321,6 @@ export class ProfileDetailsComponent implements OnInit {
         },
       });
   }
-
   // update Mentor
   updateMentor() {
     this.leaderProfileService.updateMentor(this.profileForm.value).subscribe({
@@ -363,7 +350,6 @@ export class ProfileDetailsComponent implements OnInit {
       },
     });
   }
-
   displayFormErrors() {
     Object.keys(this.profileForm.controls).forEach((field) => {
       const control = this.profileForm.get(field);
@@ -374,7 +360,6 @@ export class ProfileDetailsComponent implements OnInit {
       }
     });
   }
-
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     if (this.term.dropdownPanel === undefined) {
@@ -384,7 +369,6 @@ export class ProfileDetailsComponent implements OnInit {
       this.foucsCollege = false;
     }
   }
-
   toggleDropdownTerm() {
     if (this.foucsTerm) {
       this.term.close();

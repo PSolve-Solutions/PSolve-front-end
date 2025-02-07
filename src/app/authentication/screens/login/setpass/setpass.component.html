@@ -41,7 +41,6 @@
             fill="black"
           />
         </svg>
-
         }@else {
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +86,6 @@
             fill="black"
           />
         </svg>
-
         }@else {
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -103,16 +101,13 @@
         }
       </button>
     </div>
-
     <div class="flex flex-col items-center justify-center">
       @if (password?.errors?.['minlength'] && password?.touched) {
       <small class="block font-bold text-center text-red-500">
         Password must be at least 6 characters long.
       </small>
-
       } @if (passwordForm.errors?.['passwordMismatch'] &&
       confirmPassword?.touched) {
-
       <small class="block font-bold text-center text-red-500">
         Passwords do not match.
       </small>

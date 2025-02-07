@@ -9,7 +9,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-
 Chart.register(...registerables);
 @Component({
   selector: 'app-barchart-reports',
@@ -24,30 +23,24 @@ export class BarchartReportsComponent
   @Input() sheetsRates!: { id: number; name: string; rate: number }[];
   @ViewChild('barChartCanvas') canvas!: ElementRef<HTMLCanvasElement>;
   private chart: Chart | undefined;
-
   private isViewInitialized = false;
-
   ngAfterViewInit(): void {
     this.isViewInitialized = true;
     this.renderChart();
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (this.isViewInitialized && changes['sheetsRates']) {
       this.renderChart();
     }
   }
-
   renderChart(): void {
     if (!this.canvas) {
       console.error('Canvas element is not available.');
       return;
     }
-
     if (this.chart) {
       this.chart.destroy();
     }
-
     const ctx = this.canvas.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Canvas context not found');
@@ -113,7 +106,6 @@ export class BarchartReportsComponent
       },
     });
   }
-
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();

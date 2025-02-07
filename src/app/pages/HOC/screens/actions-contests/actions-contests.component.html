@@ -10,7 +10,6 @@
   >
     {{ id === 0 ? "Add" : "Update" }} Contest
   </h1>
-
   <form [formGroup]="contestForm" (ngSubmit)="actionsContext()">
     <div class="flex flex-col w-full ps-8 lg:w-11/12 gap-y-6 md:gap-y-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
@@ -30,7 +29,6 @@
           <label for="link" class="text-lg ps-2 text-[#002C3D4D] font-semibold"
             >Contest Link</label
           >
-
           <input
             type="text"
             formControlName="link"
@@ -56,7 +54,6 @@
             class="block p-3 text-mainColor1 font-semibold bg-[#fff] border-2 rounded-lg appearance-none focus:outline-none"
           />
         </div>
-
         <div class="flex flex-col basis-1/2">
           <label
             for="endTime"
@@ -72,7 +69,6 @@
           />
         </div>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
         <div class="relative flex flex-col">
           <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
@@ -103,7 +99,6 @@
                     fill="black"
                   />
                 </svg>
-
                 <span>Codeforces</span>
               </div>
             </ng-option>
@@ -145,7 +140,6 @@
           </button>
         </div>
         @if (onlineJudgeIsCodeforces) {
-
         <div class="relative flex flex-col">
           <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
             >Community</label
@@ -200,7 +194,6 @@
           />
         </div>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
         <div class="flex flex-col">
           <label class="text-lg ps-2 text-[#002C3D4D] font-semibold"
@@ -251,7 +244,6 @@
             </button>
           </div>
         </div>
-
         <div class="flex flex-col">
           <label
             for="chiefOfContest"
@@ -268,7 +260,6 @@
         </div>
       </div>
     </div>
-
     <div
       class="flex items-center justify-end w-full mt-20 text-lg font-semibold gap-x-6 md:w-11/12 text-mainColor4"
     >

@@ -16,7 +16,6 @@ import {
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { ProfileTraineeService } from '../../services/profile-trainee.service';
 import { ValidationProfileService } from '../../../../shared/services/validation-profile.service';
-
 @Component({
   selector: 'app-profile-trainee',
   standalone: true,
@@ -44,7 +43,6 @@ export class ProfileTraineeComponent implements OnInit {
   idMessage: string = '';
   @ViewChild('term') term!: NgSelectComponent;
   @ViewChild('college') college!: NgSelectComponent;
-
   ngOnInit(): void {
     this.profileForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -75,7 +73,6 @@ export class ProfileTraineeComponent implements OnInit {
       attendanceCount: [''],
     });
     this.profileForm.disable();
-
     this.getGeneralProfile();
     this.allCollege = [
       { id: 0, name: 'Computer and Ai' },
@@ -87,7 +84,6 @@ export class ProfileTraineeComponent implements OnInit {
       { id: 6, name: 'Others' },
     ];
   }
-
   toggleEditMode() {
     this.isEditMode = !this.isEditMode;
     if (this.isEditMode) {
@@ -99,7 +95,6 @@ export class ProfileTraineeComponent implements OnInit {
       this.getGeneralProfile();
     }
   }
-
   getGeneralProfile(): void {
     this.isLoading = true;
     this.profileTraineeService.traineeProfile().subscribe({
@@ -127,7 +122,6 @@ export class ProfileTraineeComponent implements OnInit {
       },
     });
   }
-
   vaildationPhone(): void {
     let phoneNumber = this.profileForm.get('phoneNumber')?.value;
     if (phoneNumber.length > 10) {
@@ -170,7 +164,6 @@ export class ProfileTraineeComponent implements OnInit {
       this.idMessage = '';
     }
   }
-
   onSubmit() {
     this.isLoading = true;
     if (
@@ -180,7 +173,6 @@ export class ProfileTraineeComponent implements OnInit {
     ) {
       this.isLoading = false;
       this.displayFormErrors();
-
       return;
     }
     this.profileTraineeService
@@ -209,12 +201,10 @@ export class ProfileTraineeComponent implements OnInit {
         },
       });
   }
-
   removeErrorM() {
     this.errorMessage = '';
     this.successMessage = '';
   }
-
   handleApiErrors(errors: any) {
     this.errorMessages = [];
     if (errors) {
@@ -230,11 +220,9 @@ export class ProfileTraineeComponent implements OnInit {
       }, 3000);
     });
   }
-
   removeError(index: number) {
     this.errorMessages.splice(index, 1);
   }
-
   displayFormErrors() {
     this.errorMessages = [];
     Object.keys(this.profileForm.controls).forEach((field) => {
@@ -261,7 +249,6 @@ export class ProfileTraineeComponent implements OnInit {
       }, 3000);
     });
   }
-
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     if (this.term.dropdownPanel === undefined) {
@@ -271,7 +258,6 @@ export class ProfileTraineeComponent implements OnInit {
       this.foucsCollege = false;
     }
   }
-
   toggleDropdownTerm() {
     if (this.foucsTerm) {
       this.term.close();

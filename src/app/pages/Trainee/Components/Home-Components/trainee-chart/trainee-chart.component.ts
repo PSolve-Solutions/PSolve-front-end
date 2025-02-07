@@ -3,9 +3,7 @@ import { Chart, registerables, Plugin, ArcElement } from 'chart.js';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HomeService } from '../../../Services/home.service';
 import { NextPractice } from '../../../model/trinee-home';
-
 Chart.register(...registerables);
-
 @Component({
   selector: 'app-trainee-chart',
   standalone: true,
@@ -22,14 +20,11 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
   minimumProblems: number = 0;
   AllProblems: number = 0;
   public chart: any;
-
   ngOnInit(): void {
     this.loadNextPracticeData();
     this.loadChartData();
   }
-
   ngAfterViewInit(): void {}
-
   createChart(solved: number, minToSolve: number, total: number): void {
     const ctx = document.getElementById('myDoughnutChart') as HTMLCanvasElement;
     this.chart = new Chart(ctx, {
@@ -65,7 +60,6 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
       },
       options: {
         responsive: true,
-
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
@@ -79,19 +73,15 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
       ],
     });
   }
-
   createDoughnutOverlappingPlugin(): Plugin {
     return {
       id: 'doughnutBackgroundPlugin',
       beforeDraw: (chart) => {
         const { ctx, data } = chart;
-
         const meta = chart.getDatasetMeta(2); // Get the dataset meta
         const element = meta.data[0] as ArcElement; // Assert the type to ArcElement
-
         const innerRadius = element.innerRadius; // Now TypeScript recognizes innerRadius
         const outerRadius = element.outerRadius; // Now TypeScript recognizes outerRadius
-
         ctx.save();
         data.datasets.forEach((_, index) => {
           let meta = chart.getDatasetMeta(index); // Get the dataset meta
@@ -102,7 +92,6 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
       },
     };
   }
-
   createDoughnutBackgroundPlugin(backgroundColor: string): Plugin {
     return {
       id: 'doughnutBackgroundPlugin',
@@ -113,11 +102,9 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
         const height = bottom - top;
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         const meta = chart.getDatasetMeta(0).data[0] as any;
         const cutout = (chart.config.options as any).cutout || '85%';
         const cutoutRadius = (meta.outerRadius * parseFloat(cutout)) / 85;
-
         ctx.save();
         ctx.beginPath();
         ctx.arc(centerX, centerY, cutoutRadius, 0, 2 * Math.PI);
@@ -128,24 +115,19 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
       },
     };
   }
-
   copyText(link: string): void {
     navigator.clipboard.writeText(link);
   }
-
   formatDateTime(dateTimeString: string): string {
     if (!dateTimeString) return '';
-
     const date = new Date(dateTimeString);
     const dayOfWeek = this._DatePipe.transform(date, 'EEEE');
     const day = this._DatePipe.transform(date, 'd');
     const month = this._DatePipe.transform(date, 'M');
     const year = this._DatePipe.transform(date, 'yyyy');
     const time = this._DatePipe.transform(date, 'h:mm a');
-
     return `${dayOfWeek} ${day}/${month}/${year} Starts at ${time}`;
   }
-
   loadNextPracticeData(): void {
     this._homeService.nextPractice().subscribe({
       next: ({ statusCode, data }) => {
@@ -155,7 +137,6 @@ export class TraineeChartComponent implements OnInit, AfterViewInit {
       },
     });
   }
-
   loadChartData(): void {
     this._homeService.TraineeSheetProgress().subscribe({
       next: ({ statusCode, data }) => {

@@ -1,31 +1,28 @@
-nav{
+nav {
   height: 70px;
-  border-bottom: 0.1px solid #002C3D80
+  border-bottom: 0.1px solid #002c3d80;
 }
-
-.logo{
-  box-shadow: 1px 1px 4px 0px #002C3DB2;
-  background: #002C3D;
+.logo {
+  box-shadow: 1px 1px 4px 0px #002c3db2;
+  background: #002c3d;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   cursor: pointer;
-
 }
-ul{
+ul {
   gap: 3rem;
 }
-
 li a {
-font-size: 20px;
-font-weight: 900;
-line-height: 18.29px;
-text-align: left;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
-color: #002C3D;
-cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 18.29px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #002c3d;
+  cursor: pointer;
 }
-button{
+button {
   //font-family: Montserrat;
   font-size: 20px;
   font-weight: 900;
@@ -35,45 +32,39 @@ button{
   text-transform: capitalize;
   border-radius: 6px;
 }
-
-.login-btn{
-  color: #002C3D;
+.login-btn {
+  color: #002c3d;
   background: #fff;
   padding: 10px 38px;
-  border: 0.1px solid #002C3D;
-  transition: .4s all;
-
+  border: 0.1px solid #002c3d;
+  transition: 0.4s all;
 }
-.apply-btn{
+.apply-btn {
   color: #fff;
   padding: 12px 18px;
-  background: #2A8E9E;
-  border: 0.1px solid #002C3D;
-  transition: .4s all;
+  background: #2a8e9e;
+  border: 0.1px solid #002c3d;
+  transition: 0.4s all;
   border: 0.1px solid #fff;
-
 }
-.login-btn:hover{
+.login-btn:hover {
   color: #fff;
-  background: #2A8E9E;
+  background: #2a8e9e;
   padding: 10px 38px;
   border: 0.1px solid #fff;
 }
-.apply-btn:hover{
-  color: #002C3D;
+.apply-btn:hover {
+  color: #002c3d;
   padding: 12px 18px;
   background: #fff;
-  border: 0.1px solid #002C3D;
-
-
+  border: 0.1px solid #002c3d;
 }
-
-@media screen and (max-width:640px) {
+@media screen and (max-width: 640px) {
   li a {
     font-size: 20px;
     line-height: 12px;
-    }
-  button{
+  }
+  button {
     //font-family: Montserrat;
     font-size: 10px;
     font-weight: 900;
@@ -82,29 +73,28 @@ button{
     text-decoration-skip-ink: none;
     text-transform: capitalize;
     border-radius: 6px;
-}
-  .apply-btn{
+  }
+  .apply-btn {
     padding: 4px 16px;
     max-width: fit-content;
   }
-  .login-btn{
+  .login-btn {
     padding: 4px 16px;
     max-width: fit-content;
   }
-  .logo{
-    img{
-      max-width: 42.43px!important;
-      max-height: 22.83px!important;
+  .logo {
+    img {
+      max-width: 42.43px !important;
+      max-height: 22.83px !important;
     }
   }
 }
-@media screen and (max-width:400px) {
-  ul{
+@media screen and (max-width: 400px) {
+  ul {
     gap: 1.5rem;
   }
   li a {
     font-size: 14px;
     line-height: 12px;
-    }
-
+  }
 }

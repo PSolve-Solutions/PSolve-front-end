@@ -10,7 +10,6 @@
   >
     Weekly Filter
   </h1>
-
   <div class="bg-white rounded-xl">
     <div class="flex space-x-2 text-base font-semibold md:text-xl bg-[#F4F5F8]">
       <button
@@ -80,7 +79,6 @@
                       hidden
                     />
                     @if (areAllSelected()) {
-
                     <svg
                       class="w-4 h-4"
                       viewBox="0 0 24 25"
@@ -94,7 +92,6 @@
                         stroke-linecap="round"
                       />
                     </svg>
-
                     }
                   </label>
                 </div>
@@ -130,7 +127,6 @@
                     [ngClass]="{ 'border-[#3D91C7]': isSelected(item.id) }"
                   >
                     @if (isSelected(item.id)) {
-
                     <svg
                       class="w-4 h-4"
                       viewBox="0 0 24 25"
@@ -144,7 +140,6 @@
                         stroke-linecap="round"
                       />
                     </svg>
-
                     }
                   </label>
                 </div>
@@ -174,7 +169,6 @@
               <th class="flex items-center justify-center p-4">Delete</th>
             </tr>
           </thead>
-
           <tbody>
             @for (item of otherData; track $index; let first = $first) {
             <tr

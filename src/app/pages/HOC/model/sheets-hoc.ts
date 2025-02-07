@@ -11,7 +11,6 @@ export interface SheetsHoc {
   data: Data[];
   errors: any;
 }
-
 export interface Data {
   id: number;
   name: string;

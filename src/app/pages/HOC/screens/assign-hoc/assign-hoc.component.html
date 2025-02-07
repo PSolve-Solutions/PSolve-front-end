@@ -57,7 +57,6 @@
     </div>
     <h1 class="text-xl font-bold text-mainColor1">Mentors</h1>
   </div>
-
   <div class="flex gap-x-2">
     <div
       style="max-height: calc(100vh - 260px)"
@@ -82,7 +81,6 @@
             <th class="flex items-center justify-center pb-4">Add to Mentor</th>
           </tr>
         </thead>
-
         <tbody>
           @for (item of allTrainees; track $index) {
           <tr
@@ -128,7 +126,6 @@
         </div>
       </div>
       } @else {
-
       <div class="relative w-full h-auto mt-10">
         @for (mentor of allMentor; track $index) {
         <div

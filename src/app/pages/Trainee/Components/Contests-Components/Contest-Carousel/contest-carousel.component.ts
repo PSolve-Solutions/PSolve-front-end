@@ -6,10 +6,8 @@ import Swiper, { Navigation } from 'swiper';
 import { SwiperModule } from 'swiper/angular';
 import { ContestService } from '../../../Services/contest.service';
 import { FormatDatePipe } from '../../../Pipes/formatte-Date.pipe';
-
 // Import and use Swiper modules (like Navigation)
 Swiper.use([Navigation]);
-
 @Component({
   selector: 'app-contest-carousel',
   standalone: true,
@@ -18,23 +16,18 @@ Swiper.use([Navigation]);
   styleUrls: ['./contest-carousel.component.scss'],
 })
 export class ContestCarouselComponent implements OnInit {
-  @ViewChild('swiperRef', { static: false }) swiperRef!: ContestCarouselComponent; // ViewChild to reference Swiper component
-
+  @ViewChild('swiperRef', { static: false })
+  swiperRef!: ContestCarouselComponent; // ViewChild to reference Swiper component
   // Inject ContestService for fetching contest data
   private contestService = inject(ContestService);
-
   // Array to hold incoming contests
   inComingContests: InComingContest[] = [];
-
   // Reference to Swiper instance
   private swiper?: SwiperCore;
-
-
   // Lifecycle hook to initialize component
   ngOnInit(): void {
     this.loadContestData(); // Load contest data when component initializes
   }
-
   // Method to load contest data using the ContestService
   private loadContestData(): void {
     this.contestService.inComingContest.subscribe({
@@ -43,7 +36,6 @@ export class ContestCarouselComponent implements OnInit {
       },
     });
   }
-
   // Swiper configuration options
   config1: SwiperOptions = {
     slidesPerView: 4, // Number of slides visible at a time
@@ -53,19 +45,16 @@ export class ContestCarouselComponent implements OnInit {
     scrollbar: false, // Disable scrollbar
     autoplay: false, // Disable autoplay
   };
-
   // Method to handle Swiper instance when it's ready
   onSwiper(swiper: SwiperCore) {
     this.swiper = swiper;
   }
-
   // Method to move to the next slide
   nextSlide() {
     if (this.swiper) {
       this.swiper.slideNext();
     }
   }
-
   // Method to move to the previous slide
   prevSlide() {
     if (this.swiper) {

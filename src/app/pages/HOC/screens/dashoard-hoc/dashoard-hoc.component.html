@@ -37,7 +37,6 @@
   <div class="pt-4">
     @if (activeTab === 'tab1') {
     <app-dashboard-charts-hoc [dashboardData]="dashboardData" />
-
     }@else {
     <div class="flex items-center justify-center gap-x-4">
       <h2
@@ -58,7 +57,6 @@
           </div>
         </div>
         }@else {
-
         <img src="assets/img/excel.png" class="w-full" alt="" />
         }
       </div>
@@ -67,13 +65,13 @@
       <thead class="sticky top-[72px] bg-[#F4F5F8] z-[5]">
         <tr class="bg-transparent text-[#6B7088] text-lg">
           <th class="py-2 text-left pe-4 ps-8">Name</th>
-          <th class="p-2">Handle</th>
+          <th class="p-4">Codeforces</th>
+          <th class="p-4">Vjudge</th>
           <th class="p-2">Mentor</th>
           <th class="p-2">Solve</th>
           <th class="p-2">Points</th>
         </tr>
       </thead>
-
       <tbody>
         @for (item of standingData.achivers; track item.id) {
         <tr
@@ -90,7 +88,32 @@
           <td class="p-4 text-left rounded-s-xl">
             {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
           </td>
-          <td class="p-4 border-b">{{ item.codeForceHandle }}</td>
+          <td class="p-4 border-b">
+            <span>
+              <a
+                [href]="
+                  item.codeForceHandle &&
+                  'https://codeforces.com/profile/' + item.codeForceHandle
+                "
+                target="_blank"
+                class="hover:text-activeLink"
+                >{{ item.codeForceHandle || "-" }}</a
+              >
+            </span>
+          </td>
+          <td class="p-4 border-b">
+            <span>
+              <a
+                [href]="
+                  item.vjudgeHandle &&
+                  'https://vjudge.net/user/' + item.vjudgeHandle
+                "
+                target="_blank"
+                class="hover:text-activeLink"
+                >{{ item.vjudgeHandle || "-" }}</a
+              >
+            </span>
+          </td>
           <td class="p-4">{{ item.mentorName }}</td>
           <td class="p-4">
             {{ item.solvedProblems }}/{{ standingData.totalProblems }}
@@ -104,7 +127,6 @@
     <div class="flex items-center justify-center py-4">
       <h2 class="text-2xl font-medium text-mainRed">No Standing</h2>
     </div>
-
     } }
   </div>
   }

@@ -1,46 +1,82 @@
 <section class="font-montserrat bg-[#F5F9F9] sm:mt-0" id="header">
-  <div class="w-11/12 mx-auto flex items-center h-full flex-col sm:flex-row sm:relative pt-6 sm:pt-0">
-    <div class="hero-content flex sm:block flex-col sm:flex-row  sm:justify-center items-center">
-      <img src="assets/img_public/p_solve_home/logo_hero.svg" class="w-24 sm:w-52" alt="p-solve">
-      <h2 class="mt-3">
-          <span *ngFor="let letter of letters">{{ letter }}</span>
-      </h2>
+  <div
+    class="flex flex-col items-center w-11/12 h-full pt-6 mx-auto sm:flex-row sm:relative sm:pt-0"
+  >
+    <div
+      class="flex flex-col items-center hero-content sm:block sm:flex-row sm:justify-center"
+    >
+      <img
+        src="assets/img_public/p_solve_home/logo_hero.svg"
+        class="w-24 sm:w-52"
+        alt="p-solve"
+      />
+      <h1 class="mt-3">
+        @for (letter of letters; track $index) {
+        <span>{{ letter }}</span>
+        }
+      </h1>
       @if(!responsive.isSmallScreen){
-      <p class="font-medium text-xl mt-3">Full management system for communities interesting with problem solving and </p>
-      <p class="font-medium text-xl">competitive programming,we collebrate with communities to improve their training </p>
-      <p class="font-medium text-xl mb-9">preformance and facilitate hard missions to staff team.</p>
-        <div class="flex items-center gap-4">
-          <span class="text-[#002C3D] font-extrabold text-2xl" >
-            For training
-          </span>
-          <button class="bg-[#002C3D] rounded-xl text-white flex items-center px-5 py-3 gap-2 font-extrabold" routerLink="/registration">
-            Apply Now
-            <img src="assets/img_public/p_solve_home/arrow_for_button.svg" class="translat-hover" alt="arrow">
-          </button>
-        </div>
-      }
-      @else{
-        <p class="font-medium text-sm sm:text-xl mt-3">Full management system for communities
-          interesting with problem solving and
-          competitive programming,we collebrate with
-          communities to improve their training
-          preformance and facilitate hard missions to staff
-          team.</p>
+      <p class="mt-3 text-xl font-medium">
+        Full management system for communities interesting with problem solving
+        and
+      </p>
+      <p class="text-xl font-medium">
+        competitive programming,we collebrate with communities to improve their
+        training
+      </p>
+      <p class="text-xl font-medium mb-9">
+        preformance and facilitate hard missions to staff team.
+      </p>
+      <div class="flex items-center gap-4">
+        <span class="text-[#002C3D] font-extrabold text-2xl">
+          For training
+        </span>
+        <button
+          class="bg-[#002C3D] rounded-xl text-white flex items-center px-5 py-3 gap-2 font-extrabold"
+          routerLink="/registration"
+        >
+          Apply Now
+          <img
+            src="assets/img_public/p_solve_home/arrow_for_button.svg"
+            class="translat-hover"
+            alt="arrow"
+          />
+        </button>
+      </div>
+      } @else{
+      <p class="mt-3 text-sm font-medium sm:text-xl">
+        Full management system for communities interesting with problem solving
+        and competitive programming,we collebrate with communities to improve
+        their training preformance and facilitate hard missions to staff team.
+      </p>
       }
     </div>
-    <div class="hero-img flex sm:block flex-1 w-full self-start relative sm:static sm:h-full">
+    <div
+      class="relative flex self-start flex-1 w-full hero-img sm:block sm:static sm:h-full"
+    >
       @if(responsive.isSmallScreen){
-        <div class="flex flex-col items-center mt-16 gap-4">
-          <span class="text-[#002C3D] font-extrabold text-sm" >
-            For training
-          </span>
-          <button class="bg-[#002C3D] rounded-xl text-white flex items-center px-2 py-2 gap-2 font-extrabold text-xs min-w-[120px]" routerLink="/registration">
-            Apply Now
-            <img src="assets/img_public/p_solve_home/arrow_for_button.svg" class="translat-hover" alt="arrow">
-          </button>
-        </div>
+      <div class="flex flex-col items-center gap-4 mt-16">
+        <span class="text-[#002C3D] font-extrabold text-sm">
+          For training
+        </span>
+        <button
+          class="bg-[#002C3D] rounded-xl text-white flex items-center px-2 py-2 gap-2 font-extrabold text-xs min-w-[120px]"
+          routerLink="/registration"
+        >
+          Apply Now
+          <img
+            src="assets/img_public/p_solve_home/arrow_for_button.svg"
+            class="translat-hover"
+            alt="arrow"
+          />
+        </button>
+      </div>
       }
-      <img src="assets/img_public/p_solve_home/labtop_hero.svg" class="absolute left-20 top-7 w-10/12  sm:w-2/3 sm:left-3/4 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 " alt="p-solve">
+      <img
+        src="assets/img_public/p_solve_home/labtop_hero.svg"
+        class="absolute w-10/12 left-20 top-7 sm:w-2/3 sm:left-3/4 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
+        alt="p-solve"
+      />
     </div>
   </div>
 </section>

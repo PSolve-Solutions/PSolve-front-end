@@ -1,5 +1,4 @@
-
 export interface FeedBack {
-  rate: number
-  feedback: string
+  rate: number;
+  feedback: string;
 }

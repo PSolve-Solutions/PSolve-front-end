@@ -15,7 +15,6 @@ import { NotificationService } from '../../services/notification.service';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 dayjs.extend(relativeTime);
-
 @Component({
   selector: 'app-notification',
   standalone: true,
@@ -35,14 +34,12 @@ export class NotificationComponent {
   pageSize: number = 10;
   isRead: boolean = true;
   isLoading: boolean = false;
-
   toggleIsRead(): void {
     this.isRead = !this.isRead;
     this.allNotification = [];
     this.currentPage = 1;
     this.getAllNotifications(this.currentPage, this.pageSize, this.isRead);
   }
-
   getAllNotifications(
     currentPage: number,
     pageSize: number,
@@ -67,7 +64,6 @@ export class NotificationComponent {
         },
       });
   }
-
   onScroll(event: any): void {
     const element = event.target;
     const bottomThreshold = 5;
@@ -78,14 +74,12 @@ export class NotificationComponent {
       this.getAllNotifications(++this.currentPage, this.pageSize, this.isRead);
     }
   }
-
   calculateTimeFromNow(date: string): string {
     const now = dayjs();
     const then = dayjs(date);
     const diffInHours = now.diff(then, 'hour');
     const diffInDays = now.diff(then, 'day');
     const diffInMonths = now.diff(then, 'month');
-
     if (diffInHours < 24) {
       return `${diffInHours} hrs`;
     } else if (diffInDays < 30) {
@@ -97,7 +91,6 @@ export class NotificationComponent {
       return `${diffInYears} years`;
     }
   }
-
   returnTheColor(type: number, isRead: boolean): string {
     switch (type) {
       case 0:
@@ -125,7 +118,6 @@ export class NotificationComponent {
     }
     return '#DC354526';
   }
-
   goToThePage(type: number): void {
     switch (type) {
       case 0:
@@ -133,19 +125,15 @@ export class NotificationComponent {
         break;
       case 1:
         window.location.assign(`${this.baseUrlFront}/trainee/sheets`);
-
         break;
       case 2:
         window.location.assign(`${this.baseUrlFront}/trainee/contests`);
-
         break;
       case 3:
         window.location.assign(`${this.baseUrlFront}/trainee/home`);
-
         break;
       case 4:
         window.location.assign(`${this.baseUrlFront}/mentor/tasks`);
-
         break;
       case 10:
         window.location.assign(`${this.baseUrlFront}/mentor/tracking`);

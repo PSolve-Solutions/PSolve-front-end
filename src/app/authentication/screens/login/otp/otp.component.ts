@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ForgetService } from '../services/forget.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-otp',
   standalone: true,
@@ -23,7 +22,6 @@ export class OtpComponent {
   ngOnInit() {
     this.email = this.route.snapshot.paramMap.get('email');
   }
-
   resend() {
     this.isLoadingResend = true;
     this.forgetService.forgetPassword(this.email).subscribe({
@@ -44,7 +42,6 @@ export class OtpComponent {
       },
     });
   }
-
   moveToNext(event: KeyboardEvent, nextInput: HTMLInputElement | null): void {
     const input = event.target as HTMLInputElement;
     const max = 9;
@@ -60,7 +57,6 @@ export class OtpComponent {
       input.focus();
     }
   }
-
   checkResetOtp(email: any, otp: string) {
     this.isLoading.set(true);
     if (otp.length == 4) {

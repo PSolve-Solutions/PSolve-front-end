@@ -34,7 +34,7 @@
           </h3>
 
           <!-- Mentor Description -->
-          <div class="my-3 text-[14px]  sm:text-xl font-bold">
+          <div class="my-3 text-[14px] sm:text-xl font-bold">
             <p class="long-text line-clamp-2 sm:line-clamp-none text-[#002C3D]">
               {{ mentorData.about }}
             </p>
@@ -78,7 +78,7 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-             <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
+              <img src="assets/img_trainee/mail.svg" alt="Mail-icon" />
               <span class="text-xl text-[#002C3D]">Email :</span>
               <span class="font-bold text-xl text-[#2A8E9E]">
                 {{ mentorData.email ? mentorData.email : "Not Assign" }}
@@ -89,13 +89,11 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-            <img src="assets/img_trainee/phone.svg" alt="phone-icon" />
-            <span class="text-xl text-[#002C3D]">Phone Number :</span>
+              <img src="assets/img_trainee/phone.svg" alt="phone-icon" />
+              <span class="text-xl text-[#002C3D]">Phone Number :</span>
               <span class="font-bold text-xl text-[#2A8E9E]">
                 {{
-                  mentorData.phoneNumber
-                    ? mentorData.phoneNumber
-                    : "Not Assign"
+                  mentorData.phoneNumber ? mentorData.phoneNumber : "Not Assign"
                 }}
               </span>
             </p>
@@ -104,8 +102,8 @@
             <p
               class="flex items-center w-full gap-1 font-semibold text-nowrap sm:gap-3"
             >
-            <img src="assets/img_trainee/facebook.svg" alt="facebook-icon" />
-            <span class="text-xl text-[#002C3D]">Facebook :</span>
+              <img src="assets/img_trainee/facebook.svg" alt="facebook-icon" />
+              <span class="text-xl text-[#002C3D]">Facebook :</span>
               <span class="font-bold text-xl text-[#2A8E9E]">
                 @if (mentorData.facebookLink) {
                 <a

@@ -1,45 +1,82 @@
 <app-mentor-header></app-mentor-header>
 @if (isLoading) {
-  <img
-    class="w-8 h-8 block mx-auto my-12 animate-spin text-purple-950"
-    src="https://www.svgrepo.com/show/474682/loading.svg"
-    alt="Loading icon"
-  />
-  } @else { 
-<div *ngIf="atten != null" class="w-[90vw] h-[calc(100vh-200px)] m-auto  border-collapse border relative rounded-xl border-gray-300 overflow-y-auto overflow-x-auto custom-scrollbar">
-    <table class="hover-table max-h-full border-collapse border rounded-xl border-gray-300  ">
-        <thead class="sticky top-[-1px] z-[11] bg-[#F4F5F8] border-b border-black" >
-          <tr>
-            <th class="!sticky !left-[-1px] z-[11] bg-[#F4F5F8] px-3 py-3">Trainee Name</th>
-            <th class="w-fit px-3  py-3" *ngFor="let item of atten.sessions">{{item.topic}}</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of atten.trainees" class="border-b  ">
-            <th class="font-bold bg-[#F4F5F8] !sticky !left-[-1px] z-10 px-3 py-3  " >{{item.firstName}} {{item.middleName}} {{item.lastName}}</th>
-            <td  class="  px-3 py-3 " *ngFor="let i of item.attendances">
-                <svg  class="m-auto" *ngIf='!i.state' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_3634_13663)">
-                    <path d="M21.4294 2.66675L2.57227 21.3334" stroke="#FF0000" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M21.4294 21.3334L2.57227 2.66675" stroke="#FF0000" stroke-width="5" stroke-linecap="round"/>
-                    </g>
-                    <defs>
-                    <clipPath id="clip0_3634_13663">
-                    <rect width="24" height="24" fill="white"/>
-                    </clipPath>
-                    </defs>
-                    </svg>
-                    
-                    <svg class="m-auto"  *ngIf='i.state' width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 18L12.6 27L27 3" stroke="#2A8E9E" stroke-width="5" stroke-linecap="round"/>
-                        </svg>
-                        
-            </td>
-            
-          </tr>
-          
-        </tbody>
-      </table>
+<img
+  class="block w-8 h-8 mx-auto my-12 animate-spin text-purple-950"
+  src="https://www.svgrepo.com/show/474682/loading.svg"
+  alt="Loading icon"
+/>
+} @else {
+<div
+  *ngIf="atten != null"
+  class="w-[90vw] h-[calc(100vh-200px)] m-auto border-collapse border relative rounded-xl border-gray-300 overflow-y-auto overflow-x-auto custom-scrollbar"
+>
+  <table
+    class="max-h-full border border-collapse border-gray-300 hover-table rounded-xl"
+  >
+    <thead class="sticky top-[-1px] z-[11] bg-[#F4F5F8] border-b border-black">
+      <tr>
+        <th class="!sticky !left-[-1px] z-[11] bg-[#F4F5F8] px-3 py-3">
+          Trainee Name
+        </th>
+        <th class="px-3 py-3 w-fit" *ngFor="let item of atten.sessions">
+          {{ item.topic }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of atten.trainees" class="border-b">
+        <th class="font-bold bg-[#F4F5F8] !sticky !left-[-1px] z-10 px-3 py-3">
+          {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+        </th>
+        <td class="px-3 py-3" *ngFor="let i of item.attendances">
+          <svg
+            class="m-auto"
+            *ngIf="!i.state"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_3634_13663)">
+              <path
+                d="M21.4294 2.66675L2.57227 21.3334"
+                stroke="#FF0000"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M21.4294 21.3334L2.57227 2.66675"
+                stroke="#FF0000"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_3634_13663">
+                <rect width="24" height="24" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+          <svg
+            class="m-auto"
+            *ngIf="i.state"
+            width="30"
+            height="31"
+            viewBox="0 0 30 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 18L12.6 27L27 3"
+              stroke="#66AE1F"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-  }
+}

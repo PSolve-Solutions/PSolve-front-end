@@ -10,7 +10,6 @@ import { ContestsHocService } from '../../services/contests-hoc.service';
 import { SessionsHOCService } from '../../services/sessions-hoc.service';
 import { SheetsHOCService } from '../../services/sheets-hoc.service';
 import { WeeklyFilterService } from '../../services/weekly-filter.service';
-
 @Component({
   selector: 'app-confirm-delete-hoc',
   standalone: true,
@@ -28,7 +27,6 @@ export class ConfirmDeleteHocComponent {
   @Output() closeModal = new EventEmitter<boolean>();
   isLoading = signal<boolean>(false);
   isDeleted: boolean = false;
-
   cancel() {
     if (!this.isLoading() && !this.isDeleted) {
       this.closeModal.emit(false);
@@ -50,7 +48,6 @@ export class ConfirmDeleteHocComponent {
       }
     }
   }
-
   deleteItem(id: number) {
     this.isLoading.set(true);
     this.contestsHocService.deleteContest(id).subscribe({
@@ -66,7 +63,6 @@ export class ConfirmDeleteHocComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted = false;
-
         this.isLoading.update((v) => (v = false));
       },
     });
@@ -86,12 +82,10 @@ export class ConfirmDeleteHocComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted = false;
-
         this.isLoading.update((v) => (v = false));
       },
     });
   }
-
   deleteSheet(id: number) {
     this.isLoading.set(true);
     this.sheetsHOCService.deleteSheet(id).subscribe({
@@ -111,7 +105,6 @@ export class ConfirmDeleteHocComponent {
       },
     });
   }
-
   deleteTraineeOthers(id: number) {
     this.isLoading.set(true);
     this.weeklyFilterService.filterTrainee(id).subscribe({

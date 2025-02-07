@@ -17,7 +17,6 @@ import {
 } from 'ngx-image-cropper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../../../authentication/services/auth.service';
-
 @Component({
   selector: 'app-edit-image-pop',
   standalone: true,
@@ -42,51 +41,44 @@ export class EditImagePopComponent {
     translateH: 0,
     translateV: 0,
   };
-  zoomStep = 0.1; // Zoom increment per step
-
+  zoomStep = 0.1;
   closePop() {
     this.closePopup.emit();
   }
-
-  // Triggered when file is selected
   fileChangeEvent(event: Event): void {
     this.isUploaded = true;
     this.imageChangedEvent = event;
   }
-
-  // Triggered after image cropping
   imageCropped(event: ImageCroppedEvent): void {
     this.croppedBlob = event.blob ?? null;
   }
-
-  // Upload cropped image to the API
   uploadCroppedImage(): void {
     if (this.croppedBlob) {
       const formData = new FormData();
       const file = new File([this.croppedBlob], 'cropped-image.png', {
         type: 'image/png',
       });
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size <= maxSize) {
+        this.toastr.error('The image size must be less than or equal 2MB');
+        return;
+      }
       formData.append('ProfileImage', file, 'cropped-image.png');
       this.updateProfileImage(formData);
     } else {
       console.error('No cropped image to upload!');
     }
   }
-
   moveCropper(horizontal: number, vertical: number): void {
     const translateX = (this.transform.translateH ?? 0) + horizontal;
     const translateY = (this.transform.translateV ?? 0) + vertical;
-
-    // Constrain movement within bounds
     this.transform = {
       ...this.transform,
       translateH: this.constrainValue(translateX, 'x'),
       translateV: this.constrainValue(translateY, 'y'),
     };
   }
-
   zoomCropper(step: number): void {
-    // Limit zoom to the range [0.5, 3]
     const newScale = Math.min(
       3,
       Math.max(0.5, (this.transform.scale ?? 1) + step)
@@ -96,19 +88,16 @@ export class EditImagePopComponent {
       scale: newScale,
     };
   }
-
   applyZoom(): void {
     this.transform = {
       ...this.transform,
       scale: Math.min(3, Math.max(0.5, this.transform.scale ?? 1)),
     };
   }
-
   constrainValue(value: number, axis: 'x' | 'y'): number {
     const limit = 100;
     return Math.max(-limit, Math.min(value, limit));
   }
-
   updateProfileImage(newImage: any) {
     this.isLoading = true;
     this.profileService.updateProfileImage(newImage).subscribe({
@@ -138,7 +127,6 @@ export class EditImagePopComponent {
       },
     });
   }
-
   deleteProfileImage() {
     this.isLoading = true;
     this.profileService.deleteProfileImage().subscribe({

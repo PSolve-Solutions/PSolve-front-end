@@ -19,14 +19,12 @@ export class SheetsHOCService {
       params
     );
   }
-
   updateSheetsOrder(info: any): Observable<ResponseHeader> {
     return this.http.put<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/updateSheetsOrder`,
       info
     );
   }
-
   deleteSheet(id: number): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/sheets/${id}`
@@ -43,20 +41,17 @@ export class SheetsHOCService {
       info
     );
   }
-
   deleteMaterial(id: number): Observable<ResponseHeader> {
     return this.http.delete<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/materials/${id}`
     );
   }
-
   addMaterialToSheet(materialInfo: any): Observable<ResponseHeader> {
     return this.http.post<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/materials`,
       materialInfo
     );
   }
-
   createSheet(formData: any): Observable<ResponseHeader> {
     const myHeaders = new HttpHeaders({
       Accept: 'text/plain',
@@ -67,7 +62,6 @@ export class SheetsHOCService {
       { headers: myHeaders }
     );
   }
-
   getOneSheet(id: number): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/sheets/${id}`
@@ -79,7 +73,6 @@ export class SheetsHOCService {
       info
     );
   }
-
   getPublicCommunities(): Observable<ResponseHeader> {
     return this.http.get<ResponseHeader>(
       `${environment.BASE_URL}/api/Head/getPublicCommunities`

@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../authentication/services/auth.service';
-
 @Component({
   selector: 'app-login-layout',
   standalone: true,
@@ -25,10 +24,8 @@ export class LoginLayoutComponent {
   submitted = false;
   error: string = '';
   isLoading: boolean = false;
-
   passwordFieldType: string = 'password';
   password: string = '';
-
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       userName: ['', [Validators.required]],
@@ -36,15 +33,12 @@ export class LoginLayoutComponent {
       rememberMe: [true, [Validators.required]],
     });
   }
-
   // togglePasswordVisibility(): void {
   //   this.passwordFieldType =
   //     this.passwordFieldType === 'password' ? 'text' : 'password';
   // }
-
   onLogin() {
     this.submitted = true;
-
     this.isLoading = true;
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: ({ statusCode, data }) => {

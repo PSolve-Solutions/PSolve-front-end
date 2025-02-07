@@ -11,7 +11,6 @@ export interface CampInfo {
   data: Camp[];
   errors: any;
 }
-
 export interface Camp {
   id: number;
   name: string;
@@ -21,13 +20,11 @@ export interface Camp {
   joinRequestCount: number;
   durationInWeeks: number;
 }
-
 export interface AchiverCamp {
   totalProblems: number;
   campName: string;
   achivers: Achiver[];
 }
-
 export interface Achiver {
   id: string;
   firstName: string;

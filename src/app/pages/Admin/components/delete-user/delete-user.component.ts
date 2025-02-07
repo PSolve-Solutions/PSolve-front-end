@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { AdminsService } from '../../services/admins.service';
 import { ClientsService } from '../../services/clients.service';
-
 @Component({
   selector: 'app-delete-user',
   standalone: true,
@@ -32,7 +31,6 @@ export class DeleteUserComponent {
       this.closeModal.emit(true);
     }
   }
-
   confirm() {
     if (this.itemId !== null) {
       if (this.lable === 'admin') {
@@ -42,7 +40,6 @@ export class DeleteUserComponent {
       }
     }
   }
-
   deleteAdmin(id: string) {
     this.isLoading.set(true);
     this.adminService.deleteAdmin(id).subscribe({
@@ -58,7 +55,6 @@ export class DeleteUserComponent {
       error: (err) => {
         console.log(err);
         this.isDeleted.set(false);
-
         this.isLoading.update((v) => (v = false));
       },
     });
