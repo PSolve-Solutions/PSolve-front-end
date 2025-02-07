@@ -33,6 +33,7 @@ import { AboutusComponent } from '../../Components/Home-Components/aboust-us/abo
 export class HomePublicComponent implements OnInit {
   homeService = inject(HomeService);
   Clintes: { id: string; name: string; logoUrl: string }[] = [];
+  isVisible: boolean = false;
   ngOnInit(): void {
     this.getAllClintes();
   }

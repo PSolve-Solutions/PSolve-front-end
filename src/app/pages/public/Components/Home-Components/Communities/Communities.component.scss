@@ -4,6 +4,7 @@
   overflow: hidden;
   position: relative;
 }
+
 .slider {
   display: flex;
   gap: 40px;
@@ -12,6 +13,7 @@
   justify-content: flex-start;
   align-items: center;
 }
+
 .slide img {
   max-width: 220px;
 }

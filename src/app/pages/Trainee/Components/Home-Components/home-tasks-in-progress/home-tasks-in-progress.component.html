@@ -11,7 +11,12 @@
         class="flex items-center justify-between w-11/12 gap-4 mx-auto sm:w-fit"
       >
         <!-- Arrow icon with rotation class -->
-        <img src="assets/img_trainee/arrow_down.svg" class="progress-arrow" />
+        <img
+          src="assets/img_trainee/arrow_down.svg"
+          class="progress-arrow"
+          [@rotateArrow]="arrowState"
+        />
+
         <!-- In Progress button label -->
         <a
           class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold"
@@ -21,12 +26,14 @@
           <img src="assets/img_trainee/progress.svg" />
           <span>In Progress</span>
         </a>
+
         <!-- In Progress task count -->
         <span class="text-[#2A8E9E] font-semibold">{{
           inProgressTasks.length
         }}</span>
       </div>
     </button>
+
     <!-- In Progress Table -->
     <div class="min-w-full mt-4 content sm:ml-9 progress-table">
       <table
@@ -56,9 +63,15 @@
                 <div (click)="toggleList(inProgress.id)" class="cursor-pointer">
                   <img src="assets/img_trainee/progress-blue.svg" />
                 </div>
+
                 <!-- Dropdown list for task status -->
                 <div
-                  [id]="inProgress.id"
+                  [@slideToggle]="
+                    listVisibility[inProgress.id] ? 'visible' : 'hidden'
+                  "
+                  [@fadeToggle]="
+                    listVisibility[inProgress.id] ? 'open' : 'closed'
+                  "
                   class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
                 >
                   <a

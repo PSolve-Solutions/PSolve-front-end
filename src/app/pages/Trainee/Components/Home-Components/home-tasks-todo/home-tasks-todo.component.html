@@ -6,13 +6,18 @@
     <button
       (click)="toggleTables()"
       type="button"
-      class="relative flex w-full text-sm rounded-full sm:w-fit"
+      class="relative flex rounded-full w-full sm:w-fit text-sm"
     >
       <div
-        class="flex items-center justify-between w-11/12 gap-4 mx-auto sm:w-fit"
+        class="flex justify-between items-center gap-4 w-11/12 mx-auto sm:w-fit"
       >
         <!-- Arrow icon with rotation class -->
-        <img src="assets/img_trainee/arrow_down.svg" class="todo-arrow" />
+        <img
+          src="assets/img_trainee/arrow_down.svg"
+          class="todo-arrow"
+          [@rotateArrow]="arrowState"
+        />
+
         <!-- To-Do button label -->
         <a
           class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 sm:w-full rounded-[10px] font-bold"
@@ -22,12 +27,14 @@
           <img src="assets/img_trainee/circle.svg" />
           <span>To Do</span>
         </a>
+
         <!-- To-Do task count -->
         <span class="text-[#2A8E9E] font-semibold">{{ todoTasks.length }}</span>
       </div>
     </button>
+
     <!-- To-Do Table -->
-    <div class="min-w-full mt-4 content sm:ml-9 todo-table">
+    <div class="content sm:ml-9 mt-4 min-w-full todo-table">
       <table
         class="w-full text-sm text-left"
         [@slideToggle]="tableVisible ? 'visible' : 'hidden'"
@@ -48,43 +55,44 @@
           @for(todo of todoTasks; track $index) {
           <tr class="border-b border-[#D9D9D9] relative">
             <th
-              class="flex items-center justify-between p-2 text-base font-medium capitalize sm:p-4"
+              class="p-2 sm:p-4 font-medium text-base capitalize flex items-center justify-between"
             >
               <div class="flex items-center gap-4">
-                <!-- Status toggle button -->
-                <div (click)="toggleList(todo.id)">
-                  <img
-                    src="assets/img_trainee/todo-circale.svg"
-                    width="30"
-                    alt=""
-                  />
+                <!-- Toggle Button -->
+                <div (click)="toggleList(todo.id)" class="cursor-pointer">
+                  <img src="assets/img_trainee/todo-circale.svg" />
                 </div>
-                <!-- Dropdown list for task status -->
+
+                <!-- Task List with slideToggle and fadeToggle -->
                 <div
-                  [id]="todo.id"
-                  class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
+                  [@slideToggle]="
+                    listVisibility[todo.id] ? 'visible' : 'hidden'
+                  "
+                  [@fadeToggle]="listVisibility[todo.id] ? 'open' : 'closed'"
+                  class="list flex flex-col w-fit absolute top-full left-0 z-10 min-h-fit"
                 >
                   <a
                     (click)="changeTaskStatus(todo, 0)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 font-bold w-full rounded-t-[10px]"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer text-white p-2 font-bold w-full rounded-t-[10px] task-item bg-[#979797]"
                     >To Do</a
                   >
                   <a
                     (click)="changeTaskStatus(todo, 1)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] text-white p-2 font-bold w-full"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer text-white p-2 font-bold w-ful task-item bg-[#2D91C7]"
                     >In Progress</a
                   >
                   <a
                     (click)="changeTaskStatus(todo, 2)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] text-white p-2 font-bold w-full rounded-b-[10px]"
+                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer text-white p-2 font-bold w-full rounded-b-[10px] task-item bg-[#52B788]"
                     >Done</a
                   >
                 </div>
+
                 <span class="font-semibold text-[14px] sm:text-xl">{{
                   todo.title
                 }}</span>
               </div>
-              <!-- Deadline date -->
+
               <span class="font-semibold text-[14px] sm:text-xl">{{
                 todo.startTime.split("T")[0]
               }}</span>

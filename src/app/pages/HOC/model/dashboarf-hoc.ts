@@ -9,6 +9,7 @@ export interface Achiver {
   middleName: string;
   lastName: string;
   codeForceHandle: string;
+  vjudgeHandle: string;
   solvedProblems: number;
   points: number;
   mentorName: string;

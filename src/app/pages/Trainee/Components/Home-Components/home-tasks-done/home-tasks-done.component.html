@@ -13,8 +13,10 @@
         <!-- Arrow icon with rotation class -->
         <img
           src="assets/img_trainee/arrow_down.svg"
-          class="rotate done-arrow"
+          class="done-arrow"
+          [@rotateArrow]="arrowState"
         />
+
         <!-- Done button label -->
         <a
           class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold"
@@ -24,10 +26,12 @@
           <img src="assets/img_trainee/done.svg" />
           <span>Done</span>
         </a>
+
         <!-- Done task count -->
         <span class="text-[#2A8E9E] font-semibold">{{ doneTasks.length }}</span>
       </div>
     </button>
+
     <!-- Done Table -->
     <div class="min-w-full mt-4 content sm:ml-9 done-table">
       <table
@@ -59,7 +63,10 @@
                 </div>
                 <!-- Dropdown list for task status -->
                 <div
-                  [id]="done.id"
+                  [@slideToggle]="
+                    listVisibility[done.id] ? 'visible' : 'hidden'
+                  "
+                  [@fadeToggle]="listVisibility[done.id] ? 'open' : 'closed'"
                   class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
                 >
                   <a
