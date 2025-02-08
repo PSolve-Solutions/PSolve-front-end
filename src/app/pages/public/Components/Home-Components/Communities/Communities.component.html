@@ -6,18 +6,15 @@
     Our Clients
   </h2>
 
-  <div class="slider-container bg-[#F5F9F9]">
-    <div class="slider" #slider>
-      <!-- Slider Images -->
+  <div class="relative w-full overflow-hidden bg-[#F5F9F9]">
+    <div class="flex items-center px-16 py-8 slider gap-x-10">
       @for (clinet of clientData; track $index) {
-      <ng-container>
-        <div class="slide flex justify-center items-center flex-col gap-2">
-          <img [src]="clinet.logoUrl" alt="Slider Image" />
-          <h5>
-            {{ clinet.name == null ? "Clinet Name" : clinet.name }}
-          </h5>
-        </div>
-      </ng-container>
+      <div class="flex flex-col items-center justify-center gap-2 slide">
+        <img [src]="clinet.logoUrl" alt="Slider Image" />
+        <h5>
+          {{ clinet.clientName == null ? "Clinet Name" : clinet.clientName }}
+        </h5>
+      </div>
       }
     </div>
   </div>

@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { TrackingService } from '../../services/tracking.service';
 import { NgClass } from '@angular/common';
 import { Names, Root } from '../../model/tracking-hoc';
-import { Data } from '../../model/contests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 @Component({
   selector: 'app-trainee-tracking',
