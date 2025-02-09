@@ -1,113 +1,59 @@
-<div class="flex justify-between px-12 pb-4">
-  <div class="flex items-end gap-3">
-    <button
-      (click)="she()"
-      id="she"
-      class="bg-[#2A8E9E] h-[60px] text-[20px] text-white px-8 rounded-[12px]"
-    >
-      Sheets
-    </button>
-    <button
-      (click)="cont()"
-      id="cont"
-      class="h-[60px] border text-[#2A8E9E] border-[#2A8E9E] text-[20px] px-8 rounded-[12px]"
-    >
-      Contests
-    </button>
+<div class="flex sm:px-12 px-2 justify-between pb-4">
+  <div class="flex sm:gap-3 gap-2 items-center pt-8">
+    <button (click)="she()" id="she" class=" bg-[#2A8E9E] h-[40px] text-sm sm:text-[20px] text-white sm:px-8 px-4 rounded-lg">Sheets</button>
+    <button (click)="cont()" id="cont" class="h-[40px] border text-[#2A8E9E] border-[#2A8E9E]text-sm sm:text-[20px] sm:px-8 px-4 rounded-lg ">Contests</button>
   </div>
   <app-mentor-header></app-mentor-header>
 </div>
-<div class="flex items-center justify-center p-4">
+<div class="p-4 flex justify-center items-center" >
+    
   @if (isLoading) {
-  <img
-    class="w-8 h-8 animate-spin text-purple-950"
-    src="https://www.svgrepo.com/show/474682/loading.svg"
-    alt="Loading icon"
-  />
-  } @else {
-  <div
-    *ngIf="id != null && sh"
-    id="sheet"
-    class="h-[calc(100vh-200px)] overflow-auto custom-scrollbar w-[96vw] m-auto bg-white rounded-[20px]"
-  >
-    <table class="overflow-x-auto hover-table custom-scrollbar">
-      <thead class="sticky top-[-1px] z-[11] bg-[#fff]">
-        <tr>
-          <th
-            class="!sticky !left-[-1px] z-[11] bg-[#fff] border-r border-b border-gray-300 px-4 py-4 text-center"
-          >
-            Name
-          </th>
-          <th
-            *ngFor="let trainee of this.sheet.trainees"
-            class="px-4 py-4 text-center border-b border-l border-gray-300"
-          >
-            {{ trainee.firstName }} {{ trainee.middleName }}
-            {{ trainee.lastName }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let shee of this.sheet.sheets; let i = index">
-          <th
-            class="border-t border-r border-b border-gray-300 px-4 py-4 text-center font-bold bg-[#FFF] !sticky !left-0 z-10"
-          >
-            <a href="{{ shee.sheetLink }}" target="_blank">{{ shee.name }}</a>
-          </th>
-          <td
-            *ngFor="let track of this.sheet.trainees"
-            class="px-4 py-4 text-center border-t border-b border-l border-gray-300"
-          >
-            {{
-              track.tracking != null
-                ? track.tracking[i].solvedProblems
-                : "false"
-            }}/{{ shee.problemCount }}
-          </td>
-        </tr>
-        <!-- Repeat rows for each contest -->
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
-  </div>
-  <div
-    *ngIf="id != null && con"
-    id="contest"
-    class="h-[calc(100vh-200px)] overflow-auto custom-scrollbar w-[96vw] m-auto bg-white rounded-[20px]"
-  >
-    <table class="overflow-x-auto hover-table custom-scrollbar">
-      <thead class="sticky top-[-1px] z-[11] bg-[#fff]">
-        <tr>
-          <th
-            class="!sticky !left-[-1px] z-[11] bg-[#FFF] border-r border-b border-gray-300 px-4 py-4 text-center"
-          >
-            Name
-          </th>
-          <th
-            *ngFor="let trainee of this.contest.trainees"
-            class="px-4 py-4 text-center border-b border-l border-gray-300"
-          >
-            {{ trainee.firstName }} {{ trainee.middleName }}
-            {{ trainee.lastName }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let shee of this.contest.contests; let i = index">
-          <th
-            class="border-t border-r border-b border-gray-300 px-4 py-4 text-center font-bold bg-[#FFF] !sticky !left-0 z-10"
-          >
-            <a href="{{ shee.link }}" target="_blank">{{ shee.name }}</a>
-          </th>
-          <td
-            *ngFor="let track of this.contest.trainees"
-            class="px-4 py-4 text-center border-t border-b border-l border-gray-300"
-          >
-            {{ track.tracking[i].solvedProblems }}/{{ shee.problemCount }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  }
+    <img
+      class="w-8 h-8 animate-spin text-purple-950"
+      src="https://www.svgrepo.com/show/474682/loading.svg"
+      alt="Loading icon"
+    />
+    } @else {  
+    <div *ngIf="id != null && sh" id="sheet" class="h-[calc(100vh-200px)]  overflow-auto custom-scrollbar w-[96vw] m-auto bg-white rounded-[20px]">
+        <table class="hover-table overflow-x-auto custom-scrollbar ">
+          <thead class="sticky top-[-1px] z-[11] bg-[#fff]">
+            <tr>
+              <th  class="!sticky !left-[-1px] z-[11] bg-[#fff] border-r border-b border-gray-300 px-4 py-4 text-center">Name</th>
+              <th *ngFor="let trainee of this.sheet.trainees" class="border-l  border-b border-gray-300 px-4 py-4 text-center"> {{trainee.firstName}} {{trainee.middleName}} {{trainee.lastName}}</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shee of this.sheet.sheets , let i = index">
+              <th  class="border-t border-r border-b border-gray-300 px-4 py-4 text-center font-bold bg-[#FFF] !sticky !left-0 z-10 "> <a href="{{shee.sheetLink}}" target="_blank">{{shee.name}}</a> </th>
+              <td *ngFor="let track of this.sheet.trainees" class="border-t border-b border-l border-gray-300 px-4 py-4 text-center">{{track.tracking != null ? track.tracking[i].solvedProblems : "false"}}/{{shee.problemCount}}</td>
+              
+            </tr>
+            <!-- Repeat rows for each contest -->
+            
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="id != null && con " id="contest" class=" h-[calc(100vh-200px)] overflow-auto custom-scrollbar w-[96vw] m-auto bg-white rounded-[20px]">
+        <table class="hover-table overflow-x-auto custom-scrollbar ">
+          <thead class="sticky top-[-1px] z-[11] bg-[#fff]">
+            <tr>
+              <th  class="!sticky !left-[-1px] z-[11] bg-[#FFF] border-r border-b border-gray-300 px-4 py-4 text-center">Name</th>
+              <th *ngFor="let trainee of this.contest.trainees" class="border-l  border-b border-gray-300 px-4 py-4 text-center"> {{trainee.firstName}} {{trainee.middleName}} {{trainee.lastName}}</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shee of this.contest.contests , let i = index">
+              <th  class="border-t border-r border-b border-gray-300 px-4 py-4 text-center font-bold bg-[#FFF] !sticky !left-0 z-10 "><a href="{{shee.link}}" target="_blank">{{shee.name}}</a></th>
+              <td *ngFor="let track of this.contest.trainees" class="border-t border-b border-l border-gray-300 px-4 py-4 text-center">{{track.tracking[i].solvedProblems}}/{{shee.problemCount}}</td>
+              
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    }
 </div>
+  

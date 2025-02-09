@@ -7,6 +7,7 @@ import { LocalTimePipe } from '../../../pipes/local-time.pipe';
 import { FormsModule } from '@angular/forms';
 import { UtcDatePipe } from '../../../pipes/utc-date.pipe';
 import { MentorHeaderComponent } from '../../../layouts/mentor/mentor-header/mentor-header.component';
+
 @Component({
   selector: 'app-practice',
   standalone: true,
@@ -40,8 +41,10 @@ export class PracticeComponent {
       dropdowns.forEach((dropdown) => dropdown.classList.add('hidden'));
     }
   }
+
   upd(ind: any, item: any) {
     item.state = this.stand[ind].state;
+
     let i = {
       practiceId: item.id,
       title: item.title,
@@ -50,6 +53,7 @@ export class PracticeComponent {
       time: item.time,
       state: item.state != 1 ? 1 : 2,
     };
+
     this.serv.upd(i).subscribe((d: ResponseHeader) => {
       if (d.isSuccess) {
         if (this.stand[ind].state == 1) {
@@ -62,12 +66,15 @@ export class PracticeComponent {
   }
   updstat(ind: any, item: any) {
     item.status = this.stand[ind].status;
+
     let i = {
       practiceId: item.id,
+      
       status: item.state != 1 ? 1 : 2,
     };
+
     this.serv.updstat(i).subscribe((d: ResponseHeader) => {
-      console.log(d);
+      console.log(d)
       if (d.isSuccess) {
         if (this.stand[ind].state == 1) {
           this.stand[ind].state = 2;
@@ -85,7 +92,7 @@ export class PracticeComponent {
     });
   }
   edit(data: any) {
-    this.dateEd = data.time.slice(0, 16);
+    this.dateEd = data.time.slice(0,16);
     this.titleEd = data.title;
     this.linkEd = data.meetingLink;
     this.notesEd = data.note;
@@ -97,17 +104,18 @@ export class PracticeComponent {
     const localDate = new Date();
     const timezoneOffset = localDate.getTimezoneOffset();
     let convertedTime = new Date(this.dateEd);
-    console.log(timezoneOffset);
-    convertedTime = new Date(convertedTime.getTime() - timezoneOffset * 60000);
+    console.log(timezoneOffset)
+    convertedTime=  new Date(convertedTime.getTime() - timezoneOffset*60000 )
     console.log(convertedTime);
     let i = {
       practiceId: id,
       title: this.titleEd,
       meetingLink: this.linkEd,
       note: this.notesEd,
-      time: convertedTime,
+      time:convertedTime,
       state: this.statusEd,
     };
+
     this.edError = [];
     if (this.dateEd) {
       this.serv.upd(i).subscribe((d: ResponseHeader) => {
@@ -149,6 +157,7 @@ export class PracticeComponent {
     this.notes = '';
   }
   stand: any;
+
   get(id: any) {
     this.isLoading = true;
     if (id != null) {
@@ -194,8 +203,8 @@ export class PracticeComponent {
     const localDat = new Date();
     const timezoneOff = localDat.getTimezoneOffset();
     let convertedTime = new Date(this.date);
-    console.log(timezoneOff);
-    convertedTime = new Date(convertedTime.getTime() - timezoneOff * 60000);
+    console.log(timezoneOff)
+    convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
     console.log(convertedTime);
     const data = {
       title: this.title,
@@ -204,6 +213,7 @@ export class PracticeComponent {
       time: convertedTime,
       campId: Number(localStorage.getItem('camp')),
     };
+
     this.err = [];
     this.success = false;
     if (this.date == '') {
@@ -221,7 +231,7 @@ export class PracticeComponent {
     let time: Date = new Date();
     const localDate = new Date();
     const timezoneOffset = localDate.getTimezoneOffset();
-    let meet = new Date(this.date - timezoneOffset * 60000);
+    let meet = new Date(this.date - timezoneOffset*60000);
     if (meet < time) {
       this.err.push('Date Must Be in Future');
     } else if (this.link && this.title && this.date) {
@@ -272,7 +282,9 @@ export class PracticeComponent {
           alert('not copied'); // error
         });
     }
+
     document.body.removeChild(textarea);
+
     // Optionally, you can show a success message or alert
   }
 }
