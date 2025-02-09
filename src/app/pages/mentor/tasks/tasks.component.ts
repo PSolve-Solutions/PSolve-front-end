@@ -7,10 +7,12 @@ import { LocalTimePipe } from '../../../pipes/local-time.pipe';
 import { DatePickerComponent } from '../component/date-picker/date-picker.component';
 import { UtcDatePipe } from '../../../pipes/utc-date.pipe';
 import { FormsModule } from '@angular/forms';
+
 import { LocaltoutcPipe } from '../../../pipes/localtoutc.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-tasks',
   standalone: true,
@@ -43,11 +45,13 @@ export class TasksComponent {
     // Convert the date to ISO format (YYYY-MM-DD)
     return new Date(date).toString().substring(0, 10);
   }
+
   updateTitle(data: any, dat: any, end: any): void {
     this.errors = [];
     const dateObj = new Date();
     const date = new Date(dat.value);
     // Check if inputElement is not null and has a value
+
     let e: Date;
     let s: Date;
     let task = {
@@ -60,12 +64,13 @@ export class TasksComponent {
     if (!dat.value) {
       this.errors.push('Set Start Date');
     } else {
+      
       s = new Date(dat.value);
       const localDat = new Date();
       const timezoneOff = localDat.getTimezoneOffset();
       let convertedTime = new Date(s);
       // console.log(timezoneOff)
-      convertedTime = new Date(convertedTime.getTime() - timezoneOff * 60000);
+      convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
       // console.log(convertedTime);
       task.startTime = convertedTime;
     }
@@ -77,9 +82,10 @@ export class TasksComponent {
       const timezoneOff = localDat.getTimezoneOffset();
       let convertedTime = new Date(e);
       // console.log(timezoneOff)
-      convertedTime = new Date(convertedTime.getTime() - timezoneOff * 60000);
+      convertedTime=  new Date(convertedTime.getTime() - timezoneOff*60000 )
       // console.log(convertedTime);
       task.endTime = convertedTime;
+      
     }
     if (dat.value && end.value) {
       this.serv.updTask(task).subscribe((d: ResponseHeader) => {
@@ -87,10 +93,12 @@ export class TasksComponent {
           this.ed.title = data.value;
           this.ed.startTime = s;
           this.ed.endTime = e;
+
           this.show('edit');
           this.refreshRouterOutlet();
         } else {
           this.errors = [];
+
           for (const field in d.errors) {
             if (d.errors.hasOwnProperty(field)) {
               // Check if d.errors[field] is an array before using join
@@ -126,14 +134,15 @@ export class TasksComponent {
         this.crError.push('End Time Must Be in Future');
       }
       end = new Date(endTime.value);
-      en = new Date(endTime.value); // Convert to string without 'Z'
+      en =  new Date(endTime.value); // Convert to string without 'Z'
     } else {
       this.crError.push('End Time Is Requiered');
     }
     if (startTime.value) {
       start = new Date(startTime.value);
-      st = new Date(startTime.value); // Convert to string without 'Z' .replace('Z', '')
+      st =  new Date(startTime.value); // Convert to string without 'Z' .replace('Z', '')
       console.log(st);
+
       // let meet = new Date(startTime.value);
       if (star < time) {
         this.crError.push('Start Time Must Be in Future');
@@ -150,12 +159,13 @@ export class TasksComponent {
     const timezoneOff = localDat.getTimezoneOffset();
     let sconvertedTime = new Date(startTime.value);
     // console.log(timezoneOff)
-    sconvertedTime = new Date(sconvertedTime.getTime() - timezoneOff * 60000);
+    sconvertedTime=  new Date(sconvertedTime.getTime() - timezoneOff*60000 )
     // console.log(convertedTime);
     st = sconvertedTime;
+
     let econvertedTime = new Date(endTime.value);
     // console.log(timezoneOff)
-    econvertedTime = new Date(econvertedTime.getTime() - timezoneOff * 60000);
+    econvertedTime=  new Date(econvertedTime.getTime() - timezoneOff*60000 )
     // console.log(convertedTime);
     en = econvertedTime;
     // Prepare the base data for the task creation
@@ -166,6 +176,7 @@ export class TasksComponent {
       traineesIds: this.trainTask,
       campId: Number(localStorage.getItem('camp')),
     };
+
     // Check for missing trainees and tasks
     if (this.chars.length == 0) {
       this.crError.push('Please add at least one trainee');
@@ -173,6 +184,7 @@ export class TasksComponent {
     if (this.taskNo.length == 0) {
       this.crError.push('Add at least one task');
     }
+
     // If there are any errors, add them to `this.crError`
     if (this.crError.length == 0) {
       console.log(baseData);
@@ -191,11 +203,13 @@ export class TasksComponent {
       });
     }
   }
+
   crError: any[] = [];
   del(id: any) {
     let data = {
       taskId: id,
     };
+
     this.serv.del(id).subscribe((d: ResponseHeader) => {
       if (d.isSuccess) {
         document.getElementById('D' + id)?.remove();
@@ -206,6 +220,7 @@ export class TasksComponent {
   taskNo: any[] = [];
   onKeydown(event: KeyboardEvent, task: any) {
     let v = task.value;
+
     // Check if the Enter key was pressed and the input is not just whitespace
     if (
       event.key === 'Enter' &&
@@ -217,6 +232,7 @@ export class TasksComponent {
       task.value = ''; // Clears the input
     }
   }
+
   en(event: KeyboardEvent, task: any, val: any) {
     // Check if the Enter key was pressed and the input is not just whitespace
     if (
@@ -230,6 +246,7 @@ export class TasksComponent {
       val.value = ''; // Clears the input
     }
   }
+
   handleClick(event: Event) {
     const element = event.target as HTMLElement;
     if (element.id != 'names' && element.id != 'rel' && this.isShow) {
@@ -242,10 +259,12 @@ export class TasksComponent {
   }
   removeGrandparent(id: any, ind: any) {
     const grandparent = this.getGrandparentElement(id);
+
     if (grandparent) {
       this.taskNo.splice(ind, 1);
     }
   }
+
   getGrandparentElement(id: any): HTMLElement {
     // Traverse the DOM to find the grandparent
     let element: any = document.getElementById(id);
@@ -272,6 +291,7 @@ export class TasksComponent {
   }
   getFullPath(route: ActivatedRoute): string {
     let path = route.snapshot.url.map((segment) => segment.path).join('/');
+
     // Recursively add paths from child routes if they exist
     if (route.firstChild) {
       path += '/' + this.getFullPath(route.firstChild);
@@ -335,6 +355,7 @@ export class TasksComponent {
     if (id != null) {
       this.serv.getData(id).subscribe((d: ResponseHeader) => {
         this.tasks = d.data;
+
         this.isLoading = false;
       });
     }
@@ -369,11 +390,11 @@ export class TasksComponent {
     this.ed = data;
     this.ed.taskId = data.id;
     this.ed.title = data.title;
-    this.ed.startTime = data.startTime;
-    this.ed.endTime = data.endTime;
-    this.edSt = data.startTime.slice(0, 16);
-    this.edEn = data.endTime.slice(0, 16);
-    console.log(this.edEn);
+    this.ed.startTime = data.startTime
+    this.ed.endTime = data.endTime
+    this.edSt = data.startTime.slice(0,16)
+    this.edEn =  data.endTime.slice(0,16)
+    console.log(this.edEn)
     // this.ed = {
     //   "taskId": data.taskId,
     //   "title":  data.title,
@@ -403,6 +424,7 @@ export class TasksComponent {
         document.getElementById(`n${e.id}`)?.classList.add('hidden');
       });
     }
+
     this.show('gen');
   }
   @HostListener('document:click', ['$event'])
@@ -420,7 +442,9 @@ export class TasksComponent {
   }
   getStat(start: any, end: any) {
     let d = new Date();
+    
     start = new Date(start);
+
     end = new Date(end);
     start.setSeconds(0);
     start.setMilliseconds(0);
@@ -430,12 +454,13 @@ export class TasksComponent {
     const timezoneOff = localDat.getTimezoneOffset();
     let sconvertedTime = new Date(start);
     // console.log(timezoneOff)
-    sconvertedTime = new Date(sconvertedTime.getTime() + timezoneOff * 60000);
+    sconvertedTime=  new Date(sconvertedTime.getTime() + timezoneOff*60000 )
     // console.log(convertedTime);
     start = sconvertedTime;
+
     let econvertedTime = new Date(end);
     // console.log(timezoneOff)
-    econvertedTime = new Date(econvertedTime.getTime() + timezoneOff * 60000);
+    econvertedTime=  new Date(econvertedTime.getTime() + timezoneOff*60000 )
     // console.log(convertedTime);
     end = econvertedTime;
     if (d.getTime() >= start.getTime() && d.getTime() <= end.getTime()) {
