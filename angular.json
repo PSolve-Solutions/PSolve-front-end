@@ -20,6 +20,7 @@
             "allowedCommonJsDependencies": ["qrcode", "dayjs"],
             "outputPath": "dist/psolve",
             "index": "src/index.html",
+            "baseHref": "/",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
