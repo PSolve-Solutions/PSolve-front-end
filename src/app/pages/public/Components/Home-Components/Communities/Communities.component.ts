@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./Communities.component.scss'],
 })
 export class CommunitiesComponent {
-  @Input() clientData: { id: string; name: string; logoUrl: string }[] = [];
+  @Input() clientData: { id: string; clientName: string; logoUrl: string }[] =
+    [];
 }
