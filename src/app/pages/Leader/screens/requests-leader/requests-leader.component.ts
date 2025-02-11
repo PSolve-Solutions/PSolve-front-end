@@ -13,6 +13,8 @@ import { SuccessMessageComponent } from '../success-message/success-message.comp
 import { AllTraineesInfo } from '../../model/requests';
 import { OcSidebarService } from '../../../../shared/services/oc-sidebar.service';
 import { DeleteConfirmModalComponent } from '../../../../shared/Components/delete-confirm-modal/delete-confirm-modal.component';
+import { ExportExcelService } from '../../../../shared/services/export-excel.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-requests-leader',
   standalone: true,
@@ -29,7 +31,9 @@ import { DeleteConfirmModalComponent } from '../../../../shared/Components/delet
 })
 export class RequestsLeaderComponent implements OnInit {
   requestsLeaderService = inject(RequestsLeaderService);
+  exportExcelService = inject(ExportExcelService);
   ocSidebarService = inject(OcSidebarService);
+  toastr = inject(ToastrService);
   allCamps: { id: number; name: string }[] = [];
   isLoading = signal<boolean>(false);
   isLoadingCamp = signal<boolean>(false);
@@ -48,8 +52,9 @@ export class RequestsLeaderComponent implements OnInit {
   settingsFilterRequest: any;
   totalCount: number = 0;
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 6;
   totalPages: number = 1;
+  isExporting = signal<boolean>(false);
   ngOnInit() {
     this.fetchAllCamps();
   }
@@ -246,8 +251,10 @@ export class RequestsLeaderComponent implements OnInit {
   toggleAll(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
-      this.selectedIds = this.allTraineesInfo.data.map((user) => user.id);
-      console.log(this.selectedIds, this.selectedIds.length);
+      this.allTraineesInfoData.forEach((t) => {
+        const s = t.data.map((user) => user.id);
+        this.selectedIds = [...this.selectedIds, ...s];
+      });
     } else {
       this.selectedIds = [];
     }
@@ -266,5 +273,32 @@ export class RequestsLeaderComponent implements OnInit {
   }
   areAllItemsSelected(): boolean {
     return this.selectedIds.length === this.allTraineesInfo.data.length;
+  }
+
+  downloadExcel() {
+    if (this.campId == 0) {
+      this.toastr.warning('please select camp');
+      return;
+    }
+    this.isExporting.set(true);
+    const currentDate = new Date().toISOString();
+    const campName = this.allCamps.find((c) => (c.id = this.campId))?.name;
+    this.exportExcelService
+      .exportRegisterations(this.campId, currentDate)
+      .subscribe({
+        next: (res: any) => {
+          const link = document.createElement('a');
+          link.href =
+            'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' +
+            res.fileContents;
+          link.download = `${campName} Trainees Data.xlsx`;
+          link.click();
+          this.isExporting.update((v) => (v = false));
+        },
+        error: (err) => {
+          console.log(err);
+          this.isExporting.update((v) => (v = false));
+        },
+      });
   }
 }

@@ -34,7 +34,6 @@ export class CommunityLeaderComponent implements OnInit {
     this.getCommunityById();
   }
   ngOnInit(): void {
-    console.log(this.isCodeforcesSettings);
     this.communityForm = this.fb.group({
       ClientName: ['', [Validators.required]],
       FacebookLink: [''],

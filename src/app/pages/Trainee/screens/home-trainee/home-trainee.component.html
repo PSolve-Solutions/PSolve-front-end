@@ -71,15 +71,11 @@
               formControlName="feedback"
               class="p-3 rounded-[10px] focus:outline-none max-h-[50px]"
             ></textarea>
-            <p
-              class="flex items-center gap-1 text-red-500"
-              *ngIf="
-                feedBackForm.get('feedback')?.touched &&
-                feedBackForm.get('feedback')?.getError('required')
-              "
-            >
-              <i class="fa-solid fa-circle-info"></i> Please Write Your feedback
+            @if (isShowErr) {
+            <p class="flex items-center gap-1 text-red-500">
+              <i class="fa-solid fa-circle-info"></i> Please select stars
             </p>
+            }
           </form>
         </div>
       </div>

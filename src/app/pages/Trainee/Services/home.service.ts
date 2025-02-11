@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { task } from '../model/trinee-home';
+import { ResponseHeader } from '../../../shared/model/responseHeader';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,8 +42,8 @@ export class HomeService {
       environment.BASE_URL + `/api/Trainee/canAddFeedback`
     );
   }
-  TraineeFeedBack(model: any): Observable<any> {
-    return this._HttpClient.post(
+  TraineeFeedBack(model: any): Observable<ResponseHeader> {
+    return this._HttpClient.post<ResponseHeader>(
       environment.BASE_URL + `/api/Trainee/feedback`,
       model
     );
@@ -68,8 +69,8 @@ export class HomeService {
   TraineeTasks(): Observable<any> {
     return this._HttpClient.get(environment.BASE_URL + `/api/Trainee/tasks`);
   }
-  UpdateTraineeTask(model: any): Observable<any> {
-    return this._HttpClient.put(
+  UpdateTraineeTask(model: any): Observable<ResponseHeader> {
+    return this._HttpClient.put<ResponseHeader>(
       environment.BASE_URL + `/api/Trainee/updatetaskStatus`,
       model
     );

@@ -17,4 +17,11 @@ export class ExportExcelService {
   downloadExcelHOC(): Observable<any> {
     return this.http.get(`${environment.BASE_URL}/api/Head/exportCampTrainees`);
   }
+  exportRegisterations(campId: number, time: any): Observable<any> {
+    const params = new HttpParams().set('CampId', campId).set('Time', time);
+    return this.http.get(
+      `${environment.BASE_URL}/api/Leader/ExportRegisterations`,
+      { params }
+    );
+  }
 }

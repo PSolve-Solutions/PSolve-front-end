@@ -43,7 +43,6 @@ export class SystemFilterComponent implements OnInit {
       filtersC: this.fb.array<FormFilter>([this.generateFilter()]),
       filtersV: this.fb.array<FormFilterV>([this.generateFilterV()]),
     }) as Form;
-    console.log(this.codeforcesFilters, this.vjudgeFilters);
     if (this.codeforcesFilters.length === 0) {
       this.codeforcesFilters.push({
         sheetId: '',
