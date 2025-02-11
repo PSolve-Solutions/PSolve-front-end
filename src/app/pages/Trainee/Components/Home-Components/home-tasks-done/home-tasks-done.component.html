@@ -1,51 +1,51 @@
-<div class="mt-7">
-  <!-- Done Section -->
+<div class="my-7">
   <div class="relative w-full mr-auto">
-    <!-- Button to toggle the Done table -->
     <button
-      (click)="toggleTables()"
+      (click)="openToDoTasks()"
       type="button"
       class="relative flex w-full text-sm rounded-full sm:w-fit"
     >
       <div
         class="flex items-center justify-between w-11/12 gap-4 mx-auto sm:w-fit"
       >
-        <!-- Arrow icon with rotation class -->
-        <img
-          src="assets/img_trainee/arrow_down.svg"
-          class="done-arrow"
-          [@rotateArrow]="arrowState"
-        />
-
-        <!-- Done button label -->
-        <a
-          class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold"
-          role="menuitem"
-          tabindex="-1"
-        >
-          <img src="assets/img_trainee/done.svg" />
-          <span>Done</span>
-        </a>
-
-        <!-- Done task count -->
+        <div class="flex items-center gap-x-4">
+          <svg
+            class="transition-transform duration-500"
+            [class]="isOpenTasks() ? 'rotate-0' : '-rotate-90'"
+            xmlns="http://www.w3.org/2000/svg"
+            width="34"
+            height="27"
+            viewBox="0 0 19 12"
+            fill="none"
+          >
+            <path d="M18.75 0L9.6825 12L0.75 0H18.75Z" fill="#2A8E9E" />
+          </svg>
+          <div
+            class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] w-fit sm:w-full rounded-[10px] text-white p-2 font-bold"
+          >
+            <img src="assets/img_trainee/done.svg" />
+            <span>Done</span>
+          </div>
+        </div>
         <span class="text-[#2A8E9E] font-semibold">{{ doneTasks.length }}</span>
       </div>
     </button>
 
-    <!-- Done Table -->
-    <div class="min-w-full mt-4 content sm:ml-9 done-table">
-      <table
-        class="w-full text-sm text-left"
-        [@slideToggle]="tableVisible ? 'visible' : 'hidden'"
-      >
-        <!-- Table header -->
+    <div
+      class="min-w-full mt-4 content sm:ml-9"
+      [ngClass]="isOpenTasks() ? 'block' : 'hidden'"
+    >
+      <table class="w-full text-sm text-left">
         <thead class="text-xs">
           <tr
             class="w-full flex items-center justify-between border-b border-[#D9D9D9]"
           >
             <th class="px-1 py-3 text-xl font-medium text-[#777575]">Name</th>
             <th class="px-2 sm:px-4 text-xl font-medium text-[#EF4A50]">
-              DeadLine
+              <div class="flex items-center gap-x-40">
+                <span class="hidden md:block">Start Time</span>
+                <span class="md:pe-8 pe-5">End Time</span>
+              </div>
             </th>
           </tr>
         </thead>
@@ -57,42 +57,74 @@
               class="flex items-center justify-between p-4 text-base font-medium capitalize"
             >
               <div class="flex items-center gap-4">
-                <!-- Status toggle button -->
-                <div (click)="toggleList(done.id)" class="cursor-pointer">
+                <div
+                  id="open"
+                  (click)="openList(done.id)"
+                  class="cursor-pointer"
+                >
                   <img src="assets/img_trainee/done_green.svg" />
                 </div>
-                <!-- Dropdown list for task status -->
                 <div
-                  [@slideToggle]="
-                    listVisibility[done.id] ? 'visible' : 'hidden'
+                  class="absolute left-0 z-10 flex flex-col overflow-hidden text-lg uppercase transition-all duration-500 w-fit top-full"
+                  [ngClass]="
+                    isOpenList() && taskId === done.id ? 'h-[140px]' : ' h-0'
                   "
-                  [@fadeToggle]="listVisibility[done.id] ? 'open' : 'closed'"
-                  class="absolute left-0 z-10 flex flex-col list w-fit top-full min-h-fit"
                 >
-                  <a
-                    (click)="changeTaskStatus(done, 0)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#979797] text-white p-2 font-bold w-full rounded-t-[10px]"
-                    >To Do</a
+                  @for ( status of taskStatus; track status.id) {
+                  <button
+                    (click)="changeTaskStatus(done.id, status.id)"
+                    class="flex items-center w-full gap-2 p-2 px-4 py-2 font-bold text-white cursor-pointer pe-10"
+                    [ngClass]="
+                      status.id === 0
+                        ? 'bg-[#979797] rounded-t-[10px]'
+                        : status.id === 1
+                        ? 'bg-[#2D91C7]'
+                        : 'bg-[#52B788] rounded-b-[10px]'
+                    "
                   >
-                  <a
-                    (click)="changeTaskStatus(done, 1)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#2D91C7] text-white p-2 font-bold w-full"
-                    >In Progress</a
-                  >
-                  <a
-                    (click)="changeTaskStatus(done, 2)"
-                    class="flex items-center gap-2 px-4 py-2 uppercase text-xl cursor-pointer bg-[#52B788] text-white p-2 font-bold w-full rounded-b-[10px]"
-                    >Done</a
-                  >
+                    {{ status.name }}
+                  </button>
+                  }
                 </div>
                 <span class="font-semibold text-[14px] sm:text-xl">{{
                   done.title
                 }}</span>
               </div>
-              <!-- Deadline date -->
-              <span class="font-semibold text-[14px] sm:text-xl">{{
-                done.startTime.split("T")[0]
-              }}</span>
+              <div
+                class="font-semibold flex items-center gap-x-6 text-[14px] sm:text-base"
+              >
+                <span class="hidden md:block">{{
+                  done.startTime | date : "MM/dd/yyyy hh:mm a"
+                }}</span>
+                <svg
+                  class="hidden md:block"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.3469 5.61643C11.4487 5.5316 11.5801 5.49068 11.7121 5.50269C11.8441 5.51469 11.966 5.57862 12.0509 5.68043L15.3839 9.68043C15.465 9.78268 15.5029 9.91261 15.4896 10.0425C15.4762 10.1723 15.4126 10.2918 15.3123 10.3753C15.212 10.4589 15.083 10.4999 14.9529 10.4897C14.8228 10.4794 14.7018 10.4187 14.6159 10.3204L11.2829 6.32043C11.198 6.21857 11.1571 6.08719 11.1691 5.95518C11.1811 5.82317 11.2451 5.70132 11.3469 5.61643Z"
+                    fill="black"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.3469 14.3842C11.2451 14.2993 11.1811 14.1775 11.1691 14.0455C11.1571 13.9134 11.198 13.7821 11.2829 13.6802L14.6159 9.6802C14.7018 9.58196 14.8228 9.52122 14.9529 9.51097C15.083 9.50071 15.212 9.54175 15.3123 9.62531C15.4126 9.70887 15.4762 9.82834 15.4896 9.95818C15.5029 10.088 15.465 10.2179 15.3839 10.3202L12.0509 14.3202C11.966 14.422 11.8441 14.4859 11.7121 14.4979C11.5801 14.5099 11.4487 14.469 11.3469 14.3842Z"
+                    fill="black"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15 10C15 10.1326 14.9473 10.2598 14.8536 10.3536C14.7598 10.4473 14.6326 10.5 14.5 10.5L5 10.5C4.86739 10.5 4.74021 10.4473 4.64645 10.3536C4.55268 10.2598 4.5 10.1326 4.5 10C4.5 9.86739 4.55268 9.74021 4.64645 9.64645C4.74021 9.55268 4.86739 9.5 5 9.5L14.5 9.5C14.6326 9.5 14.7598 9.55268 14.8536 9.64645C14.9473 9.74021 15 9.86739 15 10Z"
+                    fill="black"
+                  />
+                </svg>
+                <span>{{ done.endTime | date : "MM/dd/yyyy hh:mm a" }}</span>
+              </div>
             </th>
           </tr>
           }

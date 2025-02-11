@@ -70,20 +70,15 @@ export class MentorsTrackingComponent implements OnInit {
     }
   }
   getTasksByTaskStatus(mentorId: string, taskStatus: number): void {
-    // this.isLoading.set(true);
     this.trackingService.getTasksByTaskStatus(mentorId, taskStatus).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {
           this.allTasksData = data;
-          console.log(this.allTasksData);
-          // this.isLoading.update((v) => (v = false));
         } else {
-          // this.isLoading.update((v) => (v = false));
         }
       },
       error: (err) => {
         console.log(err);
-        // this.isLoading.update((v) => (v = false));
       },
     });
   }

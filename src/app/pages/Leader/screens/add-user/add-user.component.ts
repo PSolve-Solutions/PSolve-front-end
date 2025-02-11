@@ -196,7 +196,6 @@ export class AddUserComponent implements OnInit {
     this.addUserForm.get('campId')?.setValue(option.id);
   }
   toggleDropdownCamp() {
-    console.log(this.allCamps);
     this.foucsCamp = !this.foucsCamp;
   }
   @HostListener('document:click', ['$event'])

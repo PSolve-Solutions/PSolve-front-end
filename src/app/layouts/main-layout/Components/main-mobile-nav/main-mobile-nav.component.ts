@@ -70,7 +70,6 @@ export class MainMobileNavComponent {
     } else {
       this.ocSidebarService.openSidebar('show');
     }
-    console.log(this.ocSidebarService.isOpen());
   }
   goSpecificRole(role: string): void {
     this.router.navigate(['/', role.toLowerCase()]);

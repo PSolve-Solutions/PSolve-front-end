@@ -78,7 +78,6 @@ export class ReportsLeaderComponent implements OnInit {
       2,
       '0'
     )}/${currentDate.getFullYear()}`;
-    console.log(formattedDate);
     this.reportsService.reportsInDetails(campId, formattedDate).subscribe({
       next: ({ statusCode, data }) => {
         if (statusCode === 200) {

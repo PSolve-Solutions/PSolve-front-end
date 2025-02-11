@@ -28,7 +28,7 @@ export interface User {
   phoneNumber: string;
   nationalId: string;
   facebookLink: string;
-  vjudge: string;
+  vjudgeHandle: string;
   birthDate: string;
   acceptAttendType: boolean;
   university: string;

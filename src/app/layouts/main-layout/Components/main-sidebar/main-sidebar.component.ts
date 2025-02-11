@@ -465,7 +465,6 @@ export class MainSidebarComponent {
     } else {
       this.ocSidebarService.openSidebar('show');
     }
-    console.log(this.ocSidebarService.isOpen());
   }
   hideSidebar(): void {
     this.ocSidebarService.openSidebar('hide');

@@ -46,7 +46,6 @@ export class UniversityAdminComponent {
     const universityName = universityNameInput.value.trim();
     if (!universityName) return;
     this.isLoadingAdd = true;
-    console.log(universityName);
     this.adminsService.addUniversity(universityName).subscribe({
       next: ({ statusCode, message }) => {
         if (statusCode === 200) {

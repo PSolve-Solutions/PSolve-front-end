@@ -14,6 +14,7 @@ import { TraineeComponent } from '../../Components/Home-Components/trainee/train
 import { HomeService } from '../../Services/home.service';
 import { CommunitiesComponent } from '../../Components/Home-Components/Communities/Communities.component';
 import { AboutusComponent } from '../../Components/Home-Components/aboust-us/aboutus.component';
+import { AdsService } from '../../../../shared/services/ads.service';
 @Component({
   selector: 'app-home-public',
   standalone: true,
@@ -30,12 +31,16 @@ import { AboutusComponent } from '../../Components/Home-Components/aboust-us/abo
   templateUrl: './home-public.component.html',
   styleUrls: ['./home-public.component.scss'],
 })
-export class HomePublicComponent implements OnInit {
+export class HomePublicComponent implements OnInit, AfterViewInit {
   homeService = inject(HomeService);
+  adsService = inject(AdsService);
   Clintes: { id: string; clientName: string; logoUrl: string }[] = [];
   isVisible: boolean = false;
   ngOnInit(): void {
     this.getAllClintes();
+  }
+  ngAfterViewInit() {
+    this.adsService.loadAds();
   }
   getAllClintes(): void {
     this.homeService.getClintes().subscribe({

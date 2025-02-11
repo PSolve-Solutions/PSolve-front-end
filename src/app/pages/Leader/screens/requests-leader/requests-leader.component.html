@@ -159,6 +159,22 @@
         >
           Custom Filter
         </button>
+        @if (isExporting()) {
+        <div class="flex items-center justify-center bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-6 h-6 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+        }@else {
+        <img
+          (click)="downloadExcel()"
+          src="assets/img/excel.png"
+          class="cursor-pointer size-8"
+          alt=""
+        />
+        }
       </div>
     </div>
     <div style="height: calc(100vh - 240px)" class="flex flex-col">
@@ -197,6 +213,7 @@
                 Name
               </th>
               <th class="px-4 py-3">Codeforces</th>
+              <th class="px-4 py-3">Vjudge</th>
               <th class="px-4 py-3 whitespace-nowrap">Has laptop</th>
               <th class="px-4 py-3">Year</th>
               <th class="px-4 py-3">Collage</th>
@@ -209,7 +226,6 @@
               <th class="px-4 py-3 whitespace-nowrap">National ID</th>
               <th class="px-4 py-3 whitespace-nowrap">Facebook link</th>
               <th class="px-4 py-3 whitespace-nowrap">Birth date</th>
-              <th class="px-4 py-3">Vjudge</th>
             </tr>
           </thead>
           <tbody>
@@ -297,6 +313,9 @@
               <td class="px-4 py-2">
                 {{ row.codeForceHandle || "-" }}
               </td>
+              <td class="px-4 py-2">
+                {{ row.vjudgeHandle || "-" }}
+              </td>
               <td class="px-4 py-2">@if (row.hasLaptop) { Yes }@else { No }</td>
               <td class="px-4 py-2">{{ row.grade }}</td>
               <td class="px-4 py-2 whitespace-nowrap">
@@ -335,9 +354,6 @@
               </td>
               <td class="px-4 py-2 whitespace-nowrap">
                 {{ row.birthDate }}
-              </td>
-              <td class="px-4 py-2">
-                {{ row.vjudge || "-" }}
               </td>
             </tr>
             } } }
