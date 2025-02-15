@@ -18,12 +18,12 @@
       Edit
     </button>
     @if( isLoading() && dataRequest.length === 0) {
-    <div class="flex justify-center h-screen pt-36">
-      <img
-        src="favicon.ico"
-        alt="Loader Logo"
-        class="w-20 h-20 p-1 rounded-full bg-mainColor1 animate-ping"
-      />
+    <div class="fixed z-50 top-[40%] left-[50%] bg-opacity-60">
+      <div class="flex items-center">
+        <div
+          class="w-16 h-16 border-8 border-blue-600 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
     </div>
     } @else {
     <div

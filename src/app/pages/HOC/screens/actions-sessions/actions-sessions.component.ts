@@ -98,7 +98,6 @@ export class ActionsSessionsComponent implements OnInit {
       ).toISOString(),
       endDate: new Date(this.sessionForm.get('endDate')?.value).toISOString(),
     };
-    console.log(dataForm);
     if (this.id === 0) {
       this.sessionsHOCService.actionsSession(dataForm).subscribe({
         next: ({ statusCode, message, errors }) => {

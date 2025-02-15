@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  inject,
+} from '@angular/core';
 import { MentornavComponent } from '../mentornav/mentornav.component';
 import {
   NavigationEnd,
@@ -9,6 +15,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs'; // Import Subscription if needed in future
 import { Title } from '@angular/platform-browser';
+import { AdsService } from '../../../shared/services/ads.service';
+
 @Component({
   selector: 'app-mentor-layout',
   standalone: true,
@@ -16,9 +24,11 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './mentor-layout.component.html',
   styleUrls: ['./mentor-layout.component.scss'], // Fixed from `styleUrl` to `styleUrls`
 })
-export class MentorLayoutComponent implements OnInit, OnDestroy {
+export class MentorLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+  adsService = inject(AdsService);
   camp: boolean = false;
   private routerSubscription?: Subscription; // Declare routerSubscription if needed
+
   constructor(
     private router: Router,
     private titleService: Title,
@@ -26,6 +36,7 @@ export class MentorLayoutComponent implements OnInit, OnDestroy {
   ) {
     this.checkCampStatus();
   }
+
   ngOnInit() {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -34,12 +45,18 @@ export class MentorLayoutComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  ngAfterViewInit() {
+    this.adsService.checkAndLoadAds();
+  }
+
   ngOnDestroy() {
     // Unsubscribe from router events if subscribed
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
   }
+
   // Method to check the camp status from localStorage
   private checkCampStatus() {
     this.camp = localStorage.getItem('camp') ? true : false;
@@ -47,6 +64,7 @@ export class MentorLayoutComponent implements OnInit, OnDestroy {
       this.camp = true;
     }
   }
+
   private onRouteChange(url: string) {
     this.camp = localStorage.getItem('camp') ? true : false;
     if (this.router.url == '/mentor/profile') {

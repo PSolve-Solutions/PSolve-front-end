@@ -8,7 +8,7 @@
   <h1
     class="mb-6 text-2xl font-bold transition-all duration-500 md:hidden ps-4"
   >
-    Camps
+    All Camps : {{ !isLoading() ? totalCount : 0 }}
   </h1>
   <div class="flex flex-col space-y-4">
     <button
@@ -54,7 +54,7 @@
                   />
                 </svg>
               </th>
-              <th class="p-4 text-left truncate">Name</th>
+              <th class="p-4 text-left">Name</th>
               <th class="hidden p-4 lg:table-cell">Start Date</th>
               <th class="hidden p-4 lg:table-cell">End Date</th>
               <th class="hidden p-4 lg:table-cell">Term</th>
@@ -94,16 +94,16 @@
                   />
                 </svg>
               </td>
-              <td class="px-4 py-2 text-left whitespace-nowrap">
+              <td class="px-4 py-2 text-left">
                 {{ row.name }}
               </td>
-              <td class="hidden px-4 py-2 lg:table-cell">
+              <td class="hidden px-4 py-2 whitespace-nowrap lg:table-cell">
                 {{ convertToLocal(row.startDate) | date : "dd-MM-YYYY" }}
               </td>
-              <td class="hidden px-4 py-2 lg:table-cell">
+              <td class="hidden px-4 py-2 lg:table-cell whitespace-nowrap">
                 {{ convertToLocal(row.endDate) | date : "dd-MM-YYYY" }}
               </td>
-              <td class="hidden px-4 py-2 lg:table-cell">
+              <td class="hidden px-4 py-2 lg:table-cell whitespace-nowrap">
                 @switch (row.term) { @case (1) { First term } @case (2) { Second
                 term } @case (3) { Summer } @case (4) { Mid year } }
               </td>

@@ -1,26 +1,39 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { HomeService } from '../../../Services/home.service';
 import { task } from '../../../model/trinee-home';
-declare var $: any;
+import { DatePipe, NgClass } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-home-tasks-todo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgClass, DatePipe],
   templateUrl: './home-tasks-todo.component.html',
   styleUrls: ['./home-tasks-todo.component.scss'],
 })
 export class HomeTasksToDoComponent implements OnInit {
-  // Inject HomeService to handle task-related operations
-  private _homeService = inject(HomeService);
-  // Arrays to hold tasks based on their status
+  _homeService = inject(HomeService);
+  toastr = inject(ToastrService);
+  isOpenTasks = signal<boolean>(true);
+  isOpenList = signal<boolean>(false);
+  taskId: string = '';
+  taskStatus: { id: number; name: string }[] = [
+    { id: 0, name: 'To Do' },
+    { id: 1, name: 'In Progress' },
+    { id: 2, name: 'Done' },
+  ];
   todoTasks: task[] = [];
-  // Lifecycle hook to load tasks when the component initializes
   ngOnInit(): void {
     this._homeService.loadTasks();
     this.loadToDoTasks();
   }
-  // Load tasks from the server and categorize them based on their status
+
+  openToDoTasks(): void {
+    this.isOpenTasks.set(!this.isOpenTasks());
+  }
+  openList(id: string): void {
+    this.isOpenList.set(!this.isOpenList());
+    this.taskId = id;
+  }
   loadToDoTasks(): void {
     this._homeService.toDo.subscribe({
       next: (response) => {
@@ -28,29 +41,30 @@ export class HomeTasksToDoComponent implements OnInit {
       },
     });
   }
-  // Change the status of a task and reload the tasks
-  changeTaskStatus(task: task, status: number): void {
+  changeTaskStatus(taskId: string, status: number): void {
     const model = {
-      taskId: task.id,
+      taskId: taskId,
       status: status,
     };
     this._homeService.UpdateTraineeTask(model).subscribe({
-      next: ({ statusCode }) => {
+      next: ({ statusCode, message }) => {
         if (statusCode === 200) {
+          this.toastr.success(message);
           this._homeService.loadTasks();
+          this.isOpenList.set(false);
+        } else {
+          this.toastr.error(message);
         }
       },
     });
-    // Hide the task list after updating the status
-    $(`#${task.id}`).slideToggle(300);
   }
-  // Toggle the visibility of the task tables
-  toggleTables(): void {
-    $('.todo-table').slideToggle(500);
-    $('.todo-arrow').toggleClass('rotate');
-  }
-  // Toggle the visibility of task lists within each category
-  toggleList(id: string): void {
-    $(`#${id}`).slideToggle(300);
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const targetElement = event.target as HTMLElement;
+    const isInsideDropdown = targetElement.closest('#open');
+    if (!isInsideDropdown) {
+      this.isOpenList.set(false);
+    }
   }
 }

@@ -14,8 +14,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
-// let steps = document.querySelectorAll(".step")
 @Component({
   selector: 'app-home-trainee',
   standalone: true,
@@ -27,18 +27,19 @@ declare var $: any;
     HomeTasksDoneComponent,
     TraineeChartComponent,
     HomeTasksInProgressComponent,
-    CommonModule,
     ReactiveFormsModule,
   ],
   templateUrl: './home-trainee.component.html',
   styleUrls: ['./home-trainee.component.scss'],
 })
 export class HomeTraineeComponent implements OnInit {
-  public homeService = inject(HomeService);
+  homeService = inject(HomeService);
+  toastr = inject(ToastrService);
   rate: number = 0;
   enterFeedBack: boolean = false;
   SessionId: number = 0;
   leaveTimer: any;
+  isShowErr: boolean = false;
   stars: number[] = [1, 2, 3, 4, 5];
   feedBackForm: FormGroup = new FormGroup({
     feedback: new FormControl('', [Validators.required]),
@@ -70,16 +71,25 @@ export class HomeTraineeComponent implements OnInit {
     });
   }
   addFeedBack(): void {
-    if (this.feedBackForm.value) {
-      const model = {
-        feedback: this.feedBackForm.value.feedback,
-        rate: this.rate,
-        sessionId: this.SessionId,
-      };
-      this.homeService.TraineeFeedBack(model).subscribe({
-        next: ({ statusCode, data }) => {},
-      });
+    if (this.rate === 0) {
+      this.isShowErr = true;
+      return;
     }
+    const model = {
+      feedback: this.feedBackForm.value.feedback,
+      rate: this.rate,
+      sessionId: this.SessionId,
+    };
+    this.homeService.TraineeFeedBack(model).subscribe({
+      next: ({ statusCode, message }) => {
+        if (statusCode === 200) {
+          this.hideFeedBack();
+          this.toastr.success(message);
+        } else {
+          this.toastr.error(message);
+        }
+      },
+    });
   }
   calcTime(data: any): void {
     if (typeof data == 'number') {

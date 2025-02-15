@@ -6,8 +6,10 @@
     All Requests :
     {{ campId !== 0 && !isLoading() ? totalCount : 0 }}
   </h1>
-  <div class="flex items-center justify-between pb-4 border-b-2 md:hidden">
-    <h1 class="text-lg font-bold transition-all duration-500">All Requests</h1>
+  <div class="flex flex-col justify-between pb-4 border-b-2 md:hidden">
+    <h1 class="text-lg font-bold transition-all duration-500">
+      All Requests : {{ campId !== 0 && !isLoading() ? totalCount : 0 }}
+    </h1>
     <div class="flex items-center justify-between gap-x-2">
       <div class="relative flex items-center gap-x-2">
         <ng-select
@@ -17,13 +19,13 @@
           bindValue="id"
           (change)="chooseCamp($event)"
           placeholder="Camps"
-          class="relative block w-[7.5rem] h-10 my-2 text-xs font-semibold appearance-none text-mainColor4 bg-mainColor1 rounded-xl cursor-none focus:outline-none"
+          class="relative block w-[14.5rem] h-10 my-2 text-xs font-semibold appearance-none text-mainColor4 bg-mainColor1 rounded-xl cursor-none focus:outline-none"
         >
         </ng-select>
         <svg
           width="18"
           height="18"
-          class="absolute top-[18px] left-[96px] transition-transform"
+          class="absolute top-[18px] left-[200px] transition-transform"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -83,13 +85,13 @@
             bindValue="id"
             (change)="chooseCamp($event)"
             placeholder="Camps"
-            class="relative block w-40 h-10 my-2 text-sm font-semibold appearance-none placeholder:text-sm text-mainColor4 bg-mainColor1 rounded-xl cursor-none focus:outline-none"
+            class="relative block h-10 my-2 text-sm font-semibold appearance-none w-52 placeholder:text-sm text-mainColor4 bg-mainColor1 rounded-xl cursor-none focus:outline-none"
           >
           </ng-select>
           <svg
             width="24"
             height="24"
-            class="absolute top-[14px] left-[125px] transition-transform"
+            class="absolute top-[14px] left-[175px] transition-transform"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -159,6 +161,22 @@
         >
           Custom Filter
         </button>
+        @if (isExporting()) {
+        <div class="flex items-center justify-center bg-opacity-60">
+          <div class="flex items-center justify-center">
+            <div
+              class="w-6 h-6 border-4 border-blue-600 border-dashed rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+        }@else {
+        <img
+          (click)="downloadExcel()"
+          src="assets/img/excel.png"
+          class="cursor-pointer size-8"
+          alt=""
+        />
+        }
       </div>
     </div>
     <div style="height: calc(100vh - 240px)" class="flex flex-col">
@@ -197,6 +215,7 @@
                 Name
               </th>
               <th class="px-4 py-3">Codeforces</th>
+              <th class="px-4 py-3">Vjudge</th>
               <th class="px-4 py-3 whitespace-nowrap">Has laptop</th>
               <th class="px-4 py-3">Year</th>
               <th class="px-4 py-3">Collage</th>
@@ -209,7 +228,6 @@
               <th class="px-4 py-3 whitespace-nowrap">National ID</th>
               <th class="px-4 py-3 whitespace-nowrap">Facebook link</th>
               <th class="px-4 py-3 whitespace-nowrap">Birth date</th>
-              <th class="px-4 py-3">Vjudge</th>
             </tr>
           </thead>
           <tbody>
@@ -297,6 +315,9 @@
               <td class="px-4 py-2">
                 {{ row.codeForceHandle || "-" }}
               </td>
+              <td class="px-4 py-2">
+                {{ row.vjudgeHandle || "-" }}
+              </td>
               <td class="px-4 py-2">@if (row.hasLaptop) { Yes }@else { No }</td>
               <td class="px-4 py-2">{{ row.grade }}</td>
               <td class="px-4 py-2 whitespace-nowrap">
@@ -335,9 +356,6 @@
               </td>
               <td class="px-4 py-2 whitespace-nowrap">
                 {{ row.birthDate }}
-              </td>
-              <td class="px-4 py-2">
-                {{ row.vjudge || "-" }}
               </td>
             </tr>
             } } }

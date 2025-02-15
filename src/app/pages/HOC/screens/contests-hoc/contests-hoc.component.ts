@@ -79,9 +79,7 @@ export class ContestsHOCComponent implements OnInit {
     const element = event.target;
     const atBottom =
       element.scrollHeight - element.scrollTop <= element.clientHeight + 4;
-    console.log('atBottom', atBottom);
     if (atBottom && !this.isLoading() && this.allContests?.hasNextPage) {
-      console.log('firstPage');
       this.getAllContests(++this.currentPage, this.pageSize);
     }
   }

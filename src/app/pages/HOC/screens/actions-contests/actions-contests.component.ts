@@ -148,7 +148,6 @@ export class ActionsContestsComponent implements OnInit {
       ).toISOString(),
       endTime: new Date(this.contestForm.get('endTime')?.value).toISOString(),
     };
-    console.log(data);
     if (this.id === 0) {
       this.contestsHocService.createContest(data).subscribe({
         next: ({ statusCode, message, errors }) => {
