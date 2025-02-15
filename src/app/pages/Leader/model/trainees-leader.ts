@@ -19,6 +19,7 @@ export interface Trainee {
   email: string;
   phoneNumber: string;
   codeForceHandle: string;
+  vjudgeHandle: string;
 }
 export interface OnTraineeInfo {
   id: string;

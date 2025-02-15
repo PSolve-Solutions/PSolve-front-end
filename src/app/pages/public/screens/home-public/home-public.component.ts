@@ -40,7 +40,7 @@ export class HomePublicComponent implements OnInit, AfterViewInit {
     this.getAllClintes();
   }
   ngAfterViewInit() {
-    this.adsService.loadAds();
+    this.adsService.checkAndLoadAds();
   }
   getAllClintes(): void {
     this.homeService.getClintes().subscribe({
@@ -55,22 +55,7 @@ export class HomePublicComponent implements OnInit, AfterViewInit {
   onWindowScroll(): void {
     this.isVisible = window.scrollY > 500;
   }
-
-  // Scroll to top logic
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  //       next: ({ statusCode, data }) => {
-  //         if (statusCode === 200) {
-  //           this.Clintes = data;
-  //         } else {
-  //           console.log('Error');
-  //         }
-  //       },
-  //       error(err) {
-  //         console.log(err);
-  //       },
-  //     });
-  //   }
 }

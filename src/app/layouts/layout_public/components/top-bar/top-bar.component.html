@@ -1,42 +1,34 @@
 <nav class="bg-[#F5F9F9]">
   <div class="flex justify-between px-3 sm:px-9">
-    <div class="right flex items-center gap-5 sm:gap-16">
-      <div class="logo px-3 sm:px-7 py-4 self-start">
-        <img src="assets/img/logo.png" class="w-[63px]" alt="">
-    </div>
-    <ul class="flex sm:pt-3">
-      @if(!this.responsive.isSmallScreen){
+    <div class="flex items-center gap-5 right sm:gap-16">
+      <div class="self-start px-3 py-4 logo sm:px-7">
+        <img routerLink="/" src="assets/img/logo.png" class="w-[63px]" alt="" />
+      </div>
+      <ul class="flex sm:pt-3">
+        @if(!this.responsive.isSmallScreen){
         <li>
-          <a
-          routerLink="/"
-          fragment="header"
-          >
-           Home
-          </a>
+          <a routerLink="/"> Home </a>
         </li>
-      }
+        }
         <li>
-          <a
-          routerLink="/"
-          fragment="about-us"
-          >
-            About us
-          </a>
+          <a routerLink="/" fragment="about-us"> About us </a>
         </li>
-      <li>
-        <a
-          routerLink="/"
-          fragment="founders"
-            >
-          Founders
-        </a>
-      </li>
-    </ul>
+        <li>
+          <a routerLink="/" fragment="founders"> Founders </a>
+        </li>
+      </ul>
     </div>
-    <div class="left flex gap-4 items-center pt-2">
-      <div class="actions flex gap-[5px] flex-col sm:gap-4  sm:flex-row ">
-        <button class="login-btn"  routerLink="/login" >login</button>
-        @if (!this.responsive.isSmallScreen) {<button class="apply-btn" routerLink="/registration">apply now</button>}@else{<button class="apply-btn" routerLink="/registration">apply</button>}
+    <div class="flex items-center gap-4 pt-2 left">
+      <div class="actions flex gap-[5px] flex-col sm:gap-4 sm:flex-row">
+        <button class="login-btn" routerLink="/login">login</button>
+        @if (!this.responsive.isSmallScreen) {<button
+          class="apply-btn"
+          routerLink="/registration"
+        >
+          apply now</button
+        >}@else{<button class="apply-btn" routerLink="/registration">
+          apply</button
+        >}
       </div>
     </div>
   </div>

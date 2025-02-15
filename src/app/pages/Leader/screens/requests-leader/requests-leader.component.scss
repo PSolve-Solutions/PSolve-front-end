@@ -24,6 +24,11 @@
 .ng-select .ng-select-container {
   width: 85% !important;
 }
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  white-space: normal !important;
+}
+
 @media screen and (max-width: 768px) {
   .ng-select .ng-select-container .ng-value-container .ng-placeholder {
     font-size: 14px !important;

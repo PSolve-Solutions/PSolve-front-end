@@ -91,6 +91,7 @@
               <th class="hidden p-4 lg:table-cell">E-mail</th>
               <th class="hidden p-4 lg:table-cell">Phone</th>
               <th class="p-4">Codeforces</th>
+              <th class="p-4">Vjudge</th>
               <th class="flex items-center justify-center p-4">
                 <svg
                   class="size-5 pt-0.5"
@@ -125,7 +126,7 @@
               class="font-semibold border-b-8 border-mainColor4 hover:bg-mainColor3"
               [class.border-t-8]="first"
             >
-              <td class="px-4 py-2 text-left whitespace-nowrap">
+              <td class="px-4 py-2 text-left">
                 {{ row.firstName }} {{ row.middleName }} {{ row.lastName }}
               </td>
               <td class="hidden px-4 py-2 lg:table-cell">
@@ -143,6 +144,16 @@
                     target="_blank"
                     class="hover:text-activeLink"
                     >{{ row.codeForceHandle || "-" }}</a
+                  >
+                </span>
+              </td>
+              <td class="px-4 py-2">
+                <span>
+                  <a
+                    [href]="'https://vjudge.net/user/' + row.vjudgeHandle"
+                    target="_blank"
+                    class="hover:text-activeLink"
+                    >{{ row.vjudgeHandle || "-" }}</a
                   >
                 </span>
               </td>

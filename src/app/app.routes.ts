@@ -58,6 +58,8 @@ import { CommunityLeaderComponent } from './pages/Leader/screens/community-leade
 import { UniversityAdminComponent } from './pages/Admin/screens/university-admin/university-admin.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { PrivacyPolicyComponent } from './pages/public/screens/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './pages/public/screens/terms/terms.component';
 export const routes: Routes = [
   // Trainee Pages
   {
@@ -109,6 +111,16 @@ export const routes: Routes = [
         path: 'camps',
         component: CampsPublicComponent,
         title: 'Camps - PSovle',
+      },
+      {
+        path: 'privacy',
+        component: PrivacyPolicyComponent,
+        title: 'Privacy - PSovle',
+      },
+      {
+        path: 'terms',
+        component: TermsComponent,
+        title: 'Terms - PSovle',
       },
     ],
   },

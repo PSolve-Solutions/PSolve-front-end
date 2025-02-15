@@ -1,32 +1,53 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  inject,
+} from '@angular/core';
 import { MentornavComponent } from '../mentornav/mentornav.component';
-import { NavigationEnd, Router, RouterOutlet, ActivatedRoute } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+  ActivatedRoute,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs'; // Import Subscription if needed in future
 import { Title } from '@angular/platform-browser';
+import { AdsService } from '../../../shared/services/ads.service';
 
 @Component({
   selector: 'app-mentor-layout',
   standalone: true,
   imports: [MentornavComponent, RouterOutlet, CommonModule],
   templateUrl: './mentor-layout.component.html',
-  styleUrls: ['./mentor-layout.component.scss'] // Fixed from `styleUrl` to `styleUrls`
+  styleUrls: ['./mentor-layout.component.scss'], // Fixed from `styleUrl` to `styleUrls`
 })
-export class MentorLayoutComponent implements OnInit, OnDestroy {
+export class MentorLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+  adsService = inject(AdsService);
   camp: boolean = false;
   private routerSubscription?: Subscription; // Declare routerSubscription if needed
 
-  constructor(private router: Router, private titleService: Title , private active :ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private active: ActivatedRoute
+  ) {
     this.checkCampStatus();
   }
 
   ngOnInit() {
-    this.routerSubscription = this.router.events.subscribe(event => {
+    this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Handle view changes here
         this.onRouteChange(event.urlAfterRedirects);
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.adsService.checkAndLoadAds();
   }
 
   ngOnDestroy() {
@@ -39,16 +60,15 @@ export class MentorLayoutComponent implements OnInit, OnDestroy {
   // Method to check the camp status from localStorage
   private checkCampStatus() {
     this.camp = localStorage.getItem('camp') ? true : false;
-   if(this.router.url == '/mentor/profile'){
-    this.camp = true;
-   }
-  }
-
-  private onRouteChange(url: string){
-    this.camp = localStorage.getItem('camp') ? true : false;
-    if(this.router.url == '/mentor/profile'){
+    if (this.router.url == '/mentor/profile') {
       this.camp = true;
-     }
+    }
   }
 
+  private onRouteChange(url: string) {
+    this.camp = localStorage.getItem('camp') ? true : false;
+    if (this.router.url == '/mentor/profile') {
+      this.camp = true;
+    }
+  }
 }
